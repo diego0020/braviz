@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Braviz Concepts &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.0b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Braviz Documentation" href="../index.html" />
+    <link rel="up" title="Visual Analytics with Braviz" href="index.html" />
+    <link rel="next" title="Braviz Interface Elements" href="general.html" />
+    <link rel="prev" title="Visual Analytics with Braviz" href="index.html" /> 
+  </head>
+  <body>
+    
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html"> Braviz Documentation </a></div>
+          <nav class="parents">
+              <ol>
+        <li><a href="../index.html"> Home </a> &raquo;</li>
+          <li><a href="index.html"  accesskey="U" >Visual Analytics with Braviz</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Braviz Concepts</a><ul>
+<li><a class="reference internal" href="#project">Project</a></li>
+<li><a class="reference internal" href="#subjects">Subjects</a></li>
+<li><a class="reference internal" href="#variables">Variables</a></li>
+<li><a class="reference internal" href="#sub-samples">Sub-samples</a></li>
+<li><a class="reference internal" href="#scenarios">Scenarios</a></li>
+<li><a class="reference internal" href="#braviz-data-base">Braviz Data Base</a></li>
+<li><a class="reference internal" href="#coordinate-system">Coordinate system</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Visual Analytics with Braviz</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="general.html"
+                        title="next chapter">Braviz Interface Elements</a></p>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="braviz-concepts">
+<h1>Braviz Concepts<a class="headerlink" href="#braviz-concepts" title="Permalink to this headline">¶</a></h1>
+<p>This page definitions of the main braviz concepts. References to these terms inside Braviz and elsewhere in the
+documentation should always be interpreted as indicated here.</p>
+<div class="section" id="project">
+<h2>Project<a class="headerlink" href="#project" title="Permalink to this headline">¶</a></h2>
+<p>Inside Braviz a project is a collection of brain data on a group of subjects, usually captured as part of a
+study. All subjects of the project should ideally contain the same data. The data collected includes neuro-images
+as well as clinical, demographic and neuro-psichological data encoded in tables.</p>
+</div>
+<div class="section" id="subjects">
+<h2>Subjects<a class="headerlink" href="#subjects" title="Permalink to this headline">¶</a></h2>
+<p>Inside Braviz each participant of the study is called a subject. It has associated a group of neuro-images as well
+as a row in each data table. Usually subjects are identified with a numerical id.</p>
+</div>
+<div class="section" id="variables">
+<h2>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h2>
+<p>A variable refers to a property which can be defined for each subject. In the tables mentioned above, each variable
+would correspond to a column. For the moment Braviz can handle two types of variables:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Real Variables</strong>: The values of the variable for each subject are real numbers. Examples of these are
+age, height, volume of skull or the time taken to answer a test.</li>
+<li><strong>Nominal Variables</strong>: The values of the variable for each subject are a label that assigns him to one
+category. Some examples are: gender (male or female), categorized test results
+(average, below-average or above-average) or handedness (left-handed or right-handed).</li>
+</ul>
+</div></blockquote>
+<p>For more information about manipulating variables in Braviz see <a class="reference internal" href="variables.html"><em>Working with variables</em></a>.</p>
+</div>
+<div class="section" id="sub-samples">
+<h2>Sub-samples<a class="headerlink" href="#sub-samples" title="Permalink to this headline">¶</a></h2>
+<p>A sub-sample is a subset from the subjects in the project. They can be used to limit tests to a
+group of interest, or to reduce the size of the search space.</p>
+<p>For information on creating samples in braviz see <a class="reference internal" href="samples.html"><em>Creating Samples</em></a>.</p>
+</div>
+<div class="section" id="scenarios">
+<h2>Scenarios<a class="headerlink" href="#scenarios" title="Permalink to this headline">¶</a></h2>
+<p>Braviz applications allows you to interactively explore the dataset and produce personalized visualizations. This
+exploration can sometimes take a long time, and it should not have to be repeated. Scenarios are the way in which you
+can save the state of the application (including the state of the 3d views, active variables and current subject), in
+such a way that you can retake the analysis later or show it to a colleague.</p>
+</div>
+<div class="section" id="braviz-data-base">
+<h2>Braviz Data Base<a class="headerlink" href="#braviz-data-base" title="Permalink to this headline">¶</a></h2>
+<p>Braviz has an internal database in which it saves variable values, variable meta data, scenarios, subsamples, and other.
+In practice everything but neuro-images is saved inside the database. This database is shared by all applications
+which provides them a way to collaborate. All modifications to the database are immediately saved to the disk, therefore
+you don&#8217;t need to worry about loosing power or not closing braviz in the right way.</p>
+<p>Variables can be imported into the database  <a class="reference internal" href="from_excel.html"><em>from excel files</em></a> and
+<a class="reference internal" href="export_csv.html"><em>exported to csv files</em></a>. In this way you can use Braviz together with your favorite statistical
+program.</p>
+</div>
+<div class="section" id="coordinate-system">
+<h2>Coordinate system<a class="headerlink" href="#coordinate-system" title="Permalink to this headline">¶</a></h2>
+<p>Neuro-image data are samples from a participant&#8217;s brain, and therefore it should be possible to match the data in the
+image with the physical entity. However, due to several factors in the capture process, images from two subjects will
+hardly be in the same position. Also brains from different participants differ in size and shape. To make it easier
+to compare different participants it is sometimes useful to transform his brain into a common coordinate system. Using
+a common coordinate system also provides you with a way for talking about positions in the brain. However there is a
+cost associated to applying these transforms as it involves resampling the image, which in turn involves interpolation,
+where there is always the risk of loosing important data. Typically in Braviz we will have the following coordinate
+systems:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>World</strong> : The coordinate system from the anatomical MRI image as captured by the machine. One milimeter of
+an image in this space will match with one milimeter in the physical world.</li>
+<li><strong>Talairach</strong> : Images are rotated and scaled in such a way that they best fit the
+<a class="reference external" href="http://en.wikipedia.org/wiki/Talairach_coordinates">Talairach coordinate systems</a>. Because the image is
+scaled, it is no longer possible to relate measures taken here to the physical world. However because all
+brains are normalized in size, it could be useful to compare measures taken in this space.</li>
+<li><strong>Dartel</strong> : Images are deformed in such a way that they match a template. This template represents the brain
+of an <em>average</em> subject in the study. Currently the templates and transforms are calculated using
+<a class="reference external" href="http://www.fil.ion.ucl.ac.uk/spm/doc/">SPM Dartel</a> . Brains warped in this way will look very similar to
+one another, but there will be little correspondance with the physical world. This kind of transforms are the
+basis of second level fmri analyses or VBM.</li>
+<li><strong>Other</strong> : Diffusion images are acquired in a different space usually called <em>diff</em>, calculations involving
+tensors and gradient data are more precise if done in this native space. fMRI sequences are also captured
+in its own space. The SPM pipeline register these images to the anatomical images and afterwards the whole set
+to a template space, typically MNI. Statistical maps are calculated in this space. Notice this final coordinate
+system is not necessarily equal to the dartel system.</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+                
+                <a href="index.html" title="Visual Analytics with Braviz" accesskey="P">Previous</a>
+                
+
+                
+                 |
+                
+
+                
+                <a href="general.html" title="Braviz Interface Elements" accesskey="N"> Next</a>
+                
+
+          
+            <br/>
+            <a href="../_sources/graphical/concepts.txt"
+               rel="nofollow">Show Source</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

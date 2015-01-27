@@ -1,0 +1,276 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>R functions &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.0b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Braviz Documentation" href="../index.html" />
+    <link rel="up" title="Interaction" href="interaction.html" />
+    <link rel="next" title="Geometric Processing" href="struc_proc.html" />
+    <link rel="prev" title="Braviz Inter Application Communication" href="communication.html" /> 
+  </head>
+  <body>
+    
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html"> Braviz Documentation </a></div>
+          <nav class="parents">
+              <ol>
+        <li><a href="../index.html"> Home </a> &raquo;</li>
+          <li><a href="index.html" >Braviz library</a> &raquo;</li>
+          <li><a href="interaction.html"  accesskey="U" >Interaction</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">R functions</a><ul>
+<li><a class="reference internal" href="#utilities">Utilities</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="communication.html"
+                        title="previous chapter">Braviz Inter Application Communication</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="struc_proc.html"
+                        title="next chapter">Geometric Processing</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-braviz.interaction.r_functions"></span><div class="section" id="r-functions">
+<h1>R functions<a class="headerlink" href="#r-functions" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="braviz.interaction.r_functions.calculate_ginni_index">
+<tt class="descname">calculate_ginni_index</tt><big>(</big><em>outcome</em>, <em>data_frame</em><big>)</big><a class="headerlink" href="#braviz.interaction.r_functions.calculate_ginni_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates Ginni impurity indices respect to an outcome variable</p>
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/Decision_tree_learning#Gini_impurity">http://en.wikipedia.org/wiki/Decision_tree_learning#Gini_impurity</a>
+Uses the RandomForest package</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>outcome</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name of the outcome variable</li>
+<li><strong>data_frame</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.15.2)"><em>pandas.DataFrame</em></a>) &#8211; Data Frame with variable indices as index, this object will be modified</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The input <em>data_frame</em> with an additional column called <tt class="docutils literal"><span class="pre">Ginni</span></tt> that contains the requested indices.
+The value will be <tt class="docutils literal"><span class="pre">numpy.inf</span></tt> for the outcome variable, and 0 for variables where the index couln&#8217;t be
+calculated.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.interaction.r_functions.calculate_anova">
+<tt class="descname">calculate_anova</tt><big>(</big><em>outcome</em>, <em>regressors_data_frame</em>, <em>interactions_dict</em>, <em>sample</em><big>)</big><a class="headerlink" href="#braviz.interaction.r_functions.calculate_anova" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates an anova regression</p>
+<p>Uses the <em>car</em> package with type 3 sum of squares</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>outcome</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name of outcome variable</li>
+<li><strong>regressors_data_frame</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.15.2)"><em>pandas.DataFrame</em></a>) &#8211; <dl class="docutils">
+<dt>A DataFrame with three columns regressor name,</dt>
+<dd>degrees of freedom, and interaction. The last column should have
+zeros for single variable regressors and 1 for interaction terms.<blockquote class="last">
+<div>see <a class="reference internal" href="qt_models.html#braviz.interaction.qt_models.AnovaRegressorsModel.get_data_frame" title="braviz.interaction.qt_models.AnovaRegressorsModel.get_data_frame"><tt class="xref py py-meth docutils literal"><span class="pre">braviz.interaction.qt_models.AnovaRegressorsModel.get_data_frame()</span></tt></a></div></blockquote>
+</dd>
+<dt>interactions_dict (dict) <span class="classifier-delimiter">:</span> <span class="classifier">Dictionary mapping indices of interaction terms (in the previous DataFrame)</span></dt>
+<dd>to the indices of its factors.</dd>
+</dl>
+</li>
+<li><strong>sample</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of subject ids considered during the calculation</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><tt class="docutils literal"><span class="pre">(output_df,</span> <span class="pre">residuals,</span> <span class="pre">intercept,</span> <span class="pre">fitted)</span></tt> where <em>output_df</em> is a DataFrame containing 5 columns:
+Factor name, sum of squares, degrees of freedom, F statistic and P value, it includes an <em>(intercept)</em> term.
+<em>Residuals</em>, <em>intercept</em> and <em>fitted</em> are parameters of the regression.
+See <a class="reference internal" href="qt_models.html#braviz.interaction.qt_models.AnovaResultsModel" title="braviz.interaction.qt_models.AnovaResultsModel"><tt class="xref py py-class docutils literal"><span class="pre">braviz.interaction.qt_models.AnovaResultsModel</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.interaction.r_functions.calculate_normalized_linear_regression">
+<tt class="descname">calculate_normalized_linear_regression</tt><big>(</big><em>outcome</em>, <em>regressors_data_frame</em>, <em>interactions_dict</em>, <em>sample</em><big>)</big><a class="headerlink" href="#braviz.interaction.r_functions.calculate_normalized_linear_regression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates a linear regression after normalizing variables</p>
+<p>It uses the arm package <a class="reference external" href="http://www.inside-r.org/packages/cran/arm/docs/standardize">standardize</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>outcome</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name of outcome variable</li>
+<li><strong>regressors_data_frame</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.15.2)"><em>pandas.DataFrame</em></a>) &#8211; <dl class="docutils">
+<dt>A DataFrame with three columns regressor name,</dt>
+<dd>degrees of freedom, and interaction. The last column should have
+zeros for single variable regressors and 1 for interaction terms.<blockquote class="last">
+<div>see <a class="reference internal" href="qt_models.html#braviz.interaction.qt_models.AnovaRegressorsModel.get_data_frame" title="braviz.interaction.qt_models.AnovaRegressorsModel.get_data_frame"><tt class="xref py py-meth docutils literal"><span class="pre">braviz.interaction.qt_models.AnovaRegressorsModel.get_data_frame()</span></tt></a></div></blockquote>
+</dd>
+<dt>interactions_dict (dict) <span class="classifier-delimiter">:</span> <span class="classifier">Dictionary mapping indices of interaction terms (in the previous DataFrame)</span></dt>
+<dd>to the indices of its factors.</dd>
+</dl>
+</li>
+<li><strong>sample</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of subject ids considered during the calculation</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><p>A dictionary with the following fields</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">coefficients_df</span></tt> : A data frame with 7 columns: Slope, T statistc value, P value, standard error,
+95% confidence interval, r_name (variable alias used inside r)
+and components (Name of variables that make up the term)</li>
+<li><tt class="docutils literal"><span class="pre">residuals</span></tt> : vector with regression residuals</li>
+<li><tt class="docutils literal"><span class="pre">fitted</span></tt> : vector of fitted values</li>
+<li><tt class="docutils literal"><span class="pre">adj_r2</span></tt> : Adjusted r square</li>
+<li><tt class="docutils literal"><span class="pre">f_pval</span></tt> : Regression fit p value</li>
+<li><tt class="docutils literal"><span class="pre">f_stats_val</span></tt> : Value of the regression F statistic</li>
+<li><tt class="docutils literal"><span class="pre">f_stat_df</span></tt> : Degrees of freedom from F stistics (nominator,denominatior)</li>
+<li><tt class="docutils literal"><span class="pre">data_points</span></tt> : Subject ids used in the calculation (after dropping nans)</li>
+<li><tt class="docutils literal"><span class="pre">standardized_model</span></tt> : DataFrame of standardized data</li>
+<li><tt class="docutils literal"><span class="pre">data</span></tt> : DataFrame used in the calculation (after dropping nans)</li>
+<li><tt class="docutils literal"><span class="pre">mean_sigma</span></tt> : mean and standard deviation from outcome</li>
+<li><tt class="docutils literal"><span class="pre">var_types</span></tt> : Dictionary with the type of each variable, options are &#8220;r&#8221; for real, &#8220;b&#8221; for binary,
+and &#8220;n&#8221; for nominal variables with more levels</li>
+<li><tt class="docutils literal"><span class="pre">dummy_levels</span></tt> : The text labels for each level of dummy variables (except the base level)</li>
+</ul>
+</div></blockquote>
+<p>see <a class="reference external" href="http://blog.yhathq.com/posts/r-lm-summary.html">Fitting &amp; Interpreting Linear Models in R</a> for more
+details on the interpretation of the output</p>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="section" id="utilities">
+<h2>Utilities<a class="headerlink" href="#utilities" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="braviz.interaction.r_functions.import_or_error">
+<tt class="descname">import_or_error</tt><big>(</big><em>lib_name</em><big>)</big><a class="headerlink" href="#braviz.interaction.r_functions.import_or_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tries to import an R package, if it is not found prints a message asking the user to install it
+and raises an exception</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lib_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name of an R package</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+          <a href="communication.html" title="Braviz Inter Application Communication"
+             accesskey="P">previous</a> |
+          <a href="struc_proc.html" title="Geometric Processing"
+             accesskey="N">next</a> |
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a>
+          
+            <br/>
+            <a href="../_sources/library/r_funcs.txt"
+               rel="nofollow">Show Source</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

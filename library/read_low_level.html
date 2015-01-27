@@ -1,0 +1,1711 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Low level functions &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.0b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Braviz Documentation" href="../index.html" />
+    <link rel="up" title="Read And Filter" href="read_and_filter.html" />
+    <link rel="next" title="Visualization" href="visualization.html" />
+    <link rel="prev" title="Configuring" href="configuring.html" /> 
+  </head>
+  <body>
+    
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html"> Braviz Documentation </a></div>
+          <nav class="parents">
+              <ol>
+        <li><a href="../index.html"> Home </a> &raquo;</li>
+          <li><a href="index.html" >Braviz library</a> &raquo;</li>
+          <li><a href="read_and_filter.html"  accesskey="U" >Read And Filter</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Low level functions</a><ul>
+<li><a class="reference internal" href="#cache">cache</a></li>
+<li><a class="reference internal" href="#color-fibers">color_fibers</a></li>
+<li><a class="reference internal" href="#filter-fibers">filter_fibers</a></li>
+<li><a class="reference internal" href="#hierarchical-fibers">hierarchical fibers</a></li>
+<li><a class="reference internal" href="#images">images</a></li>
+<li><a class="reference internal" href="#named-tracts">named_tracts</a></li>
+<li><a class="reference internal" href="#read-csv">read_csv</a></li>
+<li><a class="reference internal" href="#read-spm">read_spm</a></li>
+<li><a class="reference internal" href="#module-braviz.readAndFilter.readDartelTransform">readDartelTransform</a></li>
+<li><a class="reference internal" href="#module-braviz.readAndFilter.surfer_input">surfer_input</a></li>
+<li><a class="reference internal" href="#module-braviz.readAndFilter.transforms">transforms</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="configuring.html"
+                        title="previous chapter">Configuring</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="visualization.html"
+                        title="next chapter">Visualization</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="low-level-functions">
+<h1>Low level functions<a class="headerlink" href="#low-level-functions" title="Permalink to this headline">¶</a></h1>
+<p>The readAndFilter module contains additional functions which should not be necessary for creating applications. These
+functions however may be used when developing new <a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><tt class="xref py py-class docutils literal"><span class="pre">BaseReader</span></tt></a> subclasses.</p>
+<div class="section" id="cache">
+<h2>cache<a class="headerlink" href="#cache" title="Permalink to this headline">¶</a></h2>
+<p>Handle memory cache</p>
+<span class="target" id="module-braviz.readAndFilter.cache"></span><dl class="class">
+<dt id="braviz.readAndFilter.cache.CacheContainer">
+<em class="property">class </em><tt class="descname">CacheContainer</tt><big>(</big><em>max_cache=500</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.cache.CacheContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class used to cache data, see <a class="reference internal" href="#braviz.readAndFilter.cache.cache_function" title="braviz.readAndFilter.cache.cache_function"><tt class="xref py py-func docutils literal"><span class="pre">cache_function()</span></tt></a></p>
+<dl class="attribute">
+<dt id="braviz.readAndFilter.cache.CacheContainer.cache">
+<tt class="descname">cache</tt><a class="headerlink" href="#braviz.readAndFilter.cache.CacheContainer.cache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Data container</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.readAndFilter.cache.CacheContainer.max_cache">
+<tt class="descname">max_cache</tt><a class="headerlink" href="#braviz.readAndFilter.cache.CacheContainer.max_cache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximum amount of memory in Mb that should be used by the process</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.readAndFilter.cache.LastUpdatedOrderedDict">
+<em class="property">class </em><tt class="descname">LastUpdatedOrderedDict</tt><big>(</big><em>*args</em>, <em>**kwds</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.cache.LastUpdatedOrderedDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store items in the order the keys were last updated</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.cache.cache_function">
+<tt class="descname">cache_function</tt><big>(</big><em>cache_container</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.cache.cache_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator which saves function results in memory to speed up repeated requests for the same information</p>
+<p>The decorator uses a <a class="reference internal" href="#braviz.readAndFilter.cache.CacheContainer" title="braviz.readAndFilter.cache.CacheContainer"><tt class="xref py py-class docutils literal"><span class="pre">CacheContainer</span></tt></a> to store data, and to limit the amount of memory used. Last access
+time is also recorded, and in case that memory needs to be released, data with oldest access time is deleted.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cache_container</strong> (<a class="reference internal" href="#braviz.readAndFilter.cache.CacheContainer" title="braviz.readAndFilter.cache.CacheContainer"><em>braviz.readAndFilter.cache.CacheContainer</em></a>) &#8211; Object used to store data</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.cache.memo_ten">
+<tt class="descname">memo_ten</tt><big>(</big><em>f</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.cache.memo_ten" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simple wrapper that holds up to ten function calls in cache.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.cache.memoize">
+<tt class="descname">memoize</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.cache.memoize" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper that saves the return values for a function,
+and returns them if the function is called again with the same arguments.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">There is no limit to the size of the cache in this wrapper, consider using
+<a class="reference internal" href="#braviz.readAndFilter.cache.memo_ten" title="braviz.readAndFilter.cache.memo_ten"><tt class="xref py py-func docutils literal"><span class="pre">memo_ten()</span></tt></a>. For large data use func:<cite>cache_function</cite>.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>obj</strong> (<a class="reference external" href="https://docs.python.org/2/tutorial/controlflow.html#defining-functions" title="Python function"><em>function</em></a>) &#8211; function to wrap</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="color-fibers">
+<h2>color_fibers<a class="headerlink" href="#color-fibers" title="Permalink to this headline">¶</a></h2>
+<p>Add color and scalars to tractographies</p>
+<span class="target" id="module-braviz.readAndFilter.color_fibers"></span><dl class="function">
+<dt id="braviz.readAndFilter.color_fibers.color_by_fa">
+<tt class="descname">color_by_fa</tt><big>(</big><em>pt</em>, <em>fa_img</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.color_fibers.color_by_fa" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates color based on an FA img</p>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 3.0: </span>Use scalars instead</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pt</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; points coordinates</li>
+<li><strong>fa_img</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkImageData.html" title="See on vtk documentation"><em>vtkImageData</em></a>) &#8211; FA image</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">(r,g,b)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.color_fibers.color_by_z">
+<tt class="descname">color_by_z</tt><big>(</big><em>pt</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.color_fibers.color_by_z" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color a point based on its &#8216;z&#8217; coordinate</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pt</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; Point coordinates</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">(r,g,b)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.color_fibers.color_fibers_lines">
+<tt class="descname">color_fibers_lines</tt><big>(</big><em>fibers</em>, <em>polyline_color_function</em>, <em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.color_fibers.color_fibers_lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies a function to each line in a tractography to assign it a color</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fibers</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkPolyData.html" title="See on vtk documentation"><em>vtkPolyData</em></a>) &#8211; Tractography</li>
+<li><strong>polyline_color_function</strong> (<a class="reference external" href="https://docs.python.org/2/tutorial/controlflow.html#defining-functions" title="Python function"><em>function</em></a>) &#8211; Function that takes a vtkCell and returns a dict mapping point ids
+to colors</li>
+<li><strong>*args</strong> &#8211; <p>extra positional arguments passed to <tt class="docutils literal"><span class="pre">polyline_color_function</span></tt></p>
+</li>
+<li><strong>**kwargs</strong> &#8211; <p>extra keyword arguments passed to <tt class="docutils literal"><span class="pre">polyline_color_function</span></tt></p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.color_fibers.color_fibers_pts">
+<tt class="descname">color_fibers_pts</tt><big>(</big><em>fibers</em>, <em>color_function</em>, <em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.color_fibers.color_fibers_pts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply a function to assign color for each point in a tractography</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fibers</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkPolyData.html" title="See on vtk documentation"><em>vtkPolyData</em></a>) &#8211; Tractography</li>
+<li><strong>color_function</strong> (<a class="reference external" href="https://docs.python.org/2/tutorial/controlflow.html#defining-functions" title="Python function"><em>function</em></a>) &#8211; Function that takes point coordinates and returns a color tuple</li>
+<li><strong>*args</strong> &#8211; <p>extra positional arguments passed to <tt class="docutils literal"><span class="pre">color_function</span></tt></p>
+</li>
+<li><strong>**kwargs</strong> &#8211; <p>extra keyword arguments passed to <tt class="docutils literal"><span class="pre">color_function</span></tt></p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.color_fibers.get_fa_lut">
+<tt class="descname">get_fa_lut</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.readAndFilter.color_fibers.get_fa_lut" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generic FA lookuptable</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">vtkColorTransferFunction</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.color_fibers.get_length_lut">
+<tt class="descname">get_length_lut</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.readAndFilter.color_fibers.get_length_lut" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generic length lookuptable</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">vtkColorTransferFunction</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.color_fibers.line_curvature">
+<tt class="descname">line_curvature</tt><big>(</big><em>line</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.color_fibers.line_curvature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates a color based on the curvature of the polyline</p>
+<p>Implements the simple formula from <a class="reference external" href="http://en.wikipedia.org/wiki/Curvature">http://en.wikipedia.org/wiki/Curvature</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>line</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkCell.html" title="See on vtk documentation"><em>vtkCell</em></a>) &#8211; Polyline</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Dictionary from all point ids to the random color</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.color_fibers.random_line">
+<tt class="descname">random_line</tt><big>(</big><em>line</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.color_fibers.random_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a random color and maps the whole line to it</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>line</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkCell.html" title="See on vtk documentation"><em>vtkCell</em></a>) &#8211; Polyline</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Dictionary from all point ids to the random color</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.color_fibers.scalars_from_image">
+<tt class="descname">scalars_from_image</tt><big>(</big><em>fibers</em>, <em>nifti_image</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.color_fibers.scalars_from_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assigns scalars taken from an image to a polydata</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fibers</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkPolyData.html" title="See on vtk documentation"><em>vtkPolyData</em></a>) &#8211; Tractography</li>
+<li><strong>nifti_image</strong> (<a class="reference external" href="http://nipy.org/nibabel/reference/nibabel.spatialimages.html#nibabel.spatialimages.SpatialImage" title="(in NiBabel v2.0.0)"><em>nibabel.spatialimages.SpatialImage</em></a>) &#8211; Image to grab scalars from. It should be on the same
+coordinates system as the tractography</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.color_fibers.scalars_from_image_int">
+<tt class="descname">scalars_from_image_int</tt><big>(</big><em>fibers</em>, <em>nifti_image</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.color_fibers.scalars_from_image_int" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assigns scalars taken from an image to a polydata without interpolation (nearest neighbour)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fibers</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkPolyData.html" title="See on vtk documentation"><em>vtkPolyData</em></a>) &#8211; Tractography</li>
+<li><strong>nifti_image</strong> (<a class="reference external" href="http://nipy.org/nibabel/reference/nibabel.spatialimages.html#nibabel.spatialimages.SpatialImage" title="(in NiBabel v2.0.0)"><em>nibabel.spatialimages.SpatialImage</em></a>) &#8211; Image to grab scalars from. It should be on the same
+coordinates system as the tractography</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.color_fibers.scalars_from_length">
+<tt class="descname">scalars_from_length</tt><big>(</big><em>fibers</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.color_fibers.scalars_from_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assigns scalars to each line representing its length</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fibers</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkPolyData.html" title="See on vtk documentation"><em>vtkPolyData</em></a>) &#8211; Tractography</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.color_fibers.scalars_lines_from_image">
+<tt class="descname">scalars_lines_from_image</tt><big>(</big><em>fibers</em>, <em>nifti_image</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.color_fibers.scalars_lines_from_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Averages scalars along lines and assigns one scalar to each line, based on an image</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fibers</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkPolyData.html" title="See on vtk documentation"><em>vtkPolyData</em></a>) &#8211; Tractography</li>
+<li><strong>nifti_image</strong> (<a class="reference external" href="http://nipy.org/nibabel/reference/nibabel.spatialimages.html#nibabel.spatialimages.SpatialImage" title="(in NiBabel v2.0.0)"><em>nibabel.spatialimages.SpatialImage</em></a>) &#8211; Image to grab scalars from. It should be on the same
+coordinates system as the tractography</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="filter-fibers">
+<h2>filter_fibers<a class="headerlink" href="#filter-fibers" title="Permalink to this headline">¶</a></h2>
+<p>Extract fibers from tractographies</p>
+<span class="target" id="module-braviz.readAndFilter.filter_fibers"></span><dl class="class">
+<dt id="braviz.readAndFilter.filter_fibers.FilterBundleWithSphere">
+<em class="property">class </em><tt class="descname">FilterBundleWithSphere</tt><a class="headerlink" href="#braviz.readAndFilter.filter_fibers.FilterBundleWithSphere" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class to interactively filter a polydata with a moving sphere</p>
+<dl class="method">
+<dt id="braviz.readAndFilter.filter_fibers.FilterBundleWithSphere.filter_bundle_with_sphere">
+<tt class="descname">filter_bundle_with_sphere</tt><big>(</big><em>center</em>, <em>radius</em>, <em>get_ids=False</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.filter_fibers.FilterBundleWithSphere.filter_bundle_with_sphere" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter polydata to keep only the lines which have a point inside a sphere</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>center</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; Sphere center (x,y,z)</li>
+<li><strong>radius</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Sphere radius</li>
+<li><strong>get_ids</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; get ids or filtered polydata</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">If get_ids is True the ids of the satisfying cells are returned, otherwise a filtered vtkPolydata is
+returned</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.readAndFilter.filter_fibers.FilterBundleWithSphere.set_bundle">
+<tt class="descname">set_bundle</tt><big>(</big><em>bundle</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.filter_fibers.FilterBundleWithSphere.set_bundle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the base polydata</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>bundle</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkPolyData.html" title="See on vtk documentation"><em>vtkPolyData</em></a>) &#8211; base bundle</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.filter_fibers.abstract_test_lines_in_polyline">
+<tt class="descname">abstract_test_lines_in_polyline</tt><big>(</big><em>fibers</em>, <em>predicate</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.filter_fibers.abstract_test_lines_in_polyline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract lines where at least one point makes predicate True.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fibers</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkPolyData.html" title="See on vtk documentation"><em>vtkPolyData</em></a>) &#8211; Tractography</li>
+<li><strong>predicate</strong> (<a class="reference external" href="https://docs.python.org/2/tutorial/controlflow.html#defining-functions" title="Python function"><em>function</em></a>) &#8211; Should take point coordinates and return a boolean</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Set of cells where the predicate is True for at least one point</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.filter_fibers.boundingBoxIntesection">
+<tt class="descname">boundingBoxIntesection</tt><big>(</big><em>box1</em>, <em>box2</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.filter_fibers.boundingBoxIntesection" title="Permalink to this definition">¶</a></dt>
+<dd><p>test if two bounding boxes intersect</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>box1</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; Bounding box [x0, x1, y0, y1, z0, z1]</li>
+<li><strong>box2</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; Bounding box [x0, x1, y0, y1, z0, z1]</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><tt class="docutils literal"><span class="pre">True</span></tt> if the bounding boxes intersect, <tt class="docutils literal"><span class="pre">False</span></tt> otherwise</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.filter_fibers.extract_poly_data_subset">
+<tt class="descname">extract_poly_data_subset</tt><big>(</big><em>polydata</em>, <em>id_list</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.filter_fibers.extract_poly_data_subset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extracts polylines with given ids from polydata</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>polydata</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkPolyData.html" title="See on vtk documentation"><em>vtkPolyData</em></a>) &#8211; Full polydata</li>
+<li><strong>id_list</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of cell ids</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A vtkPolyData containing only the requested cells.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.filter_fibers.filterPolylinesWithModel">
+<tt class="descname">filterPolylinesWithModel</tt><big>(</big><em>fibers</em>, <em>model</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.filter_fibers.filterPolylinesWithModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>filters a polyline, keeps only the lines that cross a model</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fibers</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkPolyData.html" title="See on vtk documentation"><em>vtkPolyData</em></a>) &#8211; Tractography</li>
+<li><strong>model</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkPolyData.html" title="See on vtk documentation"><em>vtkPolyData</em></a>) &#8211; Structure model (closed surface)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Set of polyline ids where the line goes through the model</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.filter_fibers.filter_polylines_by_scalar">
+<tt class="descname">filter_polylines_by_scalar</tt><big>(</big><em>fibs</em>, <em>scalar</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.filter_fibers.filter_polylines_by_scalar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds lines where at least one point has a scalar value in the range (scalar -0.5, scalar + 0.5)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fibs</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkPolyData.html" title="See on vtk documentation"><em>vtkPolyData</em></a>) &#8211; Full polydata with scalar data</li>
+<li><strong>scalar</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; scalar value to look for</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Cell ids where at least one point has a scalar in the range (scalar -0.5, scalar + 0.5)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.filter_fibers.filter_polylines_with_img">
+<tt class="descname">filter_polylines_with_img</tt><big>(</big><em>polydata</em>, <em>img</em>, <em>label</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.filter_fibers.filter_polylines_with_img" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter polydata based on labels found in an image.</p>
+<p>For each point in the polyline the function finds the corresponding label in the image. Only lines where at least
+one point has the requested label are left in the output set.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>polydata</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkPolyData.html" title="See on vtk documentation"><em>vtkPolyData</em></a>) &#8211; Full tractography polydata</li>
+<li><strong>img</strong> (<a class="reference external" href="http://nipy.org/nibabel/reference/nibabel.spatialimages.html#nibabel.spatialimages.SpatialImage" title="(in NiBabel v2.0.0)"><em>nibabel.spatialimages.SpatialImage</em></a>) &#8211; Label map, should be in same coordinate system as polydata</li>
+<li><strong>label</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Label of interest</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Set of CellIds where at least one point gets the requested label</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.filter_fibers.filter_polylines_with_img_slow">
+<tt class="descname">filter_polylines_with_img_slow</tt><big>(</big><em>polydata</em>, <em>img</em>, <em>label</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.filter_fibers.filter_polylines_with_img_slow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Slow version of <a class="reference internal" href="#braviz.readAndFilter.filter_fibers.filter_polylines_with_img" title="braviz.readAndFilter.filter_fibers.filter_polylines_with_img"><tt class="xref py py-func docutils literal"><span class="pre">filter_polylines_with_img()</span></tt></a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.filter_fibers.iter_id_list">
+<tt class="descname">iter_id_list</tt><big>(</big><em>id_list</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.filter_fibers.iter_id_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate over a vtkIdList</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_list</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkIdList.html" title="See on vtk documentation"><em>vtkIdList</em></a>) &#8211; Id List</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body"><em>Point ids</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="hierarchical-fibers">
+<h2>hierarchical fibers<a class="headerlink" href="#hierarchical-fibers" title="Permalink to this headline">¶</a></h2>
+<p>Read fibers defined by a logical hierarchy</p>
+<span class="target" id="module-braviz.readAndFilter.hierarchical_fibers"></span><dl class="function">
+<dt id="braviz.readAndFilter.hierarchical_fibers.get_all_lines">
+<tt class="descname">get_all_lines</tt><big>(</big><em>subj</em>, <em>reader</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.hierarchical_fibers.get_all_lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a list of the polyline ids of the whole tractography</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>subj</strong> &#8211; Subject id</li>
+<li><strong>reader</strong> (<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><em>braviz.readAndFilter.base_reader.BaseReader</em></a>) &#8211; Reader object to get data from</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.hierarchical_fibers.get_valid_lines_from_logical">
+<tt class="descname">get_valid_lines_from_logical</tt><big>(</big><em>subj</em>, <em>tree_node</em>, <em>reader</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.hierarchical_fibers.get_valid_lines_from_logical" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get polyline ids that match the condition in a logical node</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>subj</strong> &#8211; Id of subject</li>
+<li><strong>tree_node</strong> (<a class="reference internal" href="qt_models.html#braviz.interaction.logic_bundle_model.LogicBundleNode" title="braviz.interaction.logic_bundle_model.LogicBundleNode"><em>braviz.interaction.logic_bundle_model.LogicBundleNode</em></a>) &#8211; Tree node, must have logical type</li>
+<li><strong>reader</strong> (<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><em>braviz.readAndFilter.base_reader.BaseReader</em></a>) &#8211; Reader object to get data from</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.hierarchical_fibers.get_valid_lines_from_node">
+<tt class="descname">get_valid_lines_from_node</tt><big>(</big><em>subj</em>, <em>tree_node</em>, <em>reader</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.hierarchical_fibers.get_valid_lines_from_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get ids of polylines that match the condition described in a tree node</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>subj</strong> &#8211; Id of subject</li>
+<li><strong>tree_node</strong> (<a class="reference internal" href="qt_models.html#braviz.interaction.logic_bundle_model.LogicBundleNode" title="braviz.interaction.logic_bundle_model.LogicBundleNode"><em>braviz.interaction.logic_bundle_model.LogicBundleNode</em></a>) &#8211; Tree node</li>
+<li><strong>reader</strong> (<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><em>braviz.readAndFilter.base_reader.BaseReader</em></a>) &#8211; Reader object to get data from</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.hierarchical_fibers.get_valid_lines_from_roi">
+<tt class="descname">get_valid_lines_from_roi</tt><big>(</big><em>subj</em>, <em>roi_id</em>, <em>reader</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.hierarchical_fibers.get_valid_lines_from_roi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get polyline ids that match the condition in a roi node</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>subj</strong> &#8211; Id of subject</li>
+<li><strong>roi_id</strong> &#8211; Database id of a ROI (see <a class="reference internal" href="geom_db.html#module-braviz.readAndFilter.geom_db" title="braviz.readAndFilter.geom_db"><tt class="xref py py-mod docutils literal"><span class="pre">braviz.readAndFilter.geom_db</span></tt></a>)</li>
+<li><strong>reader</strong> (<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><em>braviz.readAndFilter.base_reader.BaseReader</em></a>) &#8211; Reader object to get data from</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.hierarchical_fibers.get_valid_lines_from_struct">
+<tt class="descname">get_valid_lines_from_struct</tt><big>(</big><em>subj</em>, <em>struct</em>, <em>reader</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.hierarchical_fibers.get_valid_lines_from_struct" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get polyline ids that match the condition in a structure node</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>subj</strong> &#8211; Id of subject</li>
+<li><strong>struct</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name of a freesufer model</li>
+<li><strong>reader</strong> (<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><em>braviz.readAndFilter.base_reader.BaseReader</em></a>) &#8211; Reader object to get data from</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.hierarchical_fibers.read_logical_fibers">
+<tt class="descname">read_logical_fibers</tt><big>(</big><em>subj</em>, <em>tree_dict</em>, <em>reader</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.hierarchical_fibers.read_logical_fibers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a <a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkPolyData.html" title="See on vtk documentation"><tt class="xref py py-obj docutils literal"><span class="pre">vtkPolyData</span></tt></a> for a bundle described using a logical hierarchy</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>subj</strong> &#8211; Id of subject</li>
+<li><strong>tree_dict</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; Dictionary describing the logical tree,
+see <a class="reference internal" href="bundles_db.html#braviz.readAndFilter.bundles_db.get_logic_bundle_dict" title="braviz.readAndFilter.bundles_db.get_logic_bundle_dict"><tt class="xref py py-func docutils literal"><span class="pre">braviz.readAndFilter.bundles_db.get_logic_bundle_dict()</span></tt></a></li>
+<li><strong>reader</strong> (<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><em>braviz.readAndFilter.base_reader.BaseReader</em></a>) &#8211; Reader object to get data from</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="images">
+<h2>images<a class="headerlink" href="#images" title="Permalink to this headline">¶</a></h2>
+<p>Work with nifti and vtk Images</p>
+<span class="target" id="module-braviz.readAndFilter.images"></span><dl class="function">
+<dt id="braviz.readAndFilter.images.nibNii2vtk">
+<tt class="descname">nibNii2vtk</tt><big>(</big><em>nii</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.images.nibNii2vtk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform a nifti image read by nibabel into a vtkImageData ignoring transformations</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>nii</strong> (<a class="reference external" href="http://nipy.org/nibabel/reference/nibabel.spatialimages.html#nibabel.spatialimages.SpatialImage" title="(in NiBabel v2.0.0)"><em>nibabel.spatialimages.SpatialImage</em></a>) &#8211; Nifti image object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">vtkImageData, transformations are ignored, you should apply them afterwards
+see <a class="reference internal" href="#braviz.readAndFilter.transforms.applyTransform" title="braviz.readAndFilter.transforms.applyTransform"><tt class="xref py py-func docutils literal"><span class="pre">applyTransform()</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.images.nifti_rgb2vtk">
+<tt class="descname">nifti_rgb2vtk</tt><big>(</big><em>nifti_rgb</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.images.nifti_rgb2vtk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads 4D rgb nifti images</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>nifti_rgb</strong> (<a class="reference external" href="http://nipy.org/nibabel/reference/nibabel.spatialimages.html#nibabel.spatialimages.SpatialImage" title="(in NiBabel v2.0.0)"><em>nibabel.spatialimages.SpatialImage</em></a>) &#8211; 4D Nifti image object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">vtkImageData with rgb scalars</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.images.numpy2vtk_img">
+<tt class="descname">numpy2vtk_img</tt><big>(</big><em>d</em>, <em>data_type=None</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.images.numpy2vtk_img" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform a 3d numpy array into a vtk image data object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>d</strong> (<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><em>numpy.ndarray</em></a>) &#8211; Voxel data</li>
+<li><strong>data_type</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Data type of voxel data, if None attempts to read from the array</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">vtkImageData</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.images.vtk2numpy">
+<tt class="descname">vtk2numpy</tt><big>(</big><em>vtk_image</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.images.vtk2numpy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform a vtk image into a numpy array</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>vtk_image</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkImageData.html" title="See on vtk documentation"><em>vtkImageData</em></a>) &#8211; vtk image</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A numpy array of the same shape as the image</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.images.write_nib_image">
+<tt class="descname">write_nib_image</tt><big>(</big><em>data</em>, <em>affine</em>, <em>out_file</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.images.write_nib_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes nifti image to disk</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> (<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><em>numpy.ndarray</em></a>) &#8211; Voxel data</li>
+<li><strong>affine</strong> (<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><em>numpy.ndarray</em></a>) &#8211; Image transformation</li>
+<li><strong>out_file</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Path to output file</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.images.write_vtk_image">
+<tt class="descname">write_vtk_image</tt><big>(</big><em>image_data</em>, <em>out_file</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.images.write_vtk_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a vtkImage to disk as a nifti file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>image_data</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkImageData.html" title="See on vtk documentation"><em>vtkImageData</em></a>) &#8211; Image to write</li>
+<li><strong>out_file</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Path to output nifti file</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="named-tracts">
+<h2>named_tracts<a class="headerlink" href="#named-tracts" title="Permalink to this headline">¶</a></h2>
+<p>Use custom python functions to filter tractographies</p>
+<span class="target" id="module-braviz.readAndFilter.named_tracts"></span><dl class="function">
+<dt id="braviz.readAndFilter.named_tracts.corpus_callosum">
+<tt class="descname">corpus_callosum</tt><big>(</big><em>reader</em>, <em>subject</em>, <em>color</em>, <em>scalars</em>, <em>get_out_space=False</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.named_tracts.corpus_callosum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the corpus callosum bundle</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>reader</strong> (<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><em>braviz.readAndFilter.base_reader.BaseReader</em></a>) &#8211; Braviz reader</li>
+<li><strong>subject</strong> &#8211; subject id</li>
+<li><strong>color</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; color for the output fibers</li>
+<li><strong>get_out_space</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If True return only the space in which the tracts are defined</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">vtkPolyData of the corpus callosum bundle</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.named_tracts.cortico_spinal_d">
+<tt class="descname">cortico_spinal_d</tt><big>(</big><em>reader</em>, <em>subject</em>, <em>color</em>, <em>scalars</em>, <em>get_out_space=False</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.named_tracts.cortico_spinal_d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the dominant hemisphere corticospinal tract</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>reader</strong> (<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><em>braviz.readAndFilter.base_reader.BaseReader</em></a>) &#8211; Braviz reader</li>
+<li><strong>subject</strong> &#8211; subject id</li>
+<li><strong>color</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; color for the output fibers</li>
+<li><strong>get_out_space</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If True return only the space in which the tracts are defined</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">vtkPolyData of dominant cortico-spinal tract</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.named_tracts.cortico_spinal_l">
+<tt class="descname">cortico_spinal_l</tt><big>(</big><em>reader</em>, <em>subject</em>, <em>color</em>, <em>scalars=None</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.named_tracts.cortico_spinal_l" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the left cortico-spinal tract</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>reader</strong> (<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><em>braviz.readAndFilter.base_reader.BaseReader</em></a>) &#8211; Braviz reader</li>
+<li><strong>subject</strong> &#8211; subject id</li>
+<li><strong>color</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; color for the output fibers</li>
+<li><strong>get_out_space</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If True return only the space in which the tracts are defined</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">vtkPolyData of left cortico-spinal tract</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.named_tracts.cortico_spinal_n">
+<tt class="descname">cortico_spinal_n</tt><big>(</big><em>reader</em>, <em>subject</em>, <em>color</em>, <em>scalars</em>, <em>get_out_space=False</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.named_tracts.cortico_spinal_n" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the non-dominant hemisphere corticospinal tract</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>reader</strong> (<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><em>braviz.readAndFilter.base_reader.BaseReader</em></a>) &#8211; Braviz reader</li>
+<li><strong>subject</strong> &#8211; subject id</li>
+<li><strong>color</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; color for the output fibers</li>
+<li><strong>get_out_space</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If True return only the space in which the tracts are defined</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">vtkPolyData of non-dominant cortico-spinal tract</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.named_tracts.cortico_spinal_r">
+<tt class="descname">cortico_spinal_r</tt><big>(</big><em>reader</em>, <em>subject</em>, <em>color</em>, <em>scalars=None</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.named_tracts.cortico_spinal_r" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the right corticospinal tract</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>reader</strong> (<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><em>braviz.readAndFilter.base_reader.BaseReader</em></a>) &#8211; Braviz reader</li>
+<li><strong>subject</strong> &#8211; subject id</li>
+<li><strong>color</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; color for the output fibers</li>
+<li><strong>get_out_space</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If True return only the space in which the tracts are defined</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">vtkPolyData of right cortico-spinal tract</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="read-csv">
+<h2>read_csv<a class="headerlink" href="#read-csv" title="Permalink to this headline">¶</a></h2>
+<p>Parse data from csv files</p>
+<span class="target" id="module-braviz.readAndFilter.read_csv"></span><dl class="function">
+<dt id="braviz.readAndFilter.read_csv.column_to_vtk_array">
+<tt class="descname">column_to_vtk_array</tt><big>(</big><em>col</em>, <em>name='unknown'</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.read_csv.column_to_vtk_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms a list of values into a vtkArray, useful for feedint into vtk Data Viz functions</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>col</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of values</li>
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name for the array</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A vtkDataArray with the values in <em>col</em></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.read_csv.get_column">
+<tt class="descname">get_column</tt><big>(</big><em>file_name</em>, <em>name</em>, <em>numeric=False</em>, <em>nan_value=nan</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.read_csv.get_column" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads a column from a csv file</p>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 3.0b: </span>Use <a class="reference internal" href="tabular_data.html#module-braviz.readAndFilter.tabular_data" title="braviz.readAndFilter.tabular_data"><tt class="xref py py-mod docutils literal"><span class="pre">braviz.readAndFilter.tabular_data</span></tt></a> instead</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>file_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; csv file path</li>
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; header of column</li>
+<li><strong>numeric</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; if True cast the data to float</li>
+<li><strong>nan_value</strong> &#8211; Value to use for missing data</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A list with the values in the column</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.read_csv.get_headers">
+<tt class="descname">get_headers</tt><big>(</big><em>file_name</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.read_csv.get_headers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the headers of a csv file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; csv file path</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list of headers in the file</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.read_csv.get_tuples_dict">
+<tt class="descname">get_tuples_dict</tt><big>(</big><em>file_name</em>, <em>key_col</em>, <em>columns</em>, <em>numeric=False</em>, <em>nan_value=nan</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.read_csv.get_tuples_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads multiple columns from a csv file</p>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 3.0b: </span>Use <a class="reference internal" href="tabular_data.html#module-braviz.readAndFilter.tabular_data" title="braviz.readAndFilter.tabular_data"><tt class="xref py py-mod docutils literal"><span class="pre">braviz.readAndFilter.tabular_data</span></tt></a> instead</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>file_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; csv file path</li>
+<li><strong>key_col</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; name of column to be used as key</li>
+<li><strong>columns</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; list of column headers to get as values</li>
+<li><strong>numeric</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; if True cast the data to float</li>
+<li><strong>nan_value</strong> &#8211; Value to use for missing data</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A dictionary with values from <em>key_col</em> as keys, and tuples from the values in <em>columns</em></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.read_csv.read_free_surfer_csv_file">
+<tt class="descname">read_free_surfer_csv_file</tt><big>(</big><em>file_name</em>, <em>row</em>, <em>search_col=None</em>, <em>col=None</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.read_csv.read_free_surfer_csv_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read data from freeSurfer stats file</p>
+<p>If row is headers returns a list of file headers
+Otherwise: a single row will be selected based on the row value and the search_col value.
+The function will return the row where the value under column with header search_col matches row
+if col is given, only the value under the column with this header will be returned</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>file_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; csv file path</li>
+<li><strong>row</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; identifier for the row of interest</li>
+<li><strong>search_col</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; header of the column where row identifiers will appear</li>
+<li><strong>col</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; header for the column of the value of interest</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">If <em>col</em> is <tt class="docutils literal"><span class="pre">None</span></tt> the whole row that contains <em>row</em> in column <em>search_col</em>; otherwise, the value under
+<em>col</em> for that row.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="read-spm">
+<h2>read_spm<a class="headerlink" href="#read-spm" title="Permalink to this headline">¶</a></h2>
+<p>Read data from <tt class="docutils literal"><span class="pre">spm.mat</span></tt> files</p>
+<span class="target" id="module-braviz.readAndFilter.read_spm"></span><dl class="class">
+<dt id="braviz.readAndFilter.read_spm.ConditionInfo">
+<em class="property">class </em><tt class="descname">ConditionInfo</tt><a class="headerlink" href="#braviz.readAndFilter.read_spm.ConditionInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>ConditionInfo(name, onsets, durations)</p>
+<dl class="method">
+<dt id="braviz.readAndFilter.read_spm.ConditionInfo.__getnewargs__">
+<tt class="descname">__getnewargs__</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.readAndFilter.read_spm.ConditionInfo.__getnewargs__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return self as a plain tuple.  Used by copy and pickle.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.readAndFilter.read_spm.ConditionInfo.__getstate__">
+<tt class="descname">__getstate__</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.readAndFilter.read_spm.ConditionInfo.__getstate__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exclude the OrderedDict from pickling</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.readAndFilter.read_spm.ConditionInfo.__repr__">
+<tt class="descname">__repr__</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.readAndFilter.read_spm.ConditionInfo.__repr__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a nicely formatted representation string</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.readAndFilter.read_spm.ConditionInfo.durations">
+<tt class="descname">durations</tt><a class="headerlink" href="#braviz.readAndFilter.read_spm.ConditionInfo.durations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.readAndFilter.read_spm.ConditionInfo.name">
+<tt class="descname">name</tt><a class="headerlink" href="#braviz.readAndFilter.read_spm.ConditionInfo.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.readAndFilter.read_spm.ConditionInfo.onsets">
+<tt class="descname">onsets</tt><a class="headerlink" href="#braviz.readAndFilter.read_spm.ConditionInfo.onsets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.readAndFilter.read_spm.ContrastInfo">
+<em class="property">class </em><tt class="descname">ContrastInfo</tt><a class="headerlink" href="#braviz.readAndFilter.read_spm.ContrastInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>ContrastInfo(name, design)</p>
+<dl class="method">
+<dt id="braviz.readAndFilter.read_spm.ContrastInfo.__getnewargs__">
+<tt class="descname">__getnewargs__</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.readAndFilter.read_spm.ContrastInfo.__getnewargs__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return self as a plain tuple.  Used by copy and pickle.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.readAndFilter.read_spm.ContrastInfo.__getstate__">
+<tt class="descname">__getstate__</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.readAndFilter.read_spm.ContrastInfo.__getstate__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exclude the OrderedDict from pickling</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.readAndFilter.read_spm.ContrastInfo.__repr__">
+<tt class="descname">__repr__</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.readAndFilter.read_spm.ContrastInfo.__repr__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a nicely formatted representation string</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.readAndFilter.read_spm.ContrastInfo.design">
+<tt class="descname">design</tt><a class="headerlink" href="#braviz.readAndFilter.read_spm.ContrastInfo.design" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.readAndFilter.read_spm.ContrastInfo.name">
+<tt class="descname">name</tt><a class="headerlink" href="#braviz.readAndFilter.read_spm.ContrastInfo.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.readAndFilter.read_spm.SpmFileReader">
+<em class="property">class </em><tt class="descname">SpmFileReader</tt><big>(</big><em>spm_file_path</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.read_spm.SpmFileReader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper class to read data from an SPM file</p>
+<dl class="attribute">
+<dt id="braviz.readAndFilter.read_spm.SpmFileReader.conditions">
+<tt class="descname">conditions</tt><a class="headerlink" href="#braviz.readAndFilter.read_spm.SpmFileReader.conditions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Experimental conditions in the paradigm</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A named tuple (see <a class="reference external" href="http://docs.python.org/2/library/collections.html#collections.namedtuple" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">collections.namedtuple()</span></tt></a>) with condition name as first component (str),
+onsets (numpy.ndarray) as second argument, and durations (numpy.array) as third argument</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.readAndFilter.read_spm.SpmFileReader.contrasts">
+<tt class="descname">contrasts</tt><a class="headerlink" href="#braviz.readAndFilter.read_spm.SpmFileReader.contrasts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Existing contrast design arrays</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A named tuple (see <a class="reference external" href="http://docs.python.org/2/library/collections.html#collections.namedtuple" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">collections.namedtuple()</span></tt></a>) with contrast name as first component (str), and
+the contrast design array as second component (numpy.array)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.readAndFilter.read_spm.SpmFileReader.get_condition_block">
+<tt class="descname">get_condition_block</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.read_spm.SpmFileReader.get_condition_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a block signal representing a condition</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><tt class="xref py py-class docutils literal"><span class="pre">numpy.ndarray</span></tt></a> of the same length as the one returned by <a class="reference internal" href="#braviz.readAndFilter.read_spm.SpmFileReader.get_time_vector" title="braviz.readAndFilter.read_spm.SpmFileReader.get_time_vector"><tt class="xref py py-meth docutils literal"><span class="pre">get_time_vector()</span></tt></a>, it will be 1 when
+the condition is active, and 0 otherwise</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.readAndFilter.read_spm.SpmFileReader.get_contrast_names">
+<tt class="descname">get_contrast_names</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.readAndFilter.read_spm.SpmFileReader.get_contrast_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary with contrast names</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A dictionary with contrast indexes (starting at 1) for keys and contrast names for values</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.readAndFilter.read_spm.SpmFileReader.get_time_vector">
+<tt class="descname">get_time_vector</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.readAndFilter.read_spm.SpmFileReader.get_time_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a vector containing time values for the duration of the experiment</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><tt class="xref py py-class docutils literal"><span class="pre">numpy.ndarray</span></tt></a> with time values across the duration of the experiment</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.readAndFilter.read_spm.SpmFileReader.n_scans">
+<tt class="descname">n_scans</tt><a class="headerlink" href="#braviz.readAndFilter.read_spm.SpmFileReader.n_scans" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of scans in the experiment</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.readAndFilter.read_spm.SpmFileReader.tr">
+<tt class="descname">tr</tt><a class="headerlink" href="#braviz.readAndFilter.read_spm.SpmFileReader.tr" title="Permalink to this definition">¶</a></dt>
+<dd><p>The TR time in the experiment</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.read_spm.get_contrasts_dict">
+<tt class="descname">get_contrasts_dict</tt><big>(</big><em>spm_file_path</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.read_spm.get_contrasts_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse information about existing contrasts from an spm file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>spm_file_path</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Path to <tt class="docutils literal"><span class="pre">spm.mat</span></tt> file</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A dictionary with contrast indexes (starting at 1) for keys, and contrast names for values</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-braviz.readAndFilter.readDartelTransform">
+<span id="readdarteltransform"></span><h2>readDartelTransform<a class="headerlink" href="#module-braviz.readAndFilter.readDartelTransform" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="braviz.readAndFilter.readDartelTransform.check_matrix">
+<tt class="descname">check_matrix</tt><big>(</big><em>m</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.readDartelTransform.check_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>check that the affine matrix contains only spacing and translation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>m</strong> (<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><em>numpy.ndarray</em></a>) &#8211; 4x4 Matrix</td>
+</tr>
+</tbody>
+</table>
+<p>Returns: <tt class="docutils literal"><span class="pre">True</span></tt> if the components other than the diagonal and the last column are zero, <tt class="docutils literal"><span class="pre">False</span></tt> otherwise</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.readDartelTransform.dartel2GridTransform">
+<tt class="descname">dartel2GridTransform</tt><big>(</big><em>y_file</em>, <em>assume_general_matrix=False</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.readDartelTransform.dartel2GridTransform" title="Permalink to this definition">¶</a></dt>
+<dd><p>reads a dartel nifti file from disk and returns a vtkTransform, this function is very slow</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>y_file</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; path to the nifti warp file</li>
+<li><strong>assume_general_matrix</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If True it will be assumed that the matrix contains more than origin and spacing</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">vtkGridTransform if the matrix is only spacing and origin, otherwise a vtkGeneralTransform which include the
+full original affine transform.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.readDartelTransform.dartel2GridTransform_cached">
+<tt class="descname">dartel2GridTransform_cached</tt><big>(</big><em>y_file</em>, <em>cache_key</em>, <em>reader</em>, <em>assume_general_matrix=False</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.readDartelTransform.dartel2GridTransform_cached" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cached version of <a class="reference internal" href="#braviz.readAndFilter.readDartelTransform.dartel2GridTransform" title="braviz.readAndFilter.readDartelTransform.dartel2GridTransform"><tt class="xref py py-func docutils literal"><span class="pre">dartel2GridTransform()</span></tt></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>y_file</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Path to nifti warp file</li>
+<li><strong>cache_key</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Key to use for saving and reading from cache</li>
+<li><strong>reader</strong> (<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><tt class="xref py py-class docutils literal"><span class="pre">BaseReader</span></tt></a>) &#8211; Reader object to use for accessing cache</li>
+<li><strong>assume_general_matrix</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If True it will be assumed that the matrix contains more than origin and spacing</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">vtkGridTransform if the matrix is only spacing and origin, otherwise a vtkGeneralTransform which include the
+full original affine transform.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-braviz.readAndFilter.surfer_input">
+<span id="surfer-input"></span><h2>surfer_input<a class="headerlink" href="#module-braviz.readAndFilter.surfer_input" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="braviz.readAndFilter.surfer_input.addScalars">
+<tt class="descname">addScalars</tt><big>(</big><em>surf_polydata</em>, <em>scalars</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.surfer_input.addScalars" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add scalars to a vtkPolyData representation of a freesurfer surface</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>surf_polydata</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkPolyData.html" title="See on vtk documentation"><em>vtkPolyData</em></a>) &#8211; freesurfer surface</li>
+<li><strong>scalars</strong> (<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><em>numpy.ndarray</em></a>) &#8211; scalars belonging to the same freesurfer surface (same number of points)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">vtkPolyData with scalar data</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.surfer_input.apply_offset">
+<tt class="descname">apply_offset</tt><big>(</big><em>coords</em>, <em>offset</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.surfer_input.apply_offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>applies an offset to all the coordinates in coords</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>coords</strong> (<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><em>numpy.ndarray</em></a>) &#8211; nx3 coordinates array</td>
+</tr>
+</tbody>
+</table>
+<p>Returns: nx3 coordinates array of translated coordinates</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.surfer_input.create_polydata">
+<tt class="descname">create_polydata</tt><big>(</big><em>coords</em>, <em>faces</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.surfer_input.create_polydata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a polydata using the coords and faces array (must contain only triangles)</p>
+<p>See <a class="reference internal" href="#braviz.readAndFilter.surfer_input.read_surface" title="braviz.readAndFilter.surfer_input.read_surface"><tt class="xref py py-func docutils literal"><span class="pre">read_surface()</span></tt></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>coords</strong> (<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><em>numpy.ndarray</em></a>) &#8211; Points coordinates array</li>
+<li><strong>faces</strong> (<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><em>numpy.ndarray</em></a>) &#8211; Faces array</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">vtkPolyData with same points and faces</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.surfer_input.getColorTransferLUT">
+<tt class="descname">getColorTransferLUT</tt><big>(</big><em>start</em>, <em>end</em>, <em>midpoint</em>, <em>sharpness</em>, <em>color0</em>, <em>color1</em>, <em>color2=None</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.surfer_input.getColorTransferLUT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a vtkLookUpTable from color0 to color1 or from color0 to color2 passing by color1</p>
+<p>The domain of the LUT will be (start,end)
+midpoint and sharpness can be used to change the characteristics of the function between colors
+(see <a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkPiecewiseFunction.html#details">vtkPiecewiseFunction</a>)
+if three colors are used, the resulting function will be symmetric, this means the actual midpoint for the second half will be 1-midpoint</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; first value in the lookuptable domain</li>
+<li><strong>end</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; last value in the lookuptable domain</li>
+<li><strong>midpoint</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Midpoint for function between colors</li>
+<li><strong>sharpness</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Sharpness for function between colors</li>
+<li><strong>color0</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; First color in the lookuptable</li>
+<li><strong>color1</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; Second color in the lookuptable</li>
+<li><strong>color2</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; Optional, third color in the lookuptable</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">vtkColorTransferFunction</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.surfer_input.get_free_surfer_lut">
+<tt class="descname">get_free_surfer_lut</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.surfer_input.get_free_surfer_lut" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get standard freesurfer lookup tables</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name of table, available tables are
+- curv / avg_curv
+- area
+- thickness
+- volume
+- sulc</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">vtkColorTransferFunction</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.surfer_input.read_annot">
+<tt class="descname">read_annot</tt><big>(</big><em>filepath</em>, <em>orig_ids=False</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.surfer_input.read_annot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read in a Freesurfer annotation from a .annot file.</p>
+<p><em>copied directly from pysurfer.io</em></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>filepath</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Path to annotation file</li>
+<li><strong>orig_ids</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; Whether to return the vertex ids as stored in the annotation
+file or the positional colortable ids</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>labels</strong> (<em>n_vtx numpy.ndarray</em>) &#8211;
+Annotation id at each vertex</li>
+<li><strong>ctab</strong> (<em>numpy.ndarray</em>) &#8211;
+RGBA + label id colortable array</li>
+<li><strong>names</strong> (<em>numpy.ndarray</em>) &#8211;
+Array of region names as stored in the annot file</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.surfer_input.read_morph_data">
+<tt class="descname">read_morph_data</tt><big>(</big><em>filepath</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.surfer_input.read_morph_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a Freesurfer morphometry data file.</p>
+<p><em>copied directly from pysurfer.io</em></p>
+<p>This function reads in what Freesurfer internally calls &#8220;curv&#8221; file types,
+(e.g. ?h. curv, ?h.thickness), but as that has the potential to cause
+confusion where &#8220;curv&#8221; also refers to the surface curvature values,
+we refer to these files as &#8220;morphometry&#8221; files with PySurfer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filepath</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Path to morphometry file</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>curv</strong> &#8211;
+Vector representation of surface morpometry values</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.surfer_input.read_surface">
+<tt class="descname">read_surface</tt><big>(</big><em>filepath</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.surfer_input.read_surface" title="Permalink to this definition">¶</a></dt>
+<dd><p>reads a freesurfer wireframe structure</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filepath</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Path to freesurfer surface file</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">(coords,faces,geom), where coords are the coordinates of each point, faces are the indeces of points in each
+face, and geom is a dictionary containing <tt class="docutils literal"><span class="pre">['cras',</span> <span class="pre">'volume',</span>&nbsp; <span class="pre">'voxelsize',</span>&nbsp; <span class="pre">'xras',</span>&nbsp; <span class="pre">'yras',</span>&nbsp; <span class="pre">'zras']</span></tt> which
+can be used to determine the affine transform required to move the surface to the MRI space</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.surfer_input.surfLUT2VTK">
+<tt class="descname">surfLUT2VTK</tt><big>(</big><em>ctab</em>, <em>names=None</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.surfer_input.surfLUT2VTK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform freesurfer lookuptable into a vtkLookupTable</p>
+<p>The index of the row will be used as label. This method is designed
+to work with the ctab array returned by read_annot; labels may be used to annotate values</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ctab</strong> (<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><em>numpy.ndarray</em></a>) &#8211; 2darray with R G B [A] [X] columns.</li>
+<li><strong>names</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; Same length as ctab, add annotations to the lookuptable</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Retruns:</dt>
+<dd>vtkLookupTable with colors and annotations.</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.surfer_input.surface2vtkPolyData">
+<tt class="descname">surface2vtkPolyData</tt><big>(</big><em>surf_file</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.surfer_input.surface2vtkPolyData" title="Permalink to this definition">¶</a></dt>
+<dd><p>read free surfer surface and transform to poly data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>surf_file</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Path to freesurfer surface file</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">vtkPolyData representation of the surface</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-braviz.readAndFilter.transforms">
+<span id="transforms"></span><h2>transforms<a class="headerlink" href="#module-braviz.readAndFilter.transforms" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="braviz.readAndFilter.transforms.applyTransform">
+<tt class="descname">applyTransform</tt><big>(</big><em>img</em>, <em>transform</em>, <em>origin2=None</em>, <em>dimension2=None</em>, <em>spacing2=None</em>, <em>interpolate=True</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.transforms.applyTransform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply a linear transform to a grid which afterwards resamples the image.</p>
+<p>Be sure to pass the inverse of the transform you would use to transform a point.
+Accepts linear and non linear transforms</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>img</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkImageData.html" title="See on vtk documentation"><em>vtkImageData</em></a>) &#8211; Image</li>
+<li><strong>transform</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkTransform.html" title="See on vtk documentation"><em>vtkTransform</em></a>) &#8211; Linear or nonlinear transform</li>
+<li><strong>origin2</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; If not None, the origin for the output image</li>
+<li><strong>dimension2</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; If not None, the dimension for the output image</li>
+<li><strong>spacing2</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; If not None, the spacing for the output image</li>
+<li><strong>interpolate</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If True voxel values are interpolated, if <tt class="docutils literal"><span class="pre">False</span></tt> the nearest neighbour value is
+used. This is important for label maps.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Resampled vtkImageData</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.transforms.numpy2vtkMatrix">
+<tt class="descname">numpy2vtkMatrix</tt><big>(</big><em>M</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.transforms.numpy2vtkMatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform a 4x4 numpy array into vtk4x4 matrix</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>M</strong> (<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><em>numpy.ndarray</em></a>) &#8211; Numpy 4x4 array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">vtk4x4Matrix</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.transforms.readFlirtMatrix">
+<tt class="descname">readFlirtMatrix</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.transforms.readFlirtMatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>read a matrix in fsl flirt format</p>
+<p>In order to apply this transformation information about
+the source and ref images is also requierd. The function returns
+the effective transform that can be applied to point data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>file_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Path to fsl transform</li>
+<li><strong>src_img_file</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Path to the image specifying the source image for the transform</li>
+<li><strong>ref_img_file</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Path to the image specifying the destination image for the transform</li>
+<li><strong>path</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Common path to all files, it is prepended to the other arguments</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Numpy 4x4 matrix</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.transforms.readFreeSurferTransform">
+<tt class="descname">readFreeSurferTransform</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.transforms.readFreeSurferTransform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads a freeSurfer transform file and returns a numpy array</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Path to freesurfer transform</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">4x4 numpy array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.transforms.transformGeneralData">
+<tt class="descname">transformGeneralData</tt><big>(</big><em>data</em>, <em>transform</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.transforms.transformGeneralData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use a transform or a 4x4Matrix to transform vtkPointData or poly data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> &#8211; Data to apply the transform to</li>
+<li><strong>transform</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkTransform.html" title="See on vtk documentation"><em>vtkTransform</em></a>) &#8211; Transform to be applied</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Transformed data</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.transforms.transformPolyData">
+<tt class="descname">transformPolyData</tt><big>(</big><em>poly_data</em>, <em>transform</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.transforms.transformPolyData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Kept for compatibility, it is an alias to <a class="reference internal" href="#braviz.readAndFilter.transforms.transformGeneralData" title="braviz.readAndFilter.transforms.transformGeneralData"><tt class="xref py py-func docutils literal"><span class="pre">transformGeneralData()</span></tt></a></p>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 3.0b: </span>Use <a class="reference internal" href="#braviz.readAndFilter.transforms.transformGeneralData" title="braviz.readAndFilter.transforms.transformGeneralData"><tt class="xref py py-func docutils literal"><span class="pre">transformGeneralData()</span></tt></a></p>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+          <a href="configuring.html" title="Configuring"
+             accesskey="P">previous</a> |
+          <a href="visualization.html" title="Visualization"
+             accesskey="N">next</a> |
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a>
+          
+            <br/>
+            <a href="../_sources/library/read_low_level.txt"
+               rel="nofollow">Show Source</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

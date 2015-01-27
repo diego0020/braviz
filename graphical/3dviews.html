@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Navigating 3d views &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.0b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Braviz Documentation" href="../index.html" />
+    <link rel="up" title="Braviz Interface Elements" href="general.html" />
+    <link rel="next" title="Working with variables" href="variables.html" />
+    <link rel="prev" title="Braviz Interface Elements" href="general.html" /> 
+  </head>
+  <body>
+    
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html"> Braviz Documentation </a></div>
+          <nav class="parents">
+              <ol>
+        <li><a href="../index.html"> Home </a> &raquo;</li>
+          <li><a href="index.html" >Visual Analytics with Braviz</a> &raquo;</li>
+          <li><a href="general.html"  accesskey="U" >Braviz Interface Elements</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Navigating 3d views</a><ul>
+<li><a class="reference internal" href="#rotating">Rotating</a></li>
+<li><a class="reference internal" href="#zooming">Zooming</a></li>
+<li><a class="reference internal" href="#panning">Panning</a></li>
+<li><a class="reference internal" href="#querying-images-or-surfaces">Querying images or surfaces</a></li>
+<li><a class="reference internal" href="#changing-the-image-plane">Changing the image plane</a></li>
+<li><a class="reference internal" href="#adjusting-window-and-level">Adjusting window and level</a></li>
+<li><a class="reference internal" href="#reset-camera">Reset camera</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="general.html"
+                        title="previous chapter">Braviz Interface Elements</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="variables.html"
+                        title="next chapter">Working with variables</a></p>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="navigating-3d-views">
+<h1>Navigating 3d views<a class="headerlink" href="#navigating-3d-views" title="Permalink to this headline">¶</a></h1>
+<p>Braviz uses <a class="reference external" href="http://www.vtk.org">vtk</a> for displaying 3d data. In particular we use an interaction style called
+<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkInteractorStyleTrackballCamera.html#details">trackball camera</a>.
+The mouse is used to control the camera which moves on a sphere around the view.</p>
+<div class="section" id="rotating">
+<h2>Rotating<a class="headerlink" href="#rotating" title="Permalink to this headline">¶</a></h2>
+<a class="reference internal image-reference" href="../_images/sphere_left_top.svg"><div align="center" class="align-center"><img alt="Left and top rotations" src="../_images/sphere_left_top.svg" width="50%" /></div>
+</a>
+<p>To rotate the camera to the left or to the right, or to the top or the bottom; click and hold the left mouse button, outside from any object, and
+drag it.</p>
+<a class="reference internal image-reference" href="../_images/sphere_plain.svg"><div align="center" class="align-center"><img alt="Rotating the camera around its axis" src="../_images/sphere_plain.svg" width="50%" /></div>
+</a>
+<p>To spin the camera around its own axis, press <tt class="docutils literal"><span class="pre">ctrl</span></tt> while dragging the mouse. Remember that you must start the action
+away from any image or surface.</p>
+</div>
+<div class="section" id="zooming">
+<h2>Zooming<a class="headerlink" href="#zooming" title="Permalink to this headline">¶</a></h2>
+<p>Moving the camera further or closer to the scene.</p>
+<blockquote>
+<div><ul class="simple">
+<li>Spin the mouse wheel</li>
+<li>On some touchpads you can do a <em>pinch</em> gesture</li>
+<li>Right click outside any object and drag the mouse up or down</li>
+<li>Hold <tt class="docutils literal"><span class="pre">ctrl+shift</span></tt> and drag with the left mouse button</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="panning">
+<h2>Panning<a class="headerlink" href="#panning" title="Permalink to this headline">¶</a></h2>
+<p>To move the camera parallel to the view plane without changing its direction</p>
+<blockquote>
+<div><ul class="simple">
+<li>Press the middel mouse button (the wheel) and drag the mouse.</li>
+<li>Hold <tt class="docutils literal"><span class="pre">shift</span></tt> and drag with the left mouse button.</li>
+</ul>
+</div></blockquote>
+<p>As always the action must start away from any image or surface.</p>
+</div>
+<div class="section" id="querying-images-or-surfaces">
+<h2>Querying images or surfaces<a class="headerlink" href="#querying-images-or-surfaces" title="Permalink to this headline">¶</a></h2>
+<a class="reference internal image-reference" href="../_images/image_picking.png"><img alt="Querying image location" class="align-center" src="../_images/image_picking.png" style="width: 50%;" /></a>
+<p>When you click and hold on an image, a red cursor will appear. The lower left corner will show
+the <em>voxel</em> coordinates of the point, and the value of the image at that point,
+the lower right corner will contain the <em>mm.</em> coordinates of the point and the label of the freesurfer
+segmentation at that location.</p>
+<a class="reference internal image-reference" href="../_images/surface_picking.png"><img alt="Querying surface location" class="align-center" src="../_images/surface_picking.png" style="width: 50%;" /></a>
+<p>Clicking and holding on a surface will make a red cone appear. This cone allows you to query for scalar
+values at specific positions on the surface. The lower right corner will show the value at the cone tip.</p>
+</div>
+<div class="section" id="changing-the-image-plane">
+<h2>Changing the image plane<a class="headerlink" href="#changing-the-image-plane" title="Permalink to this headline">¶</a></h2>
+<p>If you have a three button mouse you can change the current image plane by pressing the middle button (the wheel),
+holding, and dragging. The current slice will be shown on the lower right corner.</p>
+<a class="reference internal image-reference" href="../_images/changing_slice.png"><img alt="Changing image slice" class="align-center" src="../_images/changing_slice.png" style="width: 50%;" /></a>
+</div>
+<div class="section" id="adjusting-window-and-level">
+<h2>Adjusting window and level<a class="headerlink" href="#adjusting-window-and-level" title="Permalink to this headline">¶</a></h2>
+<p>For most image modalities you can adjust the window and level by right-clicking on the image, holding and dragging.
+The current window and level values are shown on the lower left corner.</p>
+<a class="reference internal image-reference" href="../_images/window_level.png"><img alt="Adjusting window and level" class="align-center" src="../_images/window_level.png" style="width: 50%;" /></a>
+</div>
+<div class="section" id="reset-camera">
+<h2>Reset camera<a class="headerlink" href="#reset-camera" title="Permalink to this headline">¶</a></h2>
+<p>Click on the 3d view and press the <tt class="docutils literal"><span class="pre">r</span></tt> key to reset the camera.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+                
+                <a href="general.html" title="Braviz Interface Elements" accesskey="P">Previous</a>
+                
+
+                
+                 |
+                
+
+                
+                <a href="variables.html" title="Working with variables" accesskey="N"> Next</a>
+                
+
+          
+            <br/>
+            <a href="../_sources/graphical/3dviews.txt"
+               rel="nofollow">Show Source</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

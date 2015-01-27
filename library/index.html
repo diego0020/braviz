@@ -1,0 +1,324 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Braviz library &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.0b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Braviz Documentation" href="../index.html" />
+    <link rel="next" title="Read And Filter" href="read_and_filter.html" />
+    <link rel="prev" title="Exporting variables" href="../graphical/export_csv.html" /> 
+  </head>
+  <body>
+    
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html"> Braviz Documentation </a></div>
+          <nav class="parents">
+              <ol>
+        <li><a href="../index.html"> Home </a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Braviz library</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#geometric-and-tabular-data">Geometric and Tabular Data</a></li>
+<li><a class="reference internal" href="#code-samples">Code Samples</a></li>
+<li><a class="reference internal" href="#guides">Guides</a><ul>
+<li><a class="reference internal" href="#interactive-work-and-simple-scripts">Interactive work and simple scripts</a></li>
+<li><a class="reference internal" href="#creating-a-new-qt-application">Creating a new Qt Application</a></li>
+<li><a class="reference internal" href="#creating-a-new-web-application">Creating a new Web Application</a></li>
+<li><a class="reference internal" href="#adapting-to-a-new-project">Adapting to a new project</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#contributing">Contributing</a><ul>
+<li><a class="reference internal" href="#issues">Issues</a></li>
+<li><a class="reference internal" href="#repository">Repository</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../graphical/export_csv.html"
+                        title="previous chapter">Exporting variables</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="read_and_filter.html"
+                        title="next chapter">Read And Filter</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="braviz-library">
+<h1>Braviz library<a class="headerlink" href="#braviz-library" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The braviz library aims to simplify the creation of visual analysis tools for brain data. It abstracts common tasks
+required in such tools so that developers can focus on providing appropriate interfaces and visualizations for a
+given task.</p>
+<p>The library is organized into the following modules</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="read_and_filter.html">Read And Filter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="read_and_filter.html#reading-geometric-data">Reading geometric data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="read_and_filter.html#reading-tabular-data">Reading tabular data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="read_and_filter.html#read-system-configuration">Read system configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="read_and_filter.html#low-level-functions">Low level functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="read_and_filter.html#access-current-project-data">Access current project data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="visualization.html">Visualization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="visualization.html#d-geometry-visualization">3D Geometry Visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualization.html#statistical-visualization">Statistical Visualization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="interaction.html">Interaction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="interaction.html#qt-graphical-user-interfaces">Qt Graphical User Interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interaction.html#applications-communication">Applications communication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interaction.html#r-statistical-processing">R Statistical processing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interaction.html#structures-processing">Structures processing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="applications.html">Applications</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="applications.html#the-braviz-menu">The braviz menu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="applications.html#graphical-applications">Graphical applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="applications.html#module-braviz.applications.parse_spss_file">Command line applications</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>The <a class="reference internal" href="read_and_filter.html"><em>Read And Filter</em></a> module simplifies reading and manipulating geometric and tabular data.
+The <a class="reference internal" href="visualization.html"><em>Visualization</em></a> module provides common geometric and spatial data visualization.
+Finally the <a class="reference internal" href="interaction.html"><em>Interaction</em></a> module contains tools for creating user interfaces, and common functions found in
+visual analysis tasks.</p>
+<p>Using braviz it is possible to create graphical applications targeted at domain experts, which can be easily extended
+to new data. In order to adapt the system to a new data-set a new <a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><tt class="xref py py-class docutils literal"><span class="pre">BaseReader</span></tt></a>
+subclass should be created. This class will be the only one that deals with the underlying file-system which contains
+the project&#8217;s geometric data. Once this class is ready, all of the already built applications will work with the new
+data-set.</p>
+<a class="reference internal image-reference" href="../_images/architecture.svg"><div align="center" class="align-center"><img alt="Braviz architecture" src="../_images/architecture.svg" width="50%" /></div>
+</a>
+</div>
+<div class="section" id="geometric-and-tabular-data">
+<h2>Geometric and Tabular Data<a class="headerlink" href="#geometric-and-tabular-data" title="Permalink to this headline">¶</a></h2>
+<p>Geometric data is what is usually found in <em>scientific visualization</em>. It has coordinates which maps places in the real
+world. In brain studies it usually  captured with an MRI machine and processed using several tools. Specifically
+the current version deals with</p>
+<ul class="simple">
+<li>Structural MRI images</li>
+<li>DWI Images</li>
+<li>Tractography</li>
+<li>fMRI</li>
+<li>Segmentations and reconstructions</li>
+<li>Affine transforms</li>
+<li>Nonlinear warps</li>
+</ul>
+<p>The <a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><tt class="xref py py-class docutils literal"><span class="pre">BaseReader</span></tt></a> class provides a convenient way of accessing this data for
+the different subjects in the study, automatically applying the necessary geometrical transformations.</p>
+<p>Tabular data is commonly found in statistics and <em>infoviz</em>. It can be easily stored in tables and databases. In brain
+studies it can be demographic and clinical information as well as results in neuro-psychological tests or other
+performance indicators.</p>
+<p>Usually both kinds of data are analyzed and manipulated with different tools. Braviz attempts to integrate them so that
+patterns and relationships involving function and structure of the brain can be found.</p>
+</div>
+<div class="section" id="code-samples">
+<h2>Code Samples<a class="headerlink" href="#code-samples" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">braviz</span>
+<span class="kn">from</span> <span class="nn">braviz.visualization.simple_vtk</span> <span class="kn">import</span> <span class="n">SimpleVtkViewer</span>
+
+<span class="n">reader</span> <span class="o">=</span> <span class="n">braviz</span><span class="o">.</span><span class="n">readAndFilter</span><span class="o">.</span><span class="n">BravizAutoReader</span><span class="p">()</span>
+<span class="n">fibers</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;fibers&quot;</span><span class="p">,</span><span class="mi">119</span><span class="p">,</span><span class="n">space</span><span class="o">=</span><span class="s">&quot;Talairach&quot;</span><span class="p">,</span>
+                    <span class="n">waypoint</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;CC_Anterior&quot;</span><span class="p">,</span><span class="s">&quot;CC_Mid_Anterior&quot;</span><span class="p">],</span><span class="n">operation</span><span class="o">=</span><span class="s">&quot;or&quot;</span><span class="p">)</span>
+<span class="n">mri</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;MRI&quot;</span><span class="p">,</span><span class="mi">119</span><span class="p">,</span><span class="n">space</span><span class="o">=</span><span class="s">&quot;Talairach&quot;</span><span class="p">,</span><span class="n">format</span><span class="o">=</span><span class="s">&quot;vtk&quot;</span><span class="p">)</span>
+<span class="n">viewer</span> <span class="o">=</span> <span class="n">SimpleVtkViewer</span><span class="p">()</span>
+<span class="n">viewer</span><span class="o">.</span><span class="n">addImg</span><span class="p">(</span><span class="n">mri</span><span class="p">)</span>
+<span class="n">viewer</span><span class="o">.</span><span class="n">addPolyData</span><span class="p">(</span><span class="n">fibers</span><span class="p">)</span>
+<span class="n">viewer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The code above displays the fibers that cross the anterior part of the  corpus-callosum of subject <cite>119</cite> together with its structural
+MRI Image, in the Talairach coordinate systems. It produces the following output in a vtkWindow</p>
+<a class="reference internal image-reference" href="../_images/vtk_minimal.png"><img alt="example output" class="align-center" src="../_images/vtk_minimal.png" style="width: 80%;" /></a>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">braviz.readAndFilter</span> <span class="kn">import</span> <span class="n">tabular_data</span>
+<span class="kn">from</span> <span class="nn">braviz.visualization.matplotlib_qt_widget</span> <span class="kn">import</span> <span class="n">MatplotWidget</span>
+<span class="kn">from</span> <span class="nn">PyQt4</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+
+<span class="n">app</span><span class="o">=</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="p">([])</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">tabular_data</span><span class="o">.</span><span class="n">get_data_frame_by_name</span><span class="p">([</span><span class="s">&quot;BIRTH_peso5&quot;</span><span class="p">,</span><span class="s">&quot;BIRTH_ballar5&quot;</span><span class="p">])</span>
+<span class="n">mp</span> <span class="o">=</span> <span class="n">MatplotWidget</span><span class="p">()</span>
+<span class="n">mp</span><span class="o">.</span><span class="n">draw_scatter</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="s">&quot;BIRTH_peso5&quot;</span><span class="p">,</span><span class="s">&quot;BIRTH_ballar5&quot;</span><span class="p">)</span>
+<span class="n">mp</span><span class="o">.</span><span class="n">highlight_id</span><span class="p">(</span><span class="mi">119</span><span class="p">)</span>
+<span class="n">mp</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The code above reads two variables from the database, creates a scatter plot and highlights the position of subject <cite>119</cite>.</p>
+<a class="reference internal image-reference" href="../_images/tab_minimal.png"><img alt="example output" class="align-center" src="../_images/tab_minimal.png" style="width: 80%;" /></a>
+<p>This two pieces of code provide the most simple way of combining tabular and geometrical data. For more advanced
+examples look at gui user manual.</p>
+</div>
+<div class="section" id="guides">
+<h2>Guides<a class="headerlink" href="#guides" title="Permalink to this headline">¶</a></h2>
+<p>The following guides are meant to help you find your way around the API and see how the different components can
+be connected.</p>
+<div class="section" id="interactive-work-and-simple-scripts">
+<h3>Interactive work and simple scripts<a class="headerlink" href="#interactive-work-and-simple-scripts" title="Permalink to this headline">¶</a></h3>
+<p>Using braviz from a python terminal and creating simple scripts.</p>
+</div>
+<div class="section" id="creating-a-new-qt-application">
+<h3>Creating a new Qt Application<a class="headerlink" href="#creating-a-new-qt-application" title="Permalink to this headline">¶</a></h3>
+<p>Building a new Qt Application and integrating it with the rest of the system.</p>
+</div>
+<div class="section" id="creating-a-new-web-application">
+<h3>Creating a new Web Application<a class="headerlink" href="#creating-a-new-web-application" title="Permalink to this headline">¶</a></h3>
+<p>Implementing a web visualization based on D3.</p>
+</div>
+<div class="section" id="adapting-to-a-new-project">
+<h3>Adapting to a new project<a class="headerlink" href="#adapting-to-a-new-project" title="Permalink to this headline">¶</a></h3>
+<p>Configuring braviz to work with a new dataset.</p>
+</div>
+</div>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p>The focus of Braviz is providing useful interactive visualizations for domain experts. As such it can be considered
+a high level library, focusing on the end user. For calculations, processing, data access and visualization;
+it relies in the following projects</p>
+<ul class="simple">
+<li><a class="reference external" href="http://matplotlib.org/">matplotlib</a></li>
+<li><a class="reference external" href="http://nipy.org/nibabel/">nibabel</a></li>
+<li><a class="reference external" href="http://www.numpy.org/">numpy</a></li>
+<li><a class="reference external" href="http://pandas.pydata.org/">pandas</a></li>
+<li><a class="reference external" href="https://pypi.python.org/pypi/psutil">psutil</a></li>
+<li><a class="reference external" href="http://www.riverbankcomputing.co.uk/software/pyqt/intro">PyQt4</a></li>
+<li><a class="reference external" href="http://rpy.sourceforge.net/">rpy2</a></li>
+<li><a class="reference external" href="http://www.scipy.org/">scipy</a></li>
+<li><a class="reference external" href="http://stanford.edu/~mwaskom/software/seaborn/">seaborn</a></li>
+<li><a class="reference external" href="http://www.tornadoweb.org/en/stable/">tornado</a></li>
+<li><a class="reference external" href="http://vtk.org/">vtk</a></li>
+</ul>
+<p>Thanks a lot to all for making braviz possible.</p>
+</div>
+<div class="section" id="contributing">
+<h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="issues">
+<h3>Issues<a class="headerlink" href="#issues" title="Permalink to this headline">¶</a></h3>
+<p>Please report bugs, issues and ideas for improvements in the
+<a class="reference external" href="https://bitbucket.org/dieg0020/braviz/issues">issue tracker</a></p>
+</div>
+<div class="section" id="repository">
+<h3>Repository<a class="headerlink" href="#repository" title="Permalink to this headline">¶</a></h3>
+<p>You may find the source code and propose improvements at the
+<a class="reference external" href="https://bitbucket.org/dieg0020/braviz">mercurial repository</a></p>
+</div>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="../genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="../py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="../search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+          <a href="../graphical/export_csv.html" title="Exporting variables"
+             accesskey="P">previous</a> |
+          <a href="read_and_filter.html" title="Read And Filter"
+             accesskey="N">next</a> |
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a>
+          
+            <br/>
+            <a href="../_sources/library/index.txt"
+               rel="nofollow">Show Source</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

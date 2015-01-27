@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Braviz Data Base &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.0b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Braviz Documentation" href="../index.html" />
+    <link rel="up" title="Read And Filter" href="read_and_filter.html" />
+    <link rel="next" title="Tabular Data" href="tabular_data.html" />
+    <link rel="prev" title="Reading geometric data" href="reader.html" /> 
+  </head>
+  <body>
+    
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html"> Braviz Documentation </a></div>
+          <nav class="parents">
+              <ol>
+        <li><a href="../index.html"> Home </a> &raquo;</li>
+          <li><a href="index.html" >Braviz library</a> &raquo;</li>
+          <li><a href="read_and_filter.html"  accesskey="U" >Read And Filter</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Braviz Data Base</a><ul>
+<li><a class="reference internal" href="#variables">Variables</a></li>
+<li><a class="reference internal" href="#user-data">User Data</a></li>
+<li><a class="reference internal" href="#geometric-data">Geometric Data</a></li>
+<li><a class="reference internal" href="#fiber-bundles">Fiber Bundles</a></li>
+<li><a class="reference internal" href="#module-braviz.readAndFilter.check_db">Checking db completeness</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="reader.html"
+                        title="previous chapter">Reading geometric data</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="tabular_data.html"
+                        title="next chapter">Tabular Data</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="braviz-data-base">
+<h1>Braviz Data Base<a class="headerlink" href="#braviz-data-base" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<p>Braviz uses a database to store analysis variables, data saved by users, and small geometric structures.
+In the current implementation this database is <a class="reference external" href="slite.org">sqlite</a>, but this may change in the future.
+The database file is located on</p>
+<p><tt class="docutils literal"><span class="pre">&lt;dynaimc</span> <span class="pre">data</span> <span class="pre">root&gt;</span> <span class="pre">/</span> <span class="pre">braviz_data</span> <span class="pre">/</span> <span class="pre">tabular_data.sqlite</span></tt></p>
+<p>where dynamic data root is the path returned by</p>
+<p><a class="reference internal" href="read_and_filter.html#braviz.readAndFilter.braviz_auto_dynamic_data_root" title="braviz.readAndFilter.braviz_auto_dynamic_data_root"><tt class="xref py py-func docutils literal"><span class="pre">braviz.readAndFilter.braviz_auto_dynamic_data_root()</span></tt></a></p>
+<div class="section" id="variables">
+<h2>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h2>
+<p>The module <a class="reference internal" href="tabular_data.html#module-braviz.readAndFilter.tabular_data" title="braviz.readAndFilter.tabular_data"><tt class="xref py py-mod docutils literal"><span class="pre">tabular_data</span></tt></a> contains functions to save and retrieve</p>
+<ul class="simple">
+<li>Nominal and Numerical Variables</li>
+<li>Variables meta-data</li>
+<li>Subjects in the project</li>
+</ul>
+<p>See <a class="reference internal" href="tabular_data.html"><em>Tabular Data</em></a></p>
+</div>
+<div class="section" id="user-data">
+<h2>User Data<a class="headerlink" href="#user-data" title="Permalink to this headline">¶</a></h2>
+<p>The module <a class="reference internal" href="user_data.html#module-braviz.readAndFilter.user_data" title="braviz.readAndFilter.user_data"><tt class="xref py py-mod docutils literal"><span class="pre">user_data</span></tt></a> contains functions to save and retrieve</p>
+<ul class="simple">
+<li>Application state (Scenarios)</li>
+<li>Sub-samples</li>
+<li>Comments on subjects</li>
+</ul>
+<p>See <a class="reference internal" href="user_data.html"><em>User Data</em></a></p>
+</div>
+<div class="section" id="geometric-data">
+<h2>Geometric Data<a class="headerlink" href="#geometric-data" title="Permalink to this headline">¶</a></h2>
+<p>The module <a class="reference internal" href="geom_db.html#module-braviz.readAndFilter.geom_db" title="braviz.readAndFilter.geom_db"><tt class="xref py py-mod docutils literal"><span class="pre">geom_db</span></tt></a> contains functions to save and retrieve geometric structures, currently:</p>
+<ul class="simple">
+<li>Lines</li>
+<li>Spheres</li>
+</ul>
+<p>See <a class="reference internal" href="geom_db.html"><em>Geometric Data</em></a></p>
+</div>
+<div class="section" id="fiber-bundles">
+<h2>Fiber Bundles<a class="headerlink" href="#fiber-bundles" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="bundles_db.html#module-braviz.readAndFilter.bundles_db" title="braviz.readAndFilter.bundles_db"><tt class="xref py py-mod docutils literal"><span class="pre">bundles_db</span></tt></a> contains functions to save and retrieve fiber bundles defined by the user</p>
+<ul class="simple">
+<li>With waypoints</li>
+<li>Logical trees</li>
+</ul>
+<p>See <a class="reference internal" href="bundles_db.html"><em>Bundles Database</em></a></p>
+</div>
+<div class="section" id="module-braviz.readAndFilter.check_db">
+<span id="checking-db-completeness"></span><h2>Checking db completeness<a class="headerlink" href="#module-braviz.readAndFilter.check_db" title="Permalink to this headline">¶</a></h2>
+<p>The module mod:<cite>~braviz.readAndFilter.check_db</cite> contains the following function</p>
+<dl class="function">
+<dt id="braviz.readAndFilter.check_db.verify_db_completeness">
+<tt class="descname">verify_db_completeness</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.readAndFilter.check_db.verify_db_completeness" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verifies that all tables exist in the braviz data base.
+If any are missing they are constructed.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+          <a href="reader.html" title="Reading geometric data"
+             accesskey="P">previous</a> |
+          <a href="tabular_data.html" title="Tabular Data"
+             accesskey="N">next</a> |
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a>
+          
+            <br/>
+            <a href="../_sources/library/braviz_db.txt"
+               rel="nofollow">Show Source</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

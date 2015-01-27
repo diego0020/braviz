@@ -1,0 +1,1631 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Braviz Qt Models &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.0b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Braviz Documentation" href="../index.html" />
+    <link rel="up" title="Interaction" href="interaction.html" />
+    <link rel="next" title="Braviz Qt Widgets" href="qt_widgets.html" />
+    <link rel="prev" title="Braviz Qt Dialogs" href="qt_dialogs.html" /> 
+  </head>
+  <body>
+    
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html"> Braviz Documentation </a></div>
+          <nav class="parents">
+              <ol>
+        <li><a href="../index.html"> Home </a> &raquo;</li>
+          <li><a href="index.html" >Braviz library</a> &raquo;</li>
+          <li><a href="interaction.html"  accesskey="U" >Interaction</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Braviz Qt Models</a><ul>
+<li><a class="reference internal" href="#generic-models">Generic models</a></li>
+<li><a class="reference internal" href="#tabular-data-models">Tabular Data Models</a><ul>
+<li><a class="reference internal" href="#variables">Variables</a></li>
+<li><a class="reference internal" href="#subjects-and-samples">Subjects and samples</a></li>
+<li><a class="reference internal" href="#statistics">Statistics</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#bundles">Bundles</a></li>
+<li><a class="reference internal" href="#scenarios">Scenarios</a></li>
+<li><a class="reference internal" href="#structures-model">Structures model</a><ul>
+<li><a class="reference internal" href="#helper">Helper</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#logic-bundle-model">Logic bundle model</a><ul>
+<li><a class="reference internal" href="#helpers">Helpers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="qt_dialogs.html"
+                        title="previous chapter">Braviz Qt Dialogs</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="qt_widgets.html"
+                        title="next chapter">Braviz Qt Widgets</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-braviz.interaction.qt_models"></span><div class="section" id="braviz-qt-models">
+<h1>Braviz Qt Models<a class="headerlink" href="#braviz-qt-models" title="Permalink to this headline">¶</a></h1>
+<p>This module provides several classes that can be used in the
+<a class="reference external" href="http://qt-project.org/doc/qt-4.8/model-view-programming.html">Model / View</a> Qt pattern,
+so they inherit from <a class="reference external" href="http://qt-project.org/doc/qt-4.8/QAbstractItemModel.html" title="See on Qt documentation"><tt class="xref py py-obj docutils literal"><span class="pre">QAbstractItemModel</span></tt></a>.
+Only methods that are not part of the Qt interface are shown here.</p>
+<div class="section" id="generic-models">
+<h2>Generic models<a class="headerlink" href="#generic-models" title="Permalink to this headline">¶</a></h2>
+<p>This models are designed to be generic, and they don&#8217;t make any assumptions about the data.</p>
+<dl class="class">
+<dt id="braviz.interaction.qt_models.SimpleSetModel">
+<em class="property">class </em><tt class="descname">SimpleSetModel</tt><a class="headerlink" href="#braviz.interaction.qt_models.SimpleSetModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms a python <a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#set" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">set</span></tt></a> into a Qt List Model</p>
+<dl class="method">
+<dt id="braviz.interaction.qt_models.SimpleSetModel.get_elements">
+<tt class="descname">get_elements</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SimpleSetModel.get_elements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a set of the current data</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.SimpleSetModel.set_elements">
+<tt class="descname">set_elements</tt><big>(</big><em>data_set</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SimpleSetModel.set_elements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the current elements in the model</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data_set</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#set" title="(in Python v2.7)"><em>set</em></a>) &#8211; Items to be stored in the model</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.interaction.qt_models.SimpleCheckModel">
+<em class="property">class </em><tt class="descname">SimpleCheckModel</tt><big>(</big><em>choices</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SimpleCheckModel" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="braviz.interaction.qt_models.SimpleCheckModel.get_selected">
+<tt class="descname">get_selected</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SimpleCheckModel.get_selected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a tuple of the checked items</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.SimpleCheckModel.set_selection">
+<tt class="descname">set_selection</tt><big>(</big><em>selection</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SimpleCheckModel.set_selection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the currently selected items to those (and only those) in <em>selection</em></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>selection</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#set" title="(in Python v2.7)"><em>set</em></a>) &#8211; New set of checked items</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="tabular-data-models">
+<h2>Tabular Data Models<a class="headerlink" href="#tabular-data-models" title="Permalink to this headline">¶</a></h2>
+<p>These models are designed to work with the braviz database and to allow users to interact with the data stored
+there through a graphical interface.</p>
+<div class="section" id="variables">
+<h3>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="braviz.interaction.qt_models.VarListModel">
+<em class="property">class </em><tt class="descname">VarListModel</tt><big>(</big><em>parent=None</em>, <em>checkeable=False</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.VarListModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of available variables, optionally with checkboxes</p>
+<p>The list can be filtered to include only variables whose name include a certain pattern</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parent</strong> (<a class="reference external" href="http://qt-project.org/doc/qt-4.8/QObject.html" title="See on Qt documentation"><em>QObject</em></a>) &#8211; Qt parent</li>
+<li><strong>checkeable</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If <tt class="docutils literal"><span class="pre">True</span></tt> the list will be displayed with checkboxes</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="braviz.interaction.qt_models.VarListModel.clear_selection">
+<tt class="descname">clear_selection</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.VarListModel.clear_selection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes checks from all variables</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.VarListModel.select_items">
+<tt class="descname">select_items</tt><big>(</big><em>items_list</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.VarListModel.select_items" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add checks to variables by id</p>
+<p>This will cause checks to appear in the respective boxes when the view is updated</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>items_list</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of variable ids to check</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.VarListModel.select_items_by_name">
+<tt class="descname">select_items_by_name</tt><big>(</big><em>items_list</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.VarListModel.select_items_by_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add variables to the set of checked items</p>
+<p>This will cause checks to appear in the respective boxes when the view is updated</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>items_list</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of variable to check</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.VarListModel.set_highlighted">
+<tt class="descname">set_highlighted</tt><big>(</big><em>highlighted_name=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.VarListModel.set_highlighted" title="Permalink to this definition">¶</a></dt>
+<dd><p>The highlighted item will appear in bold</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>highlighted_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name of a variable to show in bold, use None
+to don&#8217;t highlight any variable</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.VarListModel.update_list">
+<tt class="descname">update_list</tt><big>(</big><em>mask=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.VarListModel.update_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the variable list to show variables whose name match a mask</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mask</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Mask in sql format, the database is configured to be case insensitive. To
+search for variables that include the word <tt class="docutils literal"><span class="pre">&quot;age&quot;</span></tt> use <tt class="docutils literal"><span class="pre">&quot;%age%&quot;</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.interaction.qt_models.SubjectDetails">
+<em class="property">class </em><tt class="descname">SubjectDetails</tt><big>(</big><em>initial_vars=None</em>, <em>initial_subject=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SubjectDetails" title="Permalink to this definition">¶</a></dt>
+<dd><p>A table showing variable values for a single subject</p>
+<p>The first column contains variable names, and the second column its values, together with
+the range of values for the reference population</p>
+<p>The user may drag table rows to change the order</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>initial_vars</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of variables codes to include in the table from the start</li>
+<li><strong>initial_subject</strong> &#8211; Code of the initial subject</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="braviz.interaction.qt_models.SubjectDetails.change_subject">
+<tt class="descname">change_subject</tt><big>(</big><em>new_subject</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SubjectDetails.change_subject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change the current subject to whih the variable values correspond</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_subject</strong> &#8211; New subject code</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.SubjectDetails.get_current_variables">
+<tt class="descname">get_current_variables</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SubjectDetails.get_current_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of current variable codes</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.SubjectDetails.set_variables">
+<tt class="descname">set_variables</tt><big>(</big><em>variable_ids</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SubjectDetails.set_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the list of variables</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>variable_ids</strong> &#8211; list of new variable ids to show in the table</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.interaction.qt_models.ContextVariablesModel">
+<em class="property">class </em><tt class="descname">ContextVariablesModel</tt><big>(</big><em>context_vars_list=None</em>, <em>parent=None</em>, <em>editable_dict=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.ContextVariablesModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>A table with three columns: Variable name, variable type, and a checkbox called &#8220;editable&#8221;</p>
+<p>This table is used to select a list of variables, and decide which of those should be made
+writable, and which readonly</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>context_vars_list</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of variables ids to include at the start</li>
+<li><strong>parent</strong> (<a class="reference external" href="http://qt-project.org/doc/qt-4.8/QObject.html" title="See on Qt documentation"><em>QObject</em></a>) &#8211; Qt parent</li>
+<li><strong>editable_dict</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; Dictionary where keys are variable ids and values are booleans indicating
+if the variable should be writable by the user. This object will be modified.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="braviz.interaction.qt_models.ContextVariablesModel.add_variable">
+<tt class="descname">add_variable</tt><big>(</big><em>var_idx</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.ContextVariablesModel.add_variable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a variable to the table</p>
+<p>The removeRows method can be used to remove a variable
+:param var_idx: Variable index</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.ContextVariablesModel.get_variables">
+<tt class="descname">get_variables</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.ContextVariablesModel.get_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a list of variable indices currently in the table</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.interaction.qt_models.NewVariableValues">
+<em class="property">class </em><tt class="descname">NewVariableValues</tt><a class="headerlink" href="#braviz.interaction.qt_models.NewVariableValues" title="Permalink to this definition">¶</a></dt>
+<dd><p>A table with on column for subject, and a writable second column for variable values</p>
+<p>Values are restricted to numbers</p>
+<dl class="method">
+<dt id="braviz.interaction.qt_models.NewVariableValues.save_into_db">
+<tt class="descname">save_into_db</tt><big>(</big><em>var_idx</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.NewVariableValues.save_into_db" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save values from the model into the braviz database</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>var_idx</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Index of the variable to which the values should be saved</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.NewVariableValues.set_values_dict">
+<tt class="descname">set_values_dict</tt><big>(</big><em>values_dict</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.NewVariableValues.set_values_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set values for variables</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>values_dict</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; A dictionary with subject codes as keys, and variable values as values</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.interaction.qt_models.NominalVariablesMeta">
+<em class="property">class </em><tt class="descname">NominalVariablesMeta</tt><big>(</big><em>var_name</em>, <em>parent=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.NominalVariablesMeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>A table with numerical labels in the first column and corresponding text labels in the second column</p>
+<p>These labels correspond to the possible values a nominal variable can take
+Textual labels can be edited</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>var_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name of a nominal variable</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="braviz.interaction.qt_models.NominalVariablesMeta.add_label">
+<tt class="descname">add_label</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.NominalVariablesMeta.add_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add another row with the next numerical label to the table</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.NominalVariablesMeta.get_checked">
+<tt class="descname">get_checked</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.NominalVariablesMeta.get_checked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a set of labels whose checkbox is checked</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.NominalVariablesMeta.get_unchecked">
+<tt class="descname">get_unchecked</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.NominalVariablesMeta.get_unchecked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a set of labels whose checkbox is empty</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.NominalVariablesMeta.save_into_db">
+<tt class="descname">save_into_db</tt><big>(</big><em>var_idx</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.NominalVariablesMeta.save_into_db" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the textual labels into the database</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>var_idx</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Index of the variable to which the labels will be saved</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.NominalVariablesMeta.set_checkeable">
+<tt class="descname">set_checkeable</tt><big>(</big><em>checkeable</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.NominalVariablesMeta.set_checkeable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Choose if check boxes should be displayed next to numerical labels</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>checkeable</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If <tt class="docutils literal"><span class="pre">True</span></tt> checkboxes will appear</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.NominalVariablesMeta.set_labels_dict">
+<tt class="descname">set_labels_dict</tt><big>(</big><em>labels_dict</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.NominalVariablesMeta.set_labels_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets textual labels</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>labels_dict</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; Dictionary that maps numerical labels to textual labels</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.NominalVariablesMeta.update_model">
+<tt class="descname">update_model</tt><big>(</big><em>var_name</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.NominalVariablesMeta.update_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the table with data from the database</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>var_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Read labels for this variable</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="subjects-and-samples">
+<h3>Subjects and samples<a class="headerlink" href="#subjects-and-samples" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="braviz.interaction.qt_models.SampleTree">
+<em class="property">class </em><tt class="descname">SampleTree</tt><big>(</big><em>columns=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SampleTree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a tree for representing a sample</p>
+<p>Each first level child represents a nominal variable, and its sons are the different values for that variable
+finally, the leafs contain the subject ids. For each node the number of subjects it contains is represented in the
+second column</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>columns</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of nominal variable names to include in the tree.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="braviz.interaction.qt_models.SampleTree.get_leafs">
+<tt class="descname">get_leafs</tt><big>(</big><em>QModelIndex</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SampleTree.get_leafs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get subjectids under a certain node</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>QModelIndex</strong> (<a class="reference external" href="http://qt-project.org/doc/qt-4.8/QModelIndex.html" title="See on Qt documentation"><em>QModelIndex</em></a>) &#8211; Index of a node in the tree</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.SampleTree.set_sample">
+<tt class="descname">set_sample</tt><big>(</big><em>new_sample</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SampleTree.set_sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the subsample to show in the tree</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_sample</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#set" title="(in Python v2.7)"><em>set</em></a>) &#8211; Set of subjects in the new subsample</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.interaction.qt_models.SubjectsTable">
+<em class="property">class </em><tt class="descname">SubjectsTable</tt><big>(</big><em>initial_columns=None</em>, <em>sample=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SubjectsTable" title="Permalink to this definition">¶</a></dt>
+<dd><p>A table of subjects and values for specified variables</p>
+<p>The first column contains subject codes. There are additional columns for each requested variable.
+Values for nominal variables are shown as textual labels</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>initial_columns</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of initial variables indices to include as columns in the table</li>
+<li><strong>sample</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of subject ids to show in the table</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="braviz.interaction.qt_models.SubjectsTable.get_current_column_indexes">
+<tt class="descname">get_current_column_indexes</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SubjectsTable.get_current_column_indexes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of current variable indices shown as columns</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.SubjectsTable.get_current_columns">
+<tt class="descname">get_current_columns</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SubjectsTable.get_current_columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of current variable names shown as columns</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.SubjectsTable.get_subject_index">
+<tt class="descname">get_subject_index</tt><big>(</big><em>subj_id</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SubjectsTable.get_subject_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get row number for a certain subject id</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.SubjectsTable.set_sample">
+<tt class="descname">set_sample</tt><big>(</big><em>new_sample</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SubjectsTable.set_sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the subsample of subjects in the table</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_sample</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of subject ids</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.SubjectsTable.set_var_columns">
+<tt class="descname">set_var_columns</tt><big>(</big><em>columns</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SubjectsTable.set_var_columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the columns in the table</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>columns</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of variable indices</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.interaction.qt_models.SubjectChecklist">
+<em class="property">class </em><tt class="descname">SubjectChecklist</tt><big>(</big><em>initial_list=()</em>, <em>show_checks=True</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SubjectChecklist" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of subjects with checkboxes</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>initial_list</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of subject ids</li>
+<li><strong>show_checks</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If <tt class="docutils literal"><span class="pre">False</span></tt> no checkboxes will be shown</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="braviz.interaction.qt_models.SubjectChecklist.checked">
+<tt class="descname">checked</tt><a class="headerlink" href="#braviz.interaction.qt_models.SubjectChecklist.checked" title="Permalink to this definition">¶</a></dt>
+<dd><p>set of checked subjects</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.SubjectChecklist.set_list">
+<tt class="descname">set_list</tt><big>(</big><em>lst</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SubjectChecklist.set_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the list of subjects</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lst</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of subject ids</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.interaction.qt_models.SubjectCheckTable">
+<em class="property">class </em><tt class="descname">SubjectCheckTable</tt><big>(</big><em>initial_list=()</em>, <em>data_cols=()</em>, <em>headers=(''</em>, <em>'')</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SubjectCheckTable" title="Permalink to this definition">¶</a></dt>
+<dd><p>A table of subjects with optional checkboxes</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>initial_list</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of subject ids</li>
+<li><strong>data_cols</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of columns to shown, where each column is an iterable of the same length as the subject
+lists, such that the value for the subject in position <em>i</em> is also located at position <em>i</em></li>
+<li><strong>headers</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of strings used as headers for the table on top of each data column</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="braviz.interaction.qt_models.SubjectCheckTable.checked">
+<tt class="descname">checked</tt><a class="headerlink" href="#braviz.interaction.qt_models.SubjectCheckTable.checked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set of checked subjects</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.SubjectCheckTable.set_data_cols">
+<tt class="descname">set_data_cols</tt><big>(</big><em>new_cols</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SubjectCheckTable.set_data_cols" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets new data columns</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_cols</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of data columns, must have the same length as the headers. Each data column
+is itself an iterable of the same length and indices as the subjects list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.interaction.qt_models.SamplesSelectionModel">
+<em class="property">class </em><tt class="descname">SamplesSelectionModel</tt><a class="headerlink" href="#braviz.interaction.qt_models.SamplesSelectionModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>A table showing available subsamples</p>
+<p>It has three columns: sample size, sample name, and sample description</p>
+<dl class="method">
+<dt id="braviz.interaction.qt_models.SamplesSelectionModel.get_sample">
+<tt class="descname">get_sample</tt><big>(</big><em>QModelIndex</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SamplesSelectionModel.get_sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the set of subjects in a subsample located at a certain row</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>QModelIndex</strong> (<a class="reference external" href="http://qt-project.org/doc/qt-4.8/QModelIndex.html" title="See on Qt documentation"><em>QModelIndex</em></a>) &#8211; Index of a cell in the table (only the row is important)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.SamplesSelectionModel.get_sample_index">
+<tt class="descname">get_sample_index</tt><big>(</big><em>QModelIndex</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SamplesSelectionModel.get_sample_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the database index of a subsample located at a certain row</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>QModelIndex</strong> (<a class="reference external" href="http://qt-project.org/doc/qt-4.8/QModelIndex.html" title="See on Qt documentation"><em>QModelIndex</em></a>) &#8211; Index of a cell in the table (only the row is important)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.SamplesSelectionModel.get_sample_name">
+<tt class="descname">get_sample_name</tt><big>(</big><em>QModelIndex</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SamplesSelectionModel.get_sample_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of a subsample located at a certain row</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>QModelIndex</strong> (<a class="reference external" href="http://qt-project.org/doc/qt-4.8/QModelIndex.html" title="See on Qt documentation"><em>QModelIndex</em></a>) &#8211; Index of a cell in the table (only the row is important)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.SamplesSelectionModel.reload">
+<tt class="descname">reload</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SamplesSelectionModel.reload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reload subsamples from the database</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.interaction.qt_models.SamplesFilterModel">
+<em class="property">class </em><tt class="descname">SamplesFilterModel</tt><a class="headerlink" href="#braviz.interaction.qt_models.SamplesFilterModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of filters that can be applied to a sample</p>
+<dl class="method">
+<dt id="braviz.interaction.qt_models.SamplesFilterModel.add_filter">
+<tt class="descname">add_filter</tt><big>(</big><em>filter_name</em>, <em>filter_func</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SamplesFilterModel.add_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a filter to the list</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filter_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name of the filter, this will be shown to the user</li>
+<li><strong>filter_func</strong> (<a class="reference external" href="https://docs.python.org/2/tutorial/controlflow.html#defining-functions" title="Python function"><em>function</em></a>) &#8211; This function should take a subject id and return a boolean.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.SamplesFilterModel.apply_filters">
+<tt class="descname">apply_filters</tt><big>(</big><em>input_set</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SamplesFilterModel.apply_filters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply all filters to a given set</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>input_set</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#set" title="(in Python v2.7)"><em>set</em></a>) &#8211; Set of subject ids</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">filtered set of subject ids</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.SamplesFilterModel.remove_filter">
+<tt class="descname">remove_filter</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SamplesFilterModel.remove_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes a filter located at a given row</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<a class="reference external" href="http://qt-project.org/doc/qt-4.8/QModelIndex.html" title="See on Qt documentation"><em>QModelIndex</em></a>) &#8211; Index of the row containing the filter</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="statistics">
+<h3>Statistics<a class="headerlink" href="#statistics" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="braviz.interaction.qt_models.VarAndGiniModel">
+<em class="property">class </em><tt class="descname">VarAndGiniModel</tt><big>(</big><em>outcome_var=None</em>, <em>parent=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.VarAndGiniModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>A table of variables which can include the gini index.</p>
+<p>The
+<a class="reference external" href="http://en.wikipedia.org/wiki/Decision_tree_learning#Gini_impurity">gini index</a>
+is associated to each variable when predicting an outcome variable</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>outcome_var</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name of variable to treat as outcome</li>
+<li><strong>parent</strong> (<a class="reference external" href="http://qt-project.org/doc/qt-4.8/QObject.html" title="See on Qt documentation"><em>QObject</em></a>) &#8211; Qt parent for this object</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="braviz.interaction.qt_models.VarAndGiniModel.calculate_gini_indexes">
+<tt class="descname">calculate_gini_indexes</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.VarAndGiniModel.calculate_gini_indexes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the gini indices of the variables via a random forest</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.VarAndGiniModel.update_list">
+<tt class="descname">update_list</tt><big>(</big><em>mask</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.VarAndGiniModel.update_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the list to include only variables whose names match a mask</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mask</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; mask in sql syntax</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.interaction.qt_models.AnovaRegressorsModel">
+<em class="property">class </em><tt class="descname">AnovaRegressorsModel</tt><big>(</big><em>regressors_list=()</em>, <em>parent=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.AnovaRegressorsModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Holds the regressors and interaction terms for a linear model</p>
+<p>The model exposes two columns, regressor name and degrees of freedom. Internally it keeps track if each
+regressor is a single term or an interaction of multiple variables</p>
+<p>It is possible to show only interactions, or only single term regressors</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>regressors_list</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of variable names to be used as regressors</li>
+<li><strong>parent</strong> (<a class="reference external" href="http://qt-project.org/doc/qt-4.8/QObject.html" title="See on Qt documentation"><em>QObject</em></a>) &#8211; Qt parent</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="braviz.interaction.qt_models.AnovaRegressorsModel.add_interactor">
+<tt class="descname">add_interactor</tt><big>(</big><em>factor_rw_indexes</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.AnovaRegressorsModel.add_interactor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an interaction term to the model</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>factor_rw_indexes</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; Positions of single term regressors that compose the interaction.
+This positions are the row number of the variable in this model, without counting
+interaction terms (or the row number when interaction terms are hidden)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.AnovaRegressorsModel.add_interactor_by_names">
+<tt class="descname">add_interactor_by_names</tt><big>(</big><em>factor_names</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.AnovaRegressorsModel.add_interactor_by_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an interaction term by giving the name of its terms</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>factor_names</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of variable names, already in the model, which make up the interaction</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.AnovaRegressorsModel.add_regressor">
+<tt class="descname">add_regressor</tt><big>(</big><em>var_name</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.AnovaRegressorsModel.add_regressor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a regressor to the list</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>var_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name of a variable</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.AnovaRegressorsModel.get_data_frame">
+<tt class="descname">get_data_frame</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.AnovaRegressorsModel.get_data_frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the internal data frame</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.15.2)"><tt class="xref py py-class docutils literal"><span class="pre">pandas.DataFrame</span></tt></a> with three columns: regressor name, degrees of freedom, and interaction.
+The last column has zeros for single variable regressors and 1 for interaction terms.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.AnovaRegressorsModel.get_interactions">
+<tt class="descname">get_interactions</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.AnovaRegressorsModel.get_interactions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of interaction terms</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.AnovaRegressorsModel.get_interactors_dict">
+<tt class="descname">get_interactors_dict</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.AnovaRegressorsModel.get_interactors_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the interactions dictionary</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A dictionary that maps dataframe indices of interactions terms to the dataframe indices of
+its factors.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.AnovaRegressorsModel.get_regressors">
+<tt class="descname">get_regressors</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.AnovaRegressorsModel.get_regressors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of single term regressors</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.AnovaRegressorsModel.reset_data">
+<tt class="descname">reset_data</tt><big>(</big><em>regressors_list</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.AnovaRegressorsModel.reset_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a new list of regressors</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>regressors_list</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of variable names</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.AnovaRegressorsModel.show_interactions">
+<tt class="descname">show_interactions</tt><big>(</big><em>value=True</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.AnovaRegressorsModel.show_interactions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set if interaction terms should be shown</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; if <tt class="docutils literal"><span class="pre">False</span></tt> interaction terms will be hidden</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.AnovaRegressorsModel.show_regressors">
+<tt class="descname">show_regressors</tt><big>(</big><em>value=True</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.AnovaRegressorsModel.show_regressors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set if single variable terms should be shown</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; if <tt class="docutils literal"><span class="pre">False</span></tt> single variable terms will be hidden</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.interaction.qt_models.AnovaResultsModel">
+<em class="property">class </em><tt class="descname">AnovaResultsModel</tt><big>(</big><em>results_df=None</em>, <em>residuals=None</em>, <em>intercept=None</em>, <em>fitted=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.AnovaResultsModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>A model to represent the results of an anova regression</p>
+<p>It has columns for factor names, sum of squares, degrees of freedom, F statistic, and p value.
+Internally it also holds residuals, fitted values and intercept.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>results_df</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.15.2)"><em>pandas.DataFrame</em></a>) &#8211; A Data Frame containing the columns indicated above</li>
+<li><strong>residuals</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; A vector of the regression residuals</li>
+<li><strong>intercept</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Value of the intercept term of the regression</li>
+<li><strong>fitted</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; Vector of fitted values</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="bundles">
+<h2>Bundles<a class="headerlink" href="#bundles" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="braviz.interaction.qt_models.SimpleBundlesList">
+<em class="property">class </em><tt class="descname">SimpleBundlesList</tt><a class="headerlink" href="#braviz.interaction.qt_models.SimpleBundlesList" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of database fiber bundles</p>
+<p>An optional special bundle, called &#8220;&lt;From Segment&gt;&#8221; may also be shown</p>
+<dl class="method">
+<dt id="braviz.interaction.qt_models.SimpleBundlesList.add_bundle">
+<tt class="descname">add_bundle</tt><big>(</big><em>bundle_id</em>, <em>name</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SimpleBundlesList.add_bundle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a bundle to the list</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>bundle_id</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Bundle database index</li>
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Bundle name to show</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.SimpleBundlesList.get_bundle_name">
+<tt class="descname">get_bundle_name</tt><big>(</big><em>bid</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SimpleBundlesList.get_bundle_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name used to show a bundle with the given id</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>bid</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Bundle database id</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.SimpleBundlesList.get_ids">
+<tt class="descname">get_ids</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SimpleBundlesList.get_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get ids in the list, if the special bundle is present it is ignored</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.SimpleBundlesList.set_ids">
+<tt class="descname">set_ids</tt><big>(</big><em>id_list</em>, <em>names_dict=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SimpleBundlesList.set_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set bundle ids to show in the list</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id_list</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of database indices of bundles</li>
+<li><strong>names_dict</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; Optional, if present it is used to map ids to names; otherwise the names in the
+database are used</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.SimpleBundlesList.set_show_special">
+<tt class="descname">set_show_special</tt><big>(</big><em>show_special</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SimpleBundlesList.set_show_special" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show or hide the special &#8220;&lt;From segment&gt;&#8221; bundle</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>show_special</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If <tt class="docutils literal"><span class="pre">True</span></tt> the special bundle will appear on the list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.interaction.qt_models.BundlesSelectionList">
+<em class="property">class </em><tt class="descname">BundlesSelectionList</tt><a class="headerlink" href="#braviz.interaction.qt_models.BundlesSelectionList" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of bundles with checkboxes</p>
+<dl class="method">
+<dt id="braviz.interaction.qt_models.BundlesSelectionList.get_selected">
+<tt class="descname">get_selected</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.BundlesSelectionList.get_selected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of selected bundle ids</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.BundlesSelectionList.refresh_model">
+<tt class="descname">refresh_model</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.BundlesSelectionList.refresh_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reloads data from the database</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_models.BundlesSelectionList.select_many_ids">
+<tt class="descname">select_many_ids</tt><big>(</big><em>ids_it</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.BundlesSelectionList.select_many_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds several bundles to the selection</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ids_it</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of database ids to add</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="scenarios">
+<h2>Scenarios<a class="headerlink" href="#scenarios" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="braviz.interaction.qt_models.ScenariosTableModel">
+<em class="property">class </em><tt class="descname">ScenariosTableModel</tt><big>(</big><em>app_name</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.ScenariosTableModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>A table with available scenarios</p>
+<p>Optionally restricts the table to scenarios for a certain application
+It has three columns: date, name and description</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>app_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name of application, if <tt class="docutils literal"><span class="pre">None</span></tt> scenarios for all applications are shown</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="braviz.interaction.qt_models.ScenariosTableModel.get_index">
+<tt class="descname">get_index</tt><big>(</big><em>row</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.ScenariosTableModel.get_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the database index for the scenario in a given row</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-braviz.interaction.qt_structures_model"></span></div>
+<div class="section" id="structures-model">
+<h2>Structures model<a class="headerlink" href="#structures-model" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="braviz.interaction.qt_structures_model.StructureTreeModel">
+<em class="property">class </em><tt class="descname">StructureTreeModel</tt><big>(</big><em>reader</em>, <em>subj=None</em>, <em>dominant=False</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_structures_model.StructureTreeModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>A tree of freesurfer segmented structures</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>reader</strong> (<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><em>braviz.readAndFilter.base_reader.BaseReader</em></a>) &#8211; A reader from which to get available models</li>
+<li><strong>subj</strong> &#8211; Id of a subject to use as reference for getting available models</li>
+<li><strong>dominant</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If <tt class="docutils literal"><span class="pre">False</span></tt> the tree will have left and right hemispheres, otherwise it will
+have dominant and non-dominant hemispheres</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="braviz.interaction.qt_structures_model.StructureTreeModel.get_selected_structures">
+<tt class="descname">get_selected_structures</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.qt_structures_model.StructureTreeModel.get_selected_structures" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of currently checked structures</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_structures_model.StructureTreeModel.optimistic_reload_hierarchy">
+<tt class="descname">optimistic_reload_hierarchy</tt><big>(</big><em>dominant</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_structures_model.StructureTreeModel.optimistic_reload_hierarchy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rebuilds the tree from the models of the first subject with models</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dominant</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If <tt class="docutils literal"><span class="pre">False</span></tt> the tree will have left and right hemispheres, otherwise it will
+have dominant and non-dominant hemispheres</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_structures_model.StructureTreeModel.reload_hierarchy">
+<tt class="descname">reload_hierarchy</tt><big>(</big><em>subj=None</em>, <em>dominant=False</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_structures_model.StructureTreeModel.reload_hierarchy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reload tree based on a specific subject</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>subj</strong> &#8211; Subject to load available models from</li>
+<li><strong>dominant</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If <tt class="docutils literal"><span class="pre">False</span></tt> the tree will have left and right hemispheres, otherwise it will
+have dominant and non-dominant hemispheres</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_structures_model.StructureTreeModel.set_selected_structures">
+<tt class="descname">set_selected_structures</tt><big>(</big><em>selected_list</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_structures_model.StructureTreeModel.set_selected_structures" title="Permalink to this definition">¶</a></dt>
+<dd><p>Selects the structures given in a list</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>selected_list</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; New set of selected structures&#8217; names</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="helper">
+<h3>Helper<a class="headerlink" href="#helper" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="braviz.interaction.qt_structures_model.StructureTreeNode">
+<em class="property">class </em><tt class="descname">StructureTreeNode</tt><big>(</big><em>parent=None</em>, <em>name=''</em>, <em>son_number=0</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_structures_model.StructureTreeNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Node for the freesurfer structures tree</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parent</strong> (<a class="reference internal" href="#braviz.interaction.qt_structures_model.StructureTreeNode" title="braviz.interaction.qt_structures_model.StructureTreeNode"><em>braviz.interaction.qt_structures_model.StructureTreeNode</em></a>) &#8211; Reference to the parent node</li>
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name of this node</li>
+<li><strong>son_number</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; How many siblings are before this node</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="braviz.interaction.qt_structures_model.StructureTreeNode.add_child">
+<tt class="descname">add_child</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_structures_model.StructureTreeNode.add_child" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a child to this node</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name for the child node</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_structures_model.StructureTreeNode.check_and_update_tree">
+<tt class="descname">check_and_update_tree</tt><big>(</big><em>check=True</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_structures_model.StructureTreeNode.check_and_update_tree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a checkmark to this node</p>
+<p>If it has childs, they are also checked (recursively)
+Predecessor boxes are also updated</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_structures_model.StructureTreeNode.delete_children">
+<tt class="descname">delete_children</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.qt_structures_model.StructureTreeNode.delete_children" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete all children from this node</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_structures_model.StructureTreeNode.is_leaf">
+<tt class="descname">is_leaf</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.qt_structures_model.StructureTreeNode.is_leaf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns <tt class="docutils literal"><span class="pre">True</span></tt> if this node is a leaf</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-braviz.interaction.logic_bundle_model"></span></div>
+</div>
+<div class="section" id="logic-bundle-model">
+<h2>Logic bundle model<a class="headerlink" href="#logic-bundle-model" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="braviz.interaction.logic_bundle_model.LogicBundleQtTree">
+<em class="property">class </em><tt class="descname">LogicBundleQtTree</tt><big>(</big><em>root=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.logic_bundle_model.LogicBundleQtTree" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Qt representation of a logical fiber bundle</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>root</strong> (<a class="reference internal" href="#braviz.interaction.logic_bundle_model.LogicBundleNode" title="braviz.interaction.logic_bundle_model.LogicBundleNode"><em>braviz.interaction.logic_bundle_model.LogicBundleNode</em></a>) &#8211; Root of the logic bundle tree</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="braviz.interaction.logic_bundle_model.LogicBundleQtTree.add_node">
+<tt class="descname">add_node</tt><big>(</big><em>parent</em>, <em>node_type</em>, <em>value</em>, <em>extra_data=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.logic_bundle_model.LogicBundleQtTree.add_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a son to an specific node in the tree</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parent</strong> (<a class="reference internal" href="#braviz.interaction.logic_bundle_model.LogicBundleNode" title="braviz.interaction.logic_bundle_model.LogicBundleNode"><em>braviz.interaction.logic_bundle_model.LogicBundleNode</em></a>) &#8211; Node to which the son will be added</li>
+<li><strong>node_type</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Type of the new node</li>
+<li><strong>value</strong> &#8211; Value of the new node</li>
+<li><strong>extra_data</strong> &#8211; Extra data for the new node</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.logic_bundle_model.LogicBundleQtTree.get_node">
+<tt class="descname">get_node</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#braviz.interaction.logic_bundle_model.LogicBundleQtTree.get_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the node at a given index</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<a class="reference external" href="http://qt-project.org/doc/qt-4.8/QAbstractModelIndex.html" title="See on Qt documentation"><em>QAbstractModelIndex</em></a>) &#8211; Index of a node</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.logic_bundle_model.LogicBundleQtTree.remove_node">
+<tt class="descname">remove_node</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#braviz.interaction.logic_bundle_model.LogicBundleQtTree.remove_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a node from the tree</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<a class="reference external" href="http://qt-project.org/doc/qt-4.8/QAbstractModelIndex.html" title="See on Qt documentation"><em>QAbstractModelIndex</em></a>) &#8211; Index of node to remove</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.interaction.logic_bundle_model.LogicBundleQtTree.root">
+<tt class="descname">root</tt><a class="headerlink" href="#braviz.interaction.logic_bundle_model.LogicBundleQtTree.root" title="Permalink to this definition">¶</a></dt>
+<dd><p>root node of the underlying tree</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.logic_bundle_model.LogicBundleQtTree.set_root">
+<tt class="descname">set_root</tt><big>(</big><em>new_root</em><big>)</big><a class="headerlink" href="#braviz.interaction.logic_bundle_model.LogicBundleQtTree.set_root" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a new tree for the model</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_root</strong> (<a class="reference internal" href="#braviz.interaction.logic_bundle_model.LogicBundleNode" title="braviz.interaction.logic_bundle_model.LogicBundleNode"><em>braviz.interaction.logic_bundle_model.LogicBundleNode</em></a>) &#8211; Root of new tree</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="helpers">
+<h3>Helpers<a class="headerlink" href="#helpers" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="braviz.interaction.logic_bundle_model.LogicBundleNode">
+<em class="property">class </em><tt class="descname">LogicBundleNode</tt><big>(</big><em>parent</em>, <em>son_number</em>, <em>node_type</em>, <em>value</em>, <em>extra_data=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.logic_bundle_model.LogicBundleNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>A node for a bundle based on a logical hierarchy</p>
+<p>See <a class="reference internal" href="bundles_db.html#braviz.readAndFilter.bundles_db.get_logic_bundle_dict" title="braviz.readAndFilter.bundles_db.get_logic_bundle_dict"><tt class="xref py py-func docutils literal"><span class="pre">braviz.readAndFilter.bundles_db.get_logic_bundle_dict()</span></tt></a> for more information</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parent</strong> (<a class="reference internal" href="#braviz.interaction.logic_bundle_model.LogicBundleNode" title="braviz.interaction.logic_bundle_model.LogicBundleNode"><em>braviz.interaction.logic_bundle_model.LogicBundleNode</em></a>) &#8211; Reference to parent node, <tt class="docutils literal"><span class="pre">None</span></tt> if root</li>
+<li><strong>son_number</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Number of siblings before the current node</li>
+<li><strong>node_type</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Type of the current node. May be 0 for logic, 1 for structure or 2 for roi</li>
+<li><strong>value</strong> &#8211; Logical operation for logic nodes, or structure name for structure nodes</li>
+<li><strong>extra_data</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Roi database index for roi nodes</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="braviz.interaction.logic_bundle_model.LogicBundleNode.add_son">
+<tt class="descname">add_son</tt><big>(</big><em>node_type</em>, <em>value</em>, <em>extra_data=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.logic_bundle_model.LogicBundleNode.add_son" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a son to the current node</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>node_type</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Node type of the new son</li>
+<li><strong>value</strong> &#8211; Value for the new son</li>
+<li><strong>extra_data</strong> &#8211; Extra data for the new son</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.logic_bundle_model.LogicBundleNode.add_son_from_dict">
+<tt class="descname">add_son_from_dict</tt><big>(</big><em>values</em><big>)</big><a class="headerlink" href="#braviz.interaction.logic_bundle_model.LogicBundleNode.add_son_from_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a son from a dictionary</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>values</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; Recursive dictionary with the following keys:
+node_type, value, extra_data, children (each of them as another dictionary with these keys)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.logic_bundle_model.LogicBundleNode.decrease_son_number">
+<tt class="descname">decrease_son_number</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.logic_bundle_model.LogicBundleNode.decrease_son_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decrease my son number, call this when an older brother is removed</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="braviz.interaction.logic_bundle_model.LogicBundleNode.from_dict">
+<em class="property">static </em><tt class="descname">from_dict</tt><big>(</big><em>values</em><big>)</big><a class="headerlink" href="#braviz.interaction.logic_bundle_model.LogicBundleNode.from_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a tree from a dictionary</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>values</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; Recursive dictionary with the following keys for each node:
+node_type, value, extra_data, children (each of them as another dictionary with these keys)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The root node of the resulting tree</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.interaction.logic_bundle_model.LogicBundleNode.node_type">
+<tt class="descname">node_type</tt><a class="headerlink" href="#braviz.interaction.logic_bundle_model.LogicBundleNode.node_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type of this node, 0: Logical, 1: Structure or 2: Roi</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.interaction.logic_bundle_model.LogicBundleNode.parent">
+<tt class="descname">parent</tt><a class="headerlink" href="#braviz.interaction.logic_bundle_model.LogicBundleNode.parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parent node</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.logic_bundle_model.LogicBundleNode.remove_kid">
+<tt class="descname">remove_kid</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#braviz.interaction.logic_bundle_model.LogicBundleNode.remove_kid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a child</p>
+<p>Younger brother numbers are updated</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; number of son to remove</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.interaction.logic_bundle_model.LogicBundleNode.son_number">
+<tt class="descname">son_number</tt><a class="headerlink" href="#braviz.interaction.logic_bundle_model.LogicBundleNode.son_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of sons added before this one</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.logic_bundle_model.LogicBundleNode.to_dict">
+<tt class="descname">to_dict</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.logic_bundle_model.LogicBundleNode.to_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform the tree based at this node into a dictionary</p>
+<p>This allows for easy serialization (picking)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.interaction.logic_bundle_model.LogicBundleNodeWithVTK">
+<em class="property">class </em><tt class="descname">LogicBundleNodeWithVTK</tt><big>(</big><em>parent</em>, <em>son_number</em>, <em>node_type</em>, <em>value</em>, <em>extra_data=None</em>, <em>reader=None</em>, <em>subj=None</em>, <em>space='World'</em><big>)</big><a class="headerlink" href="#braviz.interaction.logic_bundle_model.LogicBundleNodeWithVTK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds VTK drawing capabilities to the <a class="reference internal" href="#braviz.interaction.logic_bundle_model.LogicBundleNode" title="braviz.interaction.logic_bundle_model.LogicBundleNode"><tt class="xref py py-class docutils literal"><span class="pre">LogicBundleNode</span></tt></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parent</strong> (<a class="reference internal" href="#braviz.interaction.logic_bundle_model.LogicBundleNode" title="braviz.interaction.logic_bundle_model.LogicBundleNode"><em>braviz.interaction.logic_bundle_model.LogicBundleNode</em></a>) &#8211; Reference to parent node, <tt class="docutils literal"><span class="pre">None</span></tt> if root</li>
+<li><strong>son_number</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Number of siblings before the current node</li>
+<li><strong>node_type</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Type of the current node. May be 0 for logic, 1 for structure or 2 for roi</li>
+<li><strong>value</strong> &#8211; Logical operation for logic nodes, or structure name for structure nodes</li>
+<li><strong>extra_data</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Roi database index for roi nodes</li>
+<li><strong>reader</strong> (<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><em>braviz.readAndFilter.base_reader.BaseReader</em></a>) &#8211; Reader object to get data from</li>
+<li><strong>subj</strong> &#8211; Subject index for the subject fibers you want to draw</li>
+<li><strong>space</strong> &#8211; Coordinate systems in which you want the drawing.
+See <a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader.get" title="braviz.readAndFilter.base_reader.BaseReader.get"><tt class="xref py py-meth docutils literal"><span class="pre">braviz.readAndFilter.base_reader.BaseReader.get()</span></tt></a></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="braviz.interaction.logic_bundle_model.LogicBundleNodeWithVTK.prop">
+<tt class="descname">prop</tt><a class="headerlink" href="#braviz.interaction.logic_bundle_model.LogicBundleNodeWithVTK.prop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the <a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkProp.html" title="See on vtk documentation"><tt class="xref py py-obj docutils literal"><span class="pre">vtkProp</span></tt></a> for the bundle</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.logic_bundle_model.LogicBundleNodeWithVTK.set_color">
+<tt class="descname">set_color</tt><big>(</big><em>color</em><big>)</big><a class="headerlink" href="#braviz.interaction.logic_bundle_model.LogicBundleNodeWithVTK.set_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set color for the actor</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>color</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; RGB components of the color</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.logic_bundle_model.LogicBundleNodeWithVTK.set_opacity">
+<tt class="descname">set_opacity</tt><big>(</big><em>int_opac</em><big>)</big><a class="headerlink" href="#braviz.interaction.logic_bundle_model.LogicBundleNodeWithVTK.set_opacity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the opacity of the actor</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>int_opac</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; From 0 to 100 where 0 is invisible and 100 is opaque</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.logic_bundle_model.LogicBundleNodeWithVTK.update">
+<tt class="descname">update</tt><big>(</big><em>subj</em>, <em>space</em><big>)</big><a class="headerlink" href="#braviz.interaction.logic_bundle_model.LogicBundleNodeWithVTK.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change subject or coordinate system</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>subj</strong> &#8211; New subject id</li>
+<li><strong>space</strong> &#8211; New coordinate system
+See <a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader.get" title="braviz.readAndFilter.base_reader.BaseReader.get"><tt class="xref py py-meth docutils literal"><span class="pre">braviz.readAndFilter.base_reader.BaseReader.get()</span></tt></a></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="braviz.interaction.logic_bundle_model.LogicBundleNodeWithVTK.vtk_from_dict">
+<em class="property">static </em><tt class="descname">vtk_from_dict</tt><big>(</big><em>values</em>, <em>reader</em>, <em>subj=None</em>, <em>space='World'</em><big>)</big><a class="headerlink" href="#braviz.interaction.logic_bundle_model.LogicBundleNodeWithVTK.vtk_from_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a tree from a recursive dictionary</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>values</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; Recursive dictionary with the following keys for each node:
+node_type, value, extra_data, children (each of them as another dictionary with these keys)</li>
+<li><strong>reader</strong> (<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><em>braviz.readAndFilter.base_reader.BaseReader</em></a>) &#8211; Reader object to get data from</li>
+<li><strong>subj</strong> &#8211; Subject index for the subject fibers you want to draw</li>
+<li><strong>space</strong> &#8211; Coordinate systems in which you want the drawing.
+See <a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader.get" title="braviz.readAndFilter.base_reader.BaseReader.get"><tt class="xref py py-meth docutils literal"><span class="pre">braviz.readAndFilter.base_reader.BaseReader.get()</span></tt></a></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The root node of the resulting tree</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+          <a href="qt_dialogs.html" title="Braviz Qt Dialogs"
+             accesskey="P">previous</a> |
+          <a href="qt_widgets.html" title="Braviz Qt Widgets"
+             accesskey="N">next</a> |
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a>
+          
+            <br/>
+            <a href="../_sources/library/qt_models.txt"
+               rel="nofollow">Show Source</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

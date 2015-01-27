@@ -1,0 +1,606 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Reading geometric data &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.0b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Braviz Documentation" href="../index.html" />
+    <link rel="up" title="Read And Filter" href="read_and_filter.html" />
+    <link rel="next" title="Braviz Data Base" href="braviz_db.html" />
+    <link rel="prev" title="Read And Filter" href="read_and_filter.html" /> 
+  </head>
+  <body>
+    
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html"> Braviz Documentation </a></div>
+          <nav class="parents">
+              <ol>
+        <li><a href="../index.html"> Home </a> &raquo;</li>
+          <li><a href="index.html" >Braviz library</a> &raquo;</li>
+          <li><a href="read_and_filter.html"  accesskey="U" >Read And Filter</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Reading geometric data</a><ul>
+<li><a class="reference internal" href="#basereader">BaseReader</a><ul>
+<li><a class="reference internal" href="#constructors">Constructors</a></li>
+<li><a class="reference internal" href="#the-get-method">The get method</a></li>
+<li><a class="reference internal" href="#coordinate-systems">Coordinate systems</a></li>
+<li><a class="reference internal" href="#cache">Cache</a></li>
+<li><a class="reference internal" href="#file-system">File System</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#custom-readers">Custom Readers</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="read_and_filter.html"
+                        title="previous chapter">Read And Filter</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="braviz_db.html"
+                        title="next chapter">Braviz Data Base</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="reading-geometric-data">
+<h1>Reading geometric data<a class="headerlink" href="#reading-geometric-data" title="Permalink to this headline">¶</a></h1>
+<p>In braviz scripts and applications should not have to deal with individual files or directory structures.
+All access to this data should be done through to the functions and classes in the <a class="reference internal" href="read_and_filter.html#module-braviz.readAndFilter" title="braviz.readAndFilter"><tt class="xref py py-mod docutils literal"><span class="pre">braviz.readAndFilter</span></tt></a> module.
+The objective behind this is to isolate the applications code from the underlying file system. In this way it is
+easy to adapt to different projects with different data structures.</p>
+<p>Project readers should be derived from <a class="reference internal" href="#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><tt class="xref py py-class docutils literal"><span class="pre">BaseReader</span></tt></a> , which describes the behaviour that they should provide.</p>
+<div class="section" id="basereader">
+<h2>BaseReader<a class="headerlink" href="#basereader" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="braviz.readAndFilter.base_reader.BaseReader">
+<em class="property">class </em><tt class="descname">BaseReader</tt><big>(</big><em>max_cache=100</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.base_reader.BaseReader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provide access to projects&#8217; non-tabular data</p>
+<p>Project readers provide a common interface to each projects underlying data. All project readers should be inherited
+from this class. Most data access is carried out through the <a class="reference internal" href="#braviz.readAndFilter.base_reader.BaseReader.get" title="braviz.readAndFilter.base_reader.BaseReader.get"><tt class="xref py py-meth docutils literal"><span class="pre">get()</span></tt></a> method. Underneath this method locates the
+appropriate data files and transformations, and returns the requested data in the requested coordinates system.</p>
+<p>An instance of this class will always return empty lists when indexes are requested and raise exceptions when
+data is requested. To get a more useful class you should create your own subclass.</p>
+</dd></dl>
+
+<div class="section" id="constructors">
+<h3>Constructors<a class="headerlink" href="#constructors" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><dl class="method">
+<dt id="braviz.readAndFilter.base_reader.BaseReader.__init__">
+<tt class="descclassname">BaseReader.</tt><tt class="descname">__init__</tt><big>(</big><em>self</em>, <em>max_cache=100</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.base_reader.BaseReader.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>The base reader handles a memory cache for speeding repeated access for the same data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>max_cache</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; The maximum amount of memory in MB that can be used for cache</li>
+<li><strong>**kwargs</strong> &#8211; <p>Ignored, maybe used by derived classes</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Note that subclasses may have more arguments in their constructors.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="braviz.readAndFilter.base_reader.BaseReader.get_auto_reader">
+<em class="property">static </em><tt class="descclassname">BaseReader.</tt><tt class="descname">get_auto_reader</tt><big>(</big><em>**kw_args</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.base_reader.BaseReader.get_auto_reader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialized a based on known nodes file</p>
+</dd></dl>
+
+</div></blockquote>
+</div>
+<div class="section" id="the-get-method">
+<h3>The get method<a class="headerlink" href="#the-get-method" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><dl class="method">
+<dt id="braviz.readAndFilter.base_reader.BaseReader.get">
+<tt class="descclassname">BaseReader.</tt><tt class="descname">get</tt><big>(</big><em>self</em>, <em>data</em>, <em>subj_id=None</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.base_reader.BaseReader.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides access to geometric data in an specified coordinate system.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; <p>Case insensitive, the type of data requested. Currently the possible values are</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Ids</td>
+<td>ids of all subjects in the study as a list<p class="last"><em>returns</em> a list of ids</p>
+</td>
+</tr>
+<tr class="row-even"><td>MRI</td>
+<td>structural image of the given subject<p class="last">returns a nibabel image object, use <tt class="docutils literal"><span class="pre">format=&quot;VTK&quot;</span></tt> to
+receive a vtkImageData instead.</p>
+</td>
+</tr>
+<tr class="row-odd"><td>FA</td>
+<td>fractional anisotropy image<p class="last">returns a nibabel image object, use <tt class="docutils literal"><span class="pre">format=&quot;VTK&quot;</span></tt> to
+receive a vtkImageData instead.</p>
+</td>
+</tr>
+<tr class="row-even"><td>MD</td>
+<td>Mean diffusivity image<p class="last">returns a nibabel image object, use <tt class="docutils literal"><span class="pre">format=&quot;VTK&quot;</span></tt> to
+receive a vtkImageData instead.</p>
+</td>
+</tr>
+<tr class="row-odd"><td>DTI</td>
+<td>RGB DTI image<p class="last">returns a nibabel image object, use <tt class="docutils literal"><span class="pre">format=&quot;VTK&quot;</span></tt> to
+receive a vtkImageData instead.</p>
+</td>
+</tr>
+<tr class="row-even"><td>Aparc</td>
+<td>FreeSurfer Aparc (Auto Parcelation) image<p>returns a nibabel image object, use <tt class="docutils literal"><span class="pre">format=&quot;VTK&quot;</span></tt> to
+receive a vtkImageData instead.</p>
+<p class="last">use <tt class="docutils literal"><span class="pre">lut=True</span></tt> to get a vtkLookupTable</p>
+</td>
+</tr>
+<tr class="row-odd"><td>WMparc</td>
+<td>FreeSurfer WMParc (White Matter Parcelation) image<p>returns a nibabel image object, use <tt class="docutils literal"><span class="pre">format=&quot;VTK&quot;</span></tt> to
+receive a vtkImageData instead.</p>
+<p class="last">use <tt class="docutils literal"><span class="pre">lut=True</span></tt> to get a vtkLookupTable</p>
+</td>
+</tr>
+<tr class="row-even"><td>fMRI</td>
+<td>SPM t-score map<p>returns a nibabel image object, use <tt class="docutils literal"><span class="pre">format=&quot;VTK&quot;</span></tt> to
+receive a vtkImageData instead.</p>
+<p>Requires <tt class="docutils literal"><span class="pre">name=&lt;paradigm&gt;</span></tt></p>
+<p>Optionally you may specify <tt class="docutils literal"><span class="pre">contrast=&lt;int&gt;</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">contrasts_dict</span></tt> = True will return a dictionary with
+the available for contrasts for the specified paradigm.</p>
+<dl class="last docutils">
+<dt><tt class="docutils literal"><span class="pre">SPM</span> <span class="pre">=</span> <span class="pre">True</span></tt> will return a <a class="reference internal" href="read_low_level.html#braviz.readAndFilter.read_spm.SpmFileReader" title="braviz.readAndFilter.read_spm.SpmFileReader"><tt class="xref py py-class docutils literal"><span class="pre">SpmFileReader</span></tt></a></dt>
+<dd>with the data contained in the <em>spm.mat</em> file.</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td>BOLD</td>
+<td>SPM, pre-processed bold series<p class="last">Only available as a 4d nibabel object</p>
+</td>
+</tr>
+<tr class="row-even"><td>Model</td>
+<td>Reconstruction of FreeSurfer segmented structure<p><tt class="docutils literal"><span class="pre">index=True</span></tt> returns a list of available models</p>
+<p><tt class="docutils literal"><span class="pre">name=&lt;model&gt;</span></tt> returns a vtkPolyData, unless one of the
+following options is also specified</p>
+<p><tt class="docutils literal"><span class="pre">color=True</span></tt> returns the standard FreeSurfer color
+associated with the given model</p>
+<p><tt class="docutils literal"><span class="pre">volume=True</span></tt> returns the volume of the given structure
+read from the FreeSurfer stats files</p>
+<p class="last"><tt class="docutils literal"><span class="pre">label=True</span></tt> returns the integer which identifies the
+structure in the Aparc or WMparc image</p>
+</td>
+</tr>
+<tr class="row-odd"><td>Surf</td>
+<td>FreeSurfer brain cortex surface reconstruction<p>Requires <tt class="docutils literal"><span class="pre">name=&lt;surface&gt;</span></tt> and <tt class="docutils literal"><span class="pre">hemi=&lt;r|l&gt;</span></tt> where
+surface is <em>orig, pial, white, smoothwm, inflated or sphere</em></p>
+<p><tt class="docutils literal"><span class="pre">normals=False</span></tt> returns a polydata without normals</p>
+<p class="last"><tt class="docutils literal"><span class="pre">scalars=&lt;name&gt;</span></tt> add the given scalars to the polydata
+(look Surf_Scalar)</p>
+</td>
+</tr>
+<tr class="row-even"><td>Surf_Scalar</td>
+<td>Scalars for a FreeSurfer surfaces<p><tt class="docutils literal"><span class="pre">index</span> <span class="pre">=</span> <span class="pre">True</span></tt> returns a list of available scalars</p>
+<p><tt class="docutils literal"><span class="pre">scalars=&lt;name&gt;</span></tt> and <tt class="docutils literal"><span class="pre">hemi=&lt;'r'|'l'&gt;</span></tt> will return a numpy array with the
+scalar data.</p>
+<p class="last"><tt class="docutils literal"><span class="pre">lut=True</span></tt> will return a vtkLookupTable appropriate for the given scalars.</p>
+</td>
+</tr>
+<tr class="row-odd"><td>Fibers</td>
+<td>Tractography<p>Returns a polydata containing polylines. The following options are available</p>
+<p><tt class="docutils literal"><span class="pre">color=&lt;'orient'|'rand'|None&gt;</span></tt> By default fibers are colored according to the
+direction. &#8216;rand&#8217; will give a different color for each polyline so that they can be
+distinguished. Use None when you intend to display the fibers using scalar data and
+a lookup table</p>
+<p><tt class="docutils literal"><span class="pre">scalars=&lt;'fa_p','fa_l','md_p','md_l','length','aparc','wmparc'&gt;</span></tt> will attach the
+given scalar data to the polydata. fa stands for Fractional Anisotropy and md for
+mean diffusivity. _p stands for a value for each point, while _l will create a value for
+each line equal to the mean across the line. aparc and wmpar will attach the integer label
+of the nearest voxel in the corresponding image.</p>
+<p><tt class="docutils literal"><span class="pre">lut=True</span></tt> can be used together with <tt class="docutils literal"><span class="pre">scalars</span></tt> to get an appropriate lookup table</p>
+<p><tt class="docutils literal"><span class="pre">waypoint</span> <span class="pre">=</span> <span class="pre">&lt;model&gt;</span></tt> will filter the tractography to the lines that pass through the
+given structure</p>
+<p><tt class="docutils literal"><span class="pre">waypoint</span> <span class="pre">=</span> <span class="pre">&lt;model-list&gt;</span></tt> will filter the tractography to the lines that pass through
+all models in the list. If <tt class="docutils literal"><span class="pre">operation='or'</span></tt> is also specified the behaviour changes to
+the lines that pass through at least one of the models in the list.</p>
+<p><tt class="docutils literal"><span class="pre">ids=True</span></tt> will return the ids of the polylines, based in the whole tractography, that
+cross the specified waypoints.</p>
+<p><tt class="docutils literal"><span class="pre">name=&lt;tract-name&gt;</span></tt> can be used to access tracts defined through python functions. To get
+a list of such available tracts add <tt class="docutils literal"><span class="pre">index=True</span></tt></p>
+<p class="last"><tt class="docutils literal"><span class="pre">db-id=&lt;id&gt;</span></tt> returns a tract stored in the database with the given index</p>
+</td>
+</tr>
+<tr class="row-even"><td>Tracula</td>
+<td>Tracula probabilistic tractography<p><tt class="docutils literal"><span class="pre">index=True</span></tt> returns a list of available bundles</p>
+<p><tt class="docutils literal"><span class="pre">name=&lt;bundle&gt;</span></tt> returns the isosurface at 0.20 of the maximum aposteriori probability
+for the given bundle. Use <tt class="docutils literal"><span class="pre">contour=&lt;percentage&gt;</span></tt> to change this value.</p>
+<p><tt class="docutils literal"><span class="pre">map=True</span></tt> returns the probability map as an image</p>
+<p class="last"><tt class="docutils literal"><span class="pre">color=True</span></tt> returns the standard FreeSurfer color associated with the bundle.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><strong>subj_id</strong> &#8211; The id of the subject whose data is requested. Use data=&#8217;ids&#8217; to get a list of available subjects</li>
+<li><strong>space</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; <p>The coordinate systems in which the result is requested. Available spaces are</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="84%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>world</td>
+<td>Defined by the MRI image</td>
+</tr>
+<tr class="row-even"><td>talairach</td>
+<td>MRI image after applying an affine transformation to the Talairach coordinates</td>
+</tr>
+<tr class="row-odd"><td>dartel</td>
+<td>Non-linear warp towards a template</td>
+</tr>
+<tr class="row-even"><td>diff</td>
+<td>Defined by the diffusion images</td>
+</tr>
+<tr class="row-odd"><td>fmri-&lt;pdgm&gt;</td>
+<td>Defined by the SPM results</td>
+</tr>
+<tr class="row-even"><td>native</td>
+<td>Ignores all transformations, raw voxels data</td>
+</tr>
+</tbody>
+</table>
+<p>Notice that some data types are not available in every space, in this case an exception will be risen.</p>
+</li>
+<li><strong>**kwargs</strong> &#8211; <p>Arguments specific to each data type</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</div>
+<div class="section" id="coordinate-systems">
+<h3>Coordinate systems<a class="headerlink" href="#coordinate-systems" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><dl class="method">
+<dt id="braviz.readAndFilter.base_reader.BaseReader.move_img_to_world">
+<tt class="descclassname">BaseReader.</tt><tt class="descname">move_img_to_world</tt><big>(</big><em>self</em>, <em>img</em>, <em>source_space</em>, <em>subj</em>, <em>interpolate=False</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.base_reader.BaseReader.move_img_to_world" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resamples an image into the world coordinate system</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>img</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkImageData.html" title="See on vtk documentation"><em>vtkImageData</em></a>) &#8211; source image</li>
+<li><strong>source_space</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; source image coordinate system</li>
+<li><strong>subj</strong> &#8211; Subject to whom the image belongs</li>
+<li><strong>interpolate</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If False nearest neighbours interpolation is applied, useful for label maps</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Resliced image in world coordinate system</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.readAndFilter.base_reader.BaseReader.move_img_from_world">
+<tt class="descclassname">BaseReader.</tt><tt class="descname">move_img_from_world</tt><big>(</big><em>self</em>, <em>img</em>, <em>target_space</em>, <em>subj</em>, <em>interpolate=False</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.base_reader.BaseReader.move_img_from_world" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resamples an image from the world coordinates into some other coordinate system</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>img</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkImageData.html" title="See on vtk documentation"><em>vtkImageData</em></a>) &#8211; source image</li>
+<li><strong>target_space</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; destination coordinate system</li>
+<li><strong>subj</strong> &#8211; Subject to whom the image belongs</li>
+<li><strong>interpolate</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If False nearest neighbours interpolation is applied, useful for label maps</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Resliced image in <em>target_space</em> coordinates</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.readAndFilter.base_reader.BaseReader.transform_points_to_space">
+<tt class="descclassname">BaseReader.</tt><tt class="descname">transform_points_to_space</tt><big>(</big><em>self</em>, <em>point_set</em>, <em>space</em>, <em>subj</em>, <em>inverse=False</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.base_reader.BaseReader.transform_points_to_space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms a set of points into another coordinate system</p>
+<p>By defaults moves from world coordinates to another system, but these behaviour is reversed if the
+<em>inverse</em> parameter is True. At the moment, to move from an arbitrary coordinate system to another it is
+necessary to use the world coordinates as stopover</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>point_set</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkPolyData,vtkPoints,vtkDataSet.html" title="See on vtk documentation"><em>vtkPolyData,vtkPoints,vtkDataSet</em></a>) &#8211; source points</li>
+<li><strong>space</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; origin or destination coordinate system, depending on <em>inverse</em></li>
+<li><strong>subj</strong> &#8211; Subject to whom the points belong</li>
+<li><strong>inverse</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If false points are moved from world to <em>space</em>, else the points are moved from</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Transformed points</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</div>
+<div class="section" id="cache">
+<h3>Cache<a class="headerlink" href="#cache" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><dl class="method">
+<dt id="braviz.readAndFilter.base_reader.BaseReader.clear_mem_cache">
+<tt class="descclassname">BaseReader.</tt><tt class="descname">clear_mem_cache</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.base_reader.BaseReader.clear_mem_cache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears the contents of the memory cache</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.readAndFilter.base_reader.BaseReader.save_into_cache">
+<tt class="descclassname">BaseReader.</tt><tt class="descname">save_into_cache</tt><big>(</big><em>self</em>, <em>key</em>, <em>data</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.base_reader.BaseReader.save_into_cache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves some data into a cache, uses vtkDataWriter or <a class="reference external" href="http://docs.python.org/2/library/pickle.html#module-cPickle" title="(in Python v2.7)"><tt class="xref py py-mod docutils literal"><span class="pre">cPickle</span></tt></a> for python objects.</p>
+<p>Data is stored using a <em>key</em>. This value is required to retrieve the data or to overwrite it.
+To retrieve data use <a class="reference internal" href="#braviz.readAndFilter.base_reader.BaseReader.load_from_cache" title="braviz.readAndFilter.base_reader.BaseReader.load_from_cache"><tt class="xref py py-func docutils literal"><span class="pre">load_from_cache()</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>key</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Unique value used to reference the data into the cache,
+if data with the same key exists it will be overwritten</li>
+<li><strong>data</strong> &#8211; Data object to store</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">True if the value was successfully saved, False if there was a problem</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.readAndFilter.base_reader.BaseReader.load_from_cache">
+<tt class="descclassname">BaseReader.</tt><tt class="descname">load_from_cache</tt><big>(</big><em>self</em>, <em>key</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.base_reader.BaseReader.load_from_cache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads data stored into cache with <a class="reference internal" href="#braviz.readAndFilter.base_reader.BaseReader.save_into_cache" title="braviz.readAndFilter.base_reader.BaseReader.save_into_cache"><tt class="xref py py-func docutils literal"><span class="pre">save_into_cache()</span></tt></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Key used to store the object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">If successful returns the object as it was previously stored.<p>In case of failure returns <cite>None</cite></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.readAndFilter.base_reader.BaseReader.clear_cache_dir">
+<tt class="descclassname">BaseReader.</tt><tt class="descname">clear_cache_dir</tt><big>(</big><em>self</em>, <em>last_word=False</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.base_reader.BaseReader.clear_cache_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears all the contents of the disk cache</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>last_word</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If True goes on to clear the cache, otherwise does nothing</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</div>
+<div class="section" id="file-system">
+<h3>File System<a class="headerlink" href="#file-system" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><dl class="method">
+<dt id="braviz.readAndFilter.base_reader.BaseReader.get_data_root">
+<tt class="descclassname">BaseReader.</tt><tt class="descname">get_data_root</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.base_reader.BaseReader.get_data_root" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the root directory from which this instance reads data</p>
+<p>This directory should be readable by the current user</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.readAndFilter.base_reader.BaseReader.get_dyn_data_root">
+<tt class="descclassname">BaseReader.</tt><tt class="descname">get_dyn_data_root</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.base_reader.BaseReader.get_dyn_data_root" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the root directory into which this instance stores cache and data</p>
+<p>This directory should be writable by the current user</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="braviz.readAndFilter.base_reader.BaseReader.get_auto_data_root">
+<em class="property">static </em><tt class="descclassname">BaseReader.</tt><tt class="descname">get_auto_data_root</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.readAndFilter.base_reader.BaseReader.get_auto_data_root" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the root directory that would be used by an auto_reader to read data</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="braviz.readAndFilter.base_reader.BaseReader.get_auto_dyn_data_root">
+<em class="property">static </em><tt class="descclassname">BaseReader.</tt><tt class="descname">get_auto_dyn_data_root</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.readAndFilter.base_reader.BaseReader.get_auto_dyn_data_root" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the root directory that would be used by an auto_reader to store data</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="braviz.readAndFilter.base_reader.BaseReader.initialize_dynamic_data_dir">
+<em class="property">static </em><tt class="descclassname">BaseReader.</tt><tt class="descname">initialize_dynamic_data_dir</tt><big>(</big><em>dir_name=None</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.base_reader.BaseReader.initialize_dynamic_data_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the basic directory structure used for braviz starting at the specified path.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dir_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The path where the structure will be created.
+If None, the value returned by <a class="reference internal" href="#braviz.readAndFilter.base_reader.BaseReader.get_auto_dyn_data_root" title="braviz.readAndFilter.base_reader.BaseReader.get_auto_dyn_data_root"><tt class="xref py py-meth docutils literal"><span class="pre">get_auto_dyn_data_root()</span></tt></a> will be used</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="braviz.readAndFilter.base_reader.BaseReader.clear_dynamic_data_dir">
+<em class="property">static </em><tt class="descclassname">BaseReader.</tt><tt class="descname">clear_dynamic_data_dir</tt><big>(</big><em>dir_name</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.base_reader.BaseReader.clear_dynamic_data_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears data written by braviz from a directory</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dir_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Path to the root location where data was written, this is,
+the value returned by <a class="reference internal" href="#braviz.readAndFilter.base_reader.BaseReader.get_dyn_data_root" title="braviz.readAndFilter.base_reader.BaseReader.get_dyn_data_root"><tt class="xref py py-meth docutils literal"><span class="pre">get_dyn_data_root()</span></tt></a> in the reader that stored the data.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="custom-readers">
+<h2>Custom Readers<a class="headerlink" href="#custom-readers" title="Permalink to this headline">¶</a></h2>
+<p>Custom readers should be subclasses of <a class="reference internal" href="#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><tt class="xref py py-class docutils literal"><span class="pre">BaseReader</span></tt></a>. They should be included in a module with the same name as
+the project (in lowercase) and named after the project followed by <tt class="docutils literal"><span class="pre">&quot;Reader&quot;</span></tt>. Look at the examples below</p>
+<blockquote>
+<div><dl class="class">
+<dt id="braviz.readAndFilter.kmc40.Kmc40Reader">
+<em class="property">class </em><tt class="descname">Kmc40Reader</tt><big>(</big><em>path</em>, <em>max_cache=2000</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.kmc40.Kmc40Reader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Braviz reader class designed to work with the file structure and data from the KMC pilot</p>
+<p>This project contains 50 subjects (40 preterms).
+Data is organized into folders, and path and names for the different files can be derived from data type and id.
+The constructor requires the root to this structure</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.readAndFilter.kmc400.Kmc400Reader">
+<em class="property">class </em><tt class="descname">Kmc400Reader</tt><big>(</big><em>static_root</em>, <em>dynamic_route</em>, <em>max_cache=2000</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.kmc400.Kmc400Reader" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Braviz reader designed to work with the file structure and data from the KMC saving-brains project</p>
+<p>This project  contains data from around 450 subjects but only 250 of them have images.
+Data is organized into folders, and path and names for the different files can be derived from data type and id.
+This project reads data from a non-writable directory and writes braviz specific data to a different directory.
+This is done to protect raw data and to allow to share it between different users.</p>
+</dd></dl>
+
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+          <a href="read_and_filter.html" title="Read And Filter"
+             accesskey="P">previous</a> |
+          <a href="braviz_db.html" title="Braviz Data Base"
+             accesskey="N">next</a> |
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a>
+          
+            <br/>
+            <a href="../_sources/library/reader.txt"
+               rel="nofollow">Show Source</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

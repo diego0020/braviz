@@ -1,0 +1,2133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Subject Viewer &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.0b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Braviz Documentation" href="../index.html" />
+    <link rel="up" title="Visualization" href="visualization.html" />
+    <link rel="next" title="Visualizaing functional data" href="fmri_view.html" />
+    <link rel="prev" title="Simple VTK Visualization" href="simple_vtk.html" /> 
+  </head>
+  <body>
+    
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html"> Braviz Documentation </a></div>
+          <nav class="parents">
+              <ol>
+        <li><a href="../index.html"> Home </a> &raquo;</li>
+          <li><a href="index.html" >Braviz library</a> &raquo;</li>
+          <li><a href="visualization.html"  accesskey="U" >Visualization</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Subject Viewer</a><ul>
+<li><a class="reference internal" href="#full-viewers">Full Viewers</a></li>
+<li><a class="reference internal" href="#data-managers">Data Managers</a></li>
+<li><a class="reference internal" href="#pyqt-widgets">PyQt Widgets</a></li>
+<li><a class="reference internal" href="#utilities">Utilities</a></li>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="simple_vtk.html"
+                        title="previous chapter">Simple VTK Visualization</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="fmri_view.html"
+                        title="next chapter">Visualizaing functional data</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-braviz.visualization.subject_viewer"></span><div class="section" id="subject-viewer">
+<h1>Subject Viewer<a class="headerlink" href="#subject-viewer" title="Permalink to this headline">¶</a></h1>
+<p>This module implements high level data viewers. They handle all VTK, and data access operations.
+They are made of <em>data managers</em> which specialize on handling specific data types. They maintain its state, and
+specially important, support changing subject or coordinate systems while keeping the other parameters constant. In
+this way it is possible to compare two subjects.</p>
+<p>These viewers are designed to be used as widgets it Qt applications. For that matter specific Widget wrappers
+exist for each of them. This wrappers can send PyQt signals on certain events, like picking the screen.</p>
+<div class="section" id="full-viewers">
+<h2>Full Viewers<a class="headerlink" href="#full-viewers" title="Permalink to this headline">¶</a></h2>
+<p>These classes combine different data managers to create integrated visualizations.</p>
+<dl class="class">
+<dt id="braviz.visualization.subject_viewer.SubjectViewer">
+<em class="property">class </em><tt class="descname">SubjectViewer</tt><big>(</big><em>render_window_interactor</em>, <em>reader</em>, <em>widget</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.SubjectViewer" title="Permalink to this definition">¶</a></dt>
+<dd><p>A general viewer to show data on a particular subject</p>
+<p>It provides access to</p>
+<blockquote>
+<div><ul class="simple">
+<li>Images</li>
+<li>fMRI Contours</li>
+<li>Segmentation reconstruction models</li>
+<li>Surface parcellations</li>
+<li>Tractographies</li>
+<li>Tracula Bundles</li>
+</ul>
+</div></blockquote>
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.SubjectViewer.change_current_space">
+<tt class="descname">change_current_space</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.SubjectViewer.change_current_space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the current coordinate system</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_space</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; New coordinate system</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.SubjectViewer.change_subject">
+<tt class="descname">change_subject</tt><big>(</big><em>new_subject</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.SubjectViewer.change_subject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the subject associated to the viewer</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_subject</strong> &#8211; new subject id</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.visualization.subject_viewer.SubjectViewer.contours">
+<tt class="descname">contours</tt><a class="headerlink" href="#braviz.visualization.subject_viewer.SubjectViewer.contours" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to <a class="reference internal" href="#braviz.visualization.subject_viewer.FmriContours" title="braviz.visualization.subject_viewer.FmriContours"><tt class="xref py py-class docutils literal"><span class="pre">FmriContours</span></tt></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.SubjectViewer.get_camera_parameters">
+<tt class="descname">get_camera_parameters</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.SubjectViewer.get_camera_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets current camera parameters</p>
+<dl class="docutils">
+<dt>Returs:</dt>
+<dd>focal_point, position, view_up</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.visualization.subject_viewer.SubjectViewer.image">
+<tt class="descname">image</tt><a class="headerlink" href="#braviz.visualization.subject_viewer.SubjectViewer.image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to <a class="reference internal" href="#braviz.visualization.subject_viewer.ImageManager" title="braviz.visualization.subject_viewer.ImageManager"><tt class="xref py py-class docutils literal"><span class="pre">ImageManager</span></tt></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.visualization.subject_viewer.SubjectViewer.models">
+<tt class="descname">models</tt><a class="headerlink" href="#braviz.visualization.subject_viewer.SubjectViewer.models" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to <a class="reference internal" href="#braviz.visualization.subject_viewer.ModelManager" title="braviz.visualization.subject_viewer.ModelManager"><tt class="xref py py-class docutils literal"><span class="pre">ModelManager</span></tt></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.SubjectViewer.print_camera">
+<tt class="descname">print_camera</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.SubjectViewer.print_camera" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs information about the current camera position</p>
+<p>Data is send to the current logger with <em>info</em> level</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.SubjectViewer.reset_camera">
+<tt class="descname">reset_camera</tt><big>(</big><em>position</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.SubjectViewer.reset_camera" title="Permalink to this definition">¶</a></dt>
+<dd><p>resets the current camera to standard locations.</p>
+<blockquote>
+<div><ul class="simple">
+<li>0: initial 3d view</li>
+<li>1: left</li>
+<li>2: right</li>
+<li>3: front</li>
+<li>4: back</li>
+<li>5: top</li>
+<li>6: bottom</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.SubjectViewer.set_camera">
+<tt class="descname">set_camera</tt><big>(</big><em>focal_point</em>, <em>position</em>, <em>view_up</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.SubjectViewer.set_camera" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the camera position</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>focal_point</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; Focal point</li>
+<li><strong>position</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; Camera position</li>
+<li><strong>view_up</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; View up vector</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.SubjectViewer.set_contours_visibility">
+<tt class="descname">set_contours_visibility</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.SubjectViewer.set_contours_visibility" title="Permalink to this definition">¶</a></dt>
+<dd><p>Toggle visibility of fMRI contours</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>visible</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If <tt class="docutils literal"><span class="pre">True</span></tt> contours will show, if <tt class="docutils literal"><span class="pre">False</span></tt> contours will be hidden,</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.SubjectViewer.set_fmri_contours_image">
+<tt class="descname">set_fmri_contours_image</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.SubjectViewer.set_fmri_contours_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the image to use for calculating fMRI contours</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>paradigm</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name of fMRI paradigm</li>
+<li><strong>contrast</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Index (Matlab style) of desired contrast</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.SubjectViewer.show_cone">
+<tt class="descname">show_cone</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.SubjectViewer.show_cone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Useful for testing</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.visualization.subject_viewer.SubjectViewer.surface">
+<tt class="descname">surface</tt><a class="headerlink" href="#braviz.visualization.subject_viewer.SubjectViewer.surface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to <a class="reference internal" href="#braviz.visualization.subject_viewer.SurfaceManager" title="braviz.visualization.subject_viewer.SurfaceManager"><tt class="xref py py-class docutils literal"><span class="pre">SurfaceManager</span></tt></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.visualization.subject_viewer.SubjectViewer.tractography">
+<tt class="descname">tractography</tt><a class="headerlink" href="#braviz.visualization.subject_viewer.SubjectViewer.tractography" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to <a class="reference internal" href="#braviz.visualization.subject_viewer.TractographyManager" title="braviz.visualization.subject_viewer.TractographyManager"><tt class="xref py py-class docutils literal"><span class="pre">TractographyManager</span></tt></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.visualization.subject_viewer.SubjectViewer.tracula">
+<tt class="descname">tracula</tt><a class="headerlink" href="#braviz.visualization.subject_viewer.SubjectViewer.tracula" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to <a class="reference internal" href="#braviz.visualization.subject_viewer.TraculaManager" title="braviz.visualization.subject_viewer.TraculaManager"><tt class="xref py py-class docutils literal"><span class="pre">TraculaManager</span></tt></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.visualization.subject_viewer.fMRI_viewer">
+<em class="property">class </em><tt class="descname">fMRI_viewer</tt><big>(</big><em>render_window_interactor</em>, <em>reader</em>, <em>widget</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.fMRI_viewer" title="Permalink to this definition">¶</a></dt>
+<dd><p>A viewer for visualizaing fMRI data. It displays</p>
+<blockquote>
+<div><ul class="simple">
+<li>Images</li>
+<li>fMRI contours</li>
+</ul>
+</div></blockquote>
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.fMRI_viewer.change_contrast">
+<tt class="descname">change_contrast</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.fMRI_viewer.change_contrast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change contrast</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_contrast</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Index of new contrast (starting at 1)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.fMRI_viewer.change_orientation">
+<tt class="descname">change_orientation</tt><big>(</big><em>orientation_index</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.fMRI_viewer.change_orientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the orientation of the Image Plane Widget</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>orientation_index</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; 0 for x, 1 for y and 2 for z</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.fMRI_viewer.change_paradigm">
+<tt class="descname">change_paradigm</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.fMRI_viewer.change_paradigm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change fMRI paradigm</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_pdgm</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Must be one of the available fMRI paradigms</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.fMRI_viewer.change_subject">
+<tt class="descname">change_subject</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.fMRI_viewer.change_subject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change subject associated to the plane</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_subj</strong> &#8211; Id of new subject</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.visualization.subject_viewer.fMRI_viewer.contours">
+<tt class="descname">contours</tt><a class="headerlink" href="#braviz.visualization.subject_viewer.fMRI_viewer.contours" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to FmriContours</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.fMRI_viewer.current_coords">
+<tt class="descname">current_coords</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.fMRI_viewer.current_coords" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get cursor coordinates</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A tuple of coordinates</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.fMRI_viewer.get_camera_parameters">
+<tt class="descname">get_camera_parameters</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.fMRI_viewer.get_camera_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets current camera parameters</p>
+<dl class="docutils">
+<dt>Returs:</dt>
+<dd>focal_point, position, view_up</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.visualization.subject_viewer.fMRI_viewer.image">
+<tt class="descname">image</tt><a class="headerlink" href="#braviz.visualization.subject_viewer.fMRI_viewer.image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to ImageManager</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.fMRI_viewer.reset_camera">
+<tt class="descname">reset_camera</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.fMRI_viewer.reset_camera" title="Permalink to this definition">¶</a></dt>
+<dd><p>resets the current camera to standard locations.</p>
+<blockquote>
+<div><ul class="simple">
+<li>0: initial 3d view</li>
+<li>1: left</li>
+<li>2: right</li>
+<li>3: front</li>
+<li>4: back</li>
+<li>5: top</li>
+<li>6: bottom</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.fMRI_viewer.set_all">
+<tt class="descname">set_all</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.fMRI_viewer.set_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set subject, paradigm and contrast</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>new_subject</strong> &#8211; Id of new subject</li>
+<li><strong>new_pdgm</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; New paradigm, must be one of the available fMRI paradigms</li>
+<li><strong>new_contrast</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Index of new contrast (starting at 1)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.fMRI_viewer.set_camera">
+<tt class="descname">set_camera</tt><big>(</big><em>focal_point</em>, <em>position</em>, <em>view_up</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.fMRI_viewer.set_camera" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the camera position</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>focal_point</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; Focal point</li>
+<li><strong>position</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; Camera position</li>
+<li><strong>view_up</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; View up vector</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.fMRI_viewer.set_contour_opacity">
+<tt class="descname">set_contour_opacity</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.fMRI_viewer.set_contour_opacity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opacity for displaying the contours</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; A number from 0 to 100; where 0 is invisible and 100 is opaque</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.fMRI_viewer.set_contour_value">
+<tt class="descname">set_contour_value</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.fMRI_viewer.set_contour_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set value for the fMRI contours</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; The iso-contours will be calculated at this value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.fMRI_viewer.set_contour_visibility">
+<tt class="descname">set_contour_visibility</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.fMRI_viewer.set_contour_visibility" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set visibility of contours</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If <tt class="docutils literal"><span class="pre">True</span></tt> show the contours, otherwise hide them</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.fMRI_viewer.set_cursor_coords">
+<tt class="descname">set_cursor_coords</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.fMRI_viewer.set_cursor_coords" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set coordinates for the cursor</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>Coords</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; New position for the cursor (in voxels)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.fMRI_viewer.update_view">
+<tt class="descname">update_view</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.fMRI_viewer.update_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets all elements in the view</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.visualization.subject_viewer.OrthogonalPlanesViewer">
+<em class="property">class </em><tt class="descname">OrthogonalPlanesViewer</tt><big>(</big><em>render_window_interactor</em>, <em>reader</em>, <em>widget</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.OrthogonalPlanesViewer" title="Permalink to this definition">¶</a></dt>
+<dd><p>A viewer with three orthogonal planes</p>
+<p>It provides access to</p>
+<blockquote>
+<div><ul class="simple">
+<li>Images</li>
+<li>Surfaces</li>
+<li>A sphere</li>
+</ul>
+</div></blockquote>
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.OrthogonalPlanesViewer.change_image_modality">
+<tt class="descname">change_image_modality</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.OrthogonalPlanesViewer.change_image_modality" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change image modality in all planes</p>
+<p>See <a class="reference internal" href="#braviz.visualization.subject_viewer.ImageManager.change_image_modality" title="braviz.visualization.subject_viewer.ImageManager.change_image_modality"><tt class="xref py py-meth docutils literal"><span class="pre">ImageManager.change_image_modality()</span></tt></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>mod</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; New modality, for fMRI enter the paradigm here</li>
+<li><strong>contrast</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; If modality is fMRI the index of the contrast</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.OrthogonalPlanesViewer.change_space">
+<tt class="descname">change_space</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.OrthogonalPlanesViewer.change_space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the current coordinate system</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_space</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; New coordinate system</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.OrthogonalPlanesViewer.change_subject">
+<tt class="descname">change_subject</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.OrthogonalPlanesViewer.change_subject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the subject associated to the viewer</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_subject</strong> &#8211; new subject id</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.visualization.subject_viewer.OrthogonalPlanesViewer.cortex">
+<tt class="descname">cortex</tt><a class="headerlink" href="#braviz.visualization.subject_viewer.OrthogonalPlanesViewer.cortex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to the surface manager</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.OrthogonalPlanesViewer.current_position">
+<tt class="descname">current_position</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.OrthogonalPlanesViewer.current_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Last picked position, either on the planes or on the surface</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Coordinates of the last picked position</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.OrthogonalPlanesViewer.finish_initializing">
+<tt class="descname">finish_initializing</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.OrthogonalPlanesViewer.finish_initializing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finish viewer initialization, only call this after calling &#8220;show&#8221; on the widget or its parents</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.OrthogonalPlanesViewer.get_camera_parameters">
+<tt class="descname">get_camera_parameters</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.OrthogonalPlanesViewer.get_camera_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets current camera parameters</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">focal_point, position, view_up</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.OrthogonalPlanesViewer.get_current_slice">
+<tt class="descname">get_current_slice</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.OrthogonalPlanesViewer.get_current_slice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get current slices of all planes</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A tuple with the current slice of each plane (x,y,z)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.OrthogonalPlanesViewer.get_number_of_slices">
+<tt class="descname">get_number_of_slices</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.OrthogonalPlanesViewer.get_number_of_slices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get number of slices in each plane</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A tuple with the image dimension</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.OrthogonalPlanesViewer.hide_image">
+<tt class="descname">hide_image</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.OrthogonalPlanesViewer.hide_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hide all planes</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.visualization.subject_viewer.OrthogonalPlanesViewer.image_planes">
+<tt class="descname">image_planes</tt><a class="headerlink" href="#braviz.visualization.subject_viewer.OrthogonalPlanesViewer.image_planes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to the image planes array</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.OrthogonalPlanesViewer.set_camera">
+<tt class="descname">set_camera</tt><big>(</big><em>focal_point</em>, <em>position</em>, <em>view_up</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.OrthogonalPlanesViewer.set_camera" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the camera position</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>focal_point</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; Focal point</li>
+<li><strong>position</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; Camera position</li>
+<li><strong>view_up</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; View up vector</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.OrthogonalPlanesViewer.show_image">
+<tt class="descname">show_image</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.OrthogonalPlanesViewer.show_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows all planes</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.visualization.subject_viewer.OrthogonalPlanesViewer.sphere">
+<tt class="descname">sphere</tt><a class="headerlink" href="#braviz.visualization.subject_viewer.OrthogonalPlanesViewer.sphere" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to the sphere</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.visualization.subject_viewer.OrthogonalPlanesViewer.x_image">
+<tt class="descname">x_image</tt><a class="headerlink" href="#braviz.visualization.subject_viewer.OrthogonalPlanesViewer.x_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to the image manager perpendicular to x</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.visualization.subject_viewer.OrthogonalPlanesViewer.y_image">
+<tt class="descname">y_image</tt><a class="headerlink" href="#braviz.visualization.subject_viewer.OrthogonalPlanesViewer.y_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to the image manager perpendicular to y</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.visualization.subject_viewer.OrthogonalPlanesViewer.z_image">
+<tt class="descname">z_image</tt><a class="headerlink" href="#braviz.visualization.subject_viewer.OrthogonalPlanesViewer.z_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to the image manager perpendicular to z</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.visualization.subject_viewer.MeasurerViewer">
+<em class="property">class </em><tt class="descname">MeasurerViewer</tt><big>(</big><em>render_window_interactor</em>, <em>reader</em>, <em>widget</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.MeasurerViewer" title="Permalink to this definition">¶</a></dt>
+<dd><p>A viewer that allows the user to measure the distance between two points on images using a vtkMeasureWidget</p>
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.MeasurerViewer.change_image_modality">
+<tt class="descname">change_image_modality</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.MeasurerViewer.change_image_modality" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change image modality in all planes</p>
+<p>See <a class="reference internal" href="#braviz.visualization.subject_viewer.ImageManager.change_image_modality" title="braviz.visualization.subject_viewer.ImageManager.change_image_modality"><tt class="xref py py-meth docutils literal"><span class="pre">ImageManager.change_image_modality()</span></tt></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>mod</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; New modality, for fMRI enter the paradigm here</li>
+<li><strong>contrast</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; If modality is fMRI the index of the contrast</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.MeasurerViewer.change_space">
+<tt class="descname">change_space</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.MeasurerViewer.change_space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the current coordinate system</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_space</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; New coordinate system</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.MeasurerViewer.change_subject">
+<tt class="descname">change_subject</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.MeasurerViewer.change_subject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the subject associated to the viewer</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_subject</strong> &#8211; new subject id</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.visualization.subject_viewer.MeasurerViewer.distance">
+<tt class="descname">distance</tt><a class="headerlink" href="#braviz.visualization.subject_viewer.MeasurerViewer.distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Current distance measured by the measure widget</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.MeasurerViewer.emit_distance_changed_signal">
+<tt class="descname">emit_distance_changed_signal</tt><big>(</big><em>caller</em>, <em>event</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.MeasurerViewer.emit_distance_changed_signal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Emit a Qt Signal through the associated widget</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.MeasurerViewer.finish_initializing">
+<tt class="descname">finish_initializing</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.MeasurerViewer.finish_initializing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finish viewer initialization, only call this after calling &#8220;show&#8221; on the widget or its parents</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.MeasurerViewer.get_camera_parameters">
+<tt class="descname">get_camera_parameters</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.MeasurerViewer.get_camera_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets current camera parameters</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">focal_point, position, view_up</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.MeasurerViewer.get_current_slice">
+<tt class="descname">get_current_slice</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.MeasurerViewer.get_current_slice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get current slices of all planes</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A tuple with the current slice of each plane (x,y,z)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.MeasurerViewer.get_number_of_slices">
+<tt class="descname">get_number_of_slices</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.MeasurerViewer.get_number_of_slices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get number of slices in each plane</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A tuple with the image dimension</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.MeasurerViewer.hide_image">
+<tt class="descname">hide_image</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.MeasurerViewer.hide_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hide all planes</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.visualization.subject_viewer.MeasurerViewer.image_planes">
+<tt class="descname">image_planes</tt><a class="headerlink" href="#braviz.visualization.subject_viewer.MeasurerViewer.image_planes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to the image planes array</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.visualization.subject_viewer.MeasurerViewer.point1">
+<tt class="descname">point1</tt><a class="headerlink" href="#braviz.visualization.subject_viewer.MeasurerViewer.point1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get coordinates of first measure point</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.visualization.subject_viewer.MeasurerViewer.point2">
+<tt class="descname">point2</tt><a class="headerlink" href="#braviz.visualization.subject_viewer.MeasurerViewer.point2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get coordinates of second measure point</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.MeasurerViewer.reset_camera">
+<tt class="descname">reset_camera</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.MeasurerViewer.reset_camera" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets camera to the initial position</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.MeasurerViewer.reset_measure">
+<tt class="descname">reset_measure</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.MeasurerViewer.reset_measure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset the measure widget, remove both points from the scene</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.MeasurerViewer.set_camera">
+<tt class="descname">set_camera</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.MeasurerViewer.set_camera" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the camera position</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>focal_point</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; Focal point</li>
+<li><strong>position</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; Camera position</li>
+<li><strong>view_up</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; View up vector</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.MeasurerViewer.set_measure_axis">
+<tt class="descname">set_measure_axis</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.MeasurerViewer.set_measure_axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the measure plane to be perpendicular to the axis</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>axis</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; 0 for x, 1 for y and 2 for z</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.MeasurerViewer.set_measure_color">
+<tt class="descname">set_measure_color</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.MeasurerViewer.set_measure_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set color of the measure widget</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>r</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; red</li>
+<li><strong>g</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; green</li>
+<li><strong>b</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; blue</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.MeasurerViewer.set_points">
+<tt class="descname">set_points</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.MeasurerViewer.set_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set coordinates for both points</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>p1</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; First point coordinates</li>
+<li><strong>p2</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; Second point coordinates</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.MeasurerViewer.set_slice_coords">
+<tt class="descname">set_slice_coords</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.MeasurerViewer.set_slice_coords" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move the measure plane perpendicularly</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>coords</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; New position across the axis perpendicular to the measure plane</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.MeasurerViewer.show_image">
+<tt class="descname">show_image</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.MeasurerViewer.show_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows all planes</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.visualization.subject_viewer.MeasurerViewer.x_image">
+<tt class="descname">x_image</tt><a class="headerlink" href="#braviz.visualization.subject_viewer.MeasurerViewer.x_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to the image manager perpendicular to x</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.visualization.subject_viewer.MeasurerViewer.y_image">
+<tt class="descname">y_image</tt><a class="headerlink" href="#braviz.visualization.subject_viewer.MeasurerViewer.y_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to the image manager perpendicular to y</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.visualization.subject_viewer.MeasurerViewer.z_image">
+<tt class="descname">z_image</tt><a class="headerlink" href="#braviz.visualization.subject_viewer.MeasurerViewer.z_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to the image manager perpendicular to z</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="data-managers">
+<h2>Data Managers<a class="headerlink" href="#data-managers" title="Permalink to this headline">¶</a></h2>
+<p>Managing the visualization state is simplified by the data managers, which focus on specific data types.</p>
+<dl class="class">
+<dt id="braviz.visualization.subject_viewer.ImageManager">
+<em class="property">class </em><tt class="descname">ImageManager</tt><big>(</big><em>reader</em>, <em>ren</em>, <em>widget</em>, <em>interactor</em>, <em>initial_subj=None</em>, <em>initial_space='World'</em>, <em>picker=None</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.ImageManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Controls an ImagePlaneWidget</p>
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.ImageManager.change_image_modality">
+<tt class="descname">change_image_modality</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.ImageManager.change_image_modality" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the modality of the current image;</p>
+<p>In the case of fMRI modality should be fMRI and paradigm the name of the paradigm</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>modality</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; New image modality, may be one of  <tt class="docutils literal"><span class="pre">[&quot;mri&quot;,&quot;fa&quot;,&quot;md&quot;,&quot;dti&quot;,&quot;aparc&quot;,&quot;wmparc&quot;,&quot;fmri&quot;]</span></tt></li>
+<li><strong>paradigm</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name of paradigm in case modality is <tt class="docutils literal"><span class="pre">&quot;fmri&quot;</span></tt></li>
+<li><strong>force_reload</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; if True, forces the plane to reload the image if it appears to be the same as before</li>
+<li><strong>contrast</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; contrast to show in case modality is <tt class="docutils literal"><span class="pre">&quot;fmri&quot;</span></tt></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.ImageManager.change_image_orientation">
+<tt class="descname">change_image_orientation</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.ImageManager.change_image_orientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the orientation of the current image</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>orientation</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; 0 for X, 1 for Y and 2 for Z</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.ImageManager.change_space">
+<tt class="descname">change_space</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.ImageManager.change_space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change current coordinate system</p>
+<p>new_space (str) : new coordinate system, see <a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader.get" title="braviz.readAndFilter.base_reader.BaseReader.get"><tt class="xref py py-meth docutils literal"><span class="pre">get()</span></tt></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.ImageManager.change_subject">
+<tt class="descname">change_subject</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.ImageManager.change_subject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change subject associated to the plane</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_subject</strong> &#8211; Id of new subject</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.ImageManager.get_current_image_level">
+<tt class="descname">get_current_image_level</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.ImageManager.get_current_image_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Current level</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Current level value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.ImageManager.get_current_image_slice">
+<tt class="descname">get_current_image_slice</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.ImageManager.get_current_image_slice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the index of the actual slice</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The index of the current slice</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.ImageManager.get_current_image_window">
+<tt class="descname">get_current_image_window</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.ImageManager.get_current_image_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>Current window</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Current window value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.ImageManager.get_number_of_image_slices">
+<tt class="descname">get_number_of_image_slices</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.ImageManager.get_number_of_image_slices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the number of slices in the current orientation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The number of available slicer for the current image and orientation</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.ImageManager.hide_image">
+<tt class="descname">hide_image</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.ImageManager.hide_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hide the plane widget</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.visualization.subject_viewer.ImageManager.image_plane_widget">
+<tt class="descname">image_plane_widget</tt><a class="headerlink" href="#braviz.visualization.subject_viewer.ImageManager.image_plane_widget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the vtkImagePlaneWidget</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.ImageManager.reset_window_level">
+<tt class="descname">reset_window_level</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.ImageManager.reset_window_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets window and level to standard values</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.ImageManager.set_image_level">
+<tt class="descname">set_image_level</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.ImageManager.set_image_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes level value</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_level</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; New level value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.ImageManager.set_image_slice">
+<tt class="descname">set_image_slice</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.ImageManager.set_image_slice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the image slice</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_slice</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Number of the desired slice</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.ImageManager.set_image_window">
+<tt class="descname">set_image_window</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.ImageManager.set_image_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes window value</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_window</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; New window value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.ImageManager.show_image">
+<tt class="descname">show_image</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.ImageManager.show_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show the plane widget</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.visualization.subject_viewer.ModelManager">
+<em class="property">class </em><tt class="descname">ModelManager</tt><big>(</big><em>reader</em>, <em>ren</em>, <em>initial_subj=None</em>, <em>initial_space='World'</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.ModelManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>A manager for segmented structure models</p>
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.ModelManager.get_opacity">
+<tt class="descname">get_opacity</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.ModelManager.get_opacity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets actual opacity</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">An integer from 0 to 100 indicating the current opacity percentage</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.ModelManager.get_scalar_metrics">
+<tt class="descname">get_scalar_metrics</tt><big>(</big><em>metric_name</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.ModelManager.get_scalar_metrics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get an scalar metric from the current models</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>metric_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; <p>May be</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">volume</span></tt> : Total volume occupied by all models</li>
+<li><tt class="docutils literal"><span class="pre">area</span></tt> : Sum of superficial areas of all models</li>
+<li><tt class="docutils literal"><span class="pre">fa_inside</span></tt> : Mean value of FA inside the current models</li>
+<li><tt class="docutils literal"><span class="pre">md_inside</span></tt> : Mean value of MD inside the current models</li>
+<li><tt class="docutils literal"><span class="pre">nfibers</span></tt> : Number of fibers that cross any of the current models</li>
+<li><tt class="docutils literal"><span class="pre">lfibers</span></tt> : Mean length of fibers that cross any of the current models</li>
+<li><tt class="docutils literal"><span class="pre">fa-fibers</span></tt> : Mean FA of fibers that cross any of the current models</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Scalar value or <tt class="docutils literal"><span class="pre">nan</span></tt> if there was an error</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.ModelManager.reload_models">
+<tt class="descname">reload_models</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.ModelManager.reload_models" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reloads all models</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>subj</strong> &#8211; Code for new subject, if <tt class="docutils literal"><span class="pre">None</span></tt> the subject is not changed</li>
+<li><strong>space</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; new coordinate system, if <tt class="docutils literal"><span class="pre">None</span></tt> the coordinates are not changed</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.ModelManager.set_color">
+<tt class="descname">set_color</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.ModelManager.set_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the color for displaying the models</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>float_rgb_color</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; An rgb value, if <tt class="docutils literal"><span class="pre">None</span></tt> the freesurfer lookuptable is used</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.ModelManager.set_models">
+<tt class="descname">set_models</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.ModelManager.set_models" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the currently shown models</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_model_set</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#set" title="(in Python v2.7)"><em>set</em></a>) &#8211; An iterable of strings with names of valid models.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.ModelManager.set_opacity">
+<tt class="descname">set_opacity</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.ModelManager.set_opacity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opacity for displaying the models</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>int_opacity</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; A number from 0 to 100; where 0 is invisible and 100 is opaque</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.visualization.subject_viewer.TractographyManager">
+<em class="property">class </em><tt class="descname">TractographyManager</tt><big>(</big><em>reader</em>, <em>ren</em>, <em>initial_subj=None</em>, <em>initial_space='World'</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.TractographyManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>A manager for tractography data</p>
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.TractographyManager.add_from_database">
+<tt class="descname">add_from_database</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.TractographyManager.add_from_database" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a bundle from the database</p>
+<p>See <a class="reference internal" href="bundles_db.html#module-braviz.readAndFilter.bundles_db" title="braviz.readAndFilter.bundles_db"><tt class="xref py py-mod docutils literal"><span class="pre">braviz.readAndFilter.bundles_db</span></tt></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>b_id</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Bundle id in the database</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.TractographyManager.change_color">
+<tt class="descname">change_color</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.TractographyManager.change_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the coloring scheme for the rendered data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_color</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; <p>New coloring scheme, the following values are accepted</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">bundle</span></tt> : A different color for each bundle</li>
+<li><tt class="docutils literal"><span class="pre">orient</span></tt> : Color tractography based on local orientation</li>
+<li><tt class="docutils literal"><span class="pre">rand</span></tt> : A different color for each line</li>
+<li><tt class="docutils literal"><span class="pre">fa_p</span></tt> : Use FA values at each point and a lookuptable</li>
+<li><tt class="docutils literal"><span class="pre">fa_l</span></tt> : Use mean fa of each line and a lookuptable</li>
+<li><tt class="docutils literal"><span class="pre">md_p</span></tt> : Use MD values at each point and a lookuptable</li>
+<li><tt class="docutils literal"><span class="pre">md_l</span></tt> : Use mean MD of each line and a lookuptable</li>
+<li><tt class="docutils literal"><span class="pre">length</span></tt>: Use length of each line and a lookuptable</li>
+<li><tt class="docutils literal"><span class="pre">aparc</span></tt>: Use the <em>aparc</em> label at each point and the freesurfer lookuptable</li>
+<li><tt class="docutils literal"><span class="pre">wmparc</span></tt>: Use the <em>wmparc</em> label at each point and the freesurfer lookuptable</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.TractographyManager.get_bundle_colors">
+<tt class="descname">get_bundle_colors</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.TractographyManager.get_bundle_colors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a set of colors for coloring each active bundle in a different color</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A color palette with length equal to the number of active bundles</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.TractographyManager.get_polydata">
+<tt class="descname">get_polydata</tt><big>(</big><em>b_id</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.TractographyManager.get_polydata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the polydata object associated to a database bundle.</p>
+<p>The current subject, coordinate system and scalars are maintained</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>b_id</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Bundle database id</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">vtkPolyData from the requested bundle</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.TractographyManager.get_scalar_from_db">
+<tt class="descname">get_scalar_from_db</tt><big>(</big><em>scalar</em>, <em>bid</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.TractographyManager.get_scalar_from_db" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets an scalar metric from an active database bundle</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>scalar</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; <p>Scalar metric, available options are:</p>
+<ul>
+<li><tt class="docutils literal"><span class="pre">number</span></tt> : Number of lines</li>
+<li><tt class="docutils literal"><span class="pre">mean_length</span></tt> : Mean length of lines</li>
+<li><tt class="docutils literal"><span class="pre">mean_fa</span></tt> : Mean FA of the bundle</li>
+<li><tt class="docutils literal"><span class="pre">mean_md</span></tt> : Mean MD of the bundle</li>
+</ul>
+</li>
+<li><strong>bid</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Database id</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Scalar value or <tt class="docutils literal"><span class="pre">nan</span></tt> if there was an error</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.TractographyManager.get_scalar_from_structs">
+<tt class="descname">get_scalar_from_structs</tt><big>(</big><em>scalar</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.TractographyManager.get_scalar_from_structs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets an scalar metric from the active checkpoints bundle</p>
+<p>see <a class="reference internal" href="#braviz.visualization.subject_viewer.TractographyManager.set_bundle_from_checkpoints" title="braviz.visualization.subject_viewer.TractographyManager.set_bundle_from_checkpoints"><tt class="xref py py-meth docutils literal"><span class="pre">set_bundle_from_checkpoints()</span></tt></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>scalar</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; <p>Scalar metric, available options are:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">number</span></tt> : Number of lines</li>
+<li><tt class="docutils literal"><span class="pre">mean_length</span></tt> : Mean length of lines</li>
+<li><tt class="docutils literal"><span class="pre">mean_fa</span></tt> : Mean FA of the bundle</li>
+<li><tt class="docutils literal"><span class="pre">mean_md</span></tt> : Mean MD of the bundle</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Scalar value or <tt class="docutils literal"><span class="pre">nan</span></tt> if there was an error</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.TractographyManager.get_show_color_bar">
+<tt class="descname">get_show_color_bar</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.TractographyManager.get_show_color_bar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Status of the color bar</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><tt class="docutils literal"><span class="pre">True</span></tt> if the color bar is active, <tt class="docutils literal"><span class="pre">False</span></tt> otherwise</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.TractographyManager.hide_checkpoints_bundle">
+<tt class="descname">hide_checkpoints_bundle</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.TractographyManager.hide_checkpoints_bundle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hide the checkpoints bundle created with <a class="reference internal" href="#braviz.visualization.subject_viewer.TractographyManager.set_bundle_from_checkpoints" title="braviz.visualization.subject_viewer.TractographyManager.set_bundle_from_checkpoints"><tt class="xref py py-meth docutils literal"><span class="pre">set_bundle_from_checkpoints()</span></tt></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.TractographyManager.hide_database_tract">
+<tt class="descname">hide_database_tract</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.TractographyManager.hide_database_tract" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hides a bundle previously added from the database</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>bid</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Bundle database id</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.TractographyManager.set_active_db_tracts">
+<tt class="descname">set_active_db_tracts</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.TractographyManager.set_active_db_tracts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Selects active database tracts</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_set</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of database ids</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.TractographyManager.set_bundle_from_checkpoints">
+<tt class="descname">set_bundle_from_checkpoints</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.TractographyManager.set_bundle_from_checkpoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a fiber bundle based on a list of structures</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>checkpoints</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; Structure model names list</li>
+<li><strong>through_all</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If <tt class="docutils literal"><span class="pre">True</span></tt> the bundle will contain lines that pass though all checkpoints,
+otherwise it will contain lines that pass through any checkpoint</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.TractographyManager.set_current_space">
+<tt class="descname">set_current_space</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.TractographyManager.set_current_space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set current coordinate system</p>
+<p>new_space (str) : new coordinate system, see <a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader.get" title="braviz.readAndFilter.base_reader.BaseReader.get"><tt class="xref py py-meth docutils literal"><span class="pre">get()</span></tt></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.TractographyManager.set_opacity">
+<tt class="descname">set_opacity</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.TractographyManager.set_opacity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets opacity for the displayed bundles</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>float_opacity</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; From 0 to 1; where 0 is transparent and 1 is opaque</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.TractographyManager.set_show_color_bar">
+<tt class="descname">set_show_color_bar</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.TractographyManager.set_show_color_bar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Activates a vtk color bar</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If <tt class="docutils literal"><span class="pre">True</span></tt> the bar is activated, if <tt class="docutils literal"><span class="pre">False</span></tt> it is hidden</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.TractographyManager.set_subject">
+<tt class="descname">set_subject</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.TractographyManager.set_subject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the subject associated to the manager</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>subj</strong> &#8211; New subject</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.visualization.subject_viewer.TraculaManager">
+<em class="property">class </em><tt class="descname">TraculaManager</tt><big>(</big><em>reader</em>, <em>ren</em>, <em>initial_subj=None</em>, <em>initial_space='World'</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.TraculaManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>A data manager for Tracula bundles</p>
+<dl class="attribute">
+<dt id="braviz.visualization.subject_viewer.TraculaManager.active_bundles">
+<tt class="descname">active_bundles</tt><a class="headerlink" href="#braviz.visualization.subject_viewer.TraculaManager.active_bundles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the set of active bundles</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A frozenSet of currently active bundles</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.TraculaManager.reload_bundles">
+<tt class="descname">reload_bundles</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.TraculaManager.reload_bundles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reloads all bundles</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>subj</strong> &#8211; Code for new subject, if <tt class="docutils literal"><span class="pre">None</span></tt> the subject is not changed</li>
+<li><strong>space</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; new coordinate system, if <tt class="docutils literal"><span class="pre">None</span></tt> the coordinates are not changed</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.TraculaManager.set_bundles">
+<tt class="descname">set_bundles</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.TraculaManager.set_bundles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the currently shown bundles</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>bundle_names</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#set" title="(in Python v2.7)"><em>set</em></a>) &#8211; An iterable of strings with names of tracula bundles.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.TraculaManager.set_opacity">
+<tt class="descname">set_opacity</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.TraculaManager.set_opacity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opacity for displaying the models</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>int_opacity</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; A number from 0 to 100; where 0 is invisible and 100 is opaque</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.visualization.subject_viewer.SurfaceManager">
+<em class="property">class </em><tt class="descname">SurfaceManager</tt><big>(</big><em>reader</em>, <em>ren</em>, <em>iren</em>, <em>initial_subj=None</em>, <em>initial_space='World'</em>, <em>picker=None</em>, <em>persistent_cone=False</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.SurfaceManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>A data manager for freesurfer sufaces parcelations</p>
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.SurfaceManager.get_last_picked_pos">
+<tt class="descname">get_last_picked_pos</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.SurfaceManager.get_last_picked_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Coordinates of the last picked position</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A tuple with the coordinates of the last pickedposition</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.SurfaceManager.hide_cone">
+<tt class="descname">hide_cone</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.SurfaceManager.hide_cone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hides the picking cone</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.visualization.subject_viewer.SurfaceManager.pick_cone_actor">
+<tt class="descname">pick_cone_actor</tt><a class="headerlink" href="#braviz.visualization.subject_viewer.SurfaceManager.pick_cone_actor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to the pick cone actor</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.SurfaceManager.set_hemispheres">
+<tt class="descname">set_hemispheres</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.SurfaceManager.set_hemispheres" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the active hemisphers</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>left</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If <tt class="docutils literal"><span class="pre">True</span></tt> the left hemisphere is activated, if <tt class="docutils literal"><span class="pre">False</span></tt> it is deactivated,
+if <tt class="docutils literal"><span class="pre">None</span></tt> it is unchanged</li>
+<li><strong>right</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If <tt class="docutils literal"><span class="pre">True</span></tt> the right hemisphere is activated, if <tt class="docutils literal"><span class="pre">False</span></tt> it is deactivated,
+if <tt class="docutils literal"><span class="pre">None</span></tt> it is unchanged</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.SurfaceManager.set_opacity">
+<tt class="descname">set_opacity</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.SurfaceManager.set_opacity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opacity for displaying the surfaces</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>int_opacity</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; A number from 0 to 100; where 0 is invisible and 100 is opaque</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.SurfaceManager.set_scalars">
+<tt class="descname">set_scalars</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.SurfaceManager.set_scalars" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the current scalars to use for the surfaces</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>scalars</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; See <a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader.get" title="braviz.readAndFilter.base_reader.BaseReader.get"><tt class="xref py py-meth docutils literal"><span class="pre">braviz.readAndFilter.base_reader.BaseReader.get()</span></tt></a> for options</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.SurfaceManager.set_space">
+<tt class="descname">set_space</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.SurfaceManager.set_space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change current coordinate system</p>
+<p>new_space (str) : new coordinate system, see <a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader.get" title="braviz.readAndFilter.base_reader.BaseReader.get"><tt class="xref py py-meth docutils literal"><span class="pre">get()</span></tt></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.SurfaceManager.set_subject">
+<tt class="descname">set_subject</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.SurfaceManager.set_subject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change subject associated to the manager</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_subject</strong> &#8211; Id of new subject</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.SurfaceManager.set_surface">
+<tt class="descname">set_surface</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.SurfaceManager.set_surface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the current surface to display at both hemispheres</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>surface</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; See <a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader.get" title="braviz.readAndFilter.base_reader.BaseReader.get"><tt class="xref py py-meth docutils literal"><span class="pre">braviz.readAndFilter.base_reader.BaseReader.get()</span></tt></a> for options</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.SurfaceManager.show_color_bar">
+<tt class="descname">show_color_bar</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.SurfaceManager.show_color_bar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Activates a vtk color bar</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If <tt class="docutils literal"><span class="pre">True</span></tt> the bar is activated, if <tt class="docutils literal"><span class="pre">False</span></tt> it is hidden</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.visualization.subject_viewer.SphereProp">
+<em class="property">class </em><tt class="descname">SphereProp</tt><big>(</big><em>ren</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.SphereProp" title="Permalink to this definition">¶</a></dt>
+<dd><p>An sphere that can be added to any viewer to represent regions of interest</p>
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.SphereProp.hide">
+<tt class="descname">hide</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.SphereProp.hide" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hide the sphere</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.SphereProp.set_center">
+<tt class="descname">set_center</tt><big>(</big><em>ctr</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.SphereProp.set_center" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the center of the sphere</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ctr</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; center</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.SphereProp.set_color">
+<tt class="descname">set_color</tt><big>(</big><em>r</em>, <em>g</em>, <em>b</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.SphereProp.set_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set color of the measure widget</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>r</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; red</li>
+<li><strong>g</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; green</li>
+<li><strong>b</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; blue</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.SphereProp.set_opacity">
+<tt class="descname">set_opacity</tt><big>(</big><em>opac_int</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.SphereProp.set_opacity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opacity of the sphere</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>opac_int</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; A number from 0 to 100; where 0 is invisible and 100 is opaque</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.SphereProp.set_radius">
+<tt class="descname">set_radius</tt><big>(</big><em>r</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.SphereProp.set_radius" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the radius of the sphere</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>r</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Sphere radius</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.SphereProp.set_repr">
+<tt class="descname">set_repr</tt><big>(</big><em>rep</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.SphereProp.set_repr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set representation of the sphere</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rep</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Options are <tt class="docutils literal"><span class="pre">&quot;wireframe&quot;</span></tt> or <tt class="docutils literal"><span class="pre">&quot;surface&quot;</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.SphereProp.show">
+<tt class="descname">show</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.SphereProp.show" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show the sphere</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.visualization.subject_viewer.FmriContours">
+<em class="property">class </em><tt class="descname">FmriContours</tt><big>(</big><em>ren</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.FmriContours" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display contours calculated over an fMRI statistic map.</p>
+<dl class="attribute">
+<dt id="braviz.visualization.subject_viewer.FmriContours.actor">
+<tt class="descname">actor</tt><a class="headerlink" href="#braviz.visualization.subject_viewer.FmriContours.actor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the contours actor</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.FmriContours.set_image">
+<tt class="descname">set_image</tt><big>(</big><em>img</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.FmriContours.set_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the statistical map</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>img</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkImageData.html" title="See on vtk documentation"><em>vtkImageData</em></a>) &#8211; Data used for contours generation</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.FmriContours.set_lut">
+<tt class="descname">set_lut</tt><big>(</big><em>lut</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.FmriContours.set_lut" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a lookup table for showing the contours</p>
+<p>Notice the contour will always have the same vale, and therefore the same color.
+However the lut will reflect the changes in the contour value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lut</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkScalarsToColors.html" title="See on vtk documentation"><em>vtkScalarsToColors</em></a>) &#8211; Table to generate contour color based on its value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.FmriContours.set_value">
+<tt class="descname">set_value</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.FmriContours.set_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the value at which contours are generated</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Statistical value for creating contours</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="pyqt-widgets">
+<h2>PyQt Widgets<a class="headerlink" href="#pyqt-widgets" title="Permalink to this headline">¶</a></h2>
+<p>These classes wrap the viewers so that they can be connected into Qt applications, in theory such classes could
+be built for other graphical interface libraries.</p>
+<dl class="class">
+<dt id="braviz.visualization.subject_viewer.QSubjectViewerWidget">
+<em class="property">class </em><tt class="descname">QSubjectViewerWidget</tt><big>(</big><em>reader</em>, <em>parent</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.QSubjectViewerWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Qt Widget that wraps <a class="reference internal" href="#braviz.visualization.subject_viewer.SubjectViewer" title="braviz.visualization.subject_viewer.SubjectViewer"><tt class="xref py py-class docutils literal"><span class="pre">SubjectViewer</span></tt></a> and lets it connect naturally to Qt Applications</p>
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.QSubjectViewerWidget.initialize_widget">
+<tt class="descname">initialize_widget</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.QSubjectViewerWidget.initialize_widget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call this function <strong>after</strong> calling show on the widget or a parent</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.QSubjectViewerWidget.slice_change_handle">
+<tt class="descname">slice_change_handle</tt><big>(</big><em>new_slice</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.QSubjectViewerWidget.slice_change_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Emits a signal when the current image slice is changed on the vtkWidget</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.visualization.subject_viewer.QSubjectViewerWidget.subject_viewer">
+<tt class="descname">subject_viewer</tt><a class="headerlink" href="#braviz.visualization.subject_viewer.QSubjectViewerWidget.subject_viewer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to the underlying <a class="reference internal" href="#braviz.visualization.subject_viewer.SubjectViewer" title="braviz.visualization.subject_viewer.SubjectViewer"><tt class="xref py py-class docutils literal"><span class="pre">SubjectViewer</span></tt></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.QSubjectViewerWidget.window_level_change_handle">
+<tt class="descname">window_level_change_handle</tt><big>(</big><em>window</em>, <em>level</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.QSubjectViewerWidget.window_level_change_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Emits a signal when window or level are changed by interacting in the vtkWidget</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.visualization.subject_viewer.QOrthogonalPlanesWidget">
+<em class="property">class </em><tt class="descname">QOrthogonalPlanesWidget</tt><big>(</big><em>reader</em>, <em>parent</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.QOrthogonalPlanesWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Qt Widget that wraps <a class="reference internal" href="#braviz.visualization.subject_viewer.OrthogonalPlanesViewer" title="braviz.visualization.subject_viewer.OrthogonalPlanesViewer"><tt class="xref py py-class docutils literal"><span class="pre">OrthogonalPlanesViewer</span></tt></a> and lets it connect naturally to Qt Applications</p>
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.QOrthogonalPlanesWidget.initialize_widget">
+<tt class="descname">initialize_widget</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.QOrthogonalPlanesWidget.initialize_widget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call this function <strong>after</strong> calling show on the widget or a parent</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.visualization.subject_viewer.QOrthogonalPlanesWidget.orthogonal_viewer">
+<tt class="descname">orthogonal_viewer</tt><a class="headerlink" href="#braviz.visualization.subject_viewer.QOrthogonalPlanesWidget.orthogonal_viewer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to the underlying class:<cite>OrthogonalPlanesViewer</cite></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.QOrthogonalPlanesWidget.slice_change_handle">
+<tt class="descname">slice_change_handle</tt><big>(</big><em>new_slice</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.QOrthogonalPlanesWidget.slice_change_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Emits a signal when the current image slice is changed on the vtkWidget</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.QOrthogonalPlanesWidget.window_level_change_handle">
+<tt class="descname">window_level_change_handle</tt><big>(</big><em>window</em>, <em>level</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.QOrthogonalPlanesWidget.window_level_change_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Emits a signal when window or level are changed by interacting in the vtkWidget</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.visualization.subject_viewer.QMeasurerWidget">
+<em class="property">class </em><tt class="descname">QMeasurerWidget</tt><big>(</big><em>reader</em>, <em>parent</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.QMeasurerWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Qt Widget that wraps <a class="reference internal" href="#braviz.visualization.subject_viewer.MeasurerViewer" title="braviz.visualization.subject_viewer.MeasurerViewer"><tt class="xref py py-class docutils literal"><span class="pre">MeasurerViewer</span></tt></a> and lets it connect naturally to Qt Applications</p>
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.QMeasurerWidget.distance_changed_handle">
+<tt class="descname">distance_changed_handle</tt><big>(</big><em>distance</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.QMeasurerWidget.distance_changed_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Emits a signal the measured distance is changed in the vtkWidget</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.QMeasurerWidget.initialize_widget">
+<tt class="descname">initialize_widget</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.QMeasurerWidget.initialize_widget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call this function <strong>after</strong> calling show on the widget or a parent</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.visualization.subject_viewer.QMeasurerWidget.orthogonal_viewer">
+<tt class="descname">orthogonal_viewer</tt><a class="headerlink" href="#braviz.visualization.subject_viewer.QMeasurerWidget.orthogonal_viewer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to the underlying class:<cite>MeasurerViewer</cite></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.QMeasurerWidget.slice_change_handle">
+<tt class="descname">slice_change_handle</tt><big>(</big><em>new_slice</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.QMeasurerWidget.slice_change_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Emits a signal when the current image slice is changed on the vtkWidget</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.QMeasurerWidget.window_level_change_handle">
+<tt class="descname">window_level_change_handle</tt><big>(</big><em>window</em>, <em>level</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.QMeasurerWidget.window_level_change_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Emits a signal when window or level are changed by interacting in the vtkWidget</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.visualization.subject_viewer.QFmriWidget">
+<em class="property">class </em><tt class="descname">QFmriWidget</tt><big>(</big><em>reader</em>, <em>parent</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.QFmriWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Qt Widget that wraps <a class="reference internal" href="#braviz.visualization.subject_viewer.fMRI_viewer" title="braviz.visualization.subject_viewer.fMRI_viewer"><tt class="xref py py-class docutils literal"><span class="pre">fMRI_viewer</span></tt></a> and lets it connect naturally to Qt Applications</p>
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.QFmriWidget.cursor_move_handler">
+<tt class="descname">cursor_move_handler</tt><big>(</big><em>coordinates</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.QFmriWidget.cursor_move_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Emits a signal when the cursor is moved</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.QFmriWidget.initialize_widget">
+<tt class="descname">initialize_widget</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.QFmriWidget.initialize_widget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call this function <strong>after</strong> calling show on the widget or a parent</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.QFmriWidget.slice_change_handle">
+<tt class="descname">slice_change_handle</tt><big>(</big><em>new_slice</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.QFmriWidget.slice_change_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Emits a signal when the current image slice is changed on the vtkWidget</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="braviz.visualization.subject_viewer.QFmriWidget.viewer">
+<tt class="descname">viewer</tt><a class="headerlink" href="#braviz.visualization.subject_viewer.QFmriWidget.viewer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to the internal fMRI_viewer</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.QFmriWidget.window_level_change_handle">
+<tt class="descname">window_level_change_handle</tt><big>(</big><em>window</em>, <em>level</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.QFmriWidget.window_level_change_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Emits a signal when window or level are changed by interacting in the vtkWidget</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="utilities">
+<h2>Utilities<a class="headerlink" href="#utilities" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="braviz.visualization.subject_viewer.do_and_render">
+<tt class="descname">do_and_render</tt><big>(</big><em>f</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.do_and_render" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wraps drawing methods, adding an optional call to <em>Render</em> at the end.</p>
+<p>It adds the <em>skip_render</em> kwarg argument, which if True will avoid the call to Render. This is
+useful to avoid repeated call renders when performing several draw operations.</p>
+<p>requires the class to have the renderer accessible as self.ren</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>f</strong> (<a class="reference external" href="https://docs.python.org/2/tutorial/controlflow.html#defining-functions" title="Python function"><em>function</em></a>) &#8211; Function that changes vtk scene</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.visualization.subject_viewer.FilterArrows">
+<em class="property">class </em><tt class="descname">FilterArrows</tt><big>(</big><em>parent=None</em>, <em>other_keys=()</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.FilterArrows" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Qt event filter to prevent the main vtk widget from swallowing certain keys. By default this are the arrows,
+but additional keys can be added in the constructor.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.visualization.subject_viewer.AdditionalCursors">
+<em class="property">class </em><tt class="descname">AdditionalCursors</tt><big>(</big><em>ren</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.AdditionalCursors" title="Permalink to this definition">¶</a></dt>
+<dd><p>An additional set of cursors to use when those included in vtkImageWidget are not flexible enough</p>
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.AdditionalCursors.get_coords">
+<tt class="descname">get_coords</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.AdditionalCursors.get_coords" title="Permalink to this definition">¶</a></dt>
+<dd><p>Voxel coordinates of last picked position</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Coordinates of last picked position in voxels</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.AdditionalCursors.get_position">
+<tt class="descname">get_position</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.AdditionalCursors.get_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Current position of the cursors</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Coordinates of the last picked position (in mm)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.AdditionalCursors.hide">
+<tt class="descname">hide</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.AdditionalCursors.hide" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hide cursor</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.AdditionalCursors.set_axis_coords">
+<tt class="descname">set_axis_coords</tt><big>(</big><em>axis=None</em>, <em>coords=None</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.AdditionalCursors.set_axis_coords" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set position of the cursors</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>axis</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Axis perpendicular to the cursor, 0 for x, 1 for y and 2 for z</li>
+<li><strong>coords</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; Position of the cursor in voxels</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.subject_viewer.AdditionalCursors.set_image">
+<tt class="descname">set_image</tt><big>(</big><em>img</em><big>)</big><a class="headerlink" href="#braviz.visualization.subject_viewer.AdditionalCursors.set_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Image to use as reference for the cursors</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>img</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkImageData.html" title="See on vtk documentation"><em>vtkImageData</em></a>) &#8211; The cursors will stick to this image</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+          <a href="simple_vtk.html" title="Simple VTK Visualization"
+             accesskey="P">previous</a> |
+          <a href="fmri_view.html" title="Visualizaing functional data"
+             accesskey="N">next</a> |
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a>
+          
+            <br/>
+            <a href="../_sources/library/subject_viewer.txt"
+               rel="nofollow">Show Source</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

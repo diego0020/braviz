@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Visualizaing functional data &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.0b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Braviz Documentation" href="../index.html" />
+    <link rel="up" title="Visualization" href="visualization.html" />
+    <link rel="next" title="Checking image registration" href="checkboard_view.html" />
+    <link rel="prev" title="Subject Viewer" href="subject_viewer.html" /> 
+  </head>
+  <body>
+    
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html"> Braviz Documentation </a></div>
+          <nav class="parents">
+              <ol>
+        <li><a href="../index.html"> Home </a> &raquo;</li>
+          <li><a href="index.html" >Braviz library</a> &raquo;</li>
+          <li><a href="visualization.html"  accesskey="U" >Visualization</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="subject_viewer.html"
+                        title="previous chapter">Subject Viewer</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="checkboard_view.html"
+                        title="next chapter">Checking image registration</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-braviz.visualization.fmri_view"></span><div class="section" id="visualizaing-functional-data">
+<h1>Visualizaing functional data<a class="headerlink" href="#visualizaing-functional-data" title="Permalink to this headline">¶</a></h1>
+<p>This module contains low level utilities for displaying fMRI data. Check first if the classes in
+<a class="reference internal" href="subject_viewer.html#module-braviz.visualization.subject_viewer" title="braviz.visualization.subject_viewer"><tt class="xref py py-mod docutils literal"><span class="pre">subject_viewer</span></tt></a> can be used for your application.</p>
+<dl class="class">
+<dt id="braviz.visualization.fmri_view.fMRI_blender">
+<em class="property">class </em><tt class="descname">fMRI_blender</tt><a class="headerlink" href="#braviz.visualization.fmri_view.fMRI_blender" title="Permalink to this definition">¶</a></dt>
+<dd><p>Blend an fMRI map with an structural image</p>
+<dl class="method">
+<dt id="braviz.visualization.fmri_view.fMRI_blender.get_blended_img">
+<tt class="descname">get_blended_img</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.fmri_view.fMRI_blender.get_blended_img" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get blended image</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Blended vtkImageData</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.fmri_view.fMRI_blender.set_images">
+<tt class="descname">set_images</tt><big>(</big><em>mri_image</em>, <em>fmri_image</em><big>)</big><a class="headerlink" href="#braviz.visualization.fmri_view.fMRI_blender.set_images" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets structural and fMRI images</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mri_image</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkImageData.html" title="See on vtk documentation"><em>vtkImageData</em></a>) &#8211; structural image</li>
+<li><strong>fmri_image</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkImageData.html" title="See on vtk documentation"><em>vtkImageData</em></a>) &#8211; t-score image</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Blended vtkImageData</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.fmri_view.fMRI_blender.set_luts">
+<tt class="descname">set_luts</tt><big>(</big><em>mri_lut</em>, <em>fmri_lut</em><big>)</big><a class="headerlink" href="#braviz.visualization.fmri_view.fMRI_blender.set_luts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set lookuptables for both images</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>mri_lut</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkWindowLevelLookupTable.html" title="See on vtk documentation"><em>vtkWindowLevelLookupTable</em></a>) &#8211; Lookuptable for structural image</li>
+<li><strong>fmri_lut</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkScalarsToColors.html" title="See on vtk documentation"><em>vtkScalarsToColors</em></a>) &#8211; t-score image lookuptable</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.visualization.fmri_view.get_fmri_lut">
+<tt class="descname">get_fmri_lut</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.fmri_view.get_fmri_lut" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a standard look up table for fMRI data</p>
+<p>If alpha is True, the opacity of the colors below the threshold will be less than one,
+more precisely, the opacity will be a ramp from 0 to 1 between 0 and the threshold</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>alpha</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If True use a lookup table</li>
+<li><strong>threshold</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Value at which color starts to fade (lower opacity) if alpha is True
+minimum value shown</li>
+<li><strong>n_pts</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Number of points for the lookup table</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">vtkLookuptable</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.visualization.fmri_view.time_slice_viewer">
+<em class="property">class </em><tt class="descname">time_slice_viewer</tt><big>(</big><em>orientation=0</em><big>)</big><a class="headerlink" href="#braviz.visualization.fmri_view.time_slice_viewer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for displaying a single slice of a time-moment in BOLD time series</p>
+<dl class="staticmethod">
+<dt id="braviz.visualization.fmri_view.time_slice_viewer.set_input">
+<em class="property">static </em><tt class="descname">set_input</tt><big>(</big><em>input_data</em>, <em>spatial_pos=0</em>, <em>time=0</em>, <em>orientation=0</em><big>)</big><a class="headerlink" href="#braviz.visualization.fmri_view.time_slice_viewer.set_input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the input 4D image, the position across the perpendicular axis, the time point and the orientation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>input_data</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkImageData.html" title="See on vtk documentation"><em>vtkImageData</em></a>) &#8211; bold 4d image</li>
+<li><strong>spatial_pos</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; index of the slice along the perpendicular axis</li>
+<li><strong>time</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; time point of interest</li>
+<li><strong>Orientation</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; 0:x , 1:y, 2:z</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="braviz.visualization.fmri_view.time_slice_viewer.set_time_point">
+<em class="property">static </em><tt class="descname">set_time_point</tt><big>(</big><em>time</em><big>)</big><a class="headerlink" href="#braviz.visualization.fmri_view.time_slice_viewer.set_time_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the time point at which the time series should be sampled</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>time</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Time in seconds of the volume of interest</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="braviz.visualization.fmri_view.time_slice_viewer.set_window_level">
+<em class="property">static </em><tt class="descname">set_window_level</tt><big>(</big><em>window</em>, <em>level</em><big>)</big><a class="headerlink" href="#braviz.visualization.fmri_view.time_slice_viewer.set_window_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets window and level for the display image</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>window</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; window value</li>
+<li><strong>level</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; level value</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="braviz.visualization.fmri_view.time_slice_viewer.set_z_spacing">
+<em class="property">static </em><tt class="descname">set_z_spacing</tt><big>(</big><em>spacing</em><big>)</big><a class="headerlink" href="#braviz.visualization.fmri_view.time_slice_viewer.set_z_spacing" title="Permalink to this definition">¶</a></dt>
+<dd><p>spacing in perpendicular axis, used to position the resulting slice in the right place</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>spacing</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Image spacing in the perpendicular axis</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+          <a href="subject_viewer.html" title="Subject Viewer"
+             accesskey="P">previous</a> |
+          <a href="checkboard_view.html" title="Checking image registration"
+             accesskey="N">next</a> |
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a>
+          
+            <br/>
+            <a href="../_sources/library/fmri_view.txt"
+               rel="nofollow">Show Source</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

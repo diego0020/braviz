@@ -1,0 +1,417 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Configuring &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.0b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Braviz Documentation" href="../index.html" />
+    <link rel="up" title="Read And Filter" href="read_and_filter.html" />
+    <link rel="next" title="Low level functions" href="read_low_level.html" />
+    <link rel="prev" title="Bundles Database" href="bundles_db.html" /> 
+  </head>
+  <body>
+    
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html"> Braviz Documentation </a></div>
+          <nav class="parents">
+              <ol>
+        <li><a href="../index.html"> Home </a> &raquo;</li>
+          <li><a href="index.html" >Braviz library</a> &raquo;</li>
+          <li><a href="read_and_filter.html"  accesskey="U" >Read And Filter</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Configuring</a><ul>
+<li><a class="reference internal" href="#configuration-file">Configuration file</a><ul>
+<li><a class="reference internal" href="#braviz">Braviz</a></li>
+<li><a class="reference internal" href="#default-variables">Default_Variables</a></li>
+<li><a class="reference internal" href="#defaults">Defaults</a></li>
+<li><a class="reference internal" href="#vtk">VTK</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#host-configuration">Host Configuration</a></li>
+<li><a class="reference internal" href="#implementation">Implementation</a><ul>
+<li><a class="reference internal" href="#bravizconfig-class">BravizConfig Class</a></li>
+<li><a class="reference internal" href="#read-configuration">Read Configuration</a></li>
+<li><a class="reference internal" href="#create-config">Create config</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="bundles_db.html"
+                        title="previous chapter">Bundles Database</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="read_low_level.html"
+                        title="next chapter">Low level functions</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="configuring">
+<h1>Configuring<a class="headerlink" href="#configuring" title="Permalink to this headline">¶</a></h1>
+<p>Several Braviz parameters are available to end-users via a configuration file names <cite>braviz.cfg</cite> and located
+in the <a class="reference internal" href="applications.html#module-braviz.applications" title="braviz.applications"><tt class="xref py py-mod docutils literal"><span class="pre">braviz.applications</span></tt></a> directory. This files are parsed by the python <a class="reference external" href="http://docs.python.org/2/library/configparser.html#module-ConfigParser" title="(in Python v2.7)"><tt class="xref py py-mod docutils literal"><span class="pre">ConfigParser</span></tt></a> module.</p>
+<div class="section" id="configuration-file">
+<h2>Configuration file<a class="headerlink" href="#configuration-file" title="Permalink to this headline">¶</a></h2>
+<p>The default config file is</p>
+<div class="highlight-cfg"><div class="highlight"><pre><span class="k">[Braviz]</span>
+<span class="na">project</span> <span class="o">=</span> <span class="s">kmc400</span>
+<span class="na">logger</span> <span class="o">=</span> <span class="s">console</span>
+
+<span class="k">[Default_Variables]</span>
+<span class="na">nominal1</span> <span class="o">=</span> <span class="s">ubicac</span>
+<span class="na">nominal2</span> <span class="o">=</span> <span class="s">BIRTH_sexo5</span>
+<span class="na">numeric1</span> <span class="o">=</span> <span class="s">WASI_FSIQ_4</span>
+<span class="na">numeric2</span> <span class="o">=</span> <span class="s">BIRTH_peso5</span>
+<span class="na">laterality</span> <span class="o">=</span> <span class="s">LAT_EdinburgHandedness</span>
+<span class="na">left_handed_label</span> <span class="o">=</span> <span class="s">3</span>
+<span class="na">reference_pop_var</span> <span class="o">=</span> <span class="s">ubicac</span>
+<span class="na">reference_pop_label</span> <span class="o">=</span> <span class="s">3</span>
+
+<span class="k">[Defaults]</span>
+<span class="na">default_subject</span> <span class="o">=</span> <span class="s">119</span>
+
+<span class="k">[VTK]</span>
+<span class="na">background</span> <span class="o">=</span> <span class="s">0.1 0.1 0.2</span>
+<span class="na">interaction_style</span> <span class="o">=</span> <span class="s">TrackballCamera</span>
+</pre></div>
+</div>
+<div class="section" id="braviz">
+<h3>Braviz<a class="headerlink" href="#braviz" title="Permalink to this headline">¶</a></h3>
+<p>The <tt class="docutils literal"><span class="pre">project</span></tt> field defines the project that will be used in the following session. This defines the
+<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><tt class="xref py py-class docutils literal"><span class="pre">BaseReader</span></tt></a> subclass that will be used, and according to it the location for
+the database and cache files.</p>
+<p>The <tt class="docutils literal"><span class="pre">logger</span></tt> field can take the values <tt class="docutils literal"><span class="pre">console</span></tt> or <tt class="docutils literal"><span class="pre">file</span></tt>. In the first case all logging is done to the terminal,
+in the second case it is stored in the <tt class="docutils literal"><span class="pre">logs</span></tt> directory inside
+<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader.get_auto_dyn_data_root" title="braviz.readAndFilter.base_reader.BaseReader.get_auto_dyn_data_root"><tt class="xref py py-meth docutils literal"><span class="pre">get_auto_dyn_data_root()</span></tt></a></p>
+</div>
+<div class="section" id="default-variables">
+<h3>Default_Variables<a class="headerlink" href="#default-variables" title="Permalink to this headline">¶</a></h3>
+<p>This variables are shown by default in several applications. The user may use this field to choose the variables which
+are more important to them.</p>
+<p>The <tt class="docutils literal"><span class="pre">laterality</span></tt> variable is used to solve which is the dominant hemisphere for each participant, it is assumed to be
+the left side unless its value is <tt class="docutils literal"><span class="pre">left_handed_label</span></tt>.</p>
+<p>The <tt class="docutils literal"><span class="pre">reference_pop_var</span></tt> defines a reference population, where its value is equal to <tt class="docutils literal"><span class="pre">reference_pop_label</span></tt>.
+This is used in some applications to calculate a typical range for variable values.</p>
+</div>
+<div class="section" id="defaults">
+<h3>Defaults<a class="headerlink" href="#defaults" title="Permalink to this headline">¶</a></h3>
+<p>The <tt class="docutils literal"><span class="pre">default_subject</span></tt> field specifies the subject that will be loaded by default at the start of applications.</p>
+</div>
+<div class="section" id="vtk">
+<h3>VTK<a class="headerlink" href="#vtk" title="Permalink to this headline">¶</a></h3>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 2.0: </span>It is recommended to use interaction style <tt class="docutils literal"><span class="pre">trackballCamera</span></tt> and a degraded gray background color.</p>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">background</span></tt> field is used in legacy applications to select a background color for all vtk viewers.</p>
+<p>The <tt class="docutils literal"><span class="pre">interaction_style</span></tt> is used in legacy applications to select a different
+<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkInteractorStyle.html">interaction style</a>
+for vtk viewers.</p>
+</div>
+</div>
+<div class="section" id="host-configuration">
+<h2>Host Configuration<a class="headerlink" href="#host-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Host configuration files contain information for configuring auto readers (see <a class="reference internal" href="reader.html"><em>Reading geometric data</em></a>). This files are named
+after the project they belongs to. For example the file for the <em>kmc</em> project would be named <em>kmc_hosts.cfg</em>. This
+files use the same syntax as the standard configuration files (<a class="reference internal" href="#module-braviz.readAndFilter.config_file" title="braviz.readAndFilter.config_file: Read Braviz Configuration files"><tt class="xref py py-mod docutils literal"><span class="pre">config_file</span></tt></a>).</p>
+<p>This file contains the parameters required to create a reader in specific hosts. This allows using the same installation
+in different machines. When creating an autoreader the hostname is found using <a class="reference external" href="http://docs.python.org/2/library/platform.html#platform.node" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">platform.node()</span></tt></a>, afterwards
+a section with that name is located in the <em>_hosts.cfg</em> file. The options found in this section are returned as a
+dictionary which may be used by <a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader.get_auto_reader" title="braviz.readAndFilter.base_reader.BaseReader.get_auto_reader"><tt class="xref py py-func docutils literal"><span class="pre">get_auto_reader()</span></tt></a>. A section
+in such a file may look like this</p>
+<div class="highlight-cfg"><div class="highlight"><pre><span class="k">[Echer]</span>
+<span class="na">data root</span> <span class="o">=</span> <span class="s">H:/kmc400</span>
+<span class="na">dynamic data root</span> <span class="o">=</span> <span class="s">H:/kmc400-braviz</span>
+<span class="na">memory (mb)</span> <span class="o">=</span> <span class="s">8000</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="implementation">
+<h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h2>
+<p>Configuration file access is implemented in the module <a class="reference internal" href="#module-braviz.readAndFilter.config_file" title="braviz.readAndFilter.config_file: Read Braviz Configuration files"><tt class="xref py py-mod docutils literal"><span class="pre">braviz.readAndFilter.config_file</span></tt></a></p>
+<span class="target" id="module-braviz.readAndFilter.config_file"></span><div class="section" id="bravizconfig-class">
+<h3>BravizConfig Class<a class="headerlink" href="#bravizconfig-class" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="braviz.readAndFilter.config_file.BravizConfig">
+<em class="property">class </em><tt class="descname">BravizConfig</tt><a class="headerlink" href="#braviz.readAndFilter.config_file.BravizConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Holds Braviz configuration</p>
+<dl class="method">
+<dt id="braviz.readAndFilter.config_file.BravizConfig.get_default_variables">
+<tt class="descname">get_default_variables</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.readAndFilter.config_file.BravizConfig.get_default_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default variables from configuration file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A dictionary containing the default variables. The keys are
+<tt class="docutils literal"><span class="pre">{&quot;nom1&quot;,&quot;nom2&quot;,&quot;ratio1&quot;,&quot;ratio2&quot;,&quot;lat&quot;}</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.readAndFilter.config_file.BravizConfig.get_laterality">
+<tt class="descname">get_laterality</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.readAndFilter.config_file.BravizConfig.get_laterality" title="Permalink to this definition">¶</a></dt>
+<dd><p>Laterality from configuration file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A tuple <tt class="docutils literal"><span class="pre">(lat,</span> <span class="pre">left)</span></tt> where <em>lat</em> is the name of the nominal variable containing laterality information
+and <em>left</em> is the label (integer) this variable takes for left-handed subjects.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.readAndFilter.config_file.BravizConfig.get_reference_population">
+<tt class="descname">get_reference_population</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.readAndFilter.config_file.BravizConfig.get_reference_population" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reference population from configuration file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A tuple <tt class="docutils literal"><span class="pre">(var,label)</span></tt> where <em>var</em> is the name of the nominal variable that separates the reference population
+and <em>label</em> is the integer value this variable takes for the reference population</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.readAndFilter.config_file.BravizConfig.get_default_subject">
+<tt class="descname">get_default_subject</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.readAndFilter.config_file.BravizConfig.get_default_subject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default subject from configuration file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">An integer containing the code for the chosen default subject</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.readAndFilter.config_file.BravizConfig.get_background">
+<tt class="descname">get_background</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.readAndFilter.config_file.BravizConfig.get_background" title="Permalink to this definition">¶</a></dt>
+<dd><p>Background color from a configuration file</p>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 3.0b: </span>Use a gray or degraded gray background</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">RGB value as a float tuple</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.readAndFilter.config_file.BravizConfig.get_interaction_style">
+<tt class="descname">get_interaction_style</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.readAndFilter.config_file.BravizConfig.get_interaction_style" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interaction style from a configuration file</p>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 3.0b: </span>Use TrackballCamera</p>
+</div>
+<p>Checks if the intraction style is a valid vtk interaction style and returns vtk name</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">vtkInteractorStyle class</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="read-configuration">
+<h3>Read Configuration<a class="headerlink" href="#read-configuration" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="braviz.readAndFilter.config_file.get_config">
+<tt class="descname">get_config</tt><big>(</big><em>custom_dir=None</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.config_file.get_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read Braviz configuration file</p>
+<p>A default configuration file is read at the library directory. A secondary configuration can also be read,
+and in this case its values will overwrite default ones.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>custom_dir</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Location of a secondary configuration file.
+For convenience a file can also be passed and the directory containing it will be used</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">An instance of <a class="reference internal" href="#braviz.readAndFilter.config_file.BravizConfig" title="braviz.readAndFilter.config_file.BravizConfig"><tt class="xref py py-class docutils literal"><span class="pre">BravizConfig</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.config_file.get_apps_config">
+<tt class="descname">get_apps_config</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.readAndFilter.config_file.get_apps_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads configuration from the &#8216;braviz.applications&#8217; directory</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">An instance of <a class="reference internal" href="#braviz.readAndFilter.config_file.BravizConfig" title="braviz.readAndFilter.config_file.BravizConfig"><tt class="xref py py-class docutils literal"><span class="pre">BravizConfig</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.config_file.get_host_config">
+<tt class="descname">get_host_config</tt><big>(</big><em>project</em>, <em>hostname=None</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.config_file.get_host_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads host configuration for a given project</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>project</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The name of the project. This function will look for a file called <tt class="docutils literal"><span class="pre">&lt;project&gt;_hosts.cfg</span></tt>
+in the directory containing the module <a class="reference internal" href="applications.html#module-braviz.applications" title="braviz.applications"><tt class="xref py py-mod docutils literal"><span class="pre">braviz.applications</span></tt></a></li>
+<li><strong>hostname</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name of host to get configuration. If <tt class="docutils literal"><span class="pre">None</span></tt> the name of the current host,
+as returned by <a class="reference external" href="http://docs.python.org/2/library/platform.html#platform.node" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">platform.node()</span></tt></a> will be used</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A dictionary containing the requested configuration parameters.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="create-config">
+<h3>Create config<a class="headerlink" href="#create-config" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="braviz.readAndFilter.config_file.make_default_config">
+<tt class="descname">make_default_config</tt><big>(</big><em>default_config_name=None</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.config_file.make_default_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a configuration file with default parameters and stores it</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>default_config_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name used to store the default configuration,
+if <tt class="docutils literal"><span class="pre">None</span></tt> it stored as <cite>braviz.cfg</cite> in the directory containing this library</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+          <a href="bundles_db.html" title="Bundles Database"
+             accesskey="P">previous</a> |
+          <a href="read_low_level.html" title="Low level functions"
+             accesskey="N">next</a> |
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a>
+          
+            <br/>
+            <a href="../_sources/library/configuring.txt"
+               rel="nofollow">Show Source</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

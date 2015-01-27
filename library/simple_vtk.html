@@ -1,0 +1,602 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Simple VTK Visualization &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.0b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Braviz Documentation" href="../index.html" />
+    <link rel="up" title="Visualization" href="visualization.html" />
+    <link rel="next" title="Subject Viewer" href="subject_viewer.html" />
+    <link rel="prev" title="Visualization" href="visualization.html" /> 
+  </head>
+  <body>
+    
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html"> Braviz Documentation </a></div>
+          <nav class="parents">
+              <ol>
+        <li><a href="../index.html"> Home </a> &raquo;</li>
+          <li><a href="index.html" >Braviz library</a> &raquo;</li>
+          <li><a href="visualization.html"  accesskey="U" >Visualization</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Simple VTK Visualization</a><ul>
+<li><a class="reference internal" href="#simple-vtk-viewer">Simple VTK Viewer</a></li>
+<li><a class="reference internal" href="#vtk-widgets">VTK Widgets</a></li>
+<li><a class="reference internal" href="#other-utilities">Other Utilities</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="visualization.html"
+                        title="previous chapter">Visualization</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="subject_viewer.html"
+                        title="next chapter">Subject Viewer</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-braviz.visualization.simple_vtk"></span><div class="section" id="simple-vtk-visualization">
+<h1>Simple VTK Visualization<a class="headerlink" href="#simple-vtk-visualization" title="Permalink to this headline">¶</a></h1>
+<p>This module contains utilities for working with <a class="reference external" href="vtk.org">VTK</a>  visualizations.</p>
+<div class="section" id="simple-vtk-viewer">
+<h2>Simple VTK Viewer<a class="headerlink" href="#simple-vtk-viewer" title="Permalink to this headline">¶</a></h2>
+<p>The simple vtk viewer is a limited viewer class that wraps most of the vtk boilerplate code. It is meant to
+do simple tests or to use interactively from the python console.</p>
+<dl class="class">
+<dt id="braviz.visualization.simple_vtk.SimpleVtkViewer">
+<em class="property">class </em><tt class="descname">SimpleVtkViewer</tt><a class="headerlink" href="#braviz.visualization.simple_vtk.SimpleVtkViewer" title="Permalink to this definition">¶</a></dt>
+<dd><p>A very simple windows with vtk renderers and interactors.</p>
+<p>This class is intended for interactive work and fast prototyping. As such it is very simple and limited.
+For full interactive applications consider using <a class="reference internal" href="subject_viewer.html#module-braviz.visualization.subject_viewer" title="braviz.visualization.subject_viewer"><tt class="xref py py-mod docutils literal"><span class="pre">subject_viewer</span></tt></a></p>
+<dl class="method">
+<dt id="braviz.visualization.simple_vtk.SimpleVtkViewer.addImg">
+<tt class="descname">addImg</tt><big>(</big><em>img</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.SimpleVtkViewer.addImg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use this method to show an image inside an image plane widget.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>img</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkImageData.html" title="See on vtk documentation"><em>vtkImageData</em></a>) &#8211; Image</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The created imagePlaneWidget</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.simple_vtk.SimpleVtkViewer.addPolyData">
+<tt class="descname">addPolyData</tt><big>(</big><em>polyData</em>, <em>LUT=None</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.SimpleVtkViewer.addPolyData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a poly data to the viewer, a LUT can be set.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>polyData</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkPolyData.html" title="See on vtk documentation"><em>vtkPolyData</em></a>) &#8211; Polydata object to add to the scene</li>
+<li><strong>LUT</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkScalarsToColors.html" title="See on vtk documentation"><em>vtkScalarsToColors</em></a>) &#8211; A lookup table to apply to the polydata</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The vtkActor instance created, it may be used to change the visual properties</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.simple_vtk.SimpleVtkViewer.clear_poly_data">
+<tt class="descname">clear_poly_data</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.SimpleVtkViewer.clear_poly_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes all polydata from the viewer</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.visualization.simple_vtk.SimpleVtkViewer.start">
+<tt class="descname">start</tt><big>(</big><em>reset=True</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.SimpleVtkViewer.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call this method to start the interaction, interaction can be stopped by pressing &#8216;q&#8217; on the main window</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>reset</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If True the camera will be reset</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="vtk-widgets">
+<h2>VTK Widgets<a class="headerlink" href="#vtk-widgets" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Sphinx bug, methods are not <em>static</em></p>
+</div>
+<dl class="class">
+<dt id="braviz.visualization.simple_vtk.persistentImagePlane">
+<em class="property">class </em><tt class="descname">persistentImagePlane</tt><big>(</big><em>orientation=0</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane" title="Permalink to this definition">¶</a></dt>
+<dd><p>A vtkImagePlaneWidget which can keep its state between calls to SetInputData.</p>
+<p>It adds a second text message showing the world coordinates of the cursors
+This message can be further enhanced by using a label image and a label dictionary
+Additionally the values displayed in the first message can be replaced by values taken from another image, this
+is useful when the displayed image contains colors or other contexts that are not the main value (ex, fmri)
+Finally, this class generates custom events when moving the cursor and when changing the slice.</p>
+<dl class="staticmethod">
+<dt id="braviz.visualization.simple_vtk.persistentImagePlane.On">
+<em class="property">static </em><tt class="descname">On</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane.On" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn the widget on</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="braviz.visualization.simple_vtk.persistentImagePlane.SetInputData">
+<em class="property">static </em><tt class="descname">SetInputData</tt><big>(</big><em>img</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane.SetInputData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the input data por the plane widget</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>img</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkImageData.html" title="See on vtk documentation"><em>vtkImageData</em></a>) &#8211; New image data</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="braviz.visualization.simple_vtk.persistentImagePlane.SetInteractor">
+<em class="property">static </em><tt class="descname">SetInteractor</tt><big>(</big><em>iact</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane.SetInteractor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Links the widget to an interactor</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>iact</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkRenderWindowInteractor.html" title="See on vtk documentation"><em>vtkRenderWindowInteractor</em></a>) &#8211; Render window interactor</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="braviz.visualization.simple_vtk.persistentImagePlane.addLabels">
+<em class="property">static </em><tt class="descname">addLabels</tt><big>(</big><em>label_img</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane.addLabels" title="Permalink to this definition">¶</a></dt>
+<dd><p>A second image can be used to get labels for image coordinates (ex. aparc)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>label_img</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkImageData.html" title="See on vtk documentation"><em>vtkImageData</em></a>) &#8211; Image to use as reference for labels</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="braviz.visualization.simple_vtk.persistentImagePlane.get_label">
+<em class="property">static </em><tt class="descname">get_label</tt><big>(</big><em>x</em>, <em>y</em>, <em>z</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane.get_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Auxiliary function to get the label in a given coordinate (in mm)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; x coordinate</li>
+<li><strong>y</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; y coordinate</li>
+<li><strong>z</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; z coordinate</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">If a lookuptable is set returns the text label, otherwise the numeric label</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="braviz.visualization.simple_vtk.persistentImagePlane.setLabelsLut">
+<em class="property">static </em><tt class="descname">setLabelsLut</tt><big>(</big><em>lut</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane.setLabelsLut" title="Permalink to this definition">¶</a></dt>
+<dd><p>A lookup table can be used to translate numeric labels into text labels</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lut</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkLookupTable.html" title="See on vtk documentation"><em>vtkLookupTable</em></a>) &#8211; Lookup table</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="braviz.visualization.simple_vtk.persistentImagePlane.set_orientation">
+<em class="property">static </em><tt class="descname">set_orientation</tt><big>(</big><em>orientation</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane.set_orientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets image plane orientation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>orientation</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; x:0 , y:1, z:2</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="braviz.visualization.simple_vtk.persistentImagePlane.text1_to_std">
+<em class="property">static </em><tt class="descname">text1_to_std</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane.text1_to_std" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn text1 behaviour back to standard, reverts the effects of text1_value_from_img</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="braviz.visualization.simple_vtk.persistentImagePlane.text1_value_from_img">
+<em class="property">static </em><tt class="descname">text1_value_from_img</tt><big>(</big><em>img2</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane.text1_value_from_img" title="Permalink to this definition">¶</a></dt>
+<dd><p>Text 1 value can be read from a different image than the one been shown, useful for composed images</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>img2</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkImageData.html" title="See on vtk documentation"><em>vtkImageData</em></a>) &#8211; Image to get values for lower left corner text</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.visualization.simple_vtk.OutlineActor">
+<em class="property">class </em><tt class="descname">OutlineActor</tt><a class="headerlink" href="#braviz.visualization.simple_vtk.OutlineActor" title="Permalink to this definition">¶</a></dt>
+<dd><p>A simple shortcut for displaying the outline of an object</p>
+<p>Encapsulates an outline filter, a mapper and an actor</p>
+<dl class="staticmethod">
+<dt id="braviz.visualization.simple_vtk.OutlineActor.SetInputData">
+<em class="property">static </em><tt class="descname">SetInputData</tt><big>(</big><em>input_data</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.OutlineActor.SetInputData" title="Permalink to this definition">¶</a></dt>
+<dd><p>For better compatibility with vtk methods style</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>input_data</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkDataObject.html" title="See on vtk documentation"><em>vtkDataObject</em></a>) &#8211; Object whose outline we want</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="braviz.visualization.simple_vtk.OutlineActor.set_input_data">
+<em class="property">static </em><tt class="descname">set_input_data</tt><big>(</big><em>input_data</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.OutlineActor.set_input_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the input data for the outline</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>input_data</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkDataObject.html" title="See on vtk documentation"><em>vtkDataObject</em></a>) &#8211; Object whose outline we want</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.visualization.simple_vtk.OrientationAxes">
+<em class="property">class </em><tt class="descname">OrientationAxes</tt><a class="headerlink" href="#braviz.visualization.simple_vtk.OrientationAxes" title="Permalink to this definition">¶</a></dt>
+<dd><p>An orientation cube with faces labeled for Right, Left, Anterior, Posterior, Superior and Inferior</p>
+<dl class="method">
+<dt id="braviz.visualization.simple_vtk.OrientationAxes.initialize">
+<tt class="descname">initialize</tt><big>(</big><em>render_window_interactor</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.OrientationAxes.initialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Link the orientation cube with an interactor</p>
+<p>render_window_interactor (vtkRenderWindowInteractor) : vtk interactor</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.visualization.simple_vtk.cursors">
+<em class="property">class </em><tt class="descname">cursors</tt><big>(</big><em>axis=0</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.cursors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Emulates the cursors in vtkImagePlaneWidget</p>
+<p>There will be two copies of the cursors polydata, one in front and one at the back of the
+image plane, the separation between them is controlled by the <a class="reference internal" href="#braviz.visualization.simple_vtk.cursors.set_delta" title="braviz.visualization.simple_vtk.cursors.set_delta"><tt class="xref py py-meth docutils literal"><span class="pre">set_delta()</span></tt></a> method</p>
+<dl class="staticmethod">
+<dt id="braviz.visualization.simple_vtk.cursors.change_axis">
+<em class="property">static </em><tt class="descname">change_axis</tt><big>(</big><em>axis</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.cursors.change_axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change the axis perpendicular to the image plane</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>axis</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; x:0 , y:1, z:2</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="braviz.visualization.simple_vtk.cursors.set_cursor">
+<em class="property">static </em><tt class="descname">set_cursor</tt><big>(</big><em>x</em>, <em>y</em>, <em>z</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.cursors.set_cursor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the position of the cursor</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; x position</li>
+<li><strong>y</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; y position</li>
+<li><strong>z</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; z position</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="braviz.visualization.simple_vtk.cursors.set_delta">
+<em class="property">static </em><tt class="descname">set_delta</tt><big>(</big><em>delta</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.cursors.set_delta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets separation between front and back cursors.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>delta</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Separation</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="braviz.visualization.simple_vtk.cursors.set_dimensions">
+<em class="property">static </em><tt class="descname">set_dimensions</tt><big>(</big><em>nx</em>, <em>ny</em>, <em>nz</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.cursors.set_dimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the dimensions of the underlying image</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>nx</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; x dimension</li>
+<li><strong>ny</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; y dimension</li>
+<li><strong>nz</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; z dimension</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="braviz.visualization.simple_vtk.cursors.set_origin">
+<em class="property">static </em><tt class="descname">set_origin</tt><big>(</big><em>x</em>, <em>y</em>, <em>z</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.cursors.set_origin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the origin of the underlying image</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; x origin</li>
+<li><strong>y</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; y origin</li>
+<li><strong>z</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; z origin</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="braviz.visualization.simple_vtk.cursors.set_spacing">
+<em class="property">static </em><tt class="descname">set_spacing</tt><big>(</big><em>dx</em>, <em>dy</em>, <em>dz</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.cursors.set_spacing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the spacing of the underlying image</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dx</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; x spacing</li>
+<li><strong>dy</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; y spacing</li>
+<li><strong>dz</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; z spacing</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="other-utilities">
+<h2>Other Utilities<a class="headerlink" href="#other-utilities" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="braviz.visualization.simple_vtk.save_ren_win_picture">
+<tt class="descname">save_ren_win_picture</tt><big>(</big><em>ren_win</em>, <em>file_name</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.save_ren_win_picture" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves an screenshot of a render window</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ren_win</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkRenderWindow.html" title="See on vtk documentation"><em>vtkRenderWindow</em></a>) &#8211; Render Window</li>
+<li><strong>file_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Path to save screenshot</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.visualization.simple_vtk.build_grid">
+<tt class="descname">build_grid</tt><big>(</big><em>orig_img</em>, <em>slice</em>, <em>sampling_rate=5</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.build_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an homogenous grid, useful for showing the effects of transformations</p>
+<p>The grid dimensions are based on the orig_img, slice is used to position the grid along the x axis,
+For the moment only grids perpendicular to the x axis are available</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>orig_img</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkImageData.html" title="See on vtk documentation"><em>vtkImageData</em></a>) &#8211; Image to base grid on</li>
+<li><strong>slice</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Slice of the image where the grid will be located (along the x asis)</li>
+<li><strong>sampling_rate</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Density of the grid, there will be a line each <em>sampling_rate</em> voxels</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.visualization.simple_vtk.remove_nan_from_grid">
+<tt class="descname">remove_nan_from_grid</tt><big>(</big><em>grid</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.remove_nan_from_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove missing values from a grid, it is necessary in some version of vtk to avoid crash</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>grid</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkPolyData.html" title="See on vtk documentation"><em>vtkPolyData</em></a>) &#8211; Should only contain lines</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.visualization.simple_vtk.get_arrow">
+<tt class="descname">get_arrow</tt><big>(</big><em>head</em>, <em>tail</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.get_arrow" title="Permalink to this definition">¶</a></dt>
+<dd><p>create a polydata arrow, consider using vtkArrowSource</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>head</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; coordinates for arrow head</li>
+<li><strong>tail</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; coordinates for arrow tail</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.visualization.simple_vtk.get_window_level">
+<tt class="descname">get_window_level</tt><big>(</big><em>img</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.get_window_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Automatically gets appropriate window and level values for displaying an image</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>img</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkImageData.html" title="See on vtk documentation"><em>vtkImageData</em></a>) &#8211; Image</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">(window,level), proposed values</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+          <a href="visualization.html" title="Visualization"
+             accesskey="P">previous</a> |
+          <a href="subject_viewer.html" title="Subject Viewer"
+             accesskey="N">next</a> |
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a>
+          
+            <br/>
+            <a href="../_sources/library/simple_vtk.txt"
+               rel="nofollow">Show Source</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

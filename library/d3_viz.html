@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>D3 based visualizations &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.0b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Braviz Documentation" href="../index.html" />
+    <link rel="up" title="Visualization" href="visualization.html" />
+    <link rel="next" title="Interaction" href="interaction.html" />
+    <link rel="prev" title="The matplotlib widget" href="matplotlib_widget.html" /> 
+  </head>
+  <body>
+    
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html"> Braviz Documentation </a></div>
+          <nav class="parents">
+              <ol>
+        <li><a href="../index.html"> Home </a> &raquo;</li>
+          <li><a href="index.html" >Braviz library</a> &raquo;</li>
+          <li><a href="visualization.html"  accesskey="U" >Visualization</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">D3 based visualizations</a><ul>
+<li><a class="reference internal" href="#parallel-coordinates">Parallel Coordinates</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="matplotlib_widget.html"
+                        title="previous chapter">The matplotlib widget</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="interaction.html"
+                        title="next chapter">Interaction</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-braviz.visualization.d3_visualizations"></span><div class="section" id="d3-based-visualizations">
+<h1>D3 based visualizations<a class="headerlink" href="#d3-based-visualizations" title="Permalink to this headline">¶</a></h1>
+<p>The Java Script library <a class="reference external" href="d3.org">D3</a> allows to create rich interactive graphics. It is of course targeted at
+web visualizations, and is meant to run on a web browser. In order to integrate this with the rest of braviz, which
+is written in python, we will use the <a class="reference external" href="twisterweb.org">twister</a> web server to send appropriate html to the browser,
+and to receive messages (requests). We are still missing a mechanism to send further messages to the browser once the
+page is loaded. This could be done by polling at a particular address and keeping track of message numbers</p>
+<div class="section" id="parallel-coordinates">
+<h2>Parallel Coordinates<a class="headerlink" href="#parallel-coordinates" title="Permalink to this headline">¶</a></h2>
+<a class="reference internal image-reference" href="../_images/parallel_coords.png"><img alt="Parallel coordinates example" class="align-center" src="../_images/parallel_coords.png" style="width: 90%;" /></a>
+<dl class="class">
+<dt id="braviz.visualization.d3_visualizations.ParallelCoordinatesHandler">
+<em class="property">class </em><tt class="descname">ParallelCoordinatesHandler</tt><big>(</big><em>application</em>, <em>request</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.d3_visualizations.ParallelCoordinatesHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements a parallel coordinates view from variables in the database</p>
+<p>It is based on the <a class="reference external" href="http://mbostock.github.io/d3/talk/20111116/iris-parallel.html">parallel coordinates</a>
+d3 example</p>
+<p>The <em>GET</em> method receives as arguments:</p>
+<blockquote>
+<div><ul>
+<li><dl class="first docutils">
+<dt><strong>vars</strong> <span class="classifier-delimiter">:</span> <span class="classifier">A list of variable ids to include in the parallel coordinates, in order</span></dt>
+<dd><p class="first last">If it is not given, the default from the configuration file are used</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><strong>sample</strong> <span class="classifier-delimiter">:</span> <span class="classifier">A sample ID for subjects to include in the visualizaiton, if None is given the whole dataset</span></dt>
+<dd><p class="first last">is displayed</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<p>It returns a parallel coordinates web page, by rendering the template <tt class="docutils literal"><span class="pre">parallel_coordinates.html</span></tt> found inside
+<tt class="docutils literal"><span class="pre">web_template</span></tt> in the directory containing the <a class="reference internal" href="visualization.html#module-braviz.visualization" title="braviz.visualization"><tt class="xref py py-mod docutils literal"><span class="pre">braviz.visualization</span></tt></a> module.</p>
+<p>The <em>POST</em> method is used to save samples from the visualization,
+it receives the following arguments</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>sample_name</strong> : Name for the new sample</li>
+<li><strong>sample_desc</strong> : Description for the new sample</li>
+<li><strong>sample_subjects</strong> :  Subject ids inside the new sample</li>
+</ul>
+</div></blockquote>
+<p>It returns a <cite>409</cite> error code if the <em>sample_name</em> already existed, or <tt class="docutils literal"><span class="pre">ok</span></tt> with code 200, if the sample was
+successfully saved</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.visualization.d3_visualizations.IndexHandler">
+<em class="property">class </em><tt class="descname">IndexHandler</tt><big>(</big><em>application</em>, <em>request</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.d3_visualizations.IndexHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays the braviz start page</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+          <a href="matplotlib_widget.html" title="The matplotlib widget"
+             accesskey="P">previous</a> |
+          <a href="interaction.html" title="Interaction"
+             accesskey="N">next</a> |
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a>
+          
+            <br/>
+            <a href="../_sources/library/d3_viz.txt"
+               rel="nofollow">Show Source</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

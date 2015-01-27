@@ -1,0 +1,614 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Geometric Processing &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.0b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Braviz Documentation" href="../index.html" />
+    <link rel="up" title="Interaction" href="interaction.html" />
+    <link rel="next" title="Applications" href="applications.html" />
+    <link rel="prev" title="R functions" href="r_funcs.html" /> 
+  </head>
+  <body>
+    
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html"> Braviz Documentation </a></div>
+          <nav class="parents">
+              <ol>
+        <li><a href="../index.html"> Home </a> &raquo;</li>
+          <li><a href="index.html" >Braviz library</a> &raquo;</li>
+          <li><a href="interaction.html"  accesskey="U" >Interaction</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Geometric Processing</a><ul>
+<li><a class="reference internal" href="#structure-metrics">Structure metrics</a><ul>
+<li><a class="reference internal" href="#polydata-metrics">Polydata metrics</a></li>
+<li><a class="reference internal" href="#image-metrics">Image metrics</a></li>
+<li><a class="reference internal" href="#latearlity-helpers">latearlity helpers</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#geometric-descriptors">Geometric descriptors</a></li>
+<li><a class="reference internal" href="#roi-operations">Roi operations</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="r_funcs.html"
+                        title="previous chapter">R functions</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="applications.html"
+                        title="next chapter">Applications</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="geometric-processing">
+<h1>Geometric Processing<a class="headerlink" href="#geometric-processing" title="Permalink to this headline">¶</a></h1>
+<p>The following modules group operations on geometric structures returned
+by the <a class="reference internal" href="read_and_filter.html#module-braviz.readAndFilter" title="braviz.readAndFilter"><tt class="xref py py-mod docutils literal"><span class="pre">readAndFilter</span></tt></a> module. These operations are not intended
+to improve visualization, but to produce data for the user which can be used
+in statistical analyses or in other applications.</p>
+<span class="target" id="module-braviz.interaction.structure_metrics"></span><div class="section" id="structure-metrics">
+<h2>Structure metrics<a class="headerlink" href="#structure-metrics" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="polydata-metrics">
+<h3>Polydata metrics<a class="headerlink" href="#polydata-metrics" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="braviz.interaction.structure_metrics.get_mult_struct_metric">
+<tt class="descname">get_mult_struct_metric</tt><big>(</big><em>reader</em>, <em>struct_names</em>, <em>code</em>, <em>metric='volume'</em><big>)</big><a class="headerlink" href="#braviz.interaction.structure_metrics.get_mult_struct_metric" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aggregates a metric across multiple structures</p>
+<p>The supported metrics are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><em>volume</em>: Total volume of the structures, read from freesurfer files</li>
+<li><em>area</em>: Sum of the surface areas of each structure</li>
+<li><em>nfibers</em>: Number of fibers that cross the structure, or number of fibers
+in the bundle if structure is <tt class="docutils literal"><span class="pre">Fibs:*</span></tt></li>
+<li><em>lfibers</em>: Mean length of fibers going through structure or in bundle</li>
+<li><em>fa_fibers</em>: Mean fa of fibers crossing the structure or in bundle</li>
+<li><em>fa_inside</em>: Mean fa inside the structures</li>
+<li><em>md_inside</em>: Mean md inside the structures</li>
+</ul>
+</div></blockquote>
+<p>if metric is nfiber,lfibers or fa_fibers <a class="reference internal" href="#braviz.interaction.structure_metrics.get_fibers_metric" title="braviz.interaction.structure_metrics.get_fibers_metric"><tt class="xref py py-func docutils literal"><span class="pre">get_fibers_metric()</span></tt></a> is used</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>reader</strong> (<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><em>braviz.readAndFilter.base_reader.BaseReader</em></a>) &#8211; Reader object used to read the data</li>
+<li><strong>struct_names</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of structure names</li>
+<li><strong>code</strong> &#8211; Subject id</li>
+<li><strong>metric</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Metric to calculate, options are <em>volume</em>, <em>area</em> (surface area), <em>nfibers</em>, <em>lfibers</em>
+<em>md_inside</em> and <em>fa_inside</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A float number with the requested metric</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.interaction.structure_metrics.get_struct_metric">
+<tt class="descname">get_struct_metric</tt><big>(</big><em>reader</em>, <em>struct_name</em>, <em>code</em>, <em>metric='volume'</em><big>)</big><a class="headerlink" href="#braviz.interaction.structure_metrics.get_struct_metric" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates a metric for a specific structure</p>
+<p>The supported metrics are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><em>volume</em>: Volume of the structure, read from freesurfer files</li>
+<li><em>area</em>: Surfrace area of the structure</li>
+<li><em>nfibers</em>: Number of fibers that cross the structure, or number of fibers in the bundle if structure is Fibs:*</li>
+<li><em>lfibers</em>: Mean length of fibers going through structure or in bundle</li>
+<li><em>fa_fibers</em>: Mean fa of fibers crossing the structure or in bundle</li>
+<li><em>fa_inside</em>: Mean fa inside the structure</li>
+<li><em>md_inside</em>: Mean md inside the structure</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>reader</strong> (<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><em>braviz.readAndFilter.base_reader.BaseReader</em></a>) &#8211; Reader object used to read the data</li>
+<li><strong>struct_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name of an structure or of a named bundle (should start with <em>Fibs:</em>)</li>
+<li><strong>cod</strong> &#8211; Subject id</li>
+<li><strong>metric</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Look above for the options</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A float number with the requested metric</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.interaction.structure_metrics.get_fibers_metric">
+<tt class="descname">get_fibers_metric</tt><big>(</big><em>reader</em>, <em>struct_name</em>, <em>code</em>, <em>metric='number'</em><big>)</big><a class="headerlink" href="#braviz.interaction.structure_metrics.get_fibers_metric" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates metrics for groups of fibers</p>
+<p>struct_name can be the name of a freesurfer model, in which case the bundle will be the fibers that cross it,
+if struct_name is a list of structures, the fibers crossing any of those structures will be used
+finally struct_name can be a named fiber, which will be used as a bundle</p>
+<p>metrics are number, mean_length and mean_fa, see <a class="reference internal" href="#braviz.interaction.structure_metrics.get_struct_metric" title="braviz.interaction.structure_metrics.get_struct_metric"><tt class="xref py py-func docutils literal"><span class="pre">get_struct_metric()</span></tt></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>reader</strong> (<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><em>braviz.readAndFilter.base_reader.BaseReader</em></a>) &#8211; Reader object used to read the data</li>
+<li><strong>struct_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name of an structure or of a named bundle (should start with <em>Fibs:</em>)</li>
+<li><strong>cod</strong> &#8211; Subject id</li>
+<li><strong>metric</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Options are <em>number</em>, <em>mean_length</em>, and <em>mean_fa</em></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A float number with the requested metric</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.interaction.structure_metrics.cached_get_struct_metric_col">
+<tt class="descname">cached_get_struct_metric_col</tt><big>(</big><em>reader</em>, <em>codes</em>, <em>struct_name</em>, <em>metric</em>, <em>state_variables=None</em>, <em>force_reload=False</em>, <em>laterality_dict=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.structure_metrics.cached_get_struct_metric_col" title="Permalink to this definition">¶</a></dt>
+<dd><p>calculates a structure metrics for all subjects in a list of codes</p>
+<p>It has a disk cache which is used to try to save results, and reload them instead of calculating again
+if force_reload is True, a cached result will be ignored, and the column will be calculated again</p>
+<p>A laterality_dict may be used for solving dominant and non dominant structures specifications</p>
+<p>It has a dictionary of state_variables which can be used to monitor or cancel the calculation
+from a different thread
+The states variables are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>&#8216;struct_name&#8217;: the requested structure name</li>
+<li>&#8216;metric&#8217; ; the requested metric</li>
+<li>&#8216;working&#8217; : Set to true at start of function, and to false just before returning</li>
+<li>&#8216;output&#8217; : A partial list of results will be stored here, this is the same object that will be returned</li>
+<li>&#8216;number_calculated&#8217; : number of metrics calculated</li>
+<li>&#8216;number_requested&#8217; : number of metrics requested (length of codes list)</li>
+<li>&#8216;cancel&#8217; : Set this to True, to cancel the operation and return before the next iteration</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>reader</strong> (<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><em>braviz.readAndFilter.base_reader.BaseReader</em></a>) &#8211; Reader object used to read the data and access cache</li>
+<li><strong>codes</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of subject ids</li>
+<li><strong>struct_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name of an structure or of a named bundle (should start with <em>Fibs:</em>)</li>
+<li><strong>metric</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; See <a class="reference internal" href="#braviz.interaction.structure_metrics.get_struct_metric" title="braviz.interaction.structure_metrics.get_struct_metric"><tt class="xref py py-func docutils literal"><span class="pre">get_struct_metric()</span></tt></a> for options</li>
+<li><strong>state_variables</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; Used for sharing state with other threads, read above</li>
+<li><strong>force_reload</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If <tt class="docutils literal"><span class="pre">True</span></tt> cache is ignored</li>
+<li><strong>laterality_dict</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; Dictionary with laterality of subjects. Values should be
+&#8216;l&#8217; for left handed subjects and &#8216;r&#8217; otherwise. See <a class="reference internal" href="tabular_data.html#braviz.readAndFilter.tabular_data.get_laterality" title="braviz.readAndFilter.tabular_data.get_laterality"><tt class="xref py py-func docutils literal"><span class="pre">braviz.readAndFilter.tabular_data.get_laterality()</span></tt></a></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A list of floats of the same length as <em>codes</em> with the respective metrics for each subject</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.interaction.structure_metrics.get_scalar_from_fiber_ploydata">
+<tt class="descname">get_scalar_from_fiber_ploydata</tt><big>(</big><em>poly_data</em>, <em>scalar</em><big>)</big><a class="headerlink" href="#braviz.interaction.structure_metrics.get_scalar_from_fiber_ploydata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the number of lines, mean length or mean color from a polydata bundle</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>poly_data</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkPolyData.html" title="See on vtk documentation"><em>vtkPolyData</em></a>) &#8211; Poly Data containing only lines</li>
+<li><strong>scalar</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; may be &#8220;number&#8221;,&#8221;mean_length&#8221;, or &#8220;mean_color&#8221;</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The requested scalar</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.interaction.structure_metrics.get_fiber_scalars_from_db">
+<tt class="descname">get_fiber_scalars_from_db</tt><big>(</big><em>reader</em>, <em>subj_id</em>, <em>db_id</em>, <em>scalar</em><big>)</big><a class="headerlink" href="#braviz.interaction.structure_metrics.get_fiber_scalars_from_db" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the number of lines, mean length mean fa or mean md from a database fiber</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>reader</strong> (<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><em>braviz.readAndFilter.base_reader.BaseReader</em></a>) &#8211; Reader object used to read the data</li>
+<li><strong>subj_id</strong> &#8211; Subject id</li>
+<li><strong>db_id</strong> &#8211; Bundle database id</li>
+<li><strong>scalar</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; may be &#8220;number&#8221;,&#8221;mean_length&#8221;, or &#8220;mean_fa&#8221; or &#8220;mean_md&#8221;</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The requested scalar, or &#8216;nan&#8217; if there was an error</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.interaction.structure_metrics.get_fiber_scalars_from_waypoints">
+<tt class="descname">get_fiber_scalars_from_waypoints</tt><big>(</big><em>reader</em>, <em>subj_id</em>, <em>waypoints</em>, <em>operation</em>, <em>scalar</em><big>)</big><a class="headerlink" href="#braviz.interaction.structure_metrics.get_fiber_scalars_from_waypoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the number of lines, mean length mean fa or mean md from a fiber created using waypoints</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>reader</strong> (<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><em>braviz.readAndFilter.base_reader.BaseReader</em></a>) &#8211; Reader object used to read the data</li>
+<li><strong>subj_id</strong> &#8211; Subject id</li>
+<li><strong>waypoints</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of structure names</li>
+<li><strong>operation</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; &#8220;and&#8221; if it required for lines to pass through <em>all</em> waypoints, &#8220;or&#8221; if they can pass
+through <em>any</em> of them</li>
+<li><strong>scalar</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; may be &#8220;number&#8221;,&#8221;mean_length&#8221;, or &#8220;mean_fa&#8221; or &#8220;mean_md&#8221;</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The requested scalar, or &#8216;nan&#8217; if there was an error</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="image-metrics">
+<h3>Image metrics<a class="headerlink" href="#image-metrics" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="braviz.interaction.structure_metrics.mean_inside">
+<tt class="descname">mean_inside</tt><big>(</big><em>reader</em>, <em>subject</em>, <em>structures</em>, <em>img2</em>, <em>paradigm=None</em>, <em>contrast=1</em><big>)</big><a class="headerlink" href="#braviz.interaction.structure_metrics.mean_inside" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the mean value of img2 values inside of the structures listed</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>reader</strong> (<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><em>braviz.readAndFilter.base_reader.BaseReader</em></a>) &#8211; Reader object used to read the data</li>
+<li><strong>subject</strong> &#8211; Subject id</li>
+<li><strong>structures</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of structure names</li>
+<li><strong>img2</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Modality in which to calculate mean, must be FA, MD, MRI or fMRI</li>
+<li><strong>paradigm</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; In case img2 is fMRI, the paradigm to use</li>
+<li><strong>contrast</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; In case img2 is fMRI, the contrast to use</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The mean value of the image voxels that lay inside any of the listed structures</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.interaction.structure_metrics.aggregate_in_roi">
+<tt class="descname">aggregate_in_roi</tt><big>(</big><em>reader</em>, <em>subject</em>, <em>roi_ctr</em>, <em>roi_radius</em>, <em>roi_space</em>, <em>img2</em>, <em>paradigm=None</em>, <em>contrast=None</em>, <em>mean=True</em><big>)</big><a class="headerlink" href="#braviz.interaction.structure_metrics.aggregate_in_roi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aggregate values from an image inside a spherical roi</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>reader</strong> (<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><em>braviz.readAndFilter.base_reader.BaseReader</em></a>) &#8211; Reader object used to read the data</li>
+<li><strong>subject</strong> &#8211; subject id</li>
+<li><strong>roi_ctr</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; Coordinates of the roi center</li>
+<li><strong>roi_radius</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Sphere radius</li>
+<li><strong>roi_space</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Coordinate system in which the roi is defined</li>
+<li><strong>img2</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Modality in which to calculate mean or mode.</li>
+<li><strong>paradigm</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; In case img2 is fMRI, the paradigm to use</li>
+<li><strong>contrast</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; In case img2 is fMRI, the contrast to use</li>
+<li><strong>mean</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If will return the mean inside the roi, otherwise it will
+return the <em>mode</em>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Mean or mode of the image inside a sphere</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.interaction.structure_metrics.AggregateInRoi">
+<em class="property">class </em><tt class="descname">AggregateInRoi</tt><big>(</big><em>reader</em><big>)</big><a class="headerlink" href="#braviz.interaction.structure_metrics.AggregateInRoi" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class for doing repeated aggregations of image values inside different rois</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>reader</strong> (<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><em>braviz.readAndFilter.base_reader.BaseReader</em></a>) &#8211; Reader object used to read the data</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="braviz.interaction.structure_metrics.AggregateInRoi.get_value">
+<tt class="descname">get_value</tt><big>(</big><em>roi_ctr</em>, <em>roi_radius</em><big>)</big><a class="headerlink" href="#braviz.interaction.structure_metrics.AggregateInRoi.get_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get mean or mode from the image inside an spherical roi</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>roi_ctr</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; Coordinates of the roi center</li>
+<li><strong>roi_radius</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Sphere radius</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The mean or mode of the image inside the sphere, according to the data set using <a class="reference internal" href="#braviz.interaction.structure_metrics.AggregateInRoi.load_image" title="braviz.interaction.structure_metrics.AggregateInRoi.load_image"><tt class="xref py py-meth docutils literal"><span class="pre">load_image()</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.structure_metrics.AggregateInRoi.load_image">
+<tt class="descname">load_image</tt><big>(</big><em>subject</em>, <em>space</em>, <em>modality</em>, <em>paradigm=None</em>, <em>contrast=1</em>, <em>mean=True</em><big>)</big><a class="headerlink" href="#braviz.interaction.structure_metrics.AggregateInRoi.load_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads an image into the class</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>subject</strong> &#8211; subject id</li>
+<li><strong>space</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Coordinate system in which the roi is defined</li>
+<li><strong>modality</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Modality in which to calculate mean or mode.</li>
+<li><strong>paradigm</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; In case modality is fMRI, the paradigm to use</li>
+<li><strong>contrast</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; In case modality is fMRI, the contrast to use</li>
+<li><strong>mean</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If <tt class="docutils literal"><span class="pre">True</span></tt> <a class="reference internal" href="#braviz.interaction.structure_metrics.AggregateInRoi.get_value" title="braviz.interaction.structure_metrics.AggregateInRoi.get_value"><tt class="xref py py-meth docutils literal"><span class="pre">get_value()</span></tt></a> will return the mean inside the roi, otherwise it will
+return the <em>mode</em>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="latearlity-helpers">
+<h3>latearlity helpers<a class="headerlink" href="#latearlity-helpers" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="braviz.interaction.structure_metrics.get_right_or_left_hemisphere">
+<tt class="descname">get_right_or_left_hemisphere</tt><big>(</big><em>hemisphere</em>, <em>laterality</em><big>)</big><a class="headerlink" href="#braviz.interaction.structure_metrics.get_right_or_left_hemisphere" title="Permalink to this definition">¶</a></dt>
+<dd><p>Translates &#8216;d&#8217; (dominant) and &#8216;n&#8217; (non-dominant) into &#8216;r&#8217; (right) or &#8216;l&#8217; (left) using laterality,</p>
+<p>laterality should be r (right handed) or l (left handed)
+hemisphere can also be &#8216;r&#8217; or &#8216;l&#8217;; in this case the same letters will be returned</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>hemisphere</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Should be &#8216;d&#8217; for dominant, &#8216;n&#8217; for non-dominant, &#8216;r&#8217; for right or &#8216;l&#8217; for left</li>
+<li><strong>laterality</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Should be &#8216;l&#8217; for left handed subjects or &#8216;r&#8217; otherwise</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">&#8216;r&#8217; or &#8216;l&#8217;</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.interaction.structure_metrics.solve_laterality">
+<tt class="descname">solve_laterality</tt><big>(</big><em>laterality</em>, <em>names</em><big>)</big><a class="headerlink" href="#braviz.interaction.structure_metrics.solve_laterality" title="Permalink to this definition">¶</a></dt>
+<dd><p>translates dominant and nondominant freesurfer names into right and left names,</p>
+<p>laterality should be  &#8216;l&#8217; (left handed) or &#8216;r&#8217;
+names is a list of names to translate
+currently <tt class="docutils literal"><span class="pre">wm-[d|n|r|l]h-*</span></tt> , <tt class="docutils literal"><span class="pre">ctx-[d|n|r|l]h-*</span></tt> and fiber bundles ending in <tt class="docutils literal"><span class="pre">_[d|n|r|l]</span></tt> are supported</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>laterality</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Laterality of subject, &#8216;l&#8217; for left handed, &#8216;r&#8217; otherwise</li>
+<li><strong>names</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of structure names, possibly with &#8216;d&#8217; and &#8216;n&#8217; sides, to translate to &#8216;l&#8217; and &#8216;r&#8217; sides.
+Only cortical structures and named fibers are supported, read above.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="module-braviz.interaction.descriptors"></span></div>
+</div>
+<div class="section" id="geometric-descriptors">
+<h2>Geometric descriptors<a class="headerlink" href="#geometric-descriptors" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="braviz.interaction.descriptors.get_descriptors">
+<tt class="descname">get_descriptors</tt><big>(</big><em>aseg</em>, <em>labels</em>, <em>draw=False</em><big>)</big><a class="headerlink" href="#braviz.interaction.descriptors.get_descriptors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the longest axis in a structure, the second longest axis perpendicular to it, and the third axis
+perpendicular to both</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>aseg</strong> (<a class="reference external" href="http://nipy.org/nibabel/reference/nibabel.spatialimages.html#nibabel.spatialimages.SpatialImage" title="(in NiBabel v2.0.0)"><em>nibabel.spatialimages.SpatialImage</em></a>) &#8211; Label map</li>
+<li><strong>labels</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; list of integer labels to look for in the label map</li>
+<li><strong>draw</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If <tt class="docutils literal"><span class="pre">True</span></tt> the process will be illustrated in a
+<a class="reference internal" href="simple_vtk.html#braviz.visualization.simple_vtk.SimpleVtkViewer" title="braviz.visualization.simple_vtk.SimpleVtkViewer"><tt class="xref py py-class docutils literal"><span class="pre">SimpleVtkViewer</span></tt></a>, press &#8216;q&#8217; after each stage</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A tuple with the lengths of the three axes</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="module-braviz.interaction.roi"></span></div>
+<div class="section" id="roi-operations">
+<h2>Roi operations<a class="headerlink" href="#roi-operations" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="braviz.interaction.roi.generate_roi_image">
+<tt class="descname">generate_roi_image</tt><big>(</big><em>subject</em>, <em>roi_id</em>, <em>space</em>, <em>reader=None</em>, <em>out_format='nii'</em><big>)</big><a class="headerlink" href="#braviz.interaction.roi.generate_roi_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates an image representation of an spherical ROI</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>subject</strong> &#8211; Subject id</li>
+<li><strong>roi_id</strong> &#8211; ROI database id</li>
+<li><strong>space</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Coordinate system for output image</li>
+<li><strong>reader</strong> (<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><em>braviz.readAndFilter.base_reader.BaseReader</em></a>) &#8211; Reader object used to read the data, if None, the
+one returned by <a class="reference internal" href="read_and_filter.html#braviz.readAndFilter.BravizAutoReader" title="braviz.readAndFilter.BravizAutoReader"><tt class="xref py py-func docutils literal"><span class="pre">braviz.readAndFilter.BravizAutoReader()</span></tt></a> will be used</li>
+<li><strong>format</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; By default a numpy array, affine matrix pair is returned. If <tt class="docutils literal"><span class="pre">out_format=&quot;vtk&quot;</span></tt>,
+a vtkImageData object is returned</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A numpy array and a numpy affine transform by default. If <tt class="docutils literal"><span class="pre">out_format=&quot;vtk&quot;</span></tt> a vtkImageData</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.interaction.roi.export_roi">
+<tt class="descname">export_roi</tt><big>(</big><em>subject</em>, <em>roi_id</em>, <em>space</em>, <em>out_file</em>, <em>reader=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.roi.export_roi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save an image from a roi into a file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>subject</strong> &#8211; Subject id</li>
+<li><strong>roi_id</strong> &#8211; ROI database id</li>
+<li><strong>space</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Coordinate system for output image</li>
+<li><strong>out_file</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Path for the output file</li>
+<li><strong>reader</strong> (<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><em>braviz.readAndFilter.base_reader.BaseReader</em></a>) &#8211; Reader object used to read the data, if None, the
+one returned by <a class="reference internal" href="read_and_filter.html#braviz.readAndFilter.BravizAutoReader" title="braviz.readAndFilter.BravizAutoReader"><tt class="xref py py-func docutils literal"><span class="pre">braviz.readAndFilter.BravizAutoReader()</span></tt></a> will be used</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+          <a href="r_funcs.html" title="R functions"
+             accesskey="P">previous</a> |
+          <a href="applications.html" title="Applications"
+             accesskey="N">next</a> |
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a>
+          
+            <br/>
+            <a href="../_sources/library/struc_proc.txt"
+               rel="nofollow">Show Source</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

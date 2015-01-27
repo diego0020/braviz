@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Creating Samples &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.0b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Braviz Documentation" href="../index.html" />
+    <link rel="up" title="Braviz Interface Elements" href="general.html" />
+    <link rel="next" title="Configuring Braviz" href="configuration.html" />
+    <link rel="prev" title="Working with variables" href="variables.html" /> 
+  </head>
+  <body>
+    
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html"> Braviz Documentation </a></div>
+          <nav class="parents">
+              <ol>
+        <li><a href="../index.html"> Home </a> &raquo;</li>
+          <li><a href="index.html" >Visual Analytics with Braviz</a> &raquo;</li>
+          <li><a href="general.html"  accesskey="U" >Braviz Interface Elements</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Creating Samples</a><ul>
+<li><a class="reference internal" href="#the-working-set">The working set</a></li>
+<li><a class="reference internal" href="#combing-working-and-current-sets">Combing working and current sets</a></li>
+<li><a class="reference internal" href="#the-current-sample">The current sample</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="variables.html"
+                        title="previous chapter">Working with variables</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="configuration.html"
+                        title="next chapter">Configuring Braviz</a></p>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="creating-samples">
+<h1>Creating Samples<a class="headerlink" href="#creating-samples" title="Permalink to this headline">¶</a></h1>
+<p>Most applications let you work with a smaller set of subjects so that you can better focus your analyzes.
+To create such a list the <em>sample creation dialog</em>, which can be accessed by clicking <em>new</em> on all places
+where you are prompted to select a sample. For example you may click on <em>subsamples</em> in the main menu and
+afterwards click in new.</p>
+<a class="reference internal image-reference" href="../_images/new_sample.png"><img alt="Dialog for creating new samples" class="align-center" src="../_images/new_sample.png" style="width: 90%;" /></a>
+<p>This dialog contains three columns. At the left a working space, at the right the current sample and in the middle
+a series of bottoms for combining the two.</p>
+<div class="section" id="the-working-set">
+<h2>The working set<a class="headerlink" href="#the-working-set" title="Permalink to this headline">¶</a></h2>
+<p>In this panel you apply filters to a base sample in order to get a reduced subset. To add a new filter click
+the <em>Add Filter</em> button. This will take you to a variable select dialog where you can additionally select a threshold
+for real variables or a set of valid labels for nominal variables. Only subjects that pass all the filters will
+be shown at the bottom list. To remove a filter right click on it and select remove from the context menu.</p>
+</div>
+<div class="section" id="combing-working-and-current-sets">
+<h2>Combing working and current sets<a class="headerlink" href="#combing-working-and-current-sets" title="Permalink to this headline">¶</a></h2>
+<p>The buttons in the middle of the dialog allow you to move information from the working set to the current sample.</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Undo</strong>:   Restore the current sample to how it was before the last operation</li>
+<li><strong>Add All</strong>:    Add the complete working set to the current sample</li>
+<li><strong>Add Subset</strong>:    Add a random subset from the working set to the sample, a dialog will
+prompt you for the amount of subjects you which to add</li>
+<li><strong>Subtract</strong>:    Remove the subjects in the working set from the sample</li>
+<li><strong>Intersect</strong>:    Intersect the current sample with the working set, only subjects who appear in the
+working set will be kept in the sample.</li>
+<li><strong>Clear</strong>:    Clear the current sample</li>
+</ul>
+</div></blockquote>
+<p>Additionally you can right click on any subject in the working set and from the context menu add him to the
+current sample. You can also right click on individual subjects in the current sample and remove them from
+the context menu.</p>
+</div>
+<div class="section" id="the-current-sample">
+<h2>The current sample<a class="headerlink" href="#the-current-sample" title="Permalink to this headline">¶</a></h2>
+<p>The right panel shows the subjects in the current sample and its size. Afterwards there is a field where you can
+write a description for the sample. It is useful to describe which operations you applied in order to generate
+the sample, or what is its intend.</p>
+<p>Use the <em>save</em> button to save the sample into the database, it will prompt you for a name and allow you to review
+the description. The <em>load</em> button loads a set of subjects into the current sample list. The <em>cancel</em> button closes
+the dialog and discards the sample.
+Finally, the create indicator value allows you to create a nominal variable, which has label 1 for subjects in the
+sample, and 0 for subjects outside the sample.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+                
+                <a href="variables.html" title="Working with variables" accesskey="P">Previous</a>
+                
+
+                
+                 |
+                
+
+                
+                <a href="configuration.html" title="Configuring Braviz" accesskey="N"> Next</a>
+                
+
+          
+            <br/>
+            <a href="../_sources/graphical/samples.txt"
+               rel="nofollow">Show Source</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

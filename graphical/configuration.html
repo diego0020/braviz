@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Configuring Braviz &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.0b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Braviz Documentation" href="../index.html" />
+    <link rel="up" title="Braviz Interface Elements" href="general.html" />
+    <link rel="next" title="Braviz Applications" href="applications.html" />
+    <link rel="prev" title="Creating Samples" href="samples.html" /> 
+  </head>
+  <body>
+    
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html"> Braviz Documentation </a></div>
+          <nav class="parents">
+              <ol>
+        <li><a href="../index.html"> Home </a> &raquo;</li>
+          <li><a href="index.html" >Visual Analytics with Braviz</a> &raquo;</li>
+          <li><a href="general.html"  accesskey="U" >Braviz Interface Elements</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Configuring Braviz</a><ul>
+<li><a class="reference internal" href="#braviz">Braviz</a></li>
+<li><a class="reference internal" href="#default-variables">Default variables</a></li>
+<li><a class="reference internal" href="#defaults">Defaults</a></li>
+<li><a class="reference internal" href="#changing-file-location-advanced">Changing file location (advanced)</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="samples.html"
+                        title="previous chapter">Creating Samples</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="applications.html"
+                        title="next chapter">Braviz Applications</a></p>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="configuring-braviz">
+<h1>Configuring Braviz<a class="headerlink" href="#configuring-braviz" title="Permalink to this headline">¶</a></h1>
+<p>Braviz uses a configuration file to load initial settings. The configuration file is located
+at the braviz applications directory and can be opened in any text editor.</p>
+<p>The file will look like this</p>
+<div class="highlight-cfg"><div class="highlight"><pre><span class="k">[Braviz]</span>
+<span class="na">project</span> <span class="o">=</span> <span class="s">kmc400</span>
+<span class="na">logger</span> <span class="o">=</span> <span class="s">console</span>
+
+<span class="k">[Default_Variables]</span>
+<span class="na">nominal1</span> <span class="o">=</span> <span class="s">ubicac</span>
+<span class="na">nominal2</span> <span class="o">=</span> <span class="s">BIRTH_sexo5</span>
+<span class="na">numeric1</span> <span class="o">=</span> <span class="s">WASI_FSIQ_4</span>
+<span class="na">numeric2</span> <span class="o">=</span> <span class="s">BIRTH_peso5</span>
+<span class="na">laterality</span> <span class="o">=</span> <span class="s">LAT_EdinburgHandedness</span>
+<span class="na">left_handed_label</span> <span class="o">=</span> <span class="s">3</span>
+<span class="na">reference_pop_var</span> <span class="o">=</span> <span class="s">ubicac</span>
+<span class="na">reference_pop_label</span> <span class="o">=</span> <span class="s">3</span>
+
+<span class="k">[Defaults]</span>
+<span class="na">default_subject</span> <span class="o">=</span> <span class="s">119</span>
+
+<span class="k">[VTK]</span>
+<span class="na">background</span> <span class="o">=</span> <span class="s">0.1 0.1 0.2</span>
+<span class="na">interaction_style</span> <span class="o">=</span> <span class="s">TrackballCamera</span>
+</pre></div>
+</div>
+<div class="section" id="braviz">
+<h2>Braviz<a class="headerlink" href="#braviz" title="Permalink to this headline">¶</a></h2>
+<p>The first field in this section contains the name of the current project. If you have several projects you may
+select one by changing this field.</p>
+<p>The <em>logger</em> field is used to select where program output is stored. It can be the terminal, or it can be stored
+in a file. The valid values are <tt class="docutils literal"><span class="pre">console</span></tt> and <tt class="docutils literal"><span class="pre">log</span></tt>.</p>
+</div>
+<div class="section" id="default-variables">
+<h2>Default variables<a class="headerlink" href="#default-variables" title="Permalink to this headline">¶</a></h2>
+<p>In this section you can specify the names of the variables which you want to be displayed by default on the applications
+There are two nominal variables and two real variables.</p>
+<p>Here you also need to specify the variable which is used for selecting the dominant and non-dominant hemisphere of
+each subject. This should be a nominal variable. The <em>left_handed_label</em> is the value the variable takes when the
+subject is left handed, and therefore the dominant hemisphere is the right hemisphere. In all other cases
+the dominant hemisphere will be the left.</p>
+<p>Finally you can specify another nominal variable which defines a control population. The <em>reference_var_label</em> is
+the value that the variable takes on subjects from the reference population.</p>
+</div>
+<div class="section" id="defaults">
+<h2>Defaults<a class="headerlink" href="#defaults" title="Permalink to this headline">¶</a></h2>
+<p>Here you can specify the default subject, which is the one that will appear when you first open applications.</p>
+</div>
+<div class="section" id="changing-file-location-advanced">
+<h2>Changing file location (advanced)<a class="headerlink" href="#changing-file-location-advanced" title="Permalink to this headline">¶</a></h2>
+<p>There is another configuration file associated to each project. For a project called <em>kmc400</em> this file
+will be called <tt class="docutils literal"><span class="pre">kmc400_hosts.cfg</span></tt>. This file contains a list of entries like this one</p>
+<div class="highlight-cfg"><div class="highlight"><pre><span class="k">[Echer]</span>
+<span class="na">data root</span> <span class="o">=</span> <span class="s">H:/kmc400</span>
+<span class="na">dynamic data root</span> <span class="o">=</span> <span class="s">H:/kmc400-braviz</span>
+<span class="na">memory (mb)</span> <span class="o">=</span> <span class="s">8000</span>
+</pre></div>
+</div>
+<p>The section name represents the name of a machine. You should first of all search for a section named
+after your machine. The <em>data root</em> field contains the root path to the project data; the
+<em>dynamic data root</em> contains the path for the directory in which braviz stores its data; and finally the
+<em>memory (mb)</em> field contains the maximum amount of memory that braviz will try to use in a single process.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+                
+                <a href="samples.html" title="Creating Samples" accesskey="P">Previous</a>
+                
+
+                
+                 |
+                
+
+                
+                <a href="applications.html" title="Braviz Applications" accesskey="N"> Next</a>
+                
+
+          
+            <br/>
+            <a href="../_sources/graphical/configuration.txt"
+               rel="nofollow">Show Source</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

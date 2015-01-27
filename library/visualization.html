@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Visualization &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.0b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Braviz Documentation" href="../index.html" />
+    <link rel="up" title="Braviz library" href="index.html" />
+    <link rel="next" title="Simple VTK Visualization" href="simple_vtk.html" />
+    <link rel="prev" title="Low level functions" href="read_low_level.html" /> 
+  </head>
+  <body>
+    
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html"> Braviz Documentation </a></div>
+          <nav class="parents">
+              <ol>
+        <li><a href="../index.html"> Home </a> &raquo;</li>
+          <li><a href="index.html"  accesskey="U" >Braviz library</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Visualization</a><ul>
+<li><a class="reference internal" href="#d-geometry-visualization">3D Geometry Visualization</a></li>
+<li><a class="reference internal" href="#statistical-visualization">Statistical Visualization</a><ul>
+<li><a class="reference internal" href="#matplotlib-based-visualization">Matplotlib based visualization</a></li>
+<li><a class="reference internal" href="#experimental-d3-based-visualization">Experimental D3 based visualization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="read_low_level.html"
+                        title="previous chapter">Low level functions</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="simple_vtk.html"
+                        title="next chapter">Simple VTK Visualization</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-braviz.visualization"></span><div class="section" id="visualization">
+<h1>Visualization<a class="headerlink" href="#visualization" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="d-geometry-visualization">
+<h2>3D Geometry Visualization<a class="headerlink" href="#d-geometry-visualization" title="Permalink to this headline">¶</a></h2>
+<p>Braviz relies on <a class="reference external" href="vtk.org">VTK</a> for 3D visualization. The classes and functions in this module are meant to wrap
+common vtk tasks in order to make it easier to implement brain visualizations. The main modules used for this
+purpose are:</p>
+<ul class="simple">
+<li>Simple VTK (<a class="reference internal" href="simple_vtk.html#module-braviz.visualization.simple_vtk" title="braviz.visualization.simple_vtk"><tt class="xref py py-mod docutils literal"><span class="pre">simple_vtk</span></tt></a>) : Several utilities that help displaying data in vtk. Includes
+the <a class="reference internal" href="simple_vtk.html#braviz.visualization.simple_vtk.SimpleVtkViewer" title="braviz.visualization.simple_vtk.SimpleVtkViewer"><tt class="xref py py-class docutils literal"><span class="pre">SimpleVtkViewer</span></tt></a>, a lightweight viewer useful for testing.
+see <a class="reference internal" href="simple_vtk.html"><em>Simple VTK Visualization</em></a></li>
+<li>Subject Viewer (<a class="reference internal" href="subject_viewer.html#module-braviz.visualization.subject_viewer" title="braviz.visualization.subject_viewer"><tt class="xref py py-mod docutils literal"><span class="pre">subject_viewer</span></tt></a>) : Implements a powerful viewer and Qt4 Widget which
+directly requests data, and handles subject and space changes.
+see <a class="reference internal" href="subject_viewer.html"><em>Subject Viewer</em></a></li>
+</ul>
+<p>The module <a class="reference internal" href="fmri_view.html#module-braviz.visualization.fmri_view" title="braviz.visualization.fmri_view"><tt class="xref py py-mod docutils literal"><span class="pre">fmri_view</span></tt></a> contains some low level utilities for displaying fMRI data.
+The module <a class="reference internal" href="checkboard_view.html#module-braviz.visualization.checkerboard_view" title="braviz.visualization.checkerboard_view"><tt class="xref py py-mod docutils literal"><span class="pre">checkerboard_view</span></tt></a> implements a widget that shows two images in a checkboard
+pattern. It is intended to check the registration between different modalities.</p>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="statistical-visualization">
+<h2>Statistical Visualization<a class="headerlink" href="#statistical-visualization" title="Permalink to this headline">¶</a></h2>
+<p>One of the strengths of braviz is combining scientific visualizations and statistical visualizations. For visualizing
+tabular data the following options exist.</p>
+<div class="section" id="matplotlib-based-visualization">
+<h3>Matplotlib based visualization<a class="headerlink" href="#matplotlib-based-visualization" title="Permalink to this headline">¶</a></h3>
+<p>The most direct way to visualize statistical data is using the
+<a class="reference external" href="http://stanford.edu/~mwaskom/software/seaborn/">seaborn</a> library. The module
+<a class="reference internal" href="matplotlib_widget.html#module-braviz.visualization.matplotlib_qt_widget" title="braviz.visualization.matplotlib_qt_widget"><tt class="xref py py-mod docutils literal"><span class="pre">matplotlib_qt_widget</span></tt></a> wraps several of seaborn plots into an interactive qt widget.</p>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="experimental-d3-based-visualization">
+<h3>Experimental D3 based visualization<a class="headerlink" href="#experimental-d3-based-visualization" title="Permalink to this headline">¶</a></h3>
+<p>There is some experimental support for web-based visualizations using the <a class="reference external" href="d3.org">D3</a> library, which
+are served from a <a class="reference external" href="http://www.tornadoweb.org/">tornado web server</a> . These visualizations can be displayed in
+Qt applications using a <a class="reference external" href="http://qt-project.org/doc/qt-4.8/qwebview.html">QWebView</a> but the performance is not optimal.
+It is better to display them in a full browser. We are still working on tightening the integration between this kind
+of visualizations with the rest of the system.</p>
+<div class="toctree-wrapper compound">
+</div>
+<p>See the module <a class="reference internal" href="d3_viz.html#module-braviz.visualization.d3_visualizations" title="braviz.visualization.d3_visualizations"><tt class="xref py py-mod docutils literal"><span class="pre">d3_visualizations</span></tt></a>.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+          <a href="read_low_level.html" title="Low level functions"
+             accesskey="P">previous</a> |
+          <a href="simple_vtk.html" title="Simple VTK Visualization"
+             accesskey="N">next</a> |
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a>
+          
+            <br/>
+            <a href="../_sources/library/visualization.txt"
+               rel="nofollow">Show Source</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

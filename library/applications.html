@@ -1,0 +1,381 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Applications &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.0b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Braviz Documentation" href="../index.html" />
+    <link rel="up" title="Braviz library" href="index.html" />
+    <link rel="prev" title="Geometric Processing" href="struc_proc.html" /> 
+  </head>
+  <body>
+    
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html"> Braviz Documentation </a></div>
+          <nav class="parents">
+              <ol>
+        <li><a href="../index.html"> Home </a> &raquo;</li>
+          <li><a href="index.html"  accesskey="U" >Braviz library</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Applications</a><ul>
+<li><a class="reference internal" href="#the-braviz-menu">The braviz menu</a></li>
+<li><a class="reference internal" href="#graphical-applications">Graphical applications</a><ul>
+<li><a class="reference internal" href="#module-braviz.applications.subject_overview">Visualize geometry</a><ul>
+<li><a class="reference internal" href="#subject-overview">Subject Overview</a></li>
+<li><a class="reference internal" href="#sample-overview">Sample Overview</a></li>
+<li><a class="reference internal" href="#explore-fmri">Explore fMRI</a></li>
+<li><a class="reference internal" href="#check-registration">Check Registration</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#create-geometry">Create geometry</a><ul>
+<li><a class="reference internal" href="#roi-builder">ROI Builder</a></li>
+<li><a class="reference internal" href="#logic-bundles">Logic bundles</a></li>
+<li><a class="reference internal" href="#measure">Measure</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#statistics">Statistics</a><ul>
+<li><a class="reference internal" href="#anova">Anova</a></li>
+<li><a class="reference internal" href="#linear-model">Linear Model</a></li>
+<li><a class="reference internal" href="#correlations">Correlations</a></li>
+<li><a class="reference internal" href="#parallel-coordinates">Parallel Coordinates</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-import_from_excel">Utilities</a><ul>
+<li><a class="reference internal" href="#import-from-excel">Import from excel</a></li>
+<li><a class="reference internal" href="#export-to-csv">Export to csv</a></li>
+<li><a class="reference internal" href="#sample-select-dialog">Sample select dialog</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-braviz.applications.parse_spss_file">Command line applications</a><ul>
+<li><a class="reference internal" href="#parse-spss-files">Parse spss files</a></li>
+<li><a class="reference internal" href="#calculate-descriptors">Calculate descriptors</a></li>
+<li><a class="reference internal" href="#populate-cache">Populate cache</a></li>
+<li><a class="reference internal" href="#braviz-web-server">Braviz web server</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="struc_proc.html"
+                        title="previous chapter">Geometric Processing</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-braviz.applications"></span><div class="section" id="applications">
+<h1>Applications<a class="headerlink" href="#applications" title="Permalink to this headline">¶</a></h1>
+<p>The applications module is where all end-user applications live. Python files in this modules should be
+executable. This module also contains the configuration files used in <a class="reference internal" href="configuring.html#module-braviz.readAndFilter.config_file" title="braviz.readAndFilter.config_file: Read Braviz Configuration files"><tt class="xref py py-mod docutils literal"><span class="pre">braviz.readAndFilter.config_file</span></tt></a>.</p>
+<p>This page will contain an overview of the scripts located in this module and some guidelines on creating new
+applications. For documentation from the user point of view please look at</p>
+<p><a class="reference internal" href="../graphical/index.html"><em>Visual Analytics with Braviz</em></a></p>
+<div class="section" id="the-braviz-menu">
+<h2>The braviz menu<a class="headerlink" href="#the-braviz-menu" title="Permalink to this headline">¶</a></h2>
+<p>The braviz menu is the main entry point for users. It provides an overview of the available tools and provides access
+to them. But it also performs several important tasks on the background.</p>
+<blockquote>
+<div><ul class="simple">
+<li>Check database integrity (see <a class="reference internal" href="braviz_db.html"><em>Braviz Data Base</em></a>)</li>
+<li>Rebuild qt interfaces</li>
+<li>Act as a message broker (see <a class="reference internal" href="communication.html"><em>Braviz Inter Application Communication</em></a>)</li>
+</ul>
+</div></blockquote>
+<p>When an application icon is clicked in the menu, it spawns a new python interpreter with a command line similar to</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">python -m braviz.applications.&lt;app_name&gt; &lt;scenario_id&gt; &lt;server_broadcast&gt; &lt;server_receive&gt;</span>
+</pre></div>
+</div>
+<p>The parameters are</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>app_name</strong> : The application script</li>
+<li><strong>scenario_id</strong> : The id of the initial scenario to load in the application. It is 0 if called from the
+main icon, or the corresponding id if called from the <em>scenarios</em> dialog</li>
+<li><strong>server_broadcast</strong> : The address that will be used for broadcasting messages.</li>
+<li><strong>server_receive</strong> : The address in which the broker will receive messages</li>
+</ul>
+</div></blockquote>
+<p>Notice that the broadcast and receive addresses will be printed when the server starts. You may use this addresses
+to connect to the server from external applications.</p>
+<p>For an overview of the menu from the user point of view see <a class="reference internal" href="../graphical/menu.html"><em>Braviz Menu</em></a></p>
+</div>
+<div class="section" id="graphical-applications">
+<h2>Graphical applications<a class="headerlink" href="#graphical-applications" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-braviz.applications.subject_overview">
+<span id="visualize-geometry"></span><h3>Visualize geometry<a class="headerlink" href="#module-braviz.applications.subject_overview" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="subject-overview">
+<h4>Subject Overview<a class="headerlink" href="#subject-overview" title="Permalink to this headline">¶</a></h4>
+<a class="reference internal image-reference" href="../_images/subj_overview.png"><img alt="Subject overview screenshot" class="align-center" src="../_images/subj_overview.png" style="width: 80%;" /></a>
+<p>Visualize geometrical data from a single subject with tabular data as context.</p>
+<p>See <a class="reference internal" href="../graphical/subject_overview.html"><em>User documentation</em></a>.</p>
+<span class="target" id="module-braviz.applications.sample_overview"></span></div>
+<div class="section" id="sample-overview">
+<h4>Sample Overview<a class="headerlink" href="#sample-overview" title="Permalink to this headline">¶</a></h4>
+<a class="reference internal image-reference" href="../_images/sample_overview.png"><img alt="Sample overview screenshot" class="align-center" src="../_images/sample_overview.png" style="width: 80%;" /></a>
+<p>The sample_overview application can load geometric data for several subjects in the same display. Visualizations
+are created as scenarios in the subject overview application. They are arranged in rows with respect to a nominal
+variable and sorted from left to right with respect to a real variable.</p>
+<p>See <a class="reference internal" href="../graphical/sample_overview.html"><em>User documentation</em></a>.</p>
+<span class="target" id="module-braviz.applications.fmri_explorer"></span></div>
+<div class="section" id="explore-fmri">
+<h4>Explore fMRI<a class="headerlink" href="#explore-fmri" title="Permalink to this headline">¶</a></h4>
+<a class="reference internal image-reference" href="../_images/fmri_explore1.png"><img alt="Explore fmri screenshot" class="align-center" src="../_images/fmri_explore1.png" style="width: 80%;" /></a>
+<p>This application specializes in fMRI data. It shows a timeline with the experiment design and the raw bold signal at
+the bottom.</p>
+<p>See <a class="reference internal" href="../graphical/fmri_explore.html"><em>User documentation</em></a>.</p>
+<span class="target" id="module-braviz.applications.check_reg_app"></span></div>
+<div class="section" id="check-registration">
+<h4>Check Registration<a class="headerlink" href="#check-registration" title="Permalink to this headline">¶</a></h4>
+<a class="reference internal image-reference" href="../_images/check_reg.png"><img alt="Check registration screenshot" class="align-center" src="../_images/check_reg.png" style="width: 80%;" /></a>
+<p>Compare two images in order to check if a registration algorithm was successful or
+to compare images from different subjects.</p>
+<p>See <a class="reference internal" href="../graphical/check_reg.html"><em>User documentation</em></a>.</p>
+</div>
+</div>
+<div class="section" id="create-geometry">
+<h3>Create geometry<a class="headerlink" href="#create-geometry" title="Permalink to this headline">¶</a></h3>
+<span class="target" id="module-braviz.applications.build_roi"></span><div class="section" id="roi-builder">
+<h4>ROI Builder<a class="headerlink" href="#roi-builder" title="Permalink to this headline">¶</a></h4>
+<a class="reference internal image-reference" href="../_images/roi_builder1.png"><img alt="Roi builder screenshot" class="align-center" src="../_images/roi_builder1.png" style="width: 80%;" /></a>
+<p>Position spherical ROIs in the different subjects. Sphere positions and size can
+be interpolated using one of the common spaces as intermediate stop. Images and cortical surfaces can be used as
+guides to position the sphere. Fibers and scalar values inside the sphere are shown to the user.</p>
+<p>See <a class="reference internal" href="../graphical/build_roi.html"><em>User documentation</em></a>.</p>
+<span class="target" id="module-braviz.applications.logic_bundles"></span></div>
+<div class="section" id="logic-bundles">
+<h4>Logic bundles<a class="headerlink" href="#logic-bundles" title="Permalink to this headline">¶</a></h4>
+<a class="reference internal image-reference" href="../_images/logic_bundles.png"><img alt="Logic bundles screenshot" class="align-center" src="../_images/logic_bundles.png" style="width: 80%;" /></a>
+<p>Define new fiber bundles based on ROIs, segmented structures and logical
+operations.</p>
+<p>See <a class="reference internal" href="../graphical/logic_bundles.html"><em>User documentation</em></a>.</p>
+<span class="target" id="module-braviz.applications.measure_task"></span></div>
+<div class="section" id="measure">
+<h4>Measure<a class="headerlink" href="#measure" title="Permalink to this headline">¶</a></h4>
+<a class="reference internal image-reference" href="../_images/measure.png"><img alt="Measure application screenshot" class="align-center" src="../_images/measure.png" style="width: 80%;" /></a>
+<p>Perform linear measurement over an orthogonal plane.</p>
+<p>See <a class="reference internal" href="../graphical/measure.html"><em>User documentation</em></a>.</p>
+</div>
+</div>
+<div class="section" id="statistics">
+<h3>Statistics<a class="headerlink" href="#statistics" title="Permalink to this headline">¶</a></h3>
+<span class="target" id="module-braviz.applications.anova_task"></span><div class="section" id="anova">
+<h4>Anova<a class="headerlink" href="#anova" title="Permalink to this headline">¶</a></h4>
+<a class="reference internal image-reference" href="../_images/anova.png"><img alt="Anova application screenshot" class="align-center" src="../_images/anova.png" style="width: 80%;" /></a>
+<p>Fit anova regressions, and visualize the results, based on the
+variables in the database. It uses <a class="reference external" href="rpy.sourceforge.net">rpy2</a> to connect with the R statistical
+software where the actual calculation takes place.</p>
+<p>See <a class="reference internal" href="../graphical/anova.html"><em>User documentation</em></a>.</p>
+<span class="target" id="module-braviz.applications.lm_task"></span></div>
+<div class="section" id="linear-model">
+<h4>Linear Model<a class="headerlink" href="#linear-model" title="Permalink to this headline">¶</a></h4>
+<a class="reference internal image-reference" href="../_images/linear_model.png"><img alt="Linear model application screenshot" class="align-center" src="../_images/linear_model.png" style="width: 80%;" /></a>
+<p>Fit linear models and visualize the results, with the database variables.
+Variable normalization and model fitting are done in R via  <a class="reference external" href="rpy.sourceforge.net">rpy2</a>.</p>
+<p>See <a class="reference internal" href="../graphical/lm.html"><em>User documentation</em></a>.</p>
+<span class="target" id="module-braviz.applications.correlations"></span></div>
+<div class="section" id="correlations">
+<h4>Correlations<a class="headerlink" href="#correlations" title="Permalink to this headline">¶</a></h4>
+<a class="reference internal image-reference" href="../_images/correlations.png"><img alt="Correlations application screenshot" class="align-center" src="../_images/correlations.png" style="width: 80%;" /></a>
+<p>Explore a dataset looking for potential correlations.</p>
+<p>See <a class="reference internal" href="../graphical/correlations.html"><em>User documentation</em></a>.</p>
+<span class="target" id="module-braviz.applications.parallel_coordinates"></span></div>
+<div class="section" id="parallel-coordinates">
+<h4>Parallel Coordinates<a class="headerlink" href="#parallel-coordinates" title="Permalink to this headline">¶</a></h4>
+<a class="reference internal image-reference" href="../_images/parallel.png"><img alt="Parallel coordinates application screenshot" class="align-center" src="../_images/parallel.png" style="width: 80%;" /></a>
+<p>Explore relationships among several variables using a parralel coordinates display.</p>
+<p>See <a class="reference internal" href="../graphical/parallel.html"><em>User documentation</em></a>.</p>
+</div>
+</div>
+<div class="section" id="module-import_from_excel">
+<span id="utilities"></span><h3>Utilities<a class="headerlink" href="#module-import_from_excel" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="import-from-excel">
+<h4>Import from excel<a class="headerlink" href="#import-from-excel" title="Permalink to this headline">¶</a></h4>
+<p>Import variables from an excel file into the database</p>
+<p>See <a class="reference internal" href="../graphical/from_excel.html"><em>User documentation</em></a>.</p>
+<span class="target" id="module-export_vars"></span></div>
+<div class="section" id="export-to-csv">
+<h4>Export to csv<a class="headerlink" href="#export-to-csv" title="Permalink to this headline">¶</a></h4>
+<p>Export variables from the database into a csv file</p>
+<p>See <a class="reference internal" href="../graphical/export_csv.html"><em>User documentation</em></a>.</p>
+<span class="target" id="module-qt_sample_select_dialog"></span></div>
+<div class="section" id="sample-select-dialog">
+<h4>Sample select dialog<a class="headerlink" href="#sample-select-dialog" title="Permalink to this headline">¶</a></h4>
+<p>Select sub-samples and crate new sub-samples.</p>
+<p>See <a class="reference internal" href="../graphical/samples.html"><em>User documentation</em></a>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="module-braviz.applications.parse_spss_file">
+<span id="command-line-applications"></span><h2>Command line applications<a class="headerlink" href="#module-braviz.applications.parse_spss_file" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="parse-spss-files">
+<h3>Parse spss files<a class="headerlink" href="#parse-spss-files" title="Permalink to this headline">¶</a></h3>
+<p>Access an spss <tt class="docutils literal"><span class="pre">*.sav</span></tt> file to read variables metadata, specifically</p>
+<blockquote>
+<div><ul class="simple">
+<li>variable descriptions</li>
+<li>variable types</li>
+<li>nominal variable labels</li>
+</ul>
+</div></blockquote>
+<p>Notice at the moment it is not possible to read variable values from the spss file; it is necessary
+to first import the variables using the dialog in the menu. The program should be called as this</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">python -m braviz.applications.parse_spss_file my_file.sav</span>
+</pre></div>
+</div>
+<p>To read and show in the screen the descriptions and labels from the file. To save this metadata into the
+database, use the following form</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">python -m braviz.applications.parse_spss_file my_file.sav yes</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This will overwrite existing descriptions and labels in the database</p>
+</div>
+<span class="target" id="module-braviz.applications.calculate_descriptors"></span></div>
+<div class="section" id="calculate-descriptors">
+<h3>Calculate descriptors<a class="headerlink" href="#calculate-descriptors" title="Permalink to this headline">¶</a></h3>
+<p>Calculate geometric descriptors from segmented structures (ASEG only) in all available subjects.
+The results are saved into a database called <tt class="docutils literal"><span class="pre">descriptors.sqlite</span></tt> in the dynamic data root
+(see <a class="reference internal" href="read_and_filter.html#module-braviz.readAndFilter" title="braviz.readAndFilter"><tt class="xref py py-mod docutils literal"><span class="pre">braviz.readAndFilter</span></tt></a>). The geometric descriptors are</p>
+<blockquote>
+<div><ul class="simple">
+<li>Volume</li>
+<li>Surface Area</li>
+<li>Length of longest axis</li>
+<li>Length of second longest axis</li>
+<li>Length of third longest axis</li>
+</ul>
+</div></blockquote>
+<p>All three axes are orthogonal. The output database contains a single table called &#8220;descriptors&#8221; with
+columns: subject, structure, volume, area, d1, d2 and d3.</p>
+<p>The application takes as argument the number of processes to use in the calculation, for example to
+split the job on 4 processes use</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">python -m braviz.applications.calculate_descriptors 4</span>
+</pre></div>
+</div>
+<span class="target" id="module-braviz.applications.populate_cache"></span></div>
+<div class="section" id="populate-cache">
+<h3>Populate cache<a class="headerlink" href="#populate-cache" title="Permalink to this headline">¶</a></h3>
+<p>Fill the braviz disk cache (see <a class="reference internal" href="read_low_level.html#module-braviz.readAndFilter.cache" title="braviz.readAndFilter.cache"><tt class="xref py py-mod docutils literal"><span class="pre">braviz.readAndFilter.cache</span></tt></a>) with commonly used data.
+The script takes as argument the number of processes to use. For example, to use 3 processes
+call it like</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">python -m braviz.applications.calculate_descriptors 3</span>
+</pre></div>
+</div>
+<span class="target" id="module-braviz.applications.braviz_web_server"></span></div>
+<div class="section" id="braviz-web-server">
+<h3>Braviz web server<a class="headerlink" href="#braviz-web-server" title="Permalink to this headline">¶</a></h3>
+<p>Launches the <a class="reference external" href="tornado.readthedocs.org">Tornado</a> web server. It will listen for http requests on port 8100.</p>
+<p>Notice that D3 visualization applications like <a class="reference internal" href="#module-braviz.applications.parallel_coordinates" title="braviz.applications.parallel_coordinates"><tt class="xref py py-mod docutils literal"><span class="pre">parallel_coordinates</span></tt></a> will attempt
+to launch the server process if it is not found. It should not be required to launch it manually.</p>
+<p>The server is capable or relying braviz communication messages (see <a class="reference internal" href="communication.html"><em>Braviz Inter Application Communication</em></a>) to
+web applications.</p>
+<p>For compatibility it takes the same arguments as the applications launched from the menu, but ignores the scenario
+argument.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+          <a href="struc_proc.html" title="Geometric Processing"
+             accesskey="P">previous</a> |
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a>
+          
+            <br/>
+            <a href="../_sources/library/applications.txt"
+               rel="nofollow">Show Source</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

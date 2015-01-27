@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Read And Filter &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.0b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="top" title="Braviz Documentation" href="../index.html" />
+    <link rel="up" title="Braviz library" href="index.html" />
+    <link rel="next" title="Reading geometric data" href="reader.html" />
+    <link rel="prev" title="Braviz library" href="index.html" /> 
+  </head>
+  <body>
+    
+    <div class="header-wrapper">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html"> Braviz Documentation </a></div>
+          <nav class="parents">
+              <ol>
+        <li><a href="../index.html"> Home </a> &raquo;</li>
+          <li><a href="index.html"  accesskey="U" >Braviz library</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Read And Filter</a><ul>
+<li><a class="reference internal" href="#reading-geometric-data">Reading geometric data</a></li>
+<li><a class="reference internal" href="#reading-tabular-data">Reading tabular data</a></li>
+<li><a class="reference internal" href="#read-system-configuration">Read system configuration</a></li>
+<li><a class="reference internal" href="#low-level-functions">Low level functions</a></li>
+<li><a class="reference internal" href="#access-current-project-data">Access current project data</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Braviz library</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="reader.html"
+                        title="next chapter">Reading geometric data</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-braviz.readAndFilter"></span><div class="section" id="read-and-filter">
+<h1>Read And Filter<a class="headerlink" href="#read-and-filter" title="Permalink to this headline">¶</a></h1>
+<p>There are three basic operations that the readAndFilter module provides.</p>
+<div class="section" id="reading-geometric-data">
+<h2>Reading geometric data<a class="headerlink" href="#reading-geometric-data" title="Permalink to this headline">¶</a></h2>
+<p>To read geometric data, such as (images, surfaces, structures, fibers), use <a class="reference internal" href="#braviz.readAndFilter.BravizAutoReader" title="braviz.readAndFilter.BravizAutoReader"><tt class="xref py py-func docutils literal"><span class="pre">BravizAutoReader()</span></tt></a> to get an appropriate
+project reader. Afterwards use its <a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader.get" title="braviz.readAndFilter.base_reader.BaseReader.get"><tt class="xref py py-meth docutils literal"><span class="pre">get()</span></tt></a> method to access the data.</p>
+<p>see <a class="reference internal" href="reader.html"><em>Reading geometric data</em></a></p>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="reading-tabular-data">
+<h2>Reading tabular data<a class="headerlink" href="#reading-tabular-data" title="Permalink to this headline">¶</a></h2>
+<p>This data is stored inside the braviz Data Base. Use the module
+<a class="reference internal" href="tabular_data.html#module-braviz.readAndFilter.tabular_data" title="braviz.readAndFilter.tabular_data"><tt class="xref py py-mod docutils literal"><span class="pre">tabular_data</span></tt></a> to access it.</p>
+<p>see <a class="reference internal" href="braviz_db.html"><em>Braviz Data Base</em></a></p>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="read-system-configuration">
+<h2>Read system configuration<a class="headerlink" href="#read-system-configuration" title="Permalink to this headline">¶</a></h2>
+<p>User are able to configure the system using a configuration file. Applications should
+always honor this configuration. Use the module <a class="reference internal" href="configuring.html#module-braviz.readAndFilter.config_file" title="braviz.readAndFilter.config_file: Read Braviz Configuration files"><tt class="xref py py-mod docutils literal"><span class="pre">config_file</span></tt></a> to access
+this information.</p>
+<p>see <a class="reference internal" href="configuring.html"><em>Configuring</em></a></p>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="low-level-functions">
+<h2>Low level functions<a class="headerlink" href="#low-level-functions" title="Permalink to this headline">¶</a></h2>
+<p>There are other functions in the module which should only be required when building new
+<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><tt class="xref py py-class docutils literal"><span class="pre">BaseReader</span></tt></a> subclasses, or for performing very specific operations.</p>
+<p>see <a class="reference internal" href="read_low_level.html"><em>Low level functions</em></a></p>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="access-current-project-data">
+<h2>Access current project data<a class="headerlink" href="#access-current-project-data" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="braviz.readAndFilter.PROJECT">
+<tt class="descname">PROJECT</tt><a class="headerlink" href="#braviz.readAndFilter.PROJECT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of the current project, read from the configuration file</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.readAndFilter.project_reader">
+<em class="property">class </em><tt class="descname">project_reader</tt><a class="headerlink" href="#braviz.readAndFilter.project_reader" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><tt class="xref py py-class docutils literal"><span class="pre">BaseReader</span></tt></a> subclass appropriate for the current project</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.BravizAutoReader">
+<tt class="descname">BravizAutoReader</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.readAndFilter.BravizAutoReader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs a <a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><tt class="xref py py-class docutils literal"><span class="pre">BaseReader</span></tt></a> instance based on the configuration file,
+the current host, and the hosts configuration file (see <a class="reference internal" href="configuring.html"><em>Configuring</em></a>).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.braviz_auto_data_root">
+<tt class="descname">braviz_auto_data_root</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.readAndFilter.braviz_auto_data_root" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the root for geometric data files from the hosts configuration file (see <a class="reference internal" href="configuring.html"><em>Configuring</em></a>) and the
+current host</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="braviz.readAndFilter.braviz_auto_dynamic_data_root">
+<tt class="descname">braviz_auto_dynamic_data_root</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.readAndFilter.braviz_auto_dynamic_data_root" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the root for braviz data files from the hosts configuration file (see <a class="reference internal" href="configuring.html"><em>Configuring</em></a>) and the
+current host</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+          <a href="index.html" title="Braviz library"
+             accesskey="P">previous</a> |
+          <a href="reader.html" title="Reading geometric data"
+             accesskey="N">next</a> |
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a>
+          
+            <br/>
+            <a href="../_sources/library/read_and_filter.txt"
+               rel="nofollow">Show Source</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>
