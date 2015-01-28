@@ -157,39 +157,195 @@ you see additional details of the current subject. All of these features are ava
 <div class="section" id="subject-tab">
 <h3>Subject tab<a class="headerlink" href="#subject-tab" title="Permalink to this headline">¶</a></h3>
 <a class="reference internal image-reference" href="../_images/subject_tab.png"><img alt="Subject tab" class="align-center" src="../_images/subject_tab.png" style="width: 50%;" /></a>
+<p>This tab shows a table with the subjects in the current sample. By default they are ordered by code, but you can
+click on the header of any column to change the order. The <em>select sample</em> button allows you to select a subsample
+of subjects to use in the application. By pressing the <em>select table columns</em> button will open a dialog where you
+can select which variables you want to be displayed as columns in the table. If you double click on any of the rows
+of the table the application will switch to that subject. Finally, notice that the order in which subjects are
+traversed using the <em>subject selection widget</em> is determined by this table.</p>
 </div>
 <div class="section" id="details-tab">
 <h3>Details tab<a class="headerlink" href="#details-tab" title="Permalink to this headline">¶</a></h3>
 <a class="reference internal image-reference" href="../_images/details_tab.png"><img alt="Details tab" class="align-center" src="../_images/details_tab.png" style="width: 50%;" /></a>
+<p>This tab lets you view additional variable values for the current subject. In this case each variable is displayed
+as a row in the table with the value in front. For real variables the minimum and maximum values found inside the
+reference population (see <a class="reference internal" href="configuration.html"><em>Configuring Braviz</em></a>). A star is shown next to the values that fall outside this range.
+Clicking the <em>select variables</em> button will display a dialog where you can select the variables that will be used as
+rows for the table.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">You may change the order of the rows by dragging them with the mouse.</p>
+</div>
+<p>At the bottom of the tab is a large text field where you can write general comments about the subject. This comments
+will be saved into the database when you click on <em>save</em>. The next time you open the same subject the previously
+entered comments will show again. You can use this to register remarks or peculiarities about a subject that should
+be taken into account when looking at him.</p>
 </div>
 <div class="section" id="images-tab">
 <h3>Images tab<a class="headerlink" href="#images-tab" title="Permalink to this headline">¶</a></h3>
 <a class="reference internal image-reference" href="../_images/images_tab.png"><img alt="Images tab" class="align-center" src="../_images/images_tab.png" style="width: 50%;" /></a>
+<p>Here you can control the image shown in the main view, or switch it off. The <em>modality</em> field is where you select the
+kind of image you want to see. Available options include anatomical MRI, color DTI, FA, freesurfer <em>APARC</em> segmentation
+and fMRI paradigms. In case you choose an fMRI paradigm the second field, labeled <em>Contrast</em> will become active. You
+can then use it to select the contrast of interest.
+The orientation box lets you select the orientation of the image plane.</p>
+<p>In some kinds of images you can manipulate the window and level values from the lookup-table using the corresponding
+fields. Notices you can achieve the same effect by right clicking and dragging the mouse on top of the image in the
+3d view. The <em>Reset</em> button can be used to reinitialize the window and level values.</p>
+<p>Finally the slice field and slider display the current slice and allows you to move it.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">You can use the mouse wheel to change slice while the cursor is on top of the slider or the slice number field.
+You can also use the top and down arrows in the keyboard when the cursor is on the slice number field.</p>
+</div>
 </div>
 <div class="section" id="fmri-tab">
 <h3>fMRI tab<a class="headerlink" href="#fmri-tab" title="Permalink to this headline">¶</a></h3>
 <a class="reference internal image-reference" href="../_images/fmri_tab.png"><img alt="fMRI tab" class="align-center" src="../_images/fmri_tab.png" style="width: 50%;" /></a>
+<p>This tab allows you to display iso-contours of fMRI statistical maps. The <em>paradigm</em> and <em>contrast</em> fields are used
+to select the map of interest. The <em>contours</em> checkbox activates or deactivates the contours, and the value in front
+is the T-score value at which you want to show contours. The color of the contours will be the color used for that
+value in the fMRI lookup-table.</p>
 </div>
 <div class="section" id="segmentation-tab">
 <h3>Segmentation tab<a class="headerlink" href="#segmentation-tab" title="Permalink to this headline">¶</a></h3>
-<a class="reference internal image-reference" href="../_images/subject_tab.png"><img alt="Subject tab" class="align-center" src="../_images/subject_tab.png" style="width: 50%;" /></a>
+<a class="reference internal image-reference" href="../_images/segmentation_tab.png"><img alt="Subject tab" class="align-center" src="../_images/segmentation_tab.png" style="width: 50%;" /></a>
+<p>With the controls on this tab you can include segmented structures in the 3d-view. This structures can also be used
+to select fiber bundles that go through them later in the <em>Tractography tab</em>.</p>
+<p>Most of the space is occupied by a tree which represents all of the free-surfer segmented structures. Next to each
+item is a checkbox that activates or deactivates the given item and its descendants. The tree is divided into the
+following sections</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Base</strong>: Subcortical structures</li>
+<li><strong>Corpus Callosum</strong>: The five sections segmented by freesurfer</li>
+<li><strong>Left Hemisphere</strong>: Cortical parcellation of the left hemisphere</li>
+<li><strong>Right Hemisphere</strong>: Cortical parcellation of the right hemisphere</li>
+</ul>
+</div></blockquote>
+<p>Notice that the cortical parcellations can alternatively be split into <em>Dominant</em> and <em>Non-dominant</em> using the
+radio buttons at the top of the frame.</p>
+<p>Below the list is a combo-box that lets you choose between using the freesurfer lookup-table for coloring the structures,
+or choosing your own color. Underneath is a slider that lets you adjust the transparency of the structures.</p>
+<p>Finally, the bottom section of the frame, displays a combo-box where you can select an scalar measure. The value of
+the given measure for the active structures will be shown in front. Currently the available measures are</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Volume</strong>: Sum of the volumes of all the active structures</li>
+<li><strong>Area</strong>: Sum of the surface areas of the active structures</li>
+<li><strong>FA Inside</strong>: Mean FA value from the voxels that lay inside the active structures</li>
+<li><strong>MD Inside</strong>: Mean MD value from the voxels that lay inside the active structures</li>
+</ul>
+</div></blockquote>
+<p>The button labeled <em>Export to Database</em> allows you to repeat the calculation for all subjects, and save the results
+as a new variable into the database.</p>
 </div>
 <div class="section" id="tractography-tab">
 <h3>Tractography tab<a class="headerlink" href="#tractography-tab" title="Permalink to this headline">¶</a></h3>
 <a class="reference internal image-reference" href="../_images/tractography_tab.png"><img alt="Tractography tab" class="align-center" src="../_images/tractography_tab.png" style="width: 50%;" /></a>
+<p>In this tab you can select fiber bundles to display in the 3d view. The top part shows a list of currently active
+bundles. In order to add bundles to the list click on the button <em>Select Saved Bundles</em>. These bundles are stored
+into the database and can come from three places:</p>
+<blockquote>
+<div><ul class="simple">
+<li>They can be created in this tab based on segmented structures (read below)</li>
+<li>They can be created in the Logic Bundles application (see <a class="reference internal" href="logic_bundles.html"><em>Logic Bundles</em></a>)</li>
+<li>They can be defined using code (Advanced, see <a class="reference internal" href="../library/read_low_level.html#module-braviz.readAndFilter.named_tracts" title="braviz.readAndFilter.named_tracts"><tt class="xref py py-mod docutils literal"><span class="pre">named_tracts</span></tt></a>)</li>
+</ul>
+</div></blockquote>
+<p>The combo box labeled <em>From Seg.</em> lets you build new bundles on the fly based on the currently active structures from
+the <em>Segmentation tab</em>. The possible values for the box are</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>None</strong>: Don&#8217;t create a bundle from segmented structures</li>
+<li><strong>Through Any</strong>: Create a bundle with fibers that pass through any of the active structures</li>
+<li><strong>Through All</strong>: Create a bundle with fibers that pass through all of the active structures.</li>
+</ul>
+</div></blockquote>
+<p>The <em>Save Bundle</em> button under the box lets you save the bundle defined by the operation and the list of segmented
+structures into the database. This bundle will be later available by clicking the <em>Select Saved Bundles</em> button.</p>
+<p>The box labeled <em>color</em> is used to select the lookup-table to use for displaying fibers in the viewer. The available
+values are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Orientation</strong>:    Color the lines based on the direction in which they travel. Red segments are going from
+lef to right or right to left, green segments are going from front to back or back to front, and blue segments
+are going from top to bottom or bottom to top.</li>
+<li><strong>FA (Point)</strong>: Each segment is colored according to the FA value at that voxel</li>
+<li><strong>FA (Line)</strong>: Each line is colored according to the mean FA value in all its trajectory</li>
+<li><strong>MD (Point)</strong>: Each segment is colored according to the MD value at that voxel</li>
+<li><strong>MD (Line)</strong>: Each line is colored according to the mean MD value in all its trajectory</li>
+<li><strong>Length</strong>: Each line is colored according to its length</li>
+<li><strong>By Line</strong>: Each line is assigned a random color, useful for following individual lines</li>
+<li><strong>By Bundle</strong>: Each bundle is assigned a different color, useful when multiple bundles are in the scene</li>
+</ul>
+</div></blockquote>
+<p>For the color schemes that are based on scalar values, the <em>show color bar</em> check box will be activated, and checking
+it will display a color bar that illustrates the mapping from scalar values to colors in the screen.</p>
+<p>The opacity slider lets you make the bundles translucent so that you can see what is behind.</p>
+<p>The last section of the panel displays an scalar value from one of the active bundles. In order to change the active
+bundle you must click on its name in the list at the top of the panel. The currently available scalar values are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Count</strong>: Number of lines that make up the bundle</li>
+<li><strong>Mean L</strong>: Mean length of lines in the bundle</li>
+<li><strong>Mean FA</strong>: Mean FA from all points in the bundle</li>
+<li><strong>Mean MD</strong>: Mean MD from all points in the bundle</li>
+</ul>
+</div></blockquote>
+<p>The <em>Export To Database</em> button lets you calculate the same scalar for all subjects and save it as a new variable in
+the database.</p>
 </div>
 <div class="section" id="tracula-tab">
 <h3>Tracula tab<a class="headerlink" href="#tracula-tab" title="Permalink to this headline">¶</a></h3>
 <a class="reference internal image-reference" href="../_images/tracula_tab.png"><img alt="Tracula tab" class="align-center" src="../_images/tracula_tab.png" style="width: 50%;" /></a>
+<p>This tab allows you to display bundles from tracula tractography. It displays a list of such bundles where you can
+check the ones you want to display. At the bottom there is an slider for controlling opacity of the bundles, lowering
+it will allow you to see through them.</p>
 </div>
 <div class="section" id="surfaces-tab">
 <h3>Surfaces tab<a class="headerlink" href="#surfaces-tab" title="Permalink to this headline">¶</a></h3>
 <a class="reference internal image-reference" href="../_images/surfaces_tab.png"><img alt="Surfaces tab" class="align-center" src="../_images/surfaces_tab.png" style="width: 50%;" /></a>
+<p>The surfaces tab provides access to freesurfer surface reconstructions. First there are two check boxes which let
+you activate or deactivate each hemisphere. Afterwards there is a combobox where you can select the surface you
+want to see, in this application the selection is limited to <em>pial</em> and <em>white</em>. Afterwards there is another combobox
+labeled <em>scalars</em> which lets you select the scalars and lookuptable that will be displayed. The current options are</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Curv</strong>: Curvature at each point</li>
+<li><strong>Avg. Curv</strong>: Smoothed curvature map</li>
+<li><strong>Thickness</strong>: Thickness of the cortex at the point</li>
+<li><strong>Sulc</strong>: Height of each point with respect to the average surface (<a class="reference external" href="http://surfer.nmr.mgh.harvard.edu/fswiki/UserContributions/FAQ#Q.IamusingQDECtoexaminetheanatomicaldifferencesbetweentwogroupsofsubjects.Thesurface-basedmeasuresIcanselectarethickness.2Carea.2Carea.pial.2Csulc.2Ccurv.2Candjacobianwhite.Couldanybodytellmewhatanatomicalfeaturesthelaterthree.28sulc.2Ccurv.2Candjacobianwhite.29actuallymeasure.3F">source link</a>)</li>
+<li><strong>Parcellation</strong>: Parcelation based on Desikan-Killiany Atlas</li>
+<li><strong>Parcellation 2009</strong>: Parcelation based on Destrieux Atlas</li>
+<li><strong>Parcellation DKT</strong>: Parcelation based on DKT atlas</li>
+<li><strong>Broadman area</strong>: Parcelation based on broadman areas (only a few regions)</li>
+</ul>
+</div></blockquote>
+<p>For more information on freesurfer parcelations see <a class="reference external" href="https://surfer.nmr.mgh.harvard.edu/fswiki/CorticalParcellation">here</a></p>
+<p>The <em>show color bar</em> check box is activated for color schemes showing scalar values, you may click on it to show
+a color bar with the mapping from scalar values to colors.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">You may click and hold on a surface in order to query the value or label at any point.</p>
+</div>
+<p>Finally the opacity slider lets you add some transparency to the surfaces so that they don&#8217;t occlude the scene.</p>
 </div>
 </div>
 <div class="section" id="scenarios">
 <h2>Scenarios<a class="headerlink" href="#scenarios" title="Permalink to this headline">¶</a></h2>
-<p>Saving and loading</p>
+<p>As seen above there are several ways in which you can configure this application for specific tasks. Setting up a
+visualization may take a significant amount of time and effort. To avoid having to repeat the work, it is always a
+good idea to save the application state often.</p>
+<p>Application state is saved as a scenario. This scenarios include everything, from the active objects in the 3d
+view to the camera position.</p>
+<p>In order to save a scenario click on the <em>file</em> menu in the top bar, and afterwards <em>save scenario</em>. You will be
+asked to provide a name and optionally a description.</p>
+<p>To load a scenario go to the <em>file</em> menu and click on <em>load scenario</em>. A dialog containing the available scenarios will
+open. This dilog contains the date in which scenarios were saved, the name and the description. They also show a
+screenshot of the application taken at the moment the scenario was saved. To select a scenario double click on its name
+and afterwards on the <em>ok</em> button.</p>
+<a class="reference internal image-reference" href="../_images/load_scenario1.png"><img alt="Load scenario dialog" class="align-center" src="../_images/load_scenario1.png" style="width: 70%;" /></a>
 </div>
 </div>
 

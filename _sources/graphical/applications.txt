@@ -25,6 +25,7 @@ The menu
     menu
 
 The starting point of the braviz system
+
 See :doc:`menu`
 
 

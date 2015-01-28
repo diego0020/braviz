@@ -41,7 +41,9 @@ The parameters are
 Notice that the broadcast and receive addresses will be printed when the server starts. You may use this addresses
 to connect to the server from external applications.
 
-For an overview of the menu from the user point of view see :doc:`../graphical/menu`
+For an overview of the menu from the user point of view
+
+see :doc:`../graphical/menu`
 
 Graphical applications
 ------------------------

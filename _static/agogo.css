@@ -661,6 +661,22 @@ div#agogo-sidebar #searchbox{
 margin-top: 1em;
 }
 
+/* ---------------------hints ----------------------------------------------------*/
+
+div.admonition.hint {
+border: none;
+border-radius: 15px;
+background: rgb(227, 243, 249);
+}
+
+div.admonition.hint p{
+margin: 0.5em 1em 1em 1em;
+}
+
+div.admonition.hint p.first{
+color: rgb(90, 120, 198);
+}
+
 /* ---------------------class folding ----------------------------------------------------*/
 span.fold_global_control {
 float: right;
