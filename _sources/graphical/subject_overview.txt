@@ -328,7 +328,7 @@ screenshot of the application taken at the moment the scenario was saved. To sel
 and afterwards on the *ok* button.
 
 
-.. image:: images/subject_overview/load_scenario.png
+.. image:: images/subject_overview/so_load_scenario.png
     :align: center
     :width: 70%
     :alt: Load scenario dialog
