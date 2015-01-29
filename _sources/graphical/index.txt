@@ -6,6 +6,20 @@ Visual Analytics with Braviz
     :width: 100%
     :align: center
 
+Quick links
+--------------
+
+.. toctree::
+    :includehidden:
+    :maxdepth: 1
+
+    concepts
+    general
+    applications
+
+Introduction
+--------------
+
 The braviz system is a collection of small applications tailored for specific tasks. The idea is that each application
 should be easy to understand and use. Nevertheless, applications are connected to each other in several ways which
 permits to complete more complicated tasks.
@@ -40,16 +54,6 @@ explanatory tooltips. After playing with the system for a while, you should head
     -   :doc:`Braviz interface <general>`: Using the 3d viewers, selecting variables, saving and loading scenarios
         and more actions that apply to the whole system.
     -   :doc:`Applications <applications>`: Description and instructions specific for specific each application.
-
-.. toctree::
-    :includehidden:
-    :maxdepth: 0
-    :hidden:
-
-    concepts
-    general
-    applications
-
 
 
 Frequently asked questions

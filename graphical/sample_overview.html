@@ -53,6 +53,18 @@
             
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Sample Overview</a><ul>
+<li><a class="reference internal" href="#selecting-a-sample">Selecting a sample</a></li>
+<li><a class="reference internal" href="#loading-a-visualization">Loading a visualization</a></li>
+<li><a class="reference internal" href="#selecting-variables">Selecting Variables</a></li>
+<li><a class="reference internal" href="#manipulating-the-camera">Manipulating the camera</a></li>
+<li><a class="reference internal" href="#scenarios">Scenarios</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="subject_overview.html"
                         title="previous chapter">Subject Overview</a></p>
@@ -70,6 +82,65 @@
             
   <div class="section" id="sample-overview">
 <h1>Sample Overview<a class="headerlink" href="#sample-overview" title="Permalink to this headline">¶</a></h1>
+<a class="reference internal image-reference" href="../_images/sample_overview.png"><img alt="Sample overview screenshot" class="align-center" src="../_images/sample_overview.png" style="width: 90%;" /></a>
+<p>This application provides a small multiples view of the same scenario applied to several subjects. Subjects are arranged
+in rows that correspond to levels of a nominal variables, and inside each row subjects are ordered from
+left to right with respect to a real variable.</p>
+<p>The right side displays a bar plot with the data from the two
+variables. Clicking on a bar will highlight (subtly) the corresponding 3d viewers, and the other way around.</p>
+<p>Right clicking on a 3d viewer will display a context menu where you can choose between sending a message to other
+applications asking them to switch to the selected subject (<em>show in current viewers</em>); or opening a new subject
+overview application with the corresponding scenario at full scale (<em>show in new viewer</em>). Sometimes you may need to
+first click and then right click, or right click after the tooltip displays, this happens because the right click
+action may also be interpreted as a camera zoom by the underlying viewer.</p>
+<p>Notice that this application will listen for messages from other applications, and when it receives a message asking
+to switch to a subject who is available in the current sample, this subject will be highlighted in both, the bar plot
+and the 3d viewers.</p>
+<div class="section" id="selecting-a-sample">
+<h2>Selecting a sample<a class="headerlink" href="#selecting-a-sample" title="Permalink to this headline">¶</a></h2>
+<p>By default the application lads a random subset of subjects, notice that too large samples will not fit comfortably
+in the visualization nor in memory. In order to select a custom subsample go to the <em>file</em> menu and click on
+<em>select sample</em> (see <a class="reference internal" href="samples.html"><em>Creating Samples</em></a> ).</p>
+</div>
+<div class="section" id="loading-a-visualization">
+<h2>Loading a visualization<a class="headerlink" href="#loading-a-visualization" title="Permalink to this headline">¶</a></h2>
+<p>This applications loads <em>scenarios</em> created in the <a class="reference internal" href="subject_overview.html"><em>Subject Overview</em></a> application repeatedly
+for each subject in the sample. Therefore the first step is creating the scenario in the subject overview application.
+Afterwards go to the <em>file</em> menu and click on <em>load visualization</em>. A scenario select dialog will appear, but you
+will notice it will display scenarios from the Subject Overview application. It is also possible to save and load full
+scenarios for the Sample Overview application as will be explained below.Double click on the desired scenario
+and click ok, you will see a progress bar at the bottom right corner while the scenario is loaded for each subject.</p>
+<p>Notice that depending on the complexity of the scenario, the size of the sample, existing cache,
+and the characteristics of your machine;
+this process may take a while. It is also possible that the interface will freeze during this process. This is
+absolutely normal, and if it happens you shouldn&#8217;t do anything, just wait a while and it will recover.</p>
+</div>
+<div class="section" id="selecting-variables">
+<h2>Selecting Variables<a class="headerlink" href="#selecting-variables" title="Permalink to this headline">¶</a></h2>
+<p>You may change the nominal variable used for determining the rows of the 3d viewers and the colors in the bar plot;
+and the rational variable used for the length of the bars and the left to right order inside each row. To do this
+use the <em>Facet Variable</em> and <em>Sort Variable</em> combo boxes respectively. Notice that the first combo will only let you
+choose a nominal variable, while the last one will only allow you to select real variables.</p>
+</div>
+<div class="section" id="manipulating-the-camera">
+<h2>Manipulating the camera<a class="headerlink" href="#manipulating-the-camera" title="Permalink to this headline">¶</a></h2>
+<p>You can manipulate the camera in each 3d viewer independently by using the techniques explained in <a class="reference internal" href="3dviews.html"><em>Navigating 3d views</em></a>.
+However, notice that it is not possible to move images, or change window and level values. On the other hand, you can
+start all actions on top of image objects. This behaviour is intended to ease manipulating the camera in the small
+windows.</p>
+<p>After moving the camera around in one subject it is possible to copy the new position to all existing viewers by going
+to the <em>Camera</em> combo box and selecting <em>Copy from &lt;subj&gt;</em>, where <em>&lt;subj&gt;</em> is the subject whose camera you manipulated
+last. It is also possible to reset the cameras back to the one specified in the <em>visualization</em>, by clicking on
+<em>Reset from scenario</em> in the mentioned context menu.</p>
+</div>
+<div class="section" id="scenarios">
+<h2>Scenarios<a class="headerlink" href="#scenarios" title="Permalink to this headline">¶</a></h2>
+<p>Saving scenarios for this application will allow you to restore the visualization, the selected variables,
+the sample and the camera positions. In order to do this go to the <em>file</em> menu and click on <em>save scenario</em>. You will
+be asked for a name and an optional description.</p>
+<p>In order to load a scenario, go to the <em>file</em> menu and click on <em>load scenario</em>, in the dialog that opens double click
+on the desired scenario and click <em>ok</em>.</p>
+</div>
 </div>
 
 
