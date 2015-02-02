@@ -120,7 +120,7 @@ ROI Builder
 
 Place spherical ROIs for each subject.
 
-See :doc:`check_reg`
+See :doc:`build_roi`
 
 Logic bundles
 ^^^^^^^^^^^^^^^^^^^^
@@ -133,7 +133,7 @@ Logic bundles
 
 Define bundles using segmented structures, rois and logical operations.
 
-See :doc:`check_reg`
+See :doc:`logic_bundles`
 
 Measure
 ^^^^^^^^^^^^^^^^^^^^
@@ -146,7 +146,7 @@ Measure
 
 Manually measure features on images for each subject.
 
-See :doc:`check_reg`
+See :doc:`measure`
 
 
 

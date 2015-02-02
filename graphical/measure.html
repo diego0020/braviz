@@ -23,6 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/fold_classes.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="top" title="Braviz Documentation" href="../index.html" />
@@ -53,6 +54,18 @@
             
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Measure</a><ul>
+<li><a class="reference internal" href="#main-application">Main application</a><ul>
+<li><a class="reference internal" href="#control-panel">Control panel</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#measuring">Measuring</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="logic_bundles.html"
                         title="previous chapter">Logic Bundles</a></p>
@@ -70,6 +83,50 @@
             
   <div class="section" id="measure">
 <h1>Measure<a class="headerlink" href="#measure" title="Permalink to this headline">¶</a></h1>
+<a class="reference internal image-reference" href="../_images/measure.png"><img alt="Measure screenshot" class="align-center" src="../_images/measure.png" style="width: 90%;" /></a>
+<p>In this application you can measure objects in any of the orthogonal planes in a Talairach coordinate system. It works
+in a similar way to the <a class="reference internal" href="build_roi.html"><em>Roi Builder</em></a> application. When you first open the application you will be
+presented with three options</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>New measure</strong>: Define a new measure</li>
+<li><strong>Load measure</strong>: Keep working on an already defined measure</li>
+<li><strong>Load Scenario</strong>: Load a saved scenario, which includes a measure, a subject, context items and camera angle.</li>
+</ul>
+</div></blockquote>
+<div class="section" id="main-application">
+<h2>Main application<a class="headerlink" href="#main-application" title="Permalink to this headline">¶</a></h2>
+<p>The interface is divided in three panels. At the left we have the control panel, in the middle a 3d viewer and at
+the right a list of subjects with check-marks. As in the <a class="reference internal" href="build_roi.html"><em>Roi Builder</em></a> the objective is to define the
+measure for all subjects.</p>
+<div class="section" id="control-panel">
+<h3>Control panel<a class="headerlink" href="#control-panel" title="Permalink to this headline">¶</a></h3>
+<img alt="Control panel screenshot" class="align-center" src="../_images/measure_control.png" />
+<p>The control panel consists of a top section where you can define the type of image you want to see. As usual there
+is a box for selecting the image modality and in case you choose a functional paradigm a box for selecting the contrast.
+This section also contains controls for selecting the slices of each of the panel, and checkboxes for activating
+or deactivating each plane. Notice that the measure plane is always active.</p>
+<p>The bottom section shows the details of the current measure. First is the name, followed by the length of the current
+line and the location of the two points (start and end). Afterwards there is a button that allows you yo change
+the color of the line.</p>
+<p>Next is a group of buttons</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Save Measure</strong>: Save the current line to the database</li>
+<li><strong>Reload Measure</strong>: Reload the line from the database, discarding all changes.</li>
+<li><strong>Reset Measure</strong>: Remove the two points from the viewer</li>
+</ul>
+</div></blockquote>
+<p>Finally there is a button that resets the camera to the initial position on top of the measure plane.</p>
+</div>
+</div>
+<div class="section" id="measuring">
+<h2>Measuring<a class="headerlink" href="#measuring" title="Permalink to this headline">¶</a></h2>
+<p>When you first open the main application there will be no lines in the viewer. The first click on the
+measure plane will add the first point of the line, and the second click will finish setting the line.
+Afterwards you may drag each of the points to modify the line. Notice that moving the measure plane will also
+translate the line.</p>
+</div>
 </div>
 
 

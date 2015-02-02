@@ -8,29 +8,31 @@ float : none;
 
 div#profile{
 text-align: center;
-overflow: hidden;
 }
+
+div.document h2{
+text-align: center;
+font-size: 150%;
+}
+
 
 div#profile div.section{
 text-align: left;
 width: 95% ;
 display: inline-block;
-margin-left: 0.8em;
-margin-right: 0.8em;
+margin-left: 0.5em;
+margin-right: 0.5em;
 margin-top: 2em;
-
 background: rgb(238, 238, 236);
-
 vertical-align: top;
-/*padding-bottom: 1000em;*/
-/*margin-bottom: -999em;*/
 min-height: 25em;
 position: relative;
 color: black;
-
-
 }
 
+div#profile a div.section{
+    border: outset lightgrey;
+}
 div#profile div.section:hover  {
 background-color: rgb(186, 189, 182);
 }
@@ -50,7 +52,6 @@ div#profile div.section p{
 text-align:center;
 margin-top: 1em;
 margin-bottom: 1em;
-position: absolute;
 bottom: 0;
 width: 100%;
 }
@@ -60,10 +61,15 @@ text-align: center;
 background: rgb(218, 221, 214);
 padding-top: .5em;
 padding-bottom: .5em;
+font-size: 150%;
 }
 
 
 @media screen and (min-width: 1150px){
 div#profile div.section{
 width: 21em ;
+}
+div#profile div.section p{
+position: absolute;
+}
 }

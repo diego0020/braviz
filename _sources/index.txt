@@ -34,7 +34,7 @@ Graphical interface user
     -   Visualize distribution of variables
     -   Define your own variables based on neuro-image data
 
-:doc:`Visual Analytics with Braviz<graphical/index>`
+:doc:`Visual Analytics with Braviz (Click here)<graphical/index>`
 
 Python library user
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -44,12 +44,12 @@ Python library user
     -   Program new interactive visualizations
     -   Interactively build custom visualizations
 
-:doc:`Braviz Library<library/index>`
+:doc:`Braviz Library (Click here)<library/index>`
 
 About
 -------
 
-Braviz is being developed at the `imagine <imagine.uniandes.edu.co>`_ research group
+Braviz is being developed at the `imagine <http://imagine.uniandes.edu.co>`_ research group
 as part of a phd thesis. The objective is providing brain researchers with interactive
 visualization tools, which will allow them to explore and grab insights from
 large and heterogeneus data-sets more efficiently. The focus is on user centered design,

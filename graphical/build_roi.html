@@ -23,6 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/fold_classes.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="top" title="Braviz Documentation" href="../index.html" />
@@ -53,6 +54,23 @@
             
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">ROI Builder</a><ul>
+<li><a class="reference internal" href="#start-dialog">Start dialog</a></li>
+<li><a class="reference internal" href="#main-application">Main Application</a><ul>
+<li><a class="reference internal" href="#context-panel">Context Panel</a></li>
+<li><a class="reference internal" href="#sphere-panel">Sphere Panel</a></li>
+<li><a class="reference internal" href="#the-extrapolate-dialog">The extrapolate dialog</a></li>
+<li><a class="reference internal" href="#changing-the-current-sphere">Changing the current sphere</a></li>
+<li><a class="reference internal" href="#exporting-rois">Exporting rois</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#scenarios">Scenarios</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="check_reg.html"
                         title="previous chapter">Check Registration</a></p>
@@ -70,6 +88,120 @@
             
   <div class="section" id="roi-builder">
 <h1>ROI Builder<a class="headerlink" href="#roi-builder" title="Permalink to this headline">¶</a></h1>
+<a class="reference internal image-reference" href="../_images/roi_builder.png"><img alt="Roi builder screenshot" class="align-center" src="../_images/roi_builder.png" style="width: 90%;" /></a>
+<p>This application allows you to place spherical regions of interest on each subject of the sample. The sphere can be
+adjusted independently for each subject, in size and in position. It is also possible to extrapolate the position of
+the sphere from one subject to others in order to get plausible starting points, afterwards small adjustments
+can be made. Before entering the real application you will find a start dialog.</p>
+<p>In other words, in this application you define individual spheres for each subject. This spheres are grouped into
+one name. Later on, the system accesses each sphere through the ROI name and subject id.</p>
+<div class="section" id="start-dialog">
+<h2>Start dialog<a class="headerlink" href="#start-dialog" title="Permalink to this headline">¶</a></h2>
+<a class="reference internal image-reference" href="graphical/images/roi_builder/roi_start.png"><img alt="Roi builder start screen" class="align-center" src="graphical/images/roi_builder/roi_start.png" style="width: 50%;" /></a>
+<p>In the startup dialog you have to choose one of the following options</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>New ROI</strong>: Create a new set of spheres (one for each subject), you will be asked for a name, a description
+and a coordinate system. Notice that spheres will, in general, only be spheres in one coordinate system. After
+applying a linear transformation they will likely look as ellipses, while after applying a non linear
+deformation they can look like blobs.</li>
+<li><strong>Load ROI</strong>: Continue working on an existing sphere set.</li>
+<li><strong>Load scenario</strong>: Load a scenario to re take the work exactly where you left it a previous time. See
+<em>Saving Scenarios</em> below</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="main-application">
+<h2>Main Application<a class="headerlink" href="#main-application" title="Permalink to this headline">¶</a></h2>
+<p>The main application is composed of three panels, at the left there is a tabbed box where you can choose the
+context or the sphere panel (look below). At the middle is a 3d viewer, and at the right side is a list of subjects
+with checkboxes. The checkboxes represent the subjects to which a sphere has been defined. As you start saving spheres,
+you will see check-marks start to appear. The objective of the application is to go through all subjects and defining
+ROIs.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">You can press the right and left arrow keys in the keyboard to move trough the subjects in the list</p>
+</div>
+<div class="section" id="context-panel">
+<h3>Context Panel<a class="headerlink" href="#context-panel" title="Permalink to this headline">¶</a></h3>
+<img alt="Roi builder context panel" class="align-center" src="graphical/images/roi_builder/roi_context.png" />
+<p>The context panel allows you to add images and surfaces to the viewer so that you can better find the desired
+position for the ROI. The <em>Image</em> and <em>Contrast</em> control lets you choose an image modality and a contrast in case
+the modality is an fMRI paradigm. Below these there are three <em>Slice</em> controls which let you manipulate the slice
+of each plane individually. Using the checkbox next to each plane you can activate it or de activate it. Notice it is
+still possible to change the slice by using the middle mouse button (see <a class="reference internal" href="3dviews.html"><em>Navigating 3d views</em></a>).</p>
+<p>The lower half of the panel lets you add freeSurfer surfaces. The <em>cortex</em> and <em>scalar</em> boxes let you select the kind
+of surface you are interested in and the scalars you want to draw on it. The checkboxes labeled <em>left</em> and <em>right</em> let
+you activate or deactivate the surface for the respective hemisphere. Finally the opacity slider lets you add some
+transparency so that you can see what is behind the surfaces.</p>
+</div>
+<div class="section" id="sphere-panel">
+<h3>Sphere Panel<a class="headerlink" href="#sphere-panel" title="Permalink to this headline">¶</a></h3>
+<img alt="Roi builder sphere panel" class="align-center" src="graphical/images/roi_builder/roi_sphere.png" />
+<p>The sphere panel is where you will control the attributes of the ROI. At the top there is a reminder of the ROI name
+and the coordinates system. Next we have the current subject and the associated sphere, which is characterized by
+a <em>radius</em> and the <em>x</em>, <em>y</em> and <em>z</em> coordinates of its center. You can manipulate this values directly using the
+mouse and keyboard.</p>
+<p>The <em>copy from cursor</em> button will translate the sphere center to the position of the cursor on an image or on a surface.
+By clicking on an image in the context viewer a cursor in form of a red cross will appear; if you instead click on
+a surface a red cone will appear. Pressing this button will translate the sphere to the active cursor.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">You can also move the sphere center towards the cursor by pressing the <em>c</em> key in the keyboard.</p>
+</div>
+<p>The button labeled <em>Optimize</em> will move the sphere to the place of maximum FA in a small neighborhood.</p>
+<p>The button labeled <em>reload</em> will restore the sphere position and size to the one previously stored in the database.</p>
+<p>To save the modifications of the sphere into the database you must press the <em>Save sphere</em> button. Pay special
+attention to this button, whenever it is active it means there are unsaved changes.</p>
+<p>The next part of the panel lets you control visual attributes of the sphere. First is a slider for adjusting the
+sphere opacity, afterwards a button where you can select a color for the sphere,
+and finally a box which lets you choose between solid or wire-frame representations.</p>
+<p>The <em>Show fibers</em> checkbox lets you preview the fibers that go through the current sphere, and the
+<em>Calculate value inside ROI</em> checkbox lets you see the mean value (of the current context image), the mean FA,
+and the mean MD; calculated over the voxels inside the current sphere.</p>
+</div>
+<div class="section" id="the-extrapolate-dialog">
+<h3>The extrapolate dialog<a class="headerlink" href="#the-extrapolate-dialog" title="Permalink to this headline">¶</a></h3>
+<a class="reference internal image-reference" href="graphical/images/roi_builder/roi_extrapolate.png"><img alt="Roi builder extrapolate dialog" class="align-center" src="graphical/images/roi_builder/roi_extrapolate.png" style="width: 60%;" /></a>
+<p>To load this dialog click on the bottom labeled <em>Extrapolate</em> at the bottom right corner. This dialog lets you
+approximate the sphere coordinates for several subjects based on a reference subject. Internally it makes use of
+coordinate system changes.</p>
+<p>At the left you can select the <em>origin</em> subject from which the sphere position will be extrapolated, the <em>link space</em>
+which is the coordinate system that will be used to map from one subject to another, if you want to adjust the sphere
+size or only its position (keep radius constant), finally you may apply an FA optimization after estimating the sphere
+center. The control labeled <em>Max Optimization</em> lets you choose the maximum distance (in the current coordinate system).
+Choose zero to disable this optimization.</p>
+<p>At the right side there is table showing the current sphere radius and center for each subject. Use the checkboxes to
+select the subjects to which you want to apply the estimation. At the bottom of the list there are buttons which let
+you <em>select all subjects</em>, <em>select empty</em> (only subjects who don&#8217;t yet have any sphere), or to clear all subjects.</p>
+<p>To start the extrapolation click the <em>Start exploration</em> button at the lower left. The progress bar on top of it
+will start to fill. Notice that this process may take significant time, and that the interface may freeze in the
+middle.</p>
+</div>
+<div class="section" id="changing-the-current-sphere">
+<h3>Changing the current sphere<a class="headerlink" href="#changing-the-current-sphere" title="Permalink to this headline">¶</a></h3>
+<p>If you want to start working on a different ROI, you don&#8217;t have to close the application. The <em>File</em> menu contains
+two items that let you change to a different ROI without changing anything else in the application.</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Save sphere as</strong>: Create a new ROI and save the current sphere as the sphere for the current subject.</li>
+<li><strong>Switch sphere</strong>: Change to another, existent ROI. Notice this will keep the sphere in its current position,
+if you want to load the sphere already defined in the new ROI click on <em>Reload</em>.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="exporting-rois">
+<h3>Exporting rois<a class="headerlink" href="#exporting-rois" title="Permalink to this headline">¶</a></h3>
+<p>The file menu contains an item labeled <em>Export Roi</em> which allows you to export the sphere as a nifti image, which
+contains ones in voxels inside the sphere, and zeros in the background.</p>
+</div>
+</div>
+<div class="section" id="scenarios">
+<h2>Scenarios<a class="headerlink" href="#scenarios" title="Permalink to this headline">¶</a></h2>
+<p>As usual, the <em>File</em> menu contains items for saving and loading scenarios. In this case scenarios include everything
+but the roi position or size, this data is only recorded in the database. The camera, context and visual attributes,
+current subject and current ROI will be saved.</p>
+</div>
 </div>
 
 
