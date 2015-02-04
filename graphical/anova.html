@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '3.0b',
+        VERSION:     '0.3b',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -54,6 +54,19 @@
             
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Anova</a><ul>
+<li><a class="reference internal" href="#selecting-an-outcome">Selecting an Outcome</a></li>
+<li><a class="reference internal" href="#selecting-regressors-and-interactions">Selecting Regressors and Interactions</a></li>
+<li><a class="reference internal" href="#choosing-a-sample">Choosing a Sample</a></li>
+<li><a class="reference internal" href="#fitting-the-model">Fitting the model</a></li>
+<li><a class="reference internal" href="#exporting-data">Exporting data</a></li>
+<li><a class="reference internal" href="#scenarios">Scenarios</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="measure.html"
                         title="previous chapter">Measure</a></p>
@@ -71,6 +84,112 @@
             
   <div class="section" id="anova">
 <h1>Anova<a class="headerlink" href="#anova" title="Permalink to this headline">¶</a></h1>
+<a class="reference internal image-reference" href="../_images/anova.png"><img alt="Anova screen-shot" class="align-center" src="../_images/anova.png" style="width: 90%;" /></a>
+<p>This application provides an interface for performing Anova analyzes on the database variables on the
+<a class="reference external" href="http://www.r-project.org">R</a> software. Type III sum of squares are used.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This software is meant for exploratory analysis. When you use it you are likely doing
+<a class="reference external" href="http://en.wikipedia.org/wiki/Multiple_comparisons_problem">multiple comparisons</a>
+however, the reported P values are not corrected. You must be very careful when interpreting the results.</p>
+</div>
+<p>The interface is divided in a control panel at the left, a main plot at the top right, and a results table at the
+bottom right.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">When you hover over any point in the main plot you will see the id of the associated subject, if you right
+click you will see a context menu that will let you switch to it in other applications.</p>
+</div>
+<p>The following sections describe the steps necessary for performing an Analysis. Notice that they can be
+accomplished in any order.</p>
+<div class="section" id="selecting-an-outcome">
+<h2>Selecting an Outcome<a class="headerlink" href="#selecting-an-outcome" title="Permalink to this headline">¶</a></h2>
+<p>In order to select an outcome click on the box labeled outcome. It will give you choices based on your
+favorite variables (see <a class="reference internal" href="configuration.html"><em>Configuring Braviz</em></a>) and previously used outcomes. It will also have an option labeled
+<em>select outcome</em>. Whe you click on it an enhanced variable select dialog will open.</p>
+<p>Notice that at the moment only numerical outcomes are available.</p>
+<p>If you have already added some regressors and interactions, the dialog will be able to display several plots
+that integrate the regressors with the possible outcomes. In this way you can get a better a feeling of how
+the outcome relates to the regressors before doing the actual calculation. The following pictures show examples
+of these plots</p>
+<img alt="Standard plot with noise" class="align-center" src="../_images/anova_outcome_jitter.png" />
+<img alt="Scatter plot against a numeric regressor" class="align-center" src="../_images/anova_outcome_scatter.png" />
+<img alt="Box plot against a nominal regressor" class="align-center" src="../_images/anova_outcome_box.png" />
+<img alt="Interaction between a numeric and a nominal regressor" class="align-center" src="../_images/anova_outcome_scatter_interaction.png" />
+<img alt="Interaction between two nominal variables" class="align-center" src="../_images/anova_outcome_box_interaction.png" />
+<p>When you are happy with the selection click on <em>Save and select</em></p>
+</div>
+<div class="section" id="selecting-regressors-and-interactions">
+<h2>Selecting Regressors and Interactions<a class="headerlink" href="#selecting-regressors-and-interactions" title="Permalink to this headline">¶</a></h2>
+<p>Regressors and interactions are displayed in a table together with their associated degrees of freedom (DF).</p>
+<p>In order to add regressors to the table click on the button labeled <em>Add regressor</em>. This will open an enhanced
+variable select value.</p>
+<img alt="Regressor selection dialog" class="align-center" src="../_images/anova_regressors_dialog.png" />
+<p>Notice that at the variables list at the top-left there is an additional column labeled <em>Importance</em>. This column
+displays the importance of each variable for predicting the value of the outcome. This value is calculated using
+the <a class="reference external" href="http://cran.r-project.org/web/packages/randomForest/index.html">randomForest</a> R package. When the dialog is
+first opened this values are not available, in order to perform the calculation click on the column label. To add
+variables to the table of current regressors click on the button labeled <em>save and add</em>. You may also remove
+regressors by right clicking on them in the table at the bottom left and clicking on remove. When you are happy
+with the selection click on <em>Done</em>.</p>
+<p>To add interactions click on the button labeled <em>Add Interaction</em>. The following dialog will open</p>
+<img alt="Anova interaction dialog" class="align-center" src="../_images/anova_interactions.png" />
+<p>In order to add a single interaction term select all the desired factors by clicking on them while holding the
+<tt class="docutils literal"><span class="pre">Ctrl</span></tt> key and afterwards click on <em>Add Single Term</em>. The <em>Add all combinations</em> button will add all possible
+products from the current regressors. When you are done close the dialog.</p>
+<p>In the main window you can see the list of regressors and interactions at the left side. In order to
+remove any of them right click on it and select <em>remove</em>. Notices that if you remove a regressor, all of the
+interactions that contain it will also be removed.</p>
+<p>If you double click on any of the rows in the regressors table the main plot will display the relation
+between this regressor and the outcome.</p>
+</div>
+<div class="section" id="choosing-a-sample">
+<h2>Choosing a Sample<a class="headerlink" href="#choosing-a-sample" title="Permalink to this headline">¶</a></h2>
+<p>At the lower right you will find the following tree which shows the current sample composition.</p>
+<img alt="Anova sample tree" class="align-center" src="../_images/anova_sample.png" />
+<p>In order to select a different set of subjects to work click on the button labeled <em>Modify sample</em>. The sample
+select dialog will open (see <a class="reference internal" href="samples.html"><em>Creating Samples</em></a>)</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">If you double click on any node of the sample tree the subjects it contains will be highlighted in the
+main plot.</p>
+</div>
+</div>
+<div class="section" id="fitting-the-model">
+<h2>Fitting the model<a class="headerlink" href="#fitting-the-model" title="Permalink to this headline">¶</a></h2>
+<p>When you have an outcome, and at least one regressor the <em>Calculate Anova</em> button will become active. When you click
+on it the R calculation will take place and you will see the table at the bottom right fill with the results.
+Also the main plot will show diagnostics from the residuals.</p>
+<img alt="Anova results" class="align-center" src="../_images/anova_results.png" />
+<p>If the anova hypotheses are met</p>
+<blockquote>
+<div><ul class="simple">
+<li>The residuals variance should be constant along the outcome values</li>
+<li>The residuals histogram should look like a normal distribution</li>
+</ul>
+</div></blockquote>
+<p>The results table contains columns for regressor name, sum of squares, degrees of freedom, F statistic value,
+and the associated P value.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">If you double click on any of the rows in the results table you will see a corresponding plot.</p>
+</div>
+</div>
+<div class="section" id="exporting-data">
+<h2>Exporting data<a class="headerlink" href="#exporting-data" title="Permalink to this headline">¶</a></h2>
+<p>The <em>file</em> dialog contains an entry labeled <em>export</em> which inside contains items that let you:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Export the data used in the analysis</li>
+<li>The main plot as a vectorial graphic</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="scenarios">
+<h2>Scenarios<a class="headerlink" href="#scenarios" title="Permalink to this headline">¶</a></h2>
+<p>The <em>file</em> menu contains options for saving and loading scenarios. This scenarios will include the current variables,
+current sample, and current plot.</p>
+</div>
 </div>
 
 

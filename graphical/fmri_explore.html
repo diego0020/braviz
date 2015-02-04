@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '3.0b',
+        VERSION:     '0.3b',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -54,6 +54,18 @@
             
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Explore fMRI</a><ul>
+<li><a class="reference internal" href="#fmri-panel">fMRI panel</a></li>
+<li><a class="reference internal" href="#the-time-plot">The time plot</a></li>
+<li><a class="reference internal" href="#working-with-bold-signals">Working with bold signals</a></li>
+<li><a class="reference internal" href="#exporting-data">Exporting data</a></li>
+<li><a class="reference internal" href="#samples-and-scenarios">Samples and scenarios</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="sample_overview.html"
                         title="previous chapter">Sample Overview</a></p>
@@ -71,6 +83,83 @@
             
   <div class="section" id="explore-fmri">
 <h1>Explore fMRI<a class="headerlink" href="#explore-fmri" title="Permalink to this headline">¶</a></h1>
+<a class="reference internal image-reference" href="../_images/fmri_explore.png"><img alt="Explore fMRI screenshot" class="align-center" src="../_images/fmri_explore.png" style="width: 90%;" /></a>
+<p>In this application you can visualize the underlying BOLD signal of fMRI paradigms. The interface is divide in three.
+At the top we have a tabbed panel for controlling the application and next to it a 3d viewer. Below is a plot where
+the <em>x</em> axis corresponds to time. All of these elements will be further explained below.</p>
+<div class="section" id="fmri-panel">
+<h2>fMRI panel<a class="headerlink" href="#fmri-panel" title="Permalink to this headline">¶</a></h2>
+<img alt="The fmri panel" class="align-center" src="../_images/fmri_fmri_panel.png" />
+<p>The fMRI panel lets you control the current subject, fMRI paradigm, contrast to show; using the controls with the
+corresponding labels. It also lets you change to orientation of the image plane, and move along the different slices.
+Finally there is a check-box which allows you to display <em>iso-contours</em> at a certain <em>z-score</em> value. The slide at
+the bottom, lets you add transparency to these contours.</p>
+</div>
+<div class="section" id="the-time-plot">
+<h2>The time plot<a class="headerlink" href="#the-time-plot" title="Permalink to this headline">¶</a></h2>
+<p>The time plot at the bottom of the application shows the experiment along the time domain. The stimulus that make
+up the current contrast are shown as block signals in different colors</p>
+<a class="reference internal image-reference" href="../_images/fmri_estimulus.png"><img alt="A bold signal" class="align-center" src="../_images/fmri_estimulus.png" style="width: 90%;" /></a>
+<p>When you click on a point of the image in the 3d viewer, the raw BOLD signal measured at that point will be displayed
+on the graph</p>
+<a class="reference internal image-reference" href="../_images/fmri_bold.png"><img alt="A bold signal" class="align-center" src="../_images/fmri_bold.png" style="width: 90%;" /></a>
+<p>You can move the cursor around in the 3d viewer, and the bold signal will update.</p>
+</div>
+<div class="section" id="working-with-bold-signals">
+<h2>Working with bold signals<a class="headerlink" href="#working-with-bold-signals" title="Permalink to this headline">¶</a></h2>
+<img alt="Aggregate signal" class="align-center" src="../_images/fmri_timeline_panel.png" />
+<p>The <em>Timeline</em> panel lets you perform several operations with BOLD signals. You can add several lines to the plot,
+which will be shown on the table labeled <em>frozen points</em>. The table has the following columns:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Subject</strong>: The subject to whom the signal belongs</li>
+<li><strong>Coordinates</strong>: The spatial coordinates at which the bold signal was sampled</li>
+<li><strong>Contrast</strong>: The active contrast when the signal was sampled</li>
+<li><strong>T Stat</strong>: The T statistic value corresponding to the signal and the contrast (read from the SPM output).</li>
+</ul>
+</div></blockquote>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">When you click on a row of the table the corresponding signal will be highlighted in the plot</p>
+</div>
+<a class="reference internal image-reference" href="../_images/fmri_highlighted.png"><img alt="A highlighted signal" class="align-center" src="../_images/fmri_highlighted.png" style="width: 90%;" /></a>
+<p>To remove a signal, right click on its name on the table and from the context menu select &#8220;remove&#8221;. To remove all
+signals from the table click on the button labeled <em>Clear</em>.</p>
+<p>To add the current bold signal to the table, click on the button <em>Freeze current point</em>. You can retrieve the
+current point for all subjects in the current sample by clicking on <em>Get point for all subjects</em>.</p>
+<p>By default all lines are shown in the same color, but you may also color them with respect to a nominal variable,
+or by grouping the signals by the location at which they were sampled. This is achieved using the box below the
+<em>Freeze current point</em> button.</p>
+<a class="reference internal image-reference" href="../_images/fmri_many_bold.png"><img alt="Several BOLD signals colored by gender" class="align-center" src="../_images/fmri_many_bold.png" style="width: 90%;" /></a>
+<p>The above graph show several lines on top of each other, it is also possible to group lines of the same color into
+groups and show them as in the following graph. This is done using the box below <em>Get point for all subjects</em>.
+The graph displays the mean signal, and the confidence interval based on all the lines in the group.</p>
+<a class="reference internal image-reference" href="../_images/fmri_agg_time.png"><img alt="Aggregate signal" class="align-center" src="../_images/fmri_agg_time.png" style="width: 90%;" /></a>
+</div>
+<div class="section" id="exporting-data">
+<h2>Exporting data<a class="headerlink" href="#exporting-data" title="Permalink to this headline">¶</a></h2>
+<p>This application allow exporting three kinds of data, in order to do this go to the <em>file</em> menu and then to <em>export</em>,
+you will see three options</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Graph</strong>: Export the current time plot as a vectorial (svg or pdf) or raster (pdf) file.</li>
+<li><strong>Signals</strong>: Export the current signals as a matlab data file.</li>
+<li><strong>Frozen Table</strong>: Export the current <em>Frozen points table</em> as a csv file with 5 columns<ul>
+<li>Index: A tuple with the subject and the coordinates</li>
+<li>Contrast: Name of the contrast</li>
+<li>Subject: Numerical id of the subject</li>
+<li>T Stat: T statistic associated to the contrast the subject and the coordinates.</li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="samples-and-scenarios">
+<h2>Samples and scenarios<a class="headerlink" href="#samples-and-scenarios" title="Permalink to this headline">¶</a></h2>
+<p>The <em>file</em> menu also contains options to save and load scenarios; and to change the current sample to a group of
+interest. In this case scenarios include the current plot, the frozen points table, the paradigm, contrast and camera
+of the 3d viewer. See <a class="reference internal" href="concepts.html"><em>Braviz Concepts</em></a> for more information.</p>
+</div>
 </div>
 
 

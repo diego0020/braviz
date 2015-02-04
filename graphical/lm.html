@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '3.0b',
+        VERSION:     '0.3b',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -54,6 +54,19 @@
             
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Linear Models</a><ul>
+<li><a class="reference internal" href="#differences-from-anova">Differences from Anova</a></li>
+<li><a class="reference internal" href="#selecting-outcome-and-regressors">Selecting Outcome and Regressors</a></li>
+<li><a class="reference internal" href="#sample">Sample</a></li>
+<li><a class="reference internal" href="#fitting-the-linear-model">Fitting the linear model</a></li>
+<li><a class="reference internal" href="#raw-and-mean-effects">Raw and Mean effects</a></li>
+<li><a class="reference internal" href="#scenarios-and-exporting">Scenarios and Exporting</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="anova.html"
                         title="previous chapter">Anova</a></p>
@@ -71,6 +84,73 @@
             
   <div class="section" id="linear-models">
 <h1>Linear Models<a class="headerlink" href="#linear-models" title="Permalink to this headline">¶</a></h1>
+<a class="reference internal image-reference" href="../_images/linear_model.png"><img alt="Linear model screen-shot" class="align-center" src="../_images/linear_model.png" style="width: 90%;" /></a>
+<p>This application lets you fit linear models to data in the database. It is closely related to the
+<a class="reference internal" href="anova.html"><em>Anova</em></a> application. In fact you will see it behaves almost in the same way.</p>
+<div class="section" id="differences-from-anova">
+<h2>Differences from Anova<a class="headerlink" href="#differences-from-anova" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li>Nominal variables with more than two levels are split into
+<a class="reference external" href="http://en.wikipedia.org/wiki/Dummy_variable_(statistics)">dummy variables</a></li>
+<li>Variable values are <a class="reference external" href="http://www.inside-r.org/packages/cran/arm/docs/standardize">standardized</a>
+in the following way:<ul>
+<li>Numerical variables will have a mean of 0 and an standard deviation of 0.5</li>
+<li>Binary Nominal values will have a mean of 0 and a difference of 1 between the two categories</li>
+<li>Nominal values with more than three levels are unchanged</li>
+</ul>
+</li>
+<li>Only scatter plots, no boxes</li>
+<li>It is possible to see effects of variables after removing effects from other variables</li>
+<li>Variable select dialogs are not enhanced</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="selecting-outcome-and-regressors">
+<h2>Selecting Outcome and Regressors<a class="headerlink" href="#selecting-outcome-and-regressors" title="Permalink to this headline">¶</a></h2>
+<p>In order to select an outcome variable, regressors and interaction terms; follow the same procedure as in
+<a class="reference internal" href="anova.html"><em>Anova</em></a>, however here you will not get <em>importance</em> metrics, nor additional plots.</p>
+</div>
+<div class="section" id="sample">
+<h2>Sample<a class="headerlink" href="#sample" title="Permalink to this headline">¶</a></h2>
+<p>The sample tree and the <em>Modify Sample</em> button are identical to those in <a class="reference internal" href="anova.html"><em>Anova</em></a>.</p>
+</div>
+<div class="section" id="fitting-the-linear-model">
+<h2>Fitting the linear model<a class="headerlink" href="#fitting-the-linear-model" title="Permalink to this headline">¶</a></h2>
+<p>Once you have selected an outcome, regressors and interactions; you may click on the
+<em>Calculate Linear Regression</em> button to fit the model. The table will fill and you will
+see a Factor plot (also known as <a class="reference external" href="http://www.carlislerainey.com/2012/06/30/coefficient-plots-in-r/">coefficient plot</a>.
+This plot shows the 95% confidence intervals and standard errors for all factors in the model. The usual interpretation
+is that if the interval intersects the zero line then there is no significant effect of that coefficient. Also,
+the further away the coefficient is from the zero line, the larger the effect it has on the outcome.</p>
+<img alt="Linear model results" class="align-center" src="../_images/lm_results.png" />
+<p>You may switch to the residuals diagnostic plot explained in <a class="reference internal" href="anova.html"><em>Anova</em></a> by clicking on
+<em>Residuals plot</em>.</p>
+<p>Also notice that in this case the results table includes the slope, T statistic and associated P value for
+each coefficient; and underneath we can find the <span class="math">\(R²\)</span>, F statistic and associated P value for the
+whole model.</p>
+<p>For nominal variables with more than two levels, the first level is taken as reference. The table will contain
+a coefficient for the effect of each level with respect to the first level.</p>
+</div>
+<div class="section" id="raw-and-mean-effects">
+<h2>Raw and Mean effects<a class="headerlink" href="#raw-and-mean-effects" title="Permalink to this headline">¶</a></h2>
+<p>This application can generate two kinds of scatter plots. When you double click on the rows of the <em>Regressors</em>
+table at the left side, you will see the <em>Raw</em> effect of that variable. This is a simple scatter plot of the
+values of the two variables.</p>
+<p>If instead you click in the rows of the results table, you will see a plot of the <em>Mean</em> effect. This is a scatter
+plot of the values of the variables, against the values of the outcome <em>minus</em> the value predicted by the other
+variables in the model. In other words, the plot illustrates the effect this variable has after accounting for
+all other variables.</p>
+</div>
+<div class="section" id="scenarios-and-exporting">
+<h2>Scenarios and Exporting<a class="headerlink" href="#scenarios-and-exporting" title="Permalink to this headline">¶</a></h2>
+<p>The items in the <em>file</em> menu are identical to those in <a class="reference internal" href="anova.html"><em>Anova</em></a>.
+The following plots were exported using the export image option.</p>
+<a class="reference internal image-reference" href="../_images/lm_interaction.svg"><div align="center" class="align-center"><img alt="An interaction between a nominal and a numerical variable" src="../_images/lm_interaction.svg" width="100%" /></div>
+</a>
+<a class="reference internal image-reference" href="../_images/lm_nominal.svg"><div align="center" class="align-center"><img alt="Effect of a nominal variable" src="../_images/lm_nominal.svg" width="100%" /></div>
+</a>
+</div>
 </div>
 
 

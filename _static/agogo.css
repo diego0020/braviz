@@ -598,6 +598,7 @@ dl.class:first-of-type {
 div.documentwrapper img {
     margin-bottom: 2em;
     margin-top: 2em;
+    max-width: 100%;
 }
 
 /* ---------------------Sidebar ----------------------------------------------------*/

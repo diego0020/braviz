@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '3.0b',
+        VERSION:     '0.3b',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -54,6 +54,14 @@
             
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Exporting variables</a><ul>
+<li><a class="reference internal" href="#procedure">Procedure</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="from_excel.html"
                         title="previous chapter">Import variables</a></p>
@@ -71,6 +79,17 @@
             
   <div class="section" id="exporting-variables">
 <h1>Exporting variables<a class="headerlink" href="#exporting-variables" title="Permalink to this headline">¶</a></h1>
+<img alt="Export variables dialog" class="align-center" src="../_images/export_vars.png" />
+<p>This dialog lets you take variables from the database in order to perform further analyzes or processing in other
+software. Variables are exported in a csv format which can be easily read by statistical software.</p>
+<div class="section" id="procedure">
+<h2>Procedure<a class="headerlink" href="#procedure" title="Permalink to this headline">¶</a></h2>
+<p>Check the boxes next to the variables you desire in the list at the left side, you may use the field at the top
+to search for particular variables (see <a class="reference internal" href="variables.html"><em>Working with variables</em></a>). When you are done with the selection click on the
+<em>export selected</em> button, a dialog will open prompting you where to save the file. The output file will contain
+a column with subject indices followed by one column for each variable. The first row contains variable names.
+Missing values will be represented as empty strings.</p>
+</div>
 </div>
 
 

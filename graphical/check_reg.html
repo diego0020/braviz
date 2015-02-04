@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '3.0b',
+        VERSION:     '0.3b',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -54,6 +54,15 @@
             
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Check Registration</a><ul>
+<li><a class="reference internal" href="#comparing-images-from-the-same-subject">Comparing images from the same subject</a></li>
+<li><a class="reference internal" href="#comparing-different-subjects">Comparing different subjects</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="fmri_explore.html"
                         title="previous chapter">Explore fMRI</a></p>
@@ -71,6 +80,27 @@
             
   <div class="section" id="check-registration">
 <h1>Check Registration<a class="headerlink" href="#check-registration" title="Permalink to this headline">¶</a></h1>
+<a class="reference internal image-reference" href="../_images/check_reg.png"><img alt="Check registration screen-shot" class="align-center" src="../_images/check_reg.png" style="width: 90%;" /></a>
+<p>This application lets you compare two images by showing them using a chess board pattern. Its interface contains
+a control panel on the left and a 3d viewer on the right.</p>
+<p>The control panel starts with a two pairs of boxes which let you choose a subject and an image modality. These are
+the two images that you want to compare. Notice this application lets you compare two images from the same subject
+as well as images from different subjects. Afterwards there are boxes for selecting the coordinate system, and the
+orientation of the image. Next is a control which lets you increase or decrease the number of rows and columns
+that make the chess board pattern. Finally there is a slider which lets you move the plane in its
+perpendicular direction.</p>
+<div class="section" id="comparing-images-from-the-same-subject">
+<h2>Comparing images from the same subject<a class="headerlink" href="#comparing-images-from-the-same-subject" title="Permalink to this headline">¶</a></h2>
+<p>This application can be used to compare different image moadilities in order to verify that the registration
+algorithm was successful. This test can be done in all of the coordinate systems. It is specially important to check
+diffusion images (FA), against anatomical images (MRI).</p>
+</div>
+<div class="section" id="comparing-different-subjects">
+<h2>Comparing different subjects<a class="headerlink" href="#comparing-different-subjects" title="Permalink to this headline">¶</a></h2>
+<p>This application may also be used to compare images belonging to different subjects. It is most useful when the
+coordinate system is Talairach or Dartel. In this case the application can also verify the effectiveness of the two
+kinds of common coordinate systems.</p>
+</div>
 </div>
 
 

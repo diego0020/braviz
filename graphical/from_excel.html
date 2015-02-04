@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '3.0b',
+        VERSION:     '0.3b',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -54,6 +54,15 @@
             
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Import variables</a><ul>
+<li><a class="reference internal" href="#expected-format">Expected format</a></li>
+<li><a class="reference internal" href="#procedure">Procedure</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="parallel.html"
                         title="previous chapter">Parallel Coordinates</a></p>
@@ -71,6 +80,25 @@
             
   <div class="section" id="import-variables">
 <h1>Import variables<a class="headerlink" href="#import-variables" title="Permalink to this headline">¶</a></h1>
+<img alt="Import from excel dialog" class="align-center" src="../_images/from_excel.png" />
+<p>This dialog lets you add variables to the database from an excel file.</p>
+<div class="section" id="expected-format">
+<h2>Expected format<a class="headerlink" href="#expected-format" title="Permalink to this headline">¶</a></h2>
+<p>The first column of the file should contain subject ids as found in the database. The first row should contain
+variable names. All other cells should contain variable values. Notice that nominal variable values should be entered
+as integer labels. Missing values should be empty cells or the string <tt class="docutils literal"><span class="pre">#NULL!</span></tt>.</p>
+</div>
+<div class="section" id="procedure">
+<h2>Procedure<a class="headerlink" href="#procedure" title="Permalink to this headline">¶</a></h2>
+<p>First click on <em>Select file</em> and find the excel file in the dialog. A preview of the data as understood by the program
+will be shown. Verify that everything looks ok. If the table contains existing variables their values will be
+overwritten in the database. You may instead choose to ignore this variables by checking the box labeled
+<em>Omit existent</em>.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">The terminal will show the progress of the import process.</p>
+</div>
+</div>
 </div>
 
 

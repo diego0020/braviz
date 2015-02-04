@@ -51,7 +51,7 @@ Subject Overview
 .. image:: images/subj_overview.png
     :align: center
     :width: 50%
-    :alt: Subject overview screenshot
+    :alt: Subject overview screen-shot
 
 Display images, bundles, surfaces and segmentation results for each subject at a time.
 
@@ -64,7 +64,7 @@ Sample Overview
 .. image:: images/sample_overview.png
     :align: center
     :width: 50%
-    :alt: Sample overview screenshot
+    :alt: Sample overview screen-shot
 
 Display data for multiple subjects at the same time.
 
@@ -77,7 +77,7 @@ Explore fMRI
 .. image:: images/fmri_explore.png
     :align: center
     :width: 50%
-    :alt: Explore fMRI screenshot
+    :alt: Explore fMRI screen-shot
 
 Visualize fMRI series.
 
@@ -91,7 +91,7 @@ Check Registration
 .. image:: images/check_reg.png
     :align: center
     :width: 50%
-    :alt: Check registration screenshot
+    :alt: Check registration screen-shot
 
 Visualize two images together.
 
@@ -116,7 +116,7 @@ ROI Builder
 .. image:: images/roi_builder.png
     :align: center
     :width: 50%
-    :alt: Roi builder screenshot
+    :alt: Roi builder screen-shot
 
 Place spherical ROIs for each subject.
 
@@ -129,7 +129,7 @@ Logic bundles
 .. image:: images/logic_bundles.png
     :align: center
     :width: 50%
-    :alt: Logic bundles screenshot
+    :alt: Logic bundles screen-shot
 
 Define bundles using segmented structures, rois and logical operations.
 
@@ -142,7 +142,7 @@ Measure
 .. image:: images/measure.png
     :align: center
     :width: 50%
-    :alt: Measure screenshot
+    :alt: Measure screen-shot
 
 Manually measure features on images for each subject.
 
@@ -173,7 +173,7 @@ Anova
 .. image:: images/anova.png
     :align: center
     :width: 50%
-    :alt: Anova screenshot
+    :alt: Anova screen-shot
 
 Perform and visualize anova analyzes.
 
@@ -186,7 +186,7 @@ Linear Model
 .. image:: images/linear_model.png
     :align: center
     :width: 50%
-    :alt: Linear model screenshot
+    :alt: Linear model screen-shot
 
 Fit linear models
 
@@ -199,7 +199,7 @@ Correlations
 .. image:: images/correlations.png
     :align: center
     :width: 50%
-    :alt: Correlations screenshot
+    :alt: Correlations screen-shot
 
 Quickly visualize correlations between variables
 
@@ -212,7 +212,7 @@ Parallel coordinates
 .. image:: images/parallel.png
     :align: center
     :width: 50%
-    :alt: Parallel coordinates screenshot
+    :alt: Parallel coordinates screen-shot
 
 Visualize multiple variables using a parallel coordinates
 
