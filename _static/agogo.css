@@ -678,6 +678,23 @@ div.admonition.hint p.first{
 color: rgb(90, 120, 198);
 }
 
+/* ---------------------warnings ----------------------------------------------------*/
+
+div.admonition.warning {
+border: none;
+border-radius: 15px;
+background: rgb(253, 253, 181);
+}
+
+div.admonition.warning p{
+margin: 0.5em 1em 1em 1em;
+}
+
+div.admonition.warning p.first{
+color: rgb(90, 120, 198);
+}
+
+
 /* ---------------------class folding ----------------------------------------------------*/
 span.fold_global_control {
 float: right;

@@ -100,26 +100,33 @@ Guides
 The following guides are meant to help you find your way around the API and see how the different components can
 be connected.
 
+Adapting to a new project
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Configuring braviz to work with a new dataset.
+
+[Not yet available]
+
 Interactive work and simple scripts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Using braviz from a python terminal and creating simple scripts.
+
+[Not yet available]
 
 Creating a new Qt Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Building a new Qt Application and integrating it with the rest of the system.
 
+[Not yet available]
 
 Creating a new Web Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Implementing a web visualization based on D3.
 
-Adapting to a new project
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Configuring braviz to work with a new dataset.
+[Not yet available]
 
 Dependencies
 --------------

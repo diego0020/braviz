@@ -54,6 +54,21 @@
             
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Parallel Coordinates</a><ul>
+<li><a class="reference internal" href="#selecting-data">Selecting Data</a></li>
+<li><a class="reference internal" href="#interacting-with-the-visualization">Interacting with the visualization</a><ul>
+<li><a class="reference internal" href="#identifying-subjects">Identifying subjects</a></li>
+<li><a class="reference internal" href="#reorganizing-axes">Reorganizing axes</a></li>
+<li><a class="reference internal" href="#filtering-data">Filtering data</a></li>
+<li><a class="reference internal" href="#saving-sub-samples">Saving sub-samples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="correlations.html"
                         title="previous chapter">Correlations</a></p>
@@ -71,6 +86,73 @@
             
   <div class="section" id="parallel-coordinates">
 <h1>Parallel Coordinates<a class="headerlink" href="#parallel-coordinates" title="Permalink to this headline">¶</a></h1>
+<a class="reference internal image-reference" href="../_images/parallel.png"><img alt="Parallel coordinates screen-shot" class="align-center" src="../_images/parallel.png" style="width: 90%;" /></a>
+<p>This application lets you explore variables using a parallel coordinates visualization. It uses a web visualization
+and the results are best viewed in web browser. The main window contains two panels, at the left is a control panel
+where you can select the variables you want in your visualization, and at the right is a web-view. The web-view
+is a small web-browser. It is possible to preview the visualization in this integrated browser, but the interaction
+is much more fluid in a full web browser (like google chrome, firefox or safari). In order to open the
+parallel coordinates web page in your default browser click on the blue link over the web-view. You can also copy
+the address and paste it in the address bar of a browser.</p>
+<p>Notice that this visualization is based on this
+<a class="reference external" href="http://mbostock.github.io/d3/talk/20111116/iris-parallel.html">D3 example</a>.</p>
+<div class="section" id="selecting-data">
+<h2>Selecting Data<a class="headerlink" href="#selecting-data" title="Permalink to this headline">¶</a></h2>
+<p>There are three pieces of data that make up the parallel coordinates view.</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Sample</strong> : Use the <em>sample</em> option from the <em>file</em> menu in order to select the set of subjects you
+want to display.</li>
+<li><strong>Cathegories</strong> : Lines can be colored based on a nominal variable, use the box to select which one.</li>
+<li><strong>Variables</strong> : You may add as many variables as you want to the visualization, each of them will be displayed
+as a new axis. Use the checkboxes in the list of the left to add or remove individual variables. Additionally
+you can use the <em>clear</em> button to remove all variables from the visualization.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="interacting-with-the-visualization">
+<h2>Interacting with the visualization<a class="headerlink" href="#interacting-with-the-visualization" title="Permalink to this headline">¶</a></h2>
+<p>As previously mentioned the visualization works best on a full web browser. In order to open the visualization in your
+default browser click on the blue link at the top right corner.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Don&#8217;t close the main application, the web browser still needs to communicate with it.</p>
+</div>
+<a class="reference internal image-reference" href="../_images/parallel_chromium.png"><img alt="Parallel coordinates running on the chromium browser" class="align-center" src="../_images/parallel_chromium.png" style="width: 90%;" /></a>
+<div class="section" id="identifying-subjects">
+<h3>Identifying subjects<a class="headerlink" href="#identifying-subjects" title="Permalink to this headline">¶</a></h3>
+<a class="reference internal image-reference" href="../_images/parallel_id.png"><img alt="Identifying a subject" class="align-center" src="../_images/parallel_id.png" style="width: 90%;" /></a>
+<p>When you move the mouse over the line you will see that the line directly under the pointer will become thicker. When
+the line that grabbed your attention becomes thicker, you can hold the mouse still, after a while the id of the
+subject to whom the line belongs will appear. If you hold the mouse for even longer, a context menu will appear, giving
+you the option to show that particular subject in all opened viewers.</p>
+<p>Notice that this application also listens for messages from other applications, and will highlight subjects when
+requested.</p>
+</div>
+<div class="section" id="reorganizing-axes">
+<h3>Reorganizing axes<a class="headerlink" href="#reorganizing-axes" title="Permalink to this headline">¶</a></h3>
+<p>You can change the order in which axes are displayed. To do so, click on and axis title and hold the button,
+you can then drag the axis around. When you let it go, all of the axes will redistribute again but the order will
+be maintained.</p>
+</div>
+<div class="section" id="filtering-data">
+<h3>Filtering data<a class="headerlink" href="#filtering-data" title="Permalink to this headline">¶</a></h3>
+<p>You can filter data in order to select lines that cross an axis at certain intervals.</p>
+<a class="reference internal image-reference" href="../_images/parallel_filter.png"><img alt="Filtering lines by placing an interval on an axis" class="align-center" src="../_images/parallel_filter.png" style="width: 90%;" /></a>
+<p>In order to do so click and hold on one of the axis then move to preview the interval and finally
+release the button. You can filter on many axes simultaneously by drawing several intervals. Notice that the text
+at the bottom of the page will update to show how many subjects are selected. If you scroll the window further down
+you will see a table with the values for the selected subjects.</p>
+<a class="reference internal image-reference" href="../_images/parallel_table.png"><img alt="Showing the table of selected subjects" class="align-center" src="../_images/parallel_table.png" style="width: 90%;" /></a>
+</div>
+<div class="section" id="saving-sub-samples">
+<h3>Saving sub-samples<a class="headerlink" href="#saving-sub-samples" title="Permalink to this headline">¶</a></h3>
+<p>After selecting a group of lines as explained above, you may save them into the database as a new subsample for the
+whole system. This is done using the form shown at the right of the table of selection subjects. Write a name and
+a description for the new sample and click on <em>submit</em>. If everything goes well you will see the message
+<em>saved!</em> under the submit button.</p>
+</div>
+</div>
 </div>
 
 

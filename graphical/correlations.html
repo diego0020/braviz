@@ -54,6 +54,17 @@
             
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Correlations</a><ul>
+<li><a class="reference internal" href="#selecting-variables-and-samples">Selecting Variables and Samples</a></li>
+<li><a class="reference internal" href="#the-correlation-matrix">The correlation matrix</a></li>
+<li><a class="reference internal" href="#the-scatter-plot">The scatter plot</a></li>
+<li><a class="reference internal" href="#exporting-plots">Exporting plots</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="lm.html"
                         title="previous chapter">Linear Models</a></p>
@@ -71,6 +82,44 @@
             
   <div class="section" id="correlations">
 <h1>Correlations<a class="headerlink" href="#correlations" title="Permalink to this headline">¶</a></h1>
+<a class="reference internal image-reference" href="../_images/correlations.png"><img alt="Correlations screen-shot" class="align-center" src="../_images/correlations.png" style="width: 90%;" /></a>
+<p>Using this application you can rapidly explore correlations between the variables in the database. It&#8217;s interface is
+divided in three frames, at the very left a list of variables, in the middle a correlation matrix, and at the right
+a scatter plot.</p>
+<p>Notice this application is also available to use outside of braviz as
+<a class="reference external" href="https://github.com/diego0020/correlation_viewer">correlation viewer</a></p>
+<div class="section" id="selecting-variables-and-samples">
+<h2>Selecting Variables and Samples<a class="headerlink" href="#selecting-variables-and-samples" title="Permalink to this headline">¶</a></h2>
+<p>To select the group of variables among which you want to find correlations use the checkboxes in the list at the left.
+As usual you may use the search field to find variables faster. As you select variables you will see the scatter
+matrix change.</p>
+<p>The file menu contains an option labeled <em>change sample</em> which lets you select a different set of subjects
+to work with.</p>
+</div>
+<div class="section" id="the-correlation-matrix">
+<h2>The correlation matrix<a class="headerlink" href="#the-correlation-matrix" title="Permalink to this headline">¶</a></h2>
+<p>The correlation matrix is shown in the middle of the application. Each pair of variables have one corresponding
+square in the matrix, variables are sorted in alphabetical order. The color of each square depends on the correlation
+coefficient (pearson) between the two variables. If you hold the mouse over any square you will see the exact value
+of this coefficient. If you click on any square, a scatter plot of the two variables will be shown on the roght panel.</p>
+</div>
+<div class="section" id="the-scatter-plot">
+<h2>The scatter plot<a class="headerlink" href="#the-scatter-plot" title="Permalink to this headline">¶</a></h2>
+<p>The scatter plot can give you a better idea of the correlation between the two variables. A regression line
+and confidence interval is also shown. It is also interactive.
+If you hold the mouse over any of the points, you will see its id and the exact values of the two variables. If there
+are several points at that location, you will see multiple values.</p>
+<p>At the top of the scatter plot you will see the correlation coefficient and an approximation of the associated p value.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">You may click on points in the scatter plot to temporally remove them from the analysis. The regression line,
+confidence interval, correlation coefficient and p value will be updated. To add them back, just click on them again.</p>
+</div>
+</div>
+<div class="section" id="exporting-plots">
+<h2>Exporting plots<a class="headerlink" href="#exporting-plots" title="Permalink to this headline">¶</a></h2>
+<p>In the <em>file</em> menu you will find options for exporting the correlation matrix and the scatter plot.</p>
+</div>
 </div>
 
 
