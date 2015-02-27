@@ -62,6 +62,7 @@ Write
 ^^^^^
 
 .. autofunction:: save_sub_sample
+.. autofunction:: delete_sample
 
 Comments
 ---------

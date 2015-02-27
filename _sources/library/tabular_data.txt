@@ -118,3 +118,8 @@ Modify
 .. autofunction:: save_real_meta_by_name
 .. autofunction:: save_var_description
 .. autofunction:: save_var_description_by_name
+
+Create New Database
+----------------------
+
+.. autofunction:: initialize_database

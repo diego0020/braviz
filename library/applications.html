@@ -90,6 +90,7 @@
 <li><a class="reference internal" href="#calculate-descriptors">Calculate descriptors</a></li>
 <li><a class="reference internal" href="#populate-cache">Populate cache</a></li>
 <li><a class="reference internal" href="#braviz-web-server">Braviz web server</a></li>
+<li><a class="reference internal" href="#import-comments">Import comments</a></li>
 </ul>
 </li>
 </ul>
@@ -268,27 +269,38 @@ Variable normalization and model fitting are done in R via  <a class="reference 
 <span id="command-line-applications"></span><h2>Command line applications<a class="headerlink" href="#module-braviz.applications.parse_spss_file" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="parse-spss-files">
 <h3>Parse spss files<a class="headerlink" href="#parse-spss-files" title="Permalink to this headline">¶</a></h3>
-<p>Access an spss <tt class="docutils literal"><span class="pre">*.sav</span></tt> file to read variables metadata, specifically</p>
+<p>Access a spss <tt class="docutils literal"><span class="pre">*.sav</span></tt> file to read variables and metadata, specifically</p>
 <blockquote>
 <div><ul class="simple">
 <li>variable descriptions</li>
 <li>variable types</li>
 <li>nominal variable labels</li>
+<li>numerical variable values</li>
+<li>textual variable values</li>
 </ul>
 </div></blockquote>
-<p>Notice at the moment it is not possible to read variable values from the spss file; it is necessary
-to first import the variables using the dialog in the menu. The program should be called as this</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="go">python -m braviz.applications.parse_spss_file my_file.sav</span>
-</pre></div>
-</div>
-<p>To read and show in the screen the descriptions and labels from the file. To save this metadata into the
-database, use the following form</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="go">python -m braviz.applications.parse_spss_file my_file.sav yes</span>
+<p>To see help on this command, call it with the <a href="#id2"><span class="problematic" id="id3">``</span></a>-h```flag.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">usage: parse_spss_file.py [-h] [-d] [-m] [-c] [-s] [-v] spss_file index_col</span>
+
+<span class="go">Import data from spss files</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  spss_file       Path to a spss file (usually with .sav extension)</span>
+<span class="go">  index_col       Variable containing subject indices</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help      show this help message and exit</span>
+<span class="go">  -d, --data      Read numerical data</span>
+<span class="go">  -m, --meta      Read variable descriptions, type, and labels for nominal</span>
+<span class="go">                  variables</span>
+<span class="go">  -c, --comments  Read text variables as comments for each subject</span>
+<span class="go">  -s, --save      Add the read information to the database</span>
+<span class="go">  -v, --verbose   Print data to the terminal</span>
 </pre></div>
 </div>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">This will overwrite existing descriptions and labels in the database</p>
+<p class="last">Using the <tt class="docutils literal"><span class="pre">-s</span></tt> will overwrite existing values in the database</p>
 </div>
 <span class="target" id="module-braviz.applications.calculate_descriptors"></span></div>
 <div class="section" id="calculate-descriptors">
@@ -331,6 +343,11 @@ to launch the server process if it is not found. It should not be required to la
 web applications.</p>
 <p>For compatibility it takes the same arguments as the applications launched from the menu, but ignores the scenario
 argument.</p>
+<span class="target" id="module-braviz.applications.import_comments"></span></div>
+<div class="section" id="import-comments">
+<h3>Import comments<a class="headerlink" href="#import-comments" title="Permalink to this headline">¶</a></h3>
+<p>Reads textual comments from an excel table and uploads them to the subject comment (see <a class="reference internal" href="user_data.html"><em>User Data</em></a>) field
+of the data base.</p>
 </div>
 </div>
 </div>

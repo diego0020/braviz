@@ -135,6 +135,19 @@ two items that let you change to a different ROI without changing anything else 
     -   **Switch sphere**: Change to another, existent ROI. Notice this will keep the sphere in its current position,
         if you want to load the sphere already defined in the new ROI click on *Reload*.
 
+Working with multiple spheres
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you want to work with multiple spheres simultaneously, click on the arrow next to the sphere name; and at the
+end of the combobox click on *<Multiple spheres>*, a dialog will open where you will be able to
+select additional ROIs. Notice that only spheres designed in the same space as the current one are available.
+
+After closing the dialog you will see the combobox populated with your choices. If you select one of them it will
+become the active sphere. You will be able to move it, resize it, see values inside it, extrapolate it and export it.
+
+When multiple spheres are on the scene, the *show fibers* box will display only streamlines that cross all of the ROIs.
+
+
 Exporting rois
 ^^^^^^^^^^^^^^^^
 
@@ -142,7 +155,7 @@ The file menu contains an item labeled *Export Roi* which allows you to export t
 contains ones in voxels inside the sphere, and zeros in the background.
 
 Scenarios
-----------
+^^^^^^^^^^
 
 As usual, the *File* menu contains items for saving and loading scenarios. In this case scenarios include everything
 but the roi position or size, this data is only recorded in the database. The camera, context and visual attributes,

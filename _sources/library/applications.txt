@@ -284,27 +284,38 @@ Command line applications
 Parse spss files
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Access an spss ``*.sav`` file to read variables metadata, specifically
+Access a spss ``*.sav`` file to read variables and metadata, specifically
 
     - variable descriptions
     - variable types
     - nominal variable labels
+    - numerical variable values
+    - textual variable values
 
-Notice at the moment it is not possible to read variable values from the spss file; it is necessary
-to first import the variables using the dialog in the menu. The program should be called as this
-
-.. code-block:: console
-
-    python -m braviz.applications.parse_spss_file my_file.sav
-
-To read and show in the screen the descriptions and labels from the file. To save this metadata into the
-database, use the following form
+To see help on this command, call it with the ``-h```flag.
 
 .. code-block:: console
 
-    python -m braviz.applications.parse_spss_file my_file.sav yes
+    usage: parse_spss_file.py [-h] [-d] [-m] [-c] [-s] [-v] spss_file index_col
 
-.. warning:: This will overwrite existing descriptions and labels in the database
+    Import data from spss files
+
+    positional arguments:
+      spss_file       Path to a spss file (usually with .sav extension)
+      index_col       Variable containing subject indices
+
+    optional arguments:
+      -h, --help      show this help message and exit
+      -d, --data      Read numerical data
+      -m, --meta      Read variable descriptions, type, and labels for nominal
+                      variables
+      -c, --comments  Read text variables as comments for each subject
+      -s, --save      Add the read information to the database
+      -v, --verbose   Print data to the terminal
+
+
+.. warning:: Using the ``-s`` will overwrite existing values in the database
+
 
 .. module:: braviz.applications.calculate_descriptors
 
@@ -359,3 +370,11 @@ web applications.
 
 For compatibility it takes the same arguments as the applications launched from the menu, but ignores the scenario
 argument.
+
+.. module:: braviz.applications.import_comments
+
+Import comments
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Reads textual comments from an excel table and uploads them to the subject comment (see :doc:`user_data`) field
+of the data base.

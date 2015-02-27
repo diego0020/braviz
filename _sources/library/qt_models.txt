@@ -22,6 +22,10 @@ This models are designed to be generic, and they don't make any assumptions abou
 .. autoclass:: SimpleCheckModel
     :members:
 
+.. autoclass:: DataFrameModel
+    :members:
+
+
 Tabular Data Models
 --------------------
 

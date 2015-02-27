@@ -147,9 +147,18 @@ The database file is located on</p>
 <p>The module mod:<cite>~braviz.readAndFilter.check_db</cite> contains the following function</p>
 <dl class="function">
 <dt id="braviz.readAndFilter.check_db.verify_db_completeness">
-<tt class="descname">verify_db_completeness</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.readAndFilter.check_db.verify_db_completeness" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">verify_db_completeness</tt><big>(</big><em>database_file=None</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.check_db.verify_db_completeness" title="Permalink to this definition">¶</a></dt>
 <dd><p>Verifies that all tables exist in the braviz data base.
 If any are missing they are constructed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>database_file</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Path of the database file that should be ckecked, if None, the database defined
+by the configuration file will be used.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>

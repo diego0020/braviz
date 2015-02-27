@@ -144,7 +144,8 @@ Only methods that are not part of the Qt interface are shown here.</p>
 <dl class="class">
 <dt id="braviz.interaction.qt_models.SimpleCheckModel">
 <em class="property">class </em><tt class="descname">SimpleCheckModel</tt><big>(</big><em>choices</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SimpleCheckModel" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>Provides a model for selecting items from a set of choices (represented with checkboxes in Qt Views)</p>
+<dl class="method">
 <dt id="braviz.interaction.qt_models.SimpleCheckModel.get_selected">
 <tt class="descname">get_selected</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.SimpleCheckModel.get_selected" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a tuple of the checked items</p>
@@ -164,6 +165,27 @@ Only methods that are not part of the Qt interface are shown here.</p>
 </table>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="class">
+<dt id="braviz.interaction.qt_models.DataFrameModel">
+<em class="property">class </em><tt class="descname">DataFrameModel</tt><big>(</big><em>data_frame</em>, <em>columns=None</em>, <em>string_columns=()</em>, <em>index_as_column=True</em>, <em>checks=False</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.DataFrameModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>This model is used for displaying data frames in a QT table view</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data_frame</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.15.2)"><em>pandas.DataFrame</em></a>) &#8211; Data Frame</li>
+<li><strong>columns</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; Optional, names for columns of the data frame</li>
+<li><strong>string_columns</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of column names that should be displayed as strings</li>
+<li><strong>index_as_column</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; Display the data frame index as the first column</li>
+<li><strong>checks</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; Display checkboxes next to the first column</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -1135,6 +1157,12 @@ It has three columns: date, name and description</p>
 <dd><p>Get the database index for the scenario in a given row</p>
 </dd></dl>
 
+<dl class="method">
+<dt id="braviz.interaction.qt_models.ScenariosTableModel.get_name">
+<tt class="descname">get_name</tt><big>(</big><em>row</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_models.ScenariosTableModel.get_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of the scenario at a given row</p>
+</dd></dl>
+
 </dd></dl>
 
 <span class="target" id="module-braviz.interaction.qt_structures_model"></span></div>
@@ -1259,6 +1287,12 @@ Predecessor boxes are also updated</p>
 <dt id="braviz.interaction.qt_structures_model.StructureTreeNode.delete_children">
 <tt class="descname">delete_children</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.qt_structures_model.StructureTreeNode.delete_children" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete all children from this node</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="braviz.interaction.qt_structures_model.StructureTreeNode.get_leaf_names">
+<tt class="descname">get_leaf_names</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.qt_structures_model.StructureTreeNode.get_leaf_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get names of leafs that are under the current node</p>
 </dd></dl>
 
 <dl class="method">

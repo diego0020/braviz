@@ -63,10 +63,11 @@
 <li><a class="reference internal" href="#sphere-panel">Sphere Panel</a></li>
 <li><a class="reference internal" href="#the-extrapolate-dialog">The extrapolate dialog</a></li>
 <li><a class="reference internal" href="#changing-the-current-sphere">Changing the current sphere</a></li>
+<li><a class="reference internal" href="#working-with-multiple-spheres">Working with multiple spheres</a></li>
 <li><a class="reference internal" href="#exporting-rois">Exporting rois</a></li>
+<li><a class="reference internal" href="#scenarios">Scenarios</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#scenarios">Scenarios</a></li>
 </ul>
 </li>
 </ul>
@@ -190,17 +191,26 @@ if you want to load the sphere already defined in the new ROI click on <em>Reloa
 </ul>
 </div></blockquote>
 </div>
+<div class="section" id="working-with-multiple-spheres">
+<h3>Working with multiple spheres<a class="headerlink" href="#working-with-multiple-spheres" title="Permalink to this headline">¶</a></h3>
+<p>If you want to work with multiple spheres simultaneously, click on the arrow next to the sphere name; and at the
+end of the combobox click on <em>&lt;Multiple spheres&gt;</em>, a dialog will open where you will be able to
+select additional ROIs. Notice that only spheres designed in the same space as the current one are available.</p>
+<p>After closing the dialog you will see the combobox populated with your choices. If you select one of them it will
+become the active sphere. You will be able to move it, resize it, see values inside it, extrapolate it and export it.</p>
+<p>When multiple spheres are on the scene, the <em>show fibers</em> box will display only streamlines that cross all of the ROIs.</p>
+</div>
 <div class="section" id="exporting-rois">
 <h3>Exporting rois<a class="headerlink" href="#exporting-rois" title="Permalink to this headline">¶</a></h3>
 <p>The file menu contains an item labeled <em>Export Roi</em> which allows you to export the sphere as a nifti image, which
 contains ones in voxels inside the sphere, and zeros in the background.</p>
 </div>
-</div>
 <div class="section" id="scenarios">
-<h2>Scenarios<a class="headerlink" href="#scenarios" title="Permalink to this headline">¶</a></h2>
+<h3>Scenarios<a class="headerlink" href="#scenarios" title="Permalink to this headline">¶</a></h3>
 <p>As usual, the <em>File</em> menu contains items for saving and loading scenarios. In this case scenarios include everything
 but the roi position or size, this data is only recorded in the database. The camera, context and visual attributes,
 current subject and current ROI will be saved.</p>
+</div>
 </div>
 </div>
 
