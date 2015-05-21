@@ -30,8 +30,8 @@ div.header, div.content, div.footer {
 }
 
 div.header-wrapper {
-  background: #555573 url(bgtop.png) top left repeat-x;
-  border-bottom: 3px solid #2e3436;
+  background: #ffffff;
+  border-bottom: 3px solid #1F414C;
 }
 
 nav.parents ol {
@@ -44,14 +44,14 @@ nav.parents ol {
 nav.parents ol li {
     float: left;
     text-transform: uppercase;
-    color: #fcaf3e;
+    color: #7A552E;
 
 }
 nav.parents ol li a{
     margin : 0px 5px 0px 12px;
     text-transform: uppercase;
     letter-spacing: .1em;
-    color: #fcaf3e;
+    color:#B79674;
 }
 
 nav.parents ol li:first-child a{
@@ -61,7 +61,7 @@ nav.parents ol li:first-child a{
 
 /* Default body styles */
 a {
-  color: #ce5c00;
+  color: #B79674;
 }
 
 div.bodywrapper a, div.footer a {
@@ -95,17 +95,17 @@ div.bodywrapper a, div.footer a {
 h1, h2, h3, h4 {
   font-family: "Georgia", "Times New Roman", serif;
   font-weight: normal;
-  color: #3465a4;
+  color: #558666;
   margin-bottom: .8em;
 }
 
 h1 {
-  color: #204a87;
+  color: #225935;
 }
 
 h2 {
   padding-bottom: .5em;
-  border-bottom: 1px solid #3465a4;
+  border-bottom: 1px solid #558666;
 }
 
 a.headerlink {
@@ -168,14 +168,26 @@ div.header div.rel {
 }
 
 div.header div.rel a {
-  color: #fcaf3e;
+  color: #B79674;
   letter-spacing: .1em;
   text-transform: uppercase;
 }
 
-p.logo {
-    float: right;
+.header-wrapper p.logo img.logo{
+    max-width: 90%
+
 }
+
+.sphinxsidebarwrapper p.logo {
+    display: none;
+
+}
+
+.sphinxsidebarwrapper p.logo img.logo{
+    display: none;
+
+}
+
 
 img.logo {
     border: 0;
@@ -321,7 +333,7 @@ div.sidebar li.toctree-l2:last-child a {
 }
 
 div.sidebar li.toctree-l1.current a {
-  border-right: 5px solid #fcaf3e;
+  border-right: 5px solid #B79674;
 }
 
 div.sidebar li.toctree-l1.current li.toctree-l2 a {
@@ -487,6 +499,9 @@ div.viewcode-block:target {
 }
 
 /*-- Braviz --------------------------------------------------------------------*/
+
+
+
 div.document td:only-of-type {
     padding-top: 1.5em;
 }
@@ -509,7 +524,7 @@ div.document td.field-body table.docutils tr .docutils.literal{
     margin: 0.2px;
     padding: 0.5px;
     white-space: nowrap;
-    border: 1px solid #eaeaea;
+    border: 1px solid #688189;
     background-color: #f8f8f8;
     border-radius: 3px;
     border-radius-webkit: 3px;
@@ -528,7 +543,7 @@ div.documentwrapper tt.docutils.literal {
 }
 
 div.document td.field-body table.docutils tr:hover {
-    background-color: rgba(52, 101, 175, 0.5);
+    background-color: #91A1A7;
 }
 
 div.document td.field-body table.docutils td {

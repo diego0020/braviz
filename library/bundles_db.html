@@ -23,26 +23,31 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/fold_classes.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
     <link rel="top" title="Braviz Documentation" href="../index.html" />
     <link rel="up" title="Braviz Data Base" href="braviz_db.html" />
     <link rel="next" title="Configuring" href="configuring.html" />
     <link rel="prev" title="Geometric Data" href="geom_db.html" /> 
   </head>
-  <body>
+  <body role="document">
     
     <div class="header-wrapper">
       <div class="header">
+          <p class="logo"><a href="../index.html">
+            <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+          </a></p>
+          <!--
         <div class="headertitle"><a
-          href="../index.html"> Braviz Documentation </a></div>
+          href="../index.html"> Documentation </a></div>
+          -->
           <nav class="parents">
               <ol>
         <li><a href="../index.html"> Home </a> &raquo;</li>
-          <li><a href="index.html" >Braviz library</a> &raquo;</li>
-          <li><a href="read_and_filter.html" >Read And Filter</a> &raquo;</li>
-          <li><a href="braviz_db.html"  accesskey="U" >Braviz Data Base</a> &raquo;</li>
+          <li><a href="index.html"  >Braviz library</a> &raquo;</li>
+          <li><a href="read_and_filter.html"  >Read And Filter</a> &raquo;</li>
+          <li><a href="braviz_db.html"  accesskey="U"  >Braviz Data Base</a> &raquo;</li>
                   </ol>
           </nav>
        </div>
@@ -53,8 +58,11 @@
       <div class="content">
         <div class="sidebar" id="agogo-sidebar">
             
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+            </a></p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Bundles Database</a><ul>
@@ -70,7 +78,7 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="configuring.html"
                         title="next chapter">Configuring</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -90,13 +98,13 @@
             
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <span class="target" id="module-braviz.readAndFilter.bundles_db"></span><div class="section" id="bundles-database">
 <h1>Bundles Database<a class="headerlink" href="#bundles-database" title="Permalink to this headline">¶</a></h1>
 <p>Fiber bundles definitions can be stored in the database. Bundles can be defined as a flat list of checkpoints, or more
 general logical structures.</p>
-<p>Notice these fibers can be accessed using the <a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader.get" title="braviz.readAndFilter.base_reader.BaseReader.get"><tt class="xref py py-meth docutils literal"><span class="pre">get()</span></tt></a> method, like</p>
+<p>Notice these fibers can be accessed using the <a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader.get" title="braviz.readAndFilter.base_reader.BaseReader.get"><code class="xref py py-meth docutils literal"><span class="pre">get()</span></code></a> method, like</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;fibers&quot;</span><span class="p">,</span><span class="mi">119</span><span class="p">,</span><span class="n">db</span><span class="o">-</span><span class="nb">id</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -104,13 +112,13 @@ general logical structures.</p>
 <h2>Load<a class="headerlink" href="#load" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="braviz.readAndFilter.bundles_db.get_bundle_ids_and_names">
-<tt class="descname">get_bundle_ids_and_names</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.readAndFilter.bundles_db.get_bundle_ids_and_names" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_bundle_ids_and_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/bundles_db.html#get_bundle_ids_and_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.bundles_db.get_bundle_ids_and_names" title="Permalink to this definition">¶</a></dt>
 <dd><p>Available bundles</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of tuples <tt class="docutils literal"><span class="pre">(id,name)</span></tt> where id is the bundle id and name is the bundle name</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of tuples <code class="docutils literal"><span class="pre">(id,name)</span></code> where id is the bundle id and name is the bundle name</td>
 </tr>
 </tbody>
 </table>
@@ -118,13 +126,13 @@ general logical structures.</p>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.bundles_db.get_bundles_list">
-<tt class="descname">get_bundles_list</tt><big>(</big><em>bundle_type=None</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.bundles_db.get_bundles_list" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_bundles_list</code><span class="sig-paren">(</span><em>bundle_type=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/bundles_db.html#get_bundles_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.bundles_db.get_bundles_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get available bundles</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>bundle_type</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Optional, restrict only to a certain type, see <a class="reference internal" href="#braviz.readAndFilter.bundles_db.get_bundle_details" title="braviz.readAndFilter.bundles_db.get_bundle_details"><tt class="xref py py-func docutils literal"><span class="pre">get_bundle_details()</span></tt></a></td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>bundle_type</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Optional, restrict only to a certain type, see <a class="reference internal" href="#braviz.readAndFilter.bundles_db.get_bundle_details" title="braviz.readAndFilter.bundles_db.get_bundle_details"><code class="xref py py-func docutils literal"><span class="pre">get_bundle_details()</span></code></a></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list containing the names of the available bundles</td>
 </tr>
@@ -134,7 +142,7 @@ general logical structures.</p>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.bundles_db.get_bundle_name">
-<tt class="descname">get_bundle_name</tt><big>(</big><em>bundle_id</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.bundles_db.get_bundle_name" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_bundle_name</code><span class="sig-paren">(</span><em>bundle_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/bundles_db.html#get_bundle_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.bundles_db.get_bundle_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Name of a bundle in the database</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -150,7 +158,7 @@ general logical structures.</p>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.bundles_db.check_if_name_exists">
-<tt class="descname">check_if_name_exists</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.bundles_db.check_if_name_exists" title="Permalink to this definition">¶</a></dt>
+<code class="descname">check_if_name_exists</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/bundles_db.html#check_if_name_exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.bundles_db.check_if_name_exists" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if a bundle with the given name exists in the database</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -158,7 +166,7 @@ general logical structures.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Bundle name</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><tt class="docutils literal"><span class="pre">True</span></tt> if a bundle with this name exists, <tt class="docutils literal"><span class="pre">False</span></tt> otherwise</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">True</span></code> if a bundle with this name exists, <code class="docutils literal"><span class="pre">False</span></code> otherwise</td>
 </tr>
 </tbody>
 </table>
@@ -166,7 +174,7 @@ general logical structures.</p>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.bundles_db.get_logic_bundle_dict">
-<tt class="descname">get_logic_bundle_dict</tt><big>(</big><em>bundle_id=None</em>, <em>bundle_name=None</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.bundles_db.get_logic_bundle_dict" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_logic_bundle_dict</code><span class="sig-paren">(</span><em>bundle_id=None</em>, <em>bundle_name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/bundles_db.html#get_logic_bundle_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.bundles_db.get_logic_bundle_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves a logic bundle from the database</p>
 <p>Only one of the arguments is required, bundle_id is preferred</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -181,16 +189,16 @@ general logical structures.</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><p>A nested dictionary with the specification of the logic bundle. The hierarchy is represented as a tree, where
 each node is a dictionary. The returned dictionary represents the top node of this tree. There are three types
-of nodes: logical, structures and rois. All nodes are dictionaries with three keys : <tt class="docutils literal"><span class="pre">&quot;node_type&quot;</span></tt>,
-<tt class="docutils literal"><span class="pre">&quot;value&quot;</span></tt> and <tt class="docutils literal"><span class="pre">&quot;extra_data&quot;</span></tt></p>
+of nodes: logical, structures and rois. All nodes are dictionaries with three keys : <code class="docutils literal"><span class="pre">&quot;node_type&quot;</span></code>,
+<code class="docutils literal"><span class="pre">&quot;value&quot;</span></code> and <code class="docutils literal"><span class="pre">&quot;extra_data&quot;</span></code></p>
 <ul class="simple">
-<li>Logic nodes: Value is a string which can take the values <tt class="docutils literal"><span class="pre">&quot;OR&quot;</span></tt> , <tt class="docutils literal"><span class="pre">&quot;AND&quot;</span></tt> or <tt class="docutils literal"><span class="pre">&quot;NOT&quot;</span></tt>. Extra_data holds
+<li>Logic nodes: Value is a string which can take the values <code class="docutils literal"><span class="pre">&quot;OR&quot;</span></code> , <code class="docutils literal"><span class="pre">&quot;AND&quot;</span></code> or <code class="docutils literal"><span class="pre">&quot;NOT&quot;</span></code>. Extra_data holds
 a list of children nodes. OR nodes represent the union from the sets returned by each child, AND
 represent an intersection, and NOT subtracts the union from the reference set (the whole tractography).</li>
 <li>Structure nodes: Leaf node, its value contains the name of an structure. It represents the fibers that
 cross such structure.</li>
 <li>ROI nodes: Leaf node, its extra_data contains the database id for a ROI
-(see <a class="reference internal" href="geom_db.html#module-braviz.readAndFilter.geom_db" title="braviz.readAndFilter.geom_db"><tt class="xref py py-mod docutils literal"><span class="pre">geom_db</span></tt></a>). It represents fibers that cross such ROI.</li>
+(see <a class="reference internal" href="geom_db.html#module-braviz.readAndFilter.geom_db" title="braviz.readAndFilter.geom_db"><code class="xref py py-mod docutils literal"><span class="pre">geom_db</span></code></a>). It represents fibers that cross such ROI.</li>
 </ul>
 </p>
 </td>
@@ -201,7 +209,7 @@ cross such structure.</li>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.bundles_db.get_bundle_details">
-<tt class="descname">get_bundle_details</tt><big>(</big><em>bundle_id</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.bundles_db.get_bundle_details" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_bundle_details</code><span class="sig-paren">(</span><em>bundle_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/bundles_db.html#get_bundle_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.bundles_db.get_bundle_details" title="Permalink to this definition">¶</a></dt>
 <dd><p>Low Level, Get all data from a given bundle</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -209,7 +217,7 @@ cross such structure.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>bundle_id</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Bundle id</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><tt class="docutils literal"><span class="pre">(name,type,data)</span></tt> where name is the bundle name, type is the bundle type and data is the raw data for the
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">(name,type,data)</span></code> where name is the bundle name, type is the bundle type and data is the raw data for the
 bundle. The current types are<blockquote>
 <div><table border="1" class="docutils">
 <colgroup>
@@ -229,11 +237,11 @@ bundle. The current types are<blockquote>
 <td>str containing fiber name</td>
 </tr>
 <tr class="row-odd"><td>1</td>
-<td>Waypoints <tt class="docutils literal"><span class="pre">and</span></tt></td>
+<td>Waypoints <code class="docutils literal"><span class="pre">and</span></code></td>
 <td>pickled waypoints list</td>
 </tr>
 <tr class="row-even"><td>2</td>
-<td>Waypoints <tt class="docutils literal"><span class="pre">or</span></tt></td>
+<td>Waypoints <code class="docutils literal"><span class="pre">or</span></code></td>
 <td>pickled waypoints list</td>
 </tr>
 <tr class="row-odd"><td>10</td>
@@ -254,7 +262,7 @@ bundle. The current types are<blockquote>
 <h2>Save<a class="headerlink" href="#save" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="braviz.readAndFilter.bundles_db.save_checkpoints_bundle">
-<tt class="descname">save_checkpoints_bundle</tt><big>(</big><em>bundle_name</em>, <em>operation_is_and</em>, <em>waypoints</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.bundles_db.save_checkpoints_bundle" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save_checkpoints_bundle</code><span class="sig-paren">(</span><em>bundle_name</em>, <em>operation_is_and</em>, <em>waypoints</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/bundles_db.html#save_checkpoints_bundle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.bundles_db.save_checkpoints_bundle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Saves a bundle defined using checkpoints</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -262,8 +270,8 @@ bundle. The current types are<blockquote>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>bundle_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name for the bundle</li>
-<li><strong>operation_is_and</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; <tt class="docutils literal"><span class="pre">True</span></tt> if the bundle contains fibers that should
-pass through all waypoint, <tt class="docutils literal"><span class="pre">False</span></tt> if fibers may pass through any waypoint</li>
+<li><strong>operation_is_and</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; <code class="docutils literal"><span class="pre">True</span></code> if the bundle contains fibers that should
+pass through all waypoint, <code class="docutils literal"><span class="pre">False</span></code> if fibers may pass through any waypoint</li>
 <li><strong>waypoints</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of waypoints, these should be structure names.</li>
 </ul>
 </td>
@@ -274,7 +282,7 @@ pass through all waypoint, <tt class="docutils literal"><span class="pre">False<
 
 <dl class="function">
 <dt id="braviz.readAndFilter.bundles_db.save_logic_bundle">
-<tt class="descname">save_logic_bundle</tt><big>(</big><em>bundle_name</em>, <em>logic_tree_dict</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.bundles_db.save_logic_bundle" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save_logic_bundle</code><span class="sig-paren">(</span><em>bundle_name</em>, <em>logic_tree_dict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/bundles_db.html#save_logic_bundle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.bundles_db.save_logic_bundle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Saves a logic bundle into the database</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -282,7 +290,7 @@ pass through all waypoint, <tt class="docutils literal"><span class="pre">False<
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>bundle_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name for the bundle</li>
-<li><strong>logic_tree_dict</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; Dictionary describing the bundle, see <a class="reference internal" href="#braviz.readAndFilter.bundles_db.get_logic_bundle_dict" title="braviz.readAndFilter.bundles_db.get_logic_bundle_dict"><tt class="xref py py-func docutils literal"><span class="pre">get_logic_bundle_dict()</span></tt></a></li>
+<li><strong>logic_tree_dict</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; Dictionary describing the bundle, see <a class="reference internal" href="#braviz.readAndFilter.bundles_db.get_logic_bundle_dict" title="braviz.readAndFilter.bundles_db.get_logic_bundle_dict"><code class="xref py py-func docutils literal"><span class="pre">get_logic_bundle_dict()</span></code></a></li>
 </ul>
 </td>
 </tr>
@@ -308,13 +316,13 @@ pass through all waypoint, <tt class="docutils literal"><span class="pre">False<
         <div class="left">
           
           <a href="geom_db.html" title="Geometric Data"
-             accesskey="P">previous</a> |
+             accesskey="P" >previous</a> |
           <a href="configuring.html" title="Configuring"
-             accesskey="N">next</a> |
+             accesskey="N" >next</a> |
           <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |
+              >modules</a> |
           <a href="../genindex.html" title="General Index"
-             accesskey="I">index</a>
+             accesskey="I" >index</a>
           
             <br/>
             <a href="../_sources/library/bundles_db.txt"
@@ -323,9 +331,9 @@ pass through all waypoint, <tt class="docutils literal"><span class="pre">False<
 
         <div class="right">
           
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Diego Angulo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
         </div>
         <div class="clearer"></div>

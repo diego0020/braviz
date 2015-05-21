@@ -1,0 +1,663 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>braviz.interaction.logic_bundle_model &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.3b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="top" title="Braviz Documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body role="document">
+    
+    <div class="header-wrapper">
+      <div class="header">
+          <p class="logo"><a href="../../../index.html">
+            <img class="logo" src="../../../_static/Logo_Bravis_h.png" alt="Logo"/>
+          </a></p>
+          <!--
+        <div class="headertitle"><a
+          href="../../../index.html"> Documentation </a></div>
+          -->
+          <nav class="parents">
+              <ol>
+        <li><a href="../../../index.html"> Home </a> &raquo;</li>
+          <li><a href="../../index.html"  accesskey="U"  >Module code</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/Logo_Bravis_h.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for braviz.interaction.logic_bundle_model</h1><div class="highlight"><pre>
+<span class="c">##############################################################################</span>
+<span class="c">#    Braviz, Brain Data interactive visualization                            #</span>
+<span class="c">#    Copyright (C) 2014  Diego Angulo                                        #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    This program is free software: you can redistribute it and/or modify    #</span>
+<span class="c">#    it under the terms of the GNU Lesser General Public License as          #</span>
+<span class="c">#    published by  the Free Software Foundation, either version 3 of the     #</span>
+<span class="c">#    License, or (at your option) any later version.                         #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    This program is distributed in the hope that it will be useful,         #</span>
+<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
+<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
+<span class="c">#    GNU Lesser General Public License for more details.                     #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    You should have received a copy of the GNU Lesser General Public License#</span>
+<span class="c">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
+<span class="c">##############################################################################</span>
+
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Diego&#39;</span>
+
+<span class="kn">import</span> <span class="nn">PyQt4.QtCore</span> <span class="kn">as</span> <span class="nn">QtCore</span>
+<span class="kn">from</span> <span class="nn">PyQt4.QtCore</span> <span class="kn">import</span> <span class="n">QAbstractItemModel</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">braviz.readAndFilter</span> <span class="kn">import</span> <span class="n">geom_db</span><span class="p">,</span> <span class="n">tabular_data</span>
+<span class="kn">import</span> <span class="nn">vtk</span>
+
+
+<div class="viewcode-block" id="LogicBundleNode"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.logic_bundle_model.LogicBundleNode">[docs]</a><span class="k">class</span> <span class="nc">LogicBundleNode</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A node for a bundle based on a logical hierarchy</span>
+
+<span class="sd">    See :func:`braviz.readAndFilter.bundles_db.get_logic_bundle_dict` for more information</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        parent (braviz.interaction.logic_bundle_model.LogicBundleNode) : Reference to parent node, ``None`` if root</span>
+<span class="sd">        son_number (int) : Number of siblings before the current node</span>
+<span class="sd">        node_type (int) : Type of the current node. May be 0 for logic, 1 for structure or 2 for roi</span>
+<span class="sd">        value : Logical operation for logic nodes, or structure name for structure nodes</span>
+<span class="sd">        extra_data (int) : Roi database index for roi nodes</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">LOGIC</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">STRUCT</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">ROI</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">son_number</span><span class="p">,</span> <span class="n">node_type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">extra_data</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">node_type</span> <span class="ow">in</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">LOGIC</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">STRUCT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ROI</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__parent</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__node_type</span> <span class="o">=</span> <span class="n">node_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__son_number</span> <span class="o">=</span> <span class="n">son_number</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__extra_data</span> <span class="o">=</span> <span class="n">extra_data</span>
+        <span class="c"># only logic may have children</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__node_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">LOGIC</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">()</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span>
+
+<div class="viewcode-block" id="LogicBundleNode.add_son"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.logic_bundle_model.LogicBundleNode.add_son">[docs]</a>    <span class="k">def</span> <span class="nf">add_son</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">extra_data</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a son to the current node</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            node_type (int) : Node type of the new son</span>
+<span class="sd">            value : Value for the new son</span>
+<span class="sd">            extra_data : Extra data for the new son</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_son</span> <span class="o">=</span> <span class="n">LogicBundleNode</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">),</span> <span class="n">node_type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">extra_data</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">__node_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">LOGIC</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_son</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">new_son</span>
+</div>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">parent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parent node</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parent</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">son_number</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Number of sons added before this one</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__son_number</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">node_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Type of this node, 0: Logical, 1: Structure or 2: Roi</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__node_type</span>
+
+<div class="viewcode-block" id="LogicBundleNode.decrease_son_number"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.logic_bundle_model.LogicBundleNode.decrease_son_number">[docs]</a>    <span class="k">def</span> <span class="nf">decrease_son_number</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Decrease my son number, call this when an older brother is removed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__son_number</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">__son_number</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+</div>
+<div class="viewcode-block" id="LogicBundleNode.remove_kid"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.logic_bundle_model.LogicBundleNode.remove_kid">[docs]</a>    <span class="k">def</span> <span class="nf">remove_kid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove a child</span>
+
+<span class="sd">        Younger brother numbers are updated</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index (int) : number of son to remove</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">LOGIC</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="n">index</span><span class="p">:]:</span>
+            <span class="n">s</span><span class="o">.</span><span class="n">decrease_son_number</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="LogicBundleNode.to_dict"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.logic_bundle_model.LogicBundleNode.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Transform the tree based at this node into a dictionary</span>
+
+<span class="sd">        This allows for easy serialization (picking)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">ans</span><span class="p">[</span><span class="s">&quot;node_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_type</span>
+        <span class="n">ans</span><span class="p">[</span><span class="s">&quot;value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span>
+        <span class="n">ans</span><span class="p">[</span><span class="s">&quot;extra_data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__extra_data</span>
+        <span class="n">ans</span><span class="p">[</span><span class="s">&quot;children&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">ans</span>
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="LogicBundleNode.from_dict"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.logic_bundle_model.LogicBundleNode.from_dict">[docs]</a>    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Construct a tree from a dictionary</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            values (dict) : Recursive dictionary with the following keys for each node:</span>
+<span class="sd">                node_type, value, extra_data, children (each of them as another dictionary with these keys)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The root node of the resulting tree</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">new_root</span> <span class="o">=</span> <span class="n">LogicBundleNode</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">values</span><span class="p">[</span><span class="s">&quot;node_type&quot;</span><span class="p">],</span> <span class="n">values</span><span class="p">[</span><span class="s">&quot;value&quot;</span><span class="p">],</span>
+                                   <span class="n">values</span><span class="p">[</span><span class="s">&quot;extra_data&quot;</span><span class="p">])</span>
+
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">values</span><span class="p">[</span><span class="s">&quot;children&quot;</span><span class="p">]:</span>
+            <span class="n">new_root</span><span class="o">.</span><span class="n">add_son_from_dict</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">new_root</span>
+</div>
+<div class="viewcode-block" id="LogicBundleNode.add_son_from_dict"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.logic_bundle_model.LogicBundleNode.add_son_from_dict">[docs]</a>    <span class="k">def</span> <span class="nf">add_son_from_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds a son from a dictionary</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            values (dict) : Recursive dictionary with the following keys:</span>
+<span class="sd">                node_type, value, extra_data, children (each of them as another dictionary with these keys)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_son</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_son</span><span class="p">(</span>
+            <span class="n">values</span><span class="p">[</span><span class="s">&quot;node_type&quot;</span><span class="p">],</span> <span class="n">values</span><span class="p">[</span><span class="s">&quot;value&quot;</span><span class="p">],</span> <span class="n">values</span><span class="p">[</span><span class="s">&quot;extra_data&quot;</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">values</span><span class="p">[</span><span class="s">&quot;children&quot;</span><span class="p">]:</span>
+            <span class="n">new_son</span><span class="o">.</span><span class="n">add_son_from_dict</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+</div>
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">yield</span> <span class="bp">self</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+            <span class="c"># recuersively call in children</span>
+            <span class="c"># for i in k calls __iter__ in children k</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">k</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">i</span>
+
+</div>
+<div class="viewcode-block" id="LogicBundleNodeWithVTK"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.logic_bundle_model.LogicBundleNodeWithVTK">[docs]</a><span class="k">class</span> <span class="nc">LogicBundleNodeWithVTK</span><span class="p">(</span><span class="n">LogicBundleNode</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Adds VTK drawing capabilities to the :class:`LogicBundleNode`</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        parent (braviz.interaction.logic_bundle_model.LogicBundleNode) : Reference to parent node, ``None`` if root</span>
+<span class="sd">        son_number (int) : Number of siblings before the current node</span>
+<span class="sd">        node_type (int) : Type of the current node. May be 0 for logic, 1 for structure or 2 for roi</span>
+<span class="sd">        value : Logical operation for logic nodes, or structure name for structure nodes</span>
+<span class="sd">        extra_data (int) : Roi database index for roi nodes</span>
+<span class="sd">        reader (braviz.readAndFilter.base_reader.BaseReader) : Reader object to get data from</span>
+<span class="sd">        subj : Subject index for the subject fibers you want to draw</span>
+<span class="sd">        space : Coordinate systems in which you want the drawing.</span>
+<span class="sd">            See :meth:`braviz.readAndFilter.base_reader.BaseReader.get`</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">son_number</span><span class="p">,</span> <span class="n">node_type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">extra_data</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">reader</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">subj</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="s">&quot;World&quot;</span><span class="p">):</span>
+        <span class="n">LogicBundleNode</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">son_number</span><span class="p">,</span> <span class="n">node_type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">extra_data</span><span class="o">=</span><span class="n">extra_data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__reader</span> <span class="o">=</span> <span class="n">reader</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subj</span> <span class="o">=</span> <span class="n">subj</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">space</span> <span class="o">=</span> <span class="n">space</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="n">subj_img</span> <span class="o">=</span> <span class="n">subj</span>
+        <span class="k">if</span> <span class="n">node_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">LOGIC</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__prop</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">elif</span> <span class="n">node_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">STRUCT</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">subj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__pd</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                        <span class="s">&quot;MODEL&quot;</span><span class="p">,</span> <span class="n">subj_img</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="n">space</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__pd</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__pd</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__mapper</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkPolyDataMapper</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__prop</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkActor</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__prop</span><span class="o">.</span><span class="n">SetMapper</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__mapper</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__pd</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__mapper</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__pd</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">SetVisibility</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">SetVisibility</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">node_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ROI</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__roi_id</span> <span class="o">=</span> <span class="n">extra_data</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__mapper</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkPolyDataMapper</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__prop</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkActor</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__prop</span><span class="o">.</span><span class="n">SetMapper</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__mapper</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__sphere_source</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkSphereSource</span><span class="p">()</span>
+            <span class="n">RESOLUTION</span> <span class="o">=</span> <span class="mi">20</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__sphere_source</span><span class="o">.</span><span class="n">SetThetaResolution</span><span class="p">(</span><span class="n">RESOLUTION</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__sphere_source</span><span class="o">.</span><span class="n">SetPhiResolution</span><span class="p">(</span><span class="n">RESOLUTION</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__sphere_source</span><span class="o">.</span><span class="n">LatLongTessellationOn</span><span class="p">()</span>
+            <span class="n">sphere_data</span> <span class="o">=</span> <span class="n">geom_db</span><span class="o">.</span><span class="n">load_sphere</span><span class="p">(</span><span class="n">extra_data</span><span class="p">,</span> <span class="n">subj</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">sphere_data</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">SetVisibility</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">r</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">sphere_data</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">SetVisibility</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">__sphere_source</span><span class="o">.</span><span class="n">SetRadius</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__sphere_source</span><span class="o">.</span><span class="n">SetCenter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__sphere_source</span><span class="o">.</span><span class="n">Update</span><span class="p">()</span>
+                <span class="c"># coordinates</span>
+                <span class="n">source_coords</span> <span class="o">=</span> <span class="n">geom_db</span><span class="o">.</span><span class="n">get_roi_space</span><span class="p">(</span><span class="n">roi_id</span><span class="o">=</span><span class="n">extra_data</span><span class="p">)</span>
+                <span class="c"># source -&gt; world</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__sphere_world</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">transform_points_to_space</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__sphere_source</span><span class="o">.</span><span class="n">GetOutput</span><span class="p">(),</span> <span class="n">source_coords</span><span class="p">,</span>
+                                                                       <span class="n">subj_img</span><span class="p">,</span> <span class="n">inverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+                <span class="c"># world -&gt; current</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__sphere_current</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">transform_points_to_space</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__sphere_world</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">space</span><span class="p">,</span>
+                                                                         <span class="n">subj_img</span><span class="p">,</span> <span class="n">inverse</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__mapper</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__sphere_current</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Wrong type&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">remove_kid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">LogicBundleNode</span><span class="o">.</span><span class="n">remove_kid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_son</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">extra_data</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">LOGIC</span>
+        <span class="n">new_son</span> <span class="o">=</span> <span class="n">LogicBundleNodeWithVTK</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">),</span> <span class="n">node_type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">extra_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__reader</span><span class="p">,</span>
+                                         <span class="bp">self</span><span class="o">.</span><span class="n">subj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">space</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_son</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">new_son</span>
+
+    <span class="k">def</span> <span class="nf">__update_sphere</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">space</span><span class="p">):</span>
+        <span class="n">sphere_data</span> <span class="o">=</span> <span class="n">geom_db</span><span class="o">.</span><span class="n">load_sphere</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__roi_id</span><span class="p">,</span> <span class="n">subj</span><span class="p">)</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__reader</span>
+        <span class="n">subj_img</span> <span class="o">=</span> <span class="n">subj</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">space</span> <span class="o">=</span> <span class="n">space</span>
+        <span class="k">if</span> <span class="n">sphere_data</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">SetVisibility</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">r</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">sphere_data</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__sphere_source</span><span class="o">.</span><span class="n">SetRadius</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__sphere_source</span><span class="o">.</span><span class="n">SetCenter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__sphere_source</span><span class="o">.</span><span class="n">Update</span><span class="p">()</span>
+            <span class="c"># coordinates</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">source_coords</span> <span class="o">=</span> <span class="n">geom_db</span><span class="o">.</span><span class="n">get_roi_space</span><span class="p">(</span><span class="n">roi_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__roi_id</span><span class="p">)</span>
+                <span class="c"># source -&gt; world</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__sphere_world</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">transform_points_to_space</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__sphere_source</span><span class="o">.</span><span class="n">GetOutput</span><span class="p">(),</span> <span class="n">source_coords</span><span class="p">,</span>
+                                                                       <span class="n">subj_img</span><span class="p">,</span> <span class="n">inverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+                <span class="c"># world -&gt; current</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__sphere_current</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">transform_points_to_space</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__sphere_world</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">space</span><span class="p">,</span>
+
+                                                                         <span class="n">subj_img</span><span class="p">,</span> <span class="n">inverse</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">SetVisibility</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__mapper</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__sphere_current</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">SetVisibility</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__update_struct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">space</span><span class="p">):</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__reader</span>
+        <span class="n">subj_img</span> <span class="o">=</span> <span class="n">subj</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__pd</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="s">&quot;MODEL&quot;</span><span class="p">,</span> <span class="n">subj_img</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__value</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="n">space</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__pd</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">SetVisibility</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__mapper</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__pd</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">SetVisibility</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<div class="viewcode-block" id="LogicBundleNodeWithVTK.update"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.logic_bundle_model.LogicBundleNodeWithVTK.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">space</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Change subject or coordinate system</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            subj : New subject id</span>
+<span class="sd">            space: New coordinate system</span>
+<span class="sd">                See :meth:`braviz.readAndFilter.base_reader.BaseReader.get`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">subj</span><span class="p">,</span> <span class="n">space</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">space</span> <span class="o">=</span> <span class="n">space</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subj</span> <span class="o">=</span> <span class="n">subj</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">STRUCT</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__update_struct</span><span class="p">(</span><span class="n">subj</span><span class="p">,</span> <span class="n">space</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ROI</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__update_sphere</span><span class="p">(</span><span class="n">subj</span><span class="p">,</span> <span class="n">space</span><span class="p">)</span>
+</div>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">prop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the :obj:`vtkProp` for the bundle</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__prop</span>
+
+<div class="viewcode-block" id="LogicBundleNodeWithVTK.set_opacity"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.logic_bundle_model.LogicBundleNodeWithVTK.set_opacity">[docs]</a>    <span class="k">def</span> <span class="nf">set_opacity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">int_opac</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the opacity of the actor</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            int_opac (int) : From 0 to 100 where 0 is invisible and 100 is opaque</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">LOGIC</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+                <span class="n">i</span><span class="o">.</span><span class="n">set_opacity</span><span class="p">(</span><span class="n">int_opac</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">GetProperty</span><span class="p">()</span><span class="o">.</span><span class="n">SetOpacity</span><span class="p">(</span><span class="n">int_opac</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="LogicBundleNodeWithVTK.set_color"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.logic_bundle_model.LogicBundleNodeWithVTK.set_color">[docs]</a>    <span class="k">def</span> <span class="nf">set_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set color for the actor</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            color (tuple) : RGB components of the color</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">LOGIC</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+                <span class="n">i</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">GetProperty</span><span class="p">()</span><span class="o">.</span><span class="n">SetColor</span><span class="p">(</span><span class="o">*</span><span class="n">color</span><span class="p">)</span>
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="LogicBundleNodeWithVTK.vtk_from_dict"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.logic_bundle_model.LogicBundleNodeWithVTK.vtk_from_dict">[docs]</a>    <span class="k">def</span> <span class="nf">vtk_from_dict</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">reader</span><span class="p">,</span> <span class="n">subj</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="s">&quot;World&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a tree from a recursive dictionary</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            values (dict) : Recursive dictionary with the following keys for each node:</span>
+<span class="sd">                node_type, value, extra_data, children (each of them as another dictionary with these keys)</span>
+<span class="sd">            reader (braviz.readAndFilter.base_reader.BaseReader) : Reader object to get data from</span>
+<span class="sd">            subj : Subject index for the subject fibers you want to draw</span>
+<span class="sd">            space : Coordinate systems in which you want the drawing.</span>
+<span class="sd">                See :meth:`braviz.readAndFilter.base_reader.BaseReader.get`</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The root node of the resulting tree</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">new_root</span> <span class="o">=</span> <span class="n">LogicBundleNodeWithVTK</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">values</span><span class="p">[</span><span class="s">&quot;node_type&quot;</span><span class="p">],</span> <span class="n">values</span><span class="p">[</span><span class="s">&quot;value&quot;</span><span class="p">],</span>
+                                          <span class="n">values</span><span class="p">[</span><span class="s">&quot;extra_data&quot;</span><span class="p">],</span> <span class="n">reader</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">space</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">values</span><span class="p">[</span><span class="s">&quot;children&quot;</span><span class="p">]:</span>
+            <span class="n">new_root</span><span class="o">.</span><span class="n">add_son_from_dict</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">new_root</span>
+
+</div></div>
+<div class="viewcode-block" id="LogicBundleQtTree"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.logic_bundle_model.LogicBundleQtTree">[docs]</a><span class="k">class</span> <span class="nc">LogicBundleQtTree</span><span class="p">(</span><span class="n">QAbstractItemModel</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A Qt representation of a logical fiber bundle</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        root (braviz.interaction.logic_bundle_model.LogicBundleNode) : Root of the logic bundle tree</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">QAbstractItemModel</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">root</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__root</span> <span class="o">=</span> <span class="n">LogicBundleNode</span><span class="p">(</span>
+                <span class="bp">None</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">LogicBundleNode</span><span class="o">.</span><span class="n">LOGIC</span><span class="p">,</span> <span class="s">&quot;AND&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">LogicBundleNode</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__root</span> <span class="o">=</span> <span class="n">root</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__id_index</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__id_index</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__root</span><span class="p">)]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__root</span>
+
+    <span class="k">def</span> <span class="nf">parent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">QModelIndex</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">nid</span> <span class="o">=</span> <span class="n">QModelIndex</span><span class="o">.</span><span class="n">internalId</span><span class="p">()</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_index</span><span class="p">[</span><span class="n">nid</span><span class="p">]</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span>
+        <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_node_index</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">rowCount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">QModelIndex_parent</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">QModelIndex_parent</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="n">inid</span> <span class="o">=</span> <span class="n">QModelIndex_parent</span><span class="o">.</span><span class="n">internalId</span><span class="p">()</span>
+            <span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_index</span><span class="p">[</span><span class="n">inid</span><span class="p">]</span>
+            <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent</span><span class="o">.</span><span class="n">children</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c"># root</span>
+            <span class="k">return</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">columnCount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">QModelIndex_parent</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">QModelIndex</span><span class="p">,</span> <span class="n">int_role</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">iid</span> <span class="o">=</span> <span class="n">QModelIndex</span><span class="o">.</span><span class="n">internalId</span><span class="p">()</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">QModelIndex</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_index</span><span class="p">[</span><span class="n">iid</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="n">node</span><span class="o">.</span><span class="n">son_number</span> <span class="o">==</span> <span class="n">row</span>
+        <span class="k">if</span> <span class="n">int_role</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p_int</span><span class="p">,</span> <span class="n">p_int_1</span><span class="p">,</span> <span class="n">QModelIndex_parent</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">QModelIndex_parent</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="n">nid</span> <span class="o">=</span> <span class="n">QModelIndex_parent</span><span class="o">.</span><span class="n">internalId</span><span class="p">()</span>
+            <span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_index</span><span class="p">[</span><span class="n">nid</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">p_int_1</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">p_int</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent</span><span class="o">.</span><span class="n">children</span><span class="p">):</span>
+                    <span class="n">child</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="n">p_int</span><span class="p">]</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_node_index</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="n">index</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c"># root</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__root</span><span class="p">))</span>
+            <span class="k">assert</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">index</span>
+
+    <span class="k">def</span> <span class="nf">__get_node_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createIndex</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">son_number</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">node</span><span class="p">))</span>
+        <span class="k">assert</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">index</span>
+
+<div class="viewcode-block" id="LogicBundleQtTree.add_node"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.logic_bundle_model.LogicBundleQtTree.add_node">[docs]</a>    <span class="k">def</span> <span class="nf">add_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">node_type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">extra_data</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a son to an specific node in the tree</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parent (braviz.interaction.logic_bundle_model.LogicBundleNode) : Node to which the son will be added</span>
+<span class="sd">            node_type (int) : Type of the new node</span>
+<span class="sd">            value : Value of the new node</span>
+<span class="sd">            extra_data : Extra data for the new node</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beginResetModel</span><span class="p">()</span>
+        <span class="n">new_node</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">add_son</span><span class="p">(</span><span class="n">node_type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">extra_data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__id_index</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="n">new_node</span><span class="p">)]</span> <span class="o">=</span> <span class="n">new_node</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">endResetModel</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">new_node</span>
+</div>
+<div class="viewcode-block" id="LogicBundleQtTree.remove_node"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.logic_bundle_model.LogicBundleQtTree.remove_node">[docs]</a>    <span class="k">def</span> <span class="nf">remove_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove a node from the tree</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index (QAbstractModelIndex) : Index of node to remove</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beginResetModel</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="k">return</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_index</span><span class="p">[</span><span class="n">index</span><span class="o">.</span><span class="n">internalId</span><span class="p">()]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__remove_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modelAboutToBeReset</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">endResetModel</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="LogicBundleQtTree.get_node"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.logic_bundle_model.LogicBundleQtTree.get_node">[docs]</a>    <span class="k">def</span> <span class="nf">get_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the node at a given index</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index (QAbstractModelIndex) : Index of a node</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">internalId</span><span class="p">()</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_index</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+</div>
+    <span class="k">def</span> <span class="nf">__remove_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="c"># remove kids</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__remove_node</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+        <span class="c"># remove from parent</span>
+        <span class="n">parent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span>
+        <span class="k">if</span> <span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">parent</span><span class="o">.</span><span class="n">remove_kid</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">son_number</span><span class="p">)</span>
+        <span class="c"># remove from index</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_index</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="n">node</span><span class="p">)]</span>
+
+<div class="viewcode-block" id="LogicBundleQtTree.set_root"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.logic_bundle_model.LogicBundleQtTree.set_root">[docs]</a>    <span class="k">def</span> <span class="nf">set_root</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_root</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets a new tree for the model</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            new_root (braviz.interaction.logic_bundle_model.LogicBundleNode) : Root of new tree</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># remove everything</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beginResetModel</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__remove_node</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__root</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__root</span> <span class="o">=</span> <span class="n">new_root</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__id_index</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rebuild_index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__root</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">endResetModel</span><span class="p">()</span>
+</div>
+    <span class="k">def</span> <span class="nf">_rebuild_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__id_index</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="n">node</span><span class="p">)]</span> <span class="o">=</span> <span class="n">node</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_rebuild_index</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">root</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        root node of the underlying tree</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__root</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+                
+
+                
+
+                
+
+          
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

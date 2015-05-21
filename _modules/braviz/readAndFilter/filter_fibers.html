@@ -1,0 +1,495 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>braviz.readAndFilter.filter_fibers &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.3b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="top" title="Braviz Documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body role="document">
+    
+    <div class="header-wrapper">
+      <div class="header">
+          <p class="logo"><a href="../../../index.html">
+            <img class="logo" src="../../../_static/Logo_Bravis_h.png" alt="Logo"/>
+          </a></p>
+          <!--
+        <div class="headertitle"><a
+          href="../../../index.html"> Documentation </a></div>
+          -->
+          <nav class="parents">
+              <ol>
+        <li><a href="../../../index.html"> Home </a> &raquo;</li>
+          <li><a href="../../index.html"  accesskey="U"  >Module code</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/Logo_Bravis_h.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for braviz.readAndFilter.filter_fibers</h1><div class="highlight"><pre>
+<span class="c">##############################################################################</span>
+<span class="c">#    Braviz, Brain Data interactive visualization                            #</span>
+<span class="c">#    Copyright (C) 2014  Diego Angulo                                        #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    This program is free software: you can redistribute it and/or modify    #</span>
+<span class="c">#    it under the terms of the GNU Lesser General Public License as          #</span>
+<span class="c">#    published by  the Free Software Foundation, either version 3 of the     #</span>
+<span class="c">#    License, or (at your option) any later version.                         #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    This program is distributed in the hope that it will be useful,         #</span>
+<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
+<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
+<span class="c">#    GNU Lesser General Public License for more details.                     #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    You should have received a copy of the GNU Lesser General Public License#</span>
+<span class="c">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
+<span class="c">##############################################################################</span>
+
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+
+<span class="kn">import</span> <span class="nn">vtk</span>
+
+<span class="kn">import</span> <span class="nn">braviz</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Diego&#39;</span>
+
+
+<div class="viewcode-block" id="iter_id_list"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.filter_fibers.iter_id_list">[docs]</a><span class="k">def</span> <span class="nf">iter_id_list</span><span class="p">(</span><span class="n">id_list</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Iterate over a vtkIdList</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        id_list (vtkIdList) : Id List</span>
+
+<span class="sd">    Yields:</span>
+<span class="sd">        Point ids</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">id_list</span><span class="o">.</span><span class="n">GetNumberOfIds</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">id_i</span> <span class="o">=</span> <span class="n">id_list</span><span class="o">.</span><span class="n">GetId</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">id_i</span>
+
+</div>
+<div class="viewcode-block" id="abstract_test_lines_in_polyline"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.filter_fibers.abstract_test_lines_in_polyline">[docs]</a><span class="k">def</span> <span class="nf">abstract_test_lines_in_polyline</span><span class="p">(</span><span class="n">fibers</span><span class="p">,</span> <span class="n">predicate</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extract lines where at least one point makes predicate True.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        fibers (vtkPolyData) : Tractography</span>
+<span class="sd">        predicate (function) : Should take point coordinates and return a boolean</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Set of cells where the predicate is True for at least one point</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">valid_fibers</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">fibers</span><span class="o">.</span><span class="n">GetNumberOfCells</span><span class="p">()</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">fibers</span><span class="o">.</span><span class="n">GetNumberOfLines</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">!=</span> <span class="n">l</span><span class="p">:</span>
+        <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Input must be a polydata containing only lines&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Input must be a polydata containing only lines&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_polyline</span><span class="p">(</span><span class="n">cellId</span><span class="p">):</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">cellId</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">fibers</span><span class="o">.</span><span class="n">GetCell</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">pts</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">GetPoints</span><span class="p">()</span>
+        <span class="n">npts</span> <span class="o">=</span> <span class="n">pts</span><span class="o">.</span><span class="n">GetNumberOfPoints</span><span class="p">()</span>
+        <span class="c"># inside=False</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">npts</span><span class="p">):</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">pts</span><span class="o">.</span><span class="n">GetPoint</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">predicate</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+                <span class="c"># inside=True</span>
+                <span class="k">return</span> <span class="bp">True</span>
+            <span class="c"># if not inside:</span>
+        <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">test_polyline</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+            <span class="n">valid_fibers</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">valid_fibers</span>
+
+</div>
+<div class="viewcode-block" id="extract_poly_data_subset"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.filter_fibers.extract_poly_data_subset">[docs]</a><span class="k">def</span> <span class="nf">extract_poly_data_subset</span><span class="p">(</span><span class="n">polydata</span><span class="p">,</span> <span class="n">id_list</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extracts polylines with given ids from polydata</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        polydata (vtkPolyData) : Full polydata</span>
+<span class="sd">        id_list (list) : List of cell ids</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A vtkPolyData containing only the requested cells.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">extract_lines</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkExtractSelectedPolyDataIds</span><span class="p">()</span>
+    <span class="n">cleaner</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkCleanPolyData</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">id_list</span><span class="p">,</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkIdTypeArray</span><span class="p">):</span>
+        <span class="n">id_array</span> <span class="o">=</span> <span class="n">id_list</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">id_array</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkIdTypeArray</span><span class="p">()</span>
+        <span class="n">id_array</span><span class="o">.</span><span class="n">SetNumberOfTuples</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">id_list</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">cell_id</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">id_list</span><span class="p">):</span>
+            <span class="n">id_array</span><span class="o">.</span><span class="n">SetTuple1</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">cell_id</span><span class="p">)</span>
+    <span class="n">selection</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkSelection</span><span class="p">()</span>
+    <span class="n">selection_node</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkSelectionNode</span><span class="p">()</span>
+    <span class="n">selection_node</span><span class="o">.</span><span class="n">GetProperties</span><span class="p">()</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span>
+        <span class="n">vtk</span><span class="o">.</span><span class="n">vtkSelectionNode</span><span class="o">.</span><span class="n">CONTENT_TYPE</span><span class="p">(),</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkSelectionNode</span><span class="o">.</span><span class="n">INDICES</span><span class="p">)</span>
+    <span class="n">selection_node</span><span class="o">.</span><span class="n">GetProperties</span><span class="p">()</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span>
+        <span class="n">vtk</span><span class="o">.</span><span class="n">vtkSelectionNode</span><span class="o">.</span><span class="n">FIELD_TYPE</span><span class="p">(),</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkSelectionNode</span><span class="o">.</span><span class="n">CELL</span><span class="p">)</span>
+    <span class="n">selection</span><span class="o">.</span><span class="n">AddNode</span><span class="p">(</span><span class="n">selection_node</span><span class="p">)</span>
+    <span class="n">selection_node</span><span class="o">.</span><span class="n">SetSelectionList</span><span class="p">(</span><span class="n">id_array</span><span class="p">)</span>
+    <span class="n">extract_lines</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">selection</span><span class="p">)</span>
+    <span class="n">extract_lines</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">polydata</span><span class="p">)</span>
+    <span class="c"># extract_lines.Update()</span>
+    <span class="n">cleaner</span><span class="o">.</span><span class="n">SetInputConnection</span><span class="p">(</span><span class="n">extract_lines</span><span class="o">.</span><span class="n">GetOutputPort</span><span class="p">())</span>
+    <span class="n">cleaner</span><span class="o">.</span><span class="n">PointMergingOff</span><span class="p">()</span>
+    <span class="n">cleaner</span><span class="o">.</span><span class="n">Update</span><span class="p">()</span>
+    <span class="n">fib2</span> <span class="o">=</span> <span class="n">cleaner</span><span class="o">.</span><span class="n">GetOutput</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">fib2</span>
+
+</div>
+<div class="viewcode-block" id="FilterBundleWithSphere"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.filter_fibers.FilterBundleWithSphere">[docs]</a><span class="k">class</span> <span class="nc">FilterBundleWithSphere</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to interactively filter a polydata with a moving sphere</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A class to interactively filter a polydata with a moving sphere</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__full_bundle</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__locator</span> <span class="o">=</span> <span class="bp">None</span>
+
+<div class="viewcode-block" id="FilterBundleWithSphere.set_bundle"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.filter_fibers.FilterBundleWithSphere.set_bundle">[docs]</a>    <span class="k">def</span> <span class="nf">set_bundle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bundle</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the base polydata</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            bundle (vtkPolyData) : base bundle</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__full_bundle</span> <span class="o">=</span> <span class="n">bundle</span>
+        <span class="k">if</span> <span class="n">bundle</span><span class="o">.</span><span class="n">GetNumberOfPoints</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__locator</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkKdTreePointLocator</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__locator</span><span class="o">.</span><span class="n">SetDataSet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__full_bundle</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__locator</span><span class="o">.</span><span class="n">BuildLocator</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__locator</span> <span class="o">=</span> <span class="bp">None</span>
+</div>
+<div class="viewcode-block" id="FilterBundleWithSphere.filter_bundle_with_sphere"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.filter_fibers.FilterBundleWithSphere.filter_bundle_with_sphere">[docs]</a>    <span class="k">def</span> <span class="nf">filter_bundle_with_sphere</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">get_ids</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Filter polydata to keep only the lines which have a point inside a sphere</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            center (tuple) : Sphere center (x,y,z)</span>
+<span class="sd">            radius (float) : Sphere radius</span>
+<span class="sd">            get_ids (bool) : get ids or filtered polydata</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            If get_ids is True the ids of the satisfying cells are returned, otherwise a filtered vtkPolydata is</span>
+<span class="sd">                returned</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__full_bundle</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Set a bundle first&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__locator</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">get_ids</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">set</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__full_bundle</span>
+        <span class="n">id_list</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkIdList</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__locator</span><span class="o">.</span><span class="n">FindPointsWithinRadius</span><span class="p">(</span><span class="n">radius</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">id_list</span><span class="p">)</span>
+        <span class="n">valid_cell_ids</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">pt_id</span> <span class="ow">in</span> <span class="n">iter_id_list</span><span class="p">(</span><span class="n">id_list</span><span class="p">):</span>
+            <span class="n">id_list2</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkIdList</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__full_bundle</span><span class="o">.</span><span class="n">GetPointCells</span><span class="p">(</span><span class="n">pt_id</span><span class="p">,</span> <span class="n">id_list2</span><span class="p">)</span>
+            <span class="n">valid_cell_ids</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">iter_id_list</span><span class="p">(</span><span class="n">id_list2</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">get_ids</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">valid_cell_ids</span>
+        <span class="n">out_pd</span> <span class="o">=</span> <span class="n">extract_poly_data_subset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__full_bundle</span><span class="p">,</span> <span class="n">valid_cell_ids</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">out_pd</span>
+
+</div></div>
+<div class="viewcode-block" id="filterPolylinesWithModel"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.filter_fibers.filterPolylinesWithModel">[docs]</a><span class="k">def</span> <span class="nf">filterPolylinesWithModel</span><span class="p">(</span><span class="n">fibers</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;filters a polyline, keeps only the lines that cross a model</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        fibers (vtkPolyData) : Tractography</span>
+<span class="sd">        model (vtkPolyData) : Structure model (closed surface)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Set of polyline ids where the line goes through the model</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">selector</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkSelectEnclosedPoints</span><span class="p">()</span>
+    <span class="n">selector</span><span class="o">.</span><span class="n">Initialize</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_point_inside_model</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">selector</span><span class="o">.</span><span class="n">IsInsideSurface</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="n">valid_fibers</span> <span class="o">=</span> <span class="n">abstract_test_lines_in_polyline</span><span class="p">(</span>
+        <span class="n">fibers</span><span class="p">,</span> <span class="n">test_point_inside_model</span><span class="p">)</span>
+    <span class="n">selector</span><span class="o">.</span><span class="n">Complete</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">valid_fibers</span>
+
+</div>
+<div class="viewcode-block" id="filter_polylines_with_img_slow"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.filter_fibers.filter_polylines_with_img_slow">[docs]</a><span class="k">def</span> <span class="nf">filter_polylines_with_img_slow</span><span class="p">(</span><span class="n">polydata</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Slow version of :func:`filter_polylines_with_img`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">affine</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">get_affine</span><span class="p">()</span>
+    <span class="n">i_affine</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">affine</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_point_in_img</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+        <span class="n">n_p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+        <span class="n">n_p</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span>
+        <span class="n">coords_h</span> <span class="o">=</span> <span class="n">i_affine</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">n_p</span><span class="p">)</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="n">coords_h</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">/</span> <span class="n">coords_h</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">coords_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">coords_i</span><span class="p">)]</span>
+        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span> <span class="n">v</span> <span class="o">==</span> <span class="n">label</span>
+    <span class="n">valid_fibers</span> <span class="o">=</span> <span class="n">abstract_test_lines_in_polyline</span><span class="p">(</span><span class="n">polydata</span><span class="p">,</span> <span class="n">test_point_in_img</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">valid_fibers</span>
+
+</div>
+<div class="viewcode-block" id="filter_polylines_with_img"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.filter_fibers.filter_polylines_with_img">[docs]</a><span class="k">def</span> <span class="nf">filter_polylines_with_img</span><span class="p">(</span><span class="n">polydata</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Filter polydata based on labels found in an image.</span>
+
+<span class="sd">    For each point in the polyline the function finds the corresponding label in the image. Only lines where at least</span>
+<span class="sd">    one point has the requested label are left in the output set.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        polydata (vtkPolyData) : Full tractography polydata</span>
+<span class="sd">        img (nibabel.spatialimages.SpatialImage) : Label map, should be in same coordinate system as polydata</span>
+<span class="sd">        label (int) : Label of interest</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Set of CellIds where at least one point gets the requested label</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">affine</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">get_affine</span><span class="p">()</span>
+    <span class="n">i_affine</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">affine</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_poly_line</span><span class="p">(</span><span class="n">cell</span><span class="p">):</span>
+        <span class="n">pts</span> <span class="o">=</span> <span class="n">cell</span><span class="o">.</span><span class="n">GetPoints</span><span class="p">()</span>
+        <span class="n">n_pts</span> <span class="o">=</span> <span class="n">pts</span><span class="o">.</span><span class="n">GetNumberOfPoints</span><span class="p">()</span>
+        <span class="n">points_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n_pts</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n_pts</span><span class="p">):</span>
+            <span class="n">points_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">pts</span><span class="o">.</span><span class="n">GetPoint</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">coords_h</span> <span class="o">=</span> <span class="n">i_affine</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">points_array</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="n">coords_h</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">divisors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">coords_h</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">:],</span> <span class="mi">3</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="n">coords</span> <span class="o">/</span> <span class="n">divisors</span>
+        <span class="n">coords_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+        <span class="c"># interpolates, too slow</span>
+        <span class="n">vals</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">coords_i</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">coords_i</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">coords_i</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]]</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">vals</span> <span class="o">==</span> <span class="n">label</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">polydata</span><span class="o">.</span><span class="n">GetNumberOfCells</span><span class="p">()</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">polydata</span><span class="o">.</span><span class="n">GetNumberOfLines</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">!=</span> <span class="n">l</span><span class="p">:</span>
+        <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Input must be a polydata containing only lines&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Input must be a polydata containing only lines&quot;</span><span class="p">)</span>
+    <span class="n">valid_fibers</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span>
+        <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">if</span> <span class="n">test_poly_line</span><span class="p">(</span><span class="n">polydata</span><span class="o">.</span><span class="n">GetCell</span><span class="p">(</span><span class="n">i</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">valid_fibers</span>
+
+</div>
+<div class="viewcode-block" id="filter_polylines_by_scalar"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.filter_fibers.filter_polylines_by_scalar">[docs]</a><span class="k">def</span> <span class="nf">filter_polylines_by_scalar</span><span class="p">(</span><span class="n">fibs</span><span class="p">,</span> <span class="n">scalar</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Finds lines where at least one point has a scalar value in the range (scalar -0.5, scalar + 0.5)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        fibs (vtkPolyData) : Full polydata with scalar data</span>
+<span class="sd">        scalar (float) : scalar value to look for</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Cell ids where at least one point has a scalar in the range (scalar -0.5, scalar + 0.5)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">selection</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkSelection</span><span class="p">()</span>
+    <span class="n">selection_node</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkSelectionNode</span><span class="p">()</span>
+    <span class="n">selection_node</span><span class="o">.</span><span class="n">GetProperties</span><span class="p">()</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span>
+        <span class="n">vtk</span><span class="o">.</span><span class="n">vtkSelectionNode</span><span class="o">.</span><span class="n">CONTENT_TYPE</span><span class="p">(),</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkSelectionNode</span><span class="o">.</span><span class="n">THRESHOLDS</span><span class="p">)</span>
+    <span class="n">selection_node</span><span class="o">.</span><span class="n">GetProperties</span><span class="p">()</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span>
+        <span class="n">vtk</span><span class="o">.</span><span class="n">vtkSelectionNode</span><span class="o">.</span><span class="n">FIELD_TYPE</span><span class="p">(),</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkSelectionNode</span><span class="o">.</span><span class="n">POINT</span><span class="p">)</span>
+    <span class="n">selection</span><span class="o">.</span><span class="n">AddNode</span><span class="p">(</span><span class="n">selection_node</span><span class="p">)</span>
+
+    <span class="n">array</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkDoubleArray</span><span class="p">()</span>
+    <span class="n">array</span><span class="o">.</span><span class="n">SetNumberOfComponents</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">array</span><span class="o">.</span><span class="n">InsertNextValue</span><span class="p">(</span><span class="n">scalar</span> <span class="o">-</span> <span class="o">.</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">array</span><span class="o">.</span><span class="n">InsertNextValue</span><span class="p">(</span><span class="n">scalar</span> <span class="o">+</span> <span class="o">.</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">selection_node</span><span class="o">.</span><span class="n">SetSelectionList</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+    <span class="n">extract_lines</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkExtractSelection</span><span class="p">()</span>
+    <span class="n">extract_lines</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">selection</span><span class="p">)</span>
+    <span class="n">extract_lines</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">fibs</span><span class="p">)</span>
+    <span class="n">extract_lines</span><span class="o">.</span><span class="n">PreserveTopologyOff</span><span class="p">()</span>
+    <span class="n">extract_lines</span><span class="o">.</span><span class="n">Update</span><span class="p">()</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">extract_lines</span><span class="o">.</span><span class="n">GetOutput</span><span class="p">()</span>
+    <span class="n">out_ids</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">GetPointData</span><span class="p">()</span><span class="o">.</span><span class="n">GetScalars</span><span class="p">(</span><span class="s">&quot;vtkOriginalPointIds&quot;</span><span class="p">)</span>
+
+    <span class="n">valid_cell_ids</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">out_ids</span><span class="o">.</span><span class="n">GetNumberOfTuples</span><span class="p">()):</span>
+        <span class="n">pt_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">out_ids</span><span class="o">.</span><span class="n">GetTuple</span><span class="p">(</span><span class="n">i</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">id_list2</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkIdList</span><span class="p">()</span>
+        <span class="n">fibs</span><span class="o">.</span><span class="n">GetPointCells</span><span class="p">(</span><span class="n">pt_id</span><span class="p">,</span> <span class="n">id_list2</span><span class="p">)</span>
+        <span class="n">valid_cell_ids</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">iter_id_list</span><span class="p">(</span><span class="n">id_list2</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">valid_cell_ids</span>
+</div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">braviz.visualization.simple_vtk</span> <span class="kn">import</span> <span class="n">SimpleVtkViewer</span>
+    <span class="kn">from</span> <span class="nn">braviz.readAndFilter.config_file</span> <span class="kn">import</span> <span class="n">get_apps_config</span>
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">get_apps_config</span><span class="p">()</span>
+    <span class="n">subj</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get_default_subject</span><span class="p">()</span>
+    <span class="n">reader</span> <span class="o">=</span> <span class="n">braviz</span><span class="o">.</span><span class="n">readAndFilter</span><span class="o">.</span><span class="n">BravizAutoReader</span><span class="p">()</span>
+    <span class="n">fibers</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;fibers&quot;</span><span class="p">,</span> <span class="n">subj</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">ctr</span> <span class="o">=</span> <span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="o">-</span><span class="mi">43</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+    <span class="n">test_filter</span> <span class="o">=</span> <span class="n">FilterBundleWithSphere</span><span class="p">()</span>
+    <span class="n">test_filter</span><span class="o">.</span><span class="n">set_bundle</span><span class="p">(</span><span class="n">fibers</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">test_filter</span><span class="o">.</span><span class="n">filter_bundle_with_sphere</span><span class="p">(</span><span class="n">ctr</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+    <span class="n">viewer</span> <span class="o">=</span> <span class="n">SimpleVtkViewer</span><span class="p">()</span>
+    <span class="n">viewer</span><span class="o">.</span><span class="n">addPolyData</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+    <span class="n">viewer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="boundingBoxIntesection"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.filter_fibers.boundingBoxIntesection">[docs]</a><span class="k">def</span> <span class="nf">boundingBoxIntesection</span><span class="p">(</span><span class="n">box1</span><span class="p">,</span> <span class="n">box2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;test if two bounding boxes intersect</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        box1 (list) : Bounding box [x0, x1, y0, y1, z0, z1]</span>
+<span class="sd">        box2 (list) : Bounding box [x0, x1, y0, y1, z0, z1]</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ``True`` if the bounding boxes intersect, ``False`` otherwise</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># Test intersection in three axis</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="c"># 2----[1]------2------1</span>
+        <span class="c"># 1-----[2]-----1------2</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">box2</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">box1</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">box2</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span>
+                <span class="n">box1</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">box2</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">box1</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]):</span>
+            <span class="c"># 2----[1]-----1-------2</span>
+            <span class="c"># 1-----[2]-----2-------1</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c"># Must intersect in all axis</span>
+            <span class="k">return</span> <span class="bp">False</span>
+    <span class="k">return</span> <span class="bp">True</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+                
+
+                
+
+                
+
+          
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

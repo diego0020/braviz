@@ -1,0 +1,501 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>braviz.interaction.qt_structures_model &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.3b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="top" title="Braviz Documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body role="document">
+    
+    <div class="header-wrapper">
+      <div class="header">
+          <p class="logo"><a href="../../../index.html">
+            <img class="logo" src="../../../_static/Logo_Bravis_h.png" alt="Logo"/>
+          </a></p>
+          <!--
+        <div class="headertitle"><a
+          href="../../../index.html"> Documentation </a></div>
+          -->
+          <nav class="parents">
+              <ol>
+        <li><a href="../../../index.html"> Home </a> &raquo;</li>
+          <li><a href="../../index.html"  accesskey="U"  >Module code</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/Logo_Bravis_h.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for braviz.interaction.qt_structures_model</h1><div class="highlight"><pre>
+<span class="c">##############################################################################</span>
+<span class="c">#    Braviz, Brain Data interactive visualization                            #</span>
+<span class="c">#    Copyright (C) 2014  Diego Angulo                                        #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    This program is free software: you can redistribute it and/or modify    #</span>
+<span class="c">#    it under the terms of the GNU Lesser General Public License as          #</span>
+<span class="c">#    published by  the Free Software Foundation, either version 3 of the     #</span>
+<span class="c">#    License, or (at your option) any later version.                         #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    This program is distributed in the hope that it will be useful,         #</span>
+<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
+<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
+<span class="c">#    GNU Lesser General Public License for more details.                     #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    You should have received a copy of the GNU Lesser General Public License#</span>
+<span class="c">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
+<span class="c">##############################################################################</span>
+
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Diego&#39;</span>
+
+<span class="kn">import</span> <span class="nn">PyQt4.QtCore</span> <span class="kn">as</span> <span class="nn">QtCore</span>
+<span class="kn">from</span> <span class="nn">PyQt4.QtCore</span> <span class="kn">import</span> <span class="n">QAbstractItemModel</span>
+<span class="kn">from</span> <span class="nn">braviz.readAndFilter.link_with_rdf</span> <span class="kn">import</span> <span class="n">cached_get_free_surfer_dict</span>
+<span class="kn">from</span> <span class="nn">braviz.interaction.structural_hierarchy</span> <span class="kn">import</span> <span class="n">get_structural_hierarchy_with_names</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+
+<div class="viewcode-block" id="StructureTreeNode"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.qt_structures_model.StructureTreeNode">[docs]</a><span class="k">class</span> <span class="nc">StructureTreeNode</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Node for the freesurfer structures tree</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        parent (braviz.interaction.qt_structures_model.StructureTreeNode) : Reference to the parent node</span>
+<span class="sd">        name (str) : Name of this node</span>
+<span class="sd">        son_number (int) : How many siblings are before this node</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">son_number</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent_id</span> <span class="o">=</span> <span class="nb">id</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tooltip</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checked</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Unchecked</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">leaf_name</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">son_number</span> <span class="o">=</span> <span class="n">son_number</span>
+
+<div class="viewcode-block" id="StructureTreeNode.is_leaf"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.qt_structures_model.StructureTreeNode.is_leaf">[docs]</a>    <span class="k">def</span> <span class="nf">is_leaf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns ``True`` if this node is a leaf</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+</div>
+<div class="viewcode-block" id="StructureTreeNode.add_child"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.qt_structures_model.StructureTreeNode.add_child">[docs]</a>    <span class="k">def</span> <span class="nf">add_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a child to this node</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str) : Name for the child node</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">child</span> <span class="o">=</span> <span class="n">StructureTreeNode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">child</span>
+</div>
+<div class="viewcode-block" id="StructureTreeNode.check_and_update_tree"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.qt_structures_model.StructureTreeNode.check_and_update_tree">[docs]</a>    <span class="k">def</span> <span class="nf">check_and_update_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a checkmark to this node</span>
+
+<span class="sd">        If it has childs, they are also checked (recursively)</span>
+<span class="sd">        Predecessor boxes are also updated</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__check_and_propagate_down</span><span class="p">(</span><span class="n">check</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__propagate_up</span><span class="p">()</span>
+</div>
+    <span class="k">def</span> <span class="nf">__propagate_up</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">__update_from_children</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__check_and_propagate_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checked</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Checked</span> <span class="k">if</span> <span class="n">check</span> <span class="ow">is</span> <span class="bp">True</span> <span class="k">else</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Unchecked</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+            <span class="n">k</span><span class="o">.</span><span class="n">__check_and_propagate_down</span><span class="p">(</span><span class="n">check</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__update_from_children</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c">#self.name += &quot;*&quot;</span>
+        <span class="n">previus_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">checked</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">found_checked</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">found_unchecked</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="n">k</span><span class="o">.</span><span class="n">checked</span>
+            <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Checked</span><span class="p">:</span>
+                <span class="n">found_checked</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Unchecked</span><span class="p">:</span>
+                <span class="n">found_unchecked</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">state</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">PartiallyChecked</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">found_checked</span> <span class="ow">and</span> <span class="n">found_unchecked</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">checked</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">PartiallyChecked</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">checked</span> <span class="o">!=</span> <span class="n">previus_state</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__propagate_up</span><span class="p">()</span>
+                <span class="k">return</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">found_unchecked</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">checked</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Checked</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">checked</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Unchecked</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">checked</span> <span class="o">!=</span> <span class="n">previus_state</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__propagate_up</span><span class="p">()</span>
+
+<div class="viewcode-block" id="StructureTreeNode.delete_children"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.qt_structures_model.StructureTreeNode.delete_children">[docs]</a>    <span class="k">def</span> <span class="nf">delete_children</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete all children from this node</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+            <span class="n">i</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="n">i</span><span class="o">.</span><span class="n">delete_children</span><span class="p">()</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span>
+</div>
+<div class="viewcode-block" id="StructureTreeNode.get_leaf_names"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.qt_structures_model.StructureTreeNode.get_leaf_names">[docs]</a>    <span class="k">def</span> <span class="nf">get_leaf_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get names of leafs that are under the current node</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+            <span class="k">return</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">leaf_name</span><span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">set</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">get_leaf_names</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">))</span>
+
+</div></div>
+<div class="viewcode-block" id="StructureTreeModel"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.qt_structures_model.StructureTreeModel">[docs]</a><span class="k">class</span> <span class="nc">StructureTreeModel</span><span class="p">(</span><span class="n">QAbstractItemModel</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A tree of freesurfer segmented structures</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        reader (braviz.readAndFilter.base_reader.BaseReader) : A reader from which to get available models</span>
+<span class="sd">        subj : Id of a subject to use as reference for getting available models</span>
+<span class="sd">        dominant (bool) : If ``False`` the tree will have left and right hemispheres, otherwise it will</span>
+<span class="sd">            have dominant and non-dominant hemispheres</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">selection_changed</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reader</span><span class="p">,</span> <span class="n">subj</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">dominant</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">StructureTreeModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">reader</span> <span class="o">=</span> <span class="n">reader</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pretty_names</span> <span class="o">=</span> <span class="n">cached_get_free_surfer_dict</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hierarchy</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__id_index</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__root</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">leaf_ids</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">leaf_inverse_ids</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optimistic_reload_hierarchy</span><span class="p">(</span><span class="n">dominant</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">subj</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">subj</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;ids&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subj</span> <span class="o">=</span> <span class="n">subj</span>
+
+<div class="viewcode-block" id="StructureTreeModel.optimistic_reload_hierarchy"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.qt_structures_model.StructureTreeModel.optimistic_reload_hierarchy">[docs]</a>    <span class="k">def</span> <span class="nf">optimistic_reload_hierarchy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dominant</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Rebuilds the tree from the models of the first subject with models</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dominant (bool) : If ``False`` the tree will have left and right hemispheres, otherwise it will</span>
+<span class="sd">                have dominant and non-dominant hemispheres</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">braviz.readAndFilter</span> <span class="kn">import</span> <span class="n">config_file</span>
+        <span class="n">possibles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;ids&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">favorite</span> <span class="o">=</span> <span class="n">config_file</span><span class="o">.</span><span class="n">get_apps_config</span><span class="p">()</span><span class="o">.</span><span class="n">get_default_subject</span><span class="p">()</span>
+        <span class="n">possibles</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">favorite</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">subj</span> <span class="ow">in</span> <span class="n">possibles</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">reload_hierarchy</span><span class="p">(</span><span class="n">subj</span><span class="p">,</span> <span class="n">dominant</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">hierarchy</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hierarchy</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Couldnt build structures index&quot;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="StructureTreeModel.reload_hierarchy"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.qt_structures_model.StructureTreeModel.reload_hierarchy">[docs]</a>    <span class="k">def</span> <span class="nf">reload_hierarchy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subj</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">dominant</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reload tree based on a specific subject</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            subj : Subject to load available models from</span>
+<span class="sd">            dominant (bool) : If ``False`` the tree will have left and right hemispheres, otherwise it will</span>
+<span class="sd">                have dominant and non-dominant hemispheres</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">subj</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">subj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;ids&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;reloading hierarchy&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">leaf_ids</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__id_index</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__root</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__root</span><span class="o">.</span><span class="n">delete_children</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__root</span> <span class="o">=</span> <span class="n">StructureTreeNode</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="s">&quot;root&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">dominant</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hierarchy</span> <span class="o">=</span> <span class="n">get_structural_hierarchy_with_names</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hierarchy</span> <span class="o">=</span> <span class="n">get_structural_hierarchy_with_names</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__root</span> <span class="o">=</span> <span class="n">StructureTreeNode</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="s">&quot;root&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__id_index</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__root</span><span class="p">)]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__root</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__load_sub_tree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__root</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hierarchy</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modelReset</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+</div>
+    <span class="k">def</span> <span class="nf">__load_sub_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub_root</span><span class="p">,</span> <span class="n">hierarchy_dict</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">hierarchy_dict</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">new_node</span> <span class="o">=</span> <span class="n">sub_root</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+            <span class="n">new_node_id</span> <span class="o">=</span> <span class="nb">id</span><span class="p">(</span><span class="n">new_node</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__id_index</span><span class="p">[</span><span class="n">new_node_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_node</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__load_sub_tree</span><span class="p">(</span><span class="n">new_node</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c"># is a leaf</span>
+                <span class="n">new_node</span><span class="o">.</span><span class="n">leaf_name</span> <span class="o">=</span> <span class="n">v</span>
+                <span class="n">new_node</span><span class="o">.</span><span class="n">tooltip</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pretty_names</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">leaf_ids</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">new_node_id</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">leaf_inverse_ids</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">set</span><span class="p">())</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">new_node_id</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">parent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">QModelIndex</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">QModelIndex</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="n">nid</span> <span class="o">=</span> <span class="n">QModelIndex</span><span class="o">.</span><span class="n">internalId</span><span class="p">()</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_index</span><span class="p">[</span><span class="n">nid</span><span class="p">]</span>
+            <span class="n">parent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span>
+            <span class="k">if</span> <span class="n">parent</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="c"># root node</span>
+                <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QModelIndex</span><span class="p">()</span>
+            <span class="c"># print &quot;parent of %s is %s&quot;%(node.name,parent.name)</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_node_index</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">index</span>
+
+        <span class="k">assert</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="nf">rowCount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">QModelIndex_parent</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">QModelIndex_parent</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="n">nid</span> <span class="o">=</span> <span class="n">QModelIndex_parent</span><span class="o">.</span><span class="n">internalId</span><span class="p">()</span>
+            <span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_index</span><span class="p">[</span><span class="n">nid</span><span class="p">]</span>
+            <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent</span><span class="o">.</span><span class="n">children</span><span class="p">)</span>
+        <span class="c"># Start at second level</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__root</span><span class="o">.</span><span class="n">children</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">columnCount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">QModelIndex_parent</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">QModelIndex</span><span class="p">,</span> <span class="n">int_role</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+
+        <span class="n">nid</span> <span class="o">=</span> <span class="n">QModelIndex</span><span class="o">.</span><span class="n">internalId</span><span class="p">()</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">QModelIndex</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_index</span><span class="p">[</span><span class="n">nid</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="n">node</span><span class="o">.</span><span class="n">son_number</span> <span class="o">==</span> <span class="n">row</span>
+        <span class="c"># print &quot;data&quot;, node.name</span>
+        <span class="k">if</span> <span class="n">int_role</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">elif</span> <span class="n">int_role</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ToolTipRole</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="n">tooltip</span>
+        <span class="k">elif</span> <span class="n">int_role</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">CheckStateRole</span><span class="p">:</span>
+            <span class="c"># print node.name, node.checked</span>
+            <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="n">checked</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p_int</span><span class="p">,</span> <span class="n">p_int_1</span><span class="p">,</span> <span class="n">QModelIndex_parent</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">QModelIndex_parent</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="n">nid</span> <span class="o">=</span> <span class="n">QModelIndex_parent</span><span class="o">.</span><span class="n">internalId</span><span class="p">()</span>
+            <span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_index</span><span class="p">[</span><span class="n">nid</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">p_int_1</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">p_int</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent</span><span class="o">.</span><span class="n">children</span><span class="p">):</span>
+                    <span class="n">child</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="n">p_int</span><span class="p">]</span>
+                    <span class="c"># print &quot;index&quot;, child.name</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_node_index</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="n">index</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c"># asking for root nodes</span>
+            <span class="n">meta_root</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__root</span>
+            <span class="k">if</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">p_int</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">meta_root</span><span class="o">.</span><span class="n">children</span><span class="p">))</span> <span class="ow">and</span> <span class="p">(</span><span class="n">p_int_1</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+                <span class="n">root</span> <span class="o">=</span> <span class="n">meta_root</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="n">p_int</span><span class="p">]</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_node_index</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">index</span>
+
+    <span class="k">def</span> <span class="nf">hasChildren</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">QModelIndex_parent</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">QModelIndex_parent</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="n">nid</span> <span class="o">=</span> <span class="n">QModelIndex_parent</span><span class="o">.</span><span class="n">internalId</span><span class="p">()</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_index</span><span class="p">[</span><span class="n">nid</span><span class="p">]</span>
+            <span class="k">return</span> <span class="ow">not</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="nf">setData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">QModelIndex</span><span class="p">,</span> <span class="n">QVariant</span><span class="p">,</span> <span class="n">int_role</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">int_role</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">CheckStateRole</span><span class="p">:</span>
+            <span class="n">nid</span> <span class="o">=</span> <span class="n">QModelIndex</span><span class="o">.</span><span class="n">internalId</span><span class="p">()</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_index</span><span class="p">[</span><span class="n">nid</span><span class="p">]</span>
+            <span class="k">assert</span> <span class="n">node</span><span class="o">.</span><span class="n">son_number</span> <span class="o">==</span> <span class="n">QModelIndex</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
+            <span class="n">check</span> <span class="o">=</span> <span class="n">QVariant</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Checked</span>
+            <span class="n">leaf_names</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">get_leaf_names</span><span class="p">()</span>
+            <span class="n">leaf_ids</span> <span class="o">=</span> <span class="nb">set</span><span class="o">.</span><span class="n">union</span><span class="p">(</span>
+                <span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">leaf_inverse_ids</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nb">set</span><span class="p">())</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">leaf_names</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">n_i</span> <span class="ow">in</span> <span class="n">leaf_ids</span><span class="p">:</span>
+                <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_index</span><span class="p">[</span><span class="n">n_i</span><span class="p">]</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">check_and_update_tree</span><span class="p">(</span><span class="n">check</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__notify_parents</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">QModelIndex</span><span class="p">,</span> <span class="n">QModelIndex</span><span class="p">)</span>
+            <span class="c">#self.dataChanged.emit(QtCore.QModelIndex(), QtCore.QModelIndex())</span>
+            <span class="c"># print &quot;signaling&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span>
+                <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&quot;DataChanged(QModelIndex,QModelIndex)&quot;</span><span class="p">),</span> <span class="n">QModelIndex</span><span class="p">,</span> <span class="n">QModelIndex</span><span class="p">)</span>
+            <span class="c"># parents</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__notify_parents</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__notify_children</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">selection_changed</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="k">def</span> <span class="nf">__notify_parents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="n">parent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span>
+        <span class="k">if</span> <span class="n">parent</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_node_index</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="c"># print &quot;notifying&quot;, parent.name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span>
+            <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&quot;DataChanged(QModelIndex,QModelIndex)&quot;</span><span class="p">),</span> <span class="n">index</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__notify_parents</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__notify_children</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+            <span class="k">return</span>
+        <span class="n">first_children</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">last_children</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">first_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_node_index</span><span class="p">(</span><span class="n">first_children</span><span class="p">)</span>
+        <span class="n">last_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_node_index</span><span class="p">(</span><span class="n">last_children</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span>
+            <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&quot;DataChanged(QModelIndex,QModelIndex)&quot;</span><span class="p">),</span> <span class="n">first_index</span><span class="p">,</span> <span class="n">last_index</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">flags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">QModelIndex</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">QModelIndex</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="n">flags</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsSelectable</span> <span class="o">|</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsEnabled</span> <span class="o">|</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsUserCheckable</span>
+            <span class="k">return</span> <span class="n">flags</span>
+        <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoItemFlags</span>
+
+    <span class="k">def</span> <span class="nf">__get_node_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createIndex</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">son_number</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">node</span><span class="p">))</span>
+        <span class="k">assert</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">index</span>
+
+<div class="viewcode-block" id="StructureTreeModel.get_selected_structures"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.qt_structures_model.StructureTreeModel.get_selected_structures">[docs]</a>    <span class="k">def</span> <span class="nf">get_selected_structures</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get a list of currently checked structures</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">selected_leaf_names</span> <span class="o">=</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">__id_index</span><span class="p">[</span><span class="n">leaf</span><span class="p">]</span><span class="o">.</span><span class="n">leaf_name</span> <span class="k">for</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">leaf_ids</span> <span class="k">if</span>
+                               <span class="bp">self</span><span class="o">.</span><span class="n">__id_index</span><span class="p">[</span><span class="n">leaf</span><span class="p">]</span><span class="o">.</span><span class="n">checked</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Checked</span><span class="p">}</span>
+        <span class="c"># print &quot;selected leafs names&quot;,selected_leaf_names</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">selected_leaf_names</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="StructureTreeModel.set_selected_structures"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.qt_structures_model.StructureTreeModel.set_selected_structures">[docs]</a>    <span class="k">def</span> <span class="nf">set_selected_structures</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selected_list</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Selects the structures given in a list</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            selected_list (list) : New set of selected structures&#39; names</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">leaf_ids</span><span class="p">:</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_index</span><span class="p">[</span><span class="n">leaf</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">leaf_name</span> <span class="ow">in</span> <span class="n">selected_list</span><span class="p">:</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">check_and_update_tree</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">check_and_update_tree</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selection_changed</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modelReset</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+                
+
+                
+
+                
+
+          
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

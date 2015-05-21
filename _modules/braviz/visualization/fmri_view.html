@@ -1,0 +1,432 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>braviz.visualization.fmri_view &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.3b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="top" title="Braviz Documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body role="document">
+    
+    <div class="header-wrapper">
+      <div class="header">
+          <p class="logo"><a href="../../../index.html">
+            <img class="logo" src="../../../_static/Logo_Bravis_h.png" alt="Logo"/>
+          </a></p>
+          <!--
+        <div class="headertitle"><a
+          href="../../../index.html"> Documentation </a></div>
+          -->
+          <nav class="parents">
+              <ol>
+        <li><a href="../../../index.html"> Home </a> &raquo;</li>
+          <li><a href="../../index.html"  accesskey="U"  >Module code</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/Logo_Bravis_h.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for braviz.visualization.fmri_view</h1><div class="highlight"><pre>
+<span class="c">##############################################################################</span>
+<span class="c">#    Braviz, Brain Data interactive visualization                            #</span>
+<span class="c">#    Copyright (C) 2014  Diego Angulo                                        #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    This program is free software: you can redistribute it and/or modify    #</span>
+<span class="c">#    it under the terms of the GNU Lesser General Public License as          #</span>
+<span class="c">#    published by  the Free Software Foundation, either version 3 of the     #</span>
+<span class="c">#    License, or (at your option) any later version.                         #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    This program is distributed in the hope that it will be useful,         #</span>
+<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
+<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
+<span class="c">#    GNU Lesser General Public License for more details.                     #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    You should have received a copy of the GNU Lesser General Public License#</span>
+<span class="c">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
+<span class="c">##############################################################################</span>
+
+
+<span class="sd">&quot;&quot;&quot;Contains utilities for displaying fMRI images&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+
+<span class="kn">import</span> <span class="nn">vtk</span>
+<span class="kn">from</span> <span class="nn">braviz.readAndFilter.cache</span> <span class="kn">import</span> <span class="n">memoize</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Diego&#39;</span>
+
+
+<span class="k">class</span> <span class="nc">blend_fmri_and_mri</span><span class="p">(</span><span class="n">vtk</span><span class="o">.</span><span class="n">vtkImageBlend</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class that blends an fMRI t-score map with a MRI image</span>
+
+<span class="sd">    .. deprecated:: 3.0b</span>
+<span class="sd">        Use :class:`fMRI_blender` instead</span>
+
+<span class="sd">    Use methods *GetOutput* and *GetOutputPort* to extract the output</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fmri_img</span><span class="p">,</span> <span class="n">mri_img</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">alfa</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a blend object</span>
+
+<span class="sd">        If alfa is ``True`` the opacity function will look like a &quot;v&quot;, being zero at zero, and one at plus and</span>
+<span class="sd">        minus threshold.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fmri_img (vtkImageData) : t-score image</span>
+<span class="sd">            mri_img (vtkImageData) : Structural image</span>
+<span class="sd">            window (float) : Window for structural image</span>
+<span class="sd">            level (float) : level for structural image</span>
+<span class="sd">            alfa (bool) : If True colors of t-score map will fade below *threshold*</span>
+<span class="sd">            threshold (float) : Value at which colors start to fade (invisible at zero)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">fmri_mapper</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkImageMapToColors</span><span class="p">()</span>
+        <span class="n">fmri_mapper</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="n">fmri_img</span><span class="p">)</span>
+        <span class="n">fmri_lut</span> <span class="o">=</span> <span class="n">get_fmri_lut</span><span class="p">(</span><span class="n">alfa</span><span class="p">,</span> <span class="n">threshold</span><span class="p">)</span>
+        <span class="n">fmri_mapper</span><span class="o">.</span><span class="n">SetLookupTable</span><span class="p">(</span><span class="n">fmri_lut</span><span class="p">)</span>
+
+        <span class="n">mri_mapper</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkImageMapToWindowLevelColors</span><span class="p">()</span>
+        <span class="n">mri_mapper</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="n">mri_img</span><span class="p">)</span>
+        <span class="n">mri_lut</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkWindowLevelLookupTable</span><span class="p">()</span>
+        <span class="n">mri_lut</span><span class="o">.</span><span class="n">Build</span><span class="p">()</span>
+        <span class="n">mri_mapper</span><span class="o">.</span><span class="n">SetLookupTable</span><span class="p">(</span><span class="n">mri_lut</span><span class="p">)</span>
+
+        <span class="n">mri_lut</span><span class="o">.</span><span class="n">SetWindow</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+        <span class="n">mri_lut</span><span class="o">.</span><span class="n">SetLevel</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">alfa</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">AddInputConnection</span><span class="p">(</span><span class="n">mri_mapper</span><span class="o">.</span><span class="n">GetOutputPort</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">AddInputConnection</span><span class="p">(</span><span class="n">fmri_mapper</span><span class="o">.</span><span class="n">GetOutputPort</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">SetOpacity</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">SetOpacity</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">AddInputConnection</span><span class="p">(</span><span class="n">fmri_mapper</span><span class="o">.</span><span class="n">GetOutputPort</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">AddInputConnection</span><span class="p">(</span><span class="n">mri_mapper</span><span class="o">.</span><span class="n">GetOutputPort</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">SetOpacity</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">SetOpacity</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Update</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fmri_lut</span> <span class="o">=</span> <span class="n">fmri_lut</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fmri_mapper</span> <span class="o">=</span> <span class="n">fmri_mapper</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mri_mapper</span> <span class="o">=</span> <span class="n">mri_mapper</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mri_lut</span> <span class="o">=</span> <span class="n">mri_lut</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alfa</span> <span class="o">=</span> <span class="n">alfa</span>
+
+    <span class="k">def</span> <span class="nf">change_imgs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mri_img</span><span class="p">,</span> <span class="n">fmri_img</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set new MRI and fMRI images</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mri_img (vtkImageData) : Structural image data</span>
+<span class="sd">            fmri_img (vtkImageData) : fMRI t-score image</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fmri_mapper</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="n">fmri_img</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mri_mapper</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="n">mri_img</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Update</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">change_threshold</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Change the threshold for displaying the fMRI scores</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            threshold (float) : Minimum magnitude at which the values are displayed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fmri_lut</span> <span class="o">=</span> <span class="n">get_fmri_lut</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alfa</span><span class="p">,</span> <span class="n">threshold</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fmri_mapper</span><span class="o">.</span><span class="n">SetLookupTable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fmri_lut</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Update</span><span class="p">()</span>
+
+<span class="c"># Usually the same function will be used throughout the application</span>
+
+
+<span class="nd">@memoize</span>
+<div class="viewcode-block" id="get_fmri_lut"><a class="viewcode-back" href="../../../library/fmri_view.html#braviz.visualization.fmri_view.get_fmri_lut">[docs]</a><span class="k">def</span> <span class="nf">get_fmri_lut</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_pts</span><span class="o">=</span><span class="mi">200</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns a standard look up table for fMRI data</span>
+
+<span class="sd">    If alpha is True, the opacity of the colors below the threshold will be less than one,</span>
+<span class="sd">    more precisely, the opacity will be a ramp from 0 to 1 between 0 and the threshold</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        alpha (bool) : If True use a lookup table</span>
+<span class="sd">        threshold (float) : Value at which color starts to fade (lower opacity) if alpha is True</span>
+<span class="sd">            minimum value shown</span>
+<span class="sd">        n_pts (int) : Number of points for the lookup table</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        vtkLookuptable</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">color_interpolator</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkColorTransferFunction</span><span class="p">()</span>
+    <span class="n">color_interpolator</span><span class="o">.</span><span class="n">ClampingOn</span><span class="p">()</span>
+    <span class="n">color_interpolator</span><span class="o">.</span><span class="n">SetColorSpaceToLab</span><span class="p">()</span>
+    <span class="n">color_interpolator</span><span class="o">.</span><span class="n">SetRange</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+    <span class="n">color_interpolator</span><span class="o">.</span><span class="n">Build</span><span class="p">()</span>
+    <span class="c">#                                x   ,r   ,g   , b</span>
+    <span class="n">color_interpolator</span><span class="o">.</span><span class="n">AddRGBPoint</span><span class="p">(</span><span class="o">-</span><span class="mf">9.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">color_interpolator</span><span class="o">.</span><span class="n">AddRGBPoint</span><span class="p">(</span><span class="o">-</span><span class="mf">4.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">color_interpolator</span><span class="o">.</span><span class="n">AddRGBPoint</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+    <span class="n">color_interpolator</span><span class="o">.</span><span class="n">AddRGBPoint</span><span class="p">(</span><span class="mf">4.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">color_interpolator</span><span class="o">.</span><span class="n">AddRGBPoint</span><span class="p">(</span><span class="mf">9.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">alpha</span> <span class="ow">is</span> <span class="bp">False</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">color_interpolator</span>
+
+    <span class="n">fmri_lut</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkLookupTable</span><span class="p">()</span>
+    <span class="n">fmri_lut</span><span class="o">.</span><span class="n">SetTableRange</span><span class="p">(</span><span class="o">-</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">)</span>
+    <span class="n">fmri_lut</span><span class="o">.</span><span class="n">SetNumberOfColors</span><span class="p">(</span><span class="n">n_pts</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">fmri_lut</span><span class="o">.</span><span class="n">Build</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n_pts</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="o">-</span><span class="mi">7</span> <span class="o">+</span> <span class="mi">14</span> <span class="o">*</span> <span class="n">i</span> <span class="o">/</span> <span class="n">n_pts</span>
+        <span class="k">if</span> <span class="n">threshold</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">):</span>
+            <span class="n">color</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">color_interpolator</span><span class="o">.</span><span class="n">GetColor</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="o">+</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">color</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">color_interpolator</span><span class="o">.</span><span class="n">GetColor</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="o">+</span> <span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">/</span> <span class="n">threshold</span><span class="p">]</span>
+        <span class="c"># print &quot;%f : %s&quot;%(s,color)</span>
+        <span class="n">fmri_lut</span><span class="o">.</span><span class="n">SetTableValue</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">color</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">fmri_lut</span>
+
+</div>
+<div class="viewcode-block" id="time_slice_viewer"><a class="viewcode-back" href="../../../library/fmri_view.html#braviz.visualization.fmri_view.time_slice_viewer">[docs]</a><span class="k">class</span> <span class="nc">time_slice_viewer</span><span class="p">(</span><span class="n">vtk</span><span class="o">.</span><span class="n">vtkImageSlice</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class for displaying a single slice of a time-moment in BOLD time series</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create the bold viewer</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            Orientation (int):  0:x , 1:y, 2:z</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">slice_mapper</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkImageSliceMapper</span><span class="p">()</span>
+        <span class="n">slice_mapper</span><span class="o">.</span><span class="n">SetOrientation</span><span class="p">(</span><span class="n">orientation</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SetMapper</span><span class="p">(</span><span class="n">slice_mapper</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">SetVisibility</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">image_property</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkImageProperty</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SetProperty</span><span class="p">(</span><span class="n">image_property</span><span class="p">)</span>
+
+        <span class="n">image_property</span><span class="o">.</span><span class="n">SetColorWindow</span><span class="p">(</span><span class="mi">2000</span><span class="p">)</span>
+        <span class="n">image_property</span><span class="o">.</span><span class="n">SetColorLevel</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">slice_mapper</span> <span class="o">=</span> <span class="n">slice_mapper</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">TR</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spatial_slice</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spacing</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="n">orientation</span>
+
+<div class="viewcode-block" id="time_slice_viewer.set_time_point"><a class="viewcode-back" href="../../../library/fmri_view.html#braviz.visualization.fmri_view.time_slice_viewer.set_time_point">[docs]</a>    <span class="k">def</span> <span class="nf">set_time_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the time point at which the time series should be sampled</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            time (float) : Time in seconds of the volume of interest</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">TR</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">TR</span>
+        <span class="n">space_slice</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spatial_slice</span>
+        <span class="n">position</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">position</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">orientation</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">TR</span> <span class="o">*</span> \
+            <span class="n">time</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">spacing</span> <span class="o">*</span> <span class="n">space_slice</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SetPosition</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slice_mapper</span><span class="o">.</span><span class="n">SetSliceNumber</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="time_slice_viewer.set_input"><a class="viewcode-back" href="../../../library/fmri_view.html#braviz.visualization.fmri_view.time_slice_viewer.set_input">[docs]</a>    <span class="k">def</span> <span class="nf">set_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">spatial_pos</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the input 4D image, the position across the perpendicular axis, the time point and the orientation</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            input_data (vtkImageData) : bold 4d image</span>
+<span class="sd">            spatial_pos (int) : index of the slice along the perpendicular axis</span>
+<span class="sd">            time (float) : time point of interest</span>
+<span class="sd">            Orientation (int):  0:x , 1:y, 2:z</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slice_mapper</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+        <span class="n">spacing</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">GetSpacing</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">TR</span> <span class="o">=</span> <span class="n">spacing</span><span class="p">[</span><span class="n">orientation</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spatial_slice</span> <span class="o">=</span> <span class="n">spatial_pos</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="n">orientation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slice_mapper</span><span class="o">.</span><span class="n">SetOrientation</span><span class="p">(</span><span class="n">orientation</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_time_point</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="time_slice_viewer.set_window_level"><a class="viewcode-back" href="../../../library/fmri_view.html#braviz.visualization.fmri_view.time_slice_viewer.set_window_level">[docs]</a>    <span class="k">def</span> <span class="nf">set_window_level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">level</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets window and level for the display image</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            window (float) : window value</span>
+<span class="sd">            level (float) : level value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">image_property</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetProperty</span><span class="p">()</span>
+        <span class="n">image_property</span><span class="o">.</span><span class="n">SetColorWindow</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+        <span class="n">image_property</span><span class="o">.</span><span class="n">SetColorLevel</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="time_slice_viewer.set_z_spacing"><a class="viewcode-back" href="../../../library/fmri_view.html#braviz.visualization.fmri_view.time_slice_viewer.set_z_spacing">[docs]</a>    <span class="k">def</span> <span class="nf">set_z_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spacing</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        spacing in perpendicular axis, used to position the resulting slice in the right place</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            spacing (float) : Image spacing in the perpendicular axis</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spacing</span> <span class="o">=</span> <span class="n">spacing</span>
+
+</div></div>
+<div class="viewcode-block" id="fMRI_blender"><a class="viewcode-back" href="../../../library/fmri_view.html#braviz.visualization.fmri_view.fMRI_blender">[docs]</a><span class="k">class</span> <span class="nc">fMRI_blender</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Blend an fMRI map with an structural image</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates the blender class</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blend</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkImageBlend</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color_mapper2</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkImageMapToColors</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color_mapper1</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkImageMapToWindowLevelColors</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blend</span><span class="o">.</span><span class="n">AddInputConnection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color_mapper1</span><span class="o">.</span><span class="n">GetOutputPort</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blend</span><span class="o">.</span><span class="n">AddInputConnection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color_mapper2</span><span class="o">.</span><span class="n">GetOutputPort</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blend</span><span class="o">.</span><span class="n">SetOpacity</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blend</span><span class="o">.</span><span class="n">SetOpacity</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">.</span><span class="mi">5</span><span class="p">)</span>
+
+<div class="viewcode-block" id="fMRI_blender.set_luts"><a class="viewcode-back" href="../../../library/fmri_view.html#braviz.visualization.fmri_view.fMRI_blender.set_luts">[docs]</a>    <span class="k">def</span> <span class="nf">set_luts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mri_lut</span><span class="p">,</span> <span class="n">fmri_lut</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set lookuptables for both images</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mri_lut (vtkWindowLevelLookupTable) : Lookuptable for structural image</span>
+<span class="sd">            fmri_lut (vtkScalarsToColors) : t-score image lookuptable</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color_mapper1</span><span class="o">.</span><span class="n">SetLookupTable</span><span class="p">(</span><span class="n">mri_lut</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color_mapper2</span><span class="o">.</span><span class="n">SetLookupTable</span><span class="p">(</span><span class="n">fmri_lut</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="fMRI_blender.set_images"><a class="viewcode-back" href="../../../library/fmri_view.html#braviz.visualization.fmri_view.fMRI_blender.set_images">[docs]</a>    <span class="k">def</span> <span class="nf">set_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mri_image</span><span class="p">,</span> <span class="n">fmri_image</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets structural and fMRI images</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mri_image (vtkImageData) : structural image</span>
+<span class="sd">            fmri_image (vtkImageData) : t-score image</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Blended vtkImageData</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color_mapper1</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="n">mri_image</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color_mapper2</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="n">fmri_image</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blend</span><span class="o">.</span><span class="n">Update</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">blend</span><span class="o">.</span><span class="n">GetOutput</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="fMRI_blender.get_blended_img"><a class="viewcode-back" href="../../../library/fmri_view.html#braviz.visualization.fmri_view.fMRI_blender.get_blended_img">[docs]</a>    <span class="k">def</span> <span class="nf">get_blended_img</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get blended image</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Blended vtkImageData</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">blend</span><span class="o">.</span><span class="n">GetOutput</span><span class="p">()</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+                
+
+                
+
+                
+
+          
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

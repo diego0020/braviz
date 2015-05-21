@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>braviz.interaction.generate_qt_guis &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.3b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="top" title="Braviz Documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body role="document">
+    
+    <div class="header-wrapper">
+      <div class="header">
+          <p class="logo"><a href="../../../index.html">
+            <img class="logo" src="../../../_static/Logo_Bravis_h.png" alt="Logo"/>
+          </a></p>
+          <!--
+        <div class="headertitle"><a
+          href="../../../index.html"> Documentation </a></div>
+          -->
+          <nav class="parents">
+              <ol>
+        <li><a href="../../../index.html"> Home </a> &raquo;</li>
+          <li><a href="../../index.html"  accesskey="U"  >Module code</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/Logo_Bravis_h.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for braviz.interaction.generate_qt_guis</h1><div class="highlight"><pre>
+<span class="c">##############################################################################</span>
+<span class="c">#    Braviz, Brain Data interactive visualization                            #</span>
+<span class="c">#    Copyright (C) 2014  Diego Angulo                                        #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    This program is free software: you can redistribute it and/or modify    #</span>
+<span class="c">#    it under the terms of the GNU Lesser General Public License as          #</span>
+<span class="c">#    published by  the Free Software Foundation, either version 3 of the     #</span>
+<span class="c">#    License, or (at your option) any later version.                         #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    This program is distributed in the hope that it will be useful,         #</span>
+<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
+<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
+<span class="c">#    GNU Lesser General Public License for more details.                     #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    You should have received a copy of the GNU Lesser General Public License#</span>
+<span class="c">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
+<span class="c">##############################################################################</span>
+
+
+
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="kn">import</span> <span class="nn">PyQt4.uic</span>
+
+<span class="kn">import</span> <span class="nn">braviz.utilities</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Diego&#39;</span>
+
+<div class="viewcode-block" id="update_guis"><a class="viewcode-back" href="../../../library/interaction.html#braviz.interaction.generate_qt_guis.update_guis">[docs]</a><span class="k">def</span> <span class="nf">update_guis</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Updates python gui files in the ``braviz.interaction.qt_guis`` directory</span>
+
+<span class="sd">    This function generates python files from .ui files in the mentioned folder, as well as</span>
+<span class="sd">    the ``resources_rc.py`` file from ``resources.qrc`` qt resources file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">this_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span>
+    <span class="n">qt_gui_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">this_dir</span><span class="p">,</span> <span class="s">&#39;qt_guis&#39;</span><span class="p">)</span>
+
+    <span class="n">PyQt4</span><span class="o">.</span><span class="n">uic</span><span class="o">.</span><span class="n">compileUiDir</span><span class="p">(</span><span class="n">qt_gui_dir</span><span class="p">)</span>
+
+    <span class="c"># pyrcc4 should be in the path</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">braviz</span><span class="o">.</span><span class="n">utilities</span><span class="o">.</span><span class="n">working_directory</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&quot;qt_guis&quot;</span><span class="p">)):</span>
+
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>
+                <span class="p">[</span><span class="s">&quot;pyrcc4&quot;</span><span class="p">,</span> <span class="s">&quot;-o&quot;</span><span class="p">,</span> <span class="s">&quot;resources_rc.py&quot;</span><span class="p">,</span> <span class="s">&quot;resources.qrc&quot;</span><span class="p">])</span>
+    <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;couldn&#39;t generate resources&quot;</span><span class="p">)</span>
+</div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">update_guis</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+                
+
+                
+
+                
+
+          
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

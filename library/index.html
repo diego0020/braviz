@@ -23,19 +23,24 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/fold_classes.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
     <link rel="top" title="Braviz Documentation" href="../index.html" />
     <link rel="next" title="Read And Filter" href="read_and_filter.html" />
     <link rel="prev" title="Exporting variables" href="../graphical/export_csv.html" /> 
   </head>
-  <body>
+  <body role="document">
     
     <div class="header-wrapper">
       <div class="header">
+          <p class="logo"><a href="../index.html">
+            <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+          </a></p>
+          <!--
         <div class="headertitle"><a
-          href="../index.html"> Braviz Documentation </a></div>
+          href="../index.html"> Documentation </a></div>
+          -->
           <nav class="parents">
               <ol>
         <li><a href="../index.html"> Home </a> &raquo;</li>
@@ -49,8 +54,11 @@
       <div class="content">
         <div class="sidebar" id="agogo-sidebar">
             
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+            </a></p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Braviz library</a><ul>
@@ -81,7 +89,7 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="read_and_filter.html"
                         title="next chapter">Read And Filter</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -101,7 +109,7 @@
             
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="braviz-library">
 <h1>Braviz library<a class="headerlink" href="#braviz-library" title="Permalink to this headline">¶</a></h1>
@@ -146,7 +154,7 @@ The <a class="reference internal" href="visualization.html"><em>Visualization</e
 Finally the <a class="reference internal" href="interaction.html"><em>Interaction</em></a> module contains tools for creating user interfaces, and common functions found in
 visual analysis tasks.</p>
 <p>Using braviz it is possible to create graphical applications targeted at domain experts, which can be easily extended
-to new data. In order to adapt the system to a new data-set a new <a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><tt class="xref py py-class docutils literal"><span class="pre">BaseReader</span></tt></a>
+to new data. In order to adapt the system to a new data-set a new <a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><code class="xref py py-class docutils literal"><span class="pre">BaseReader</span></code></a>
 subclass should be created. This class will be the only one that deals with the underlying file-system which contains
 the project&#8217;s geometric data. Once this class is ready, all of the already built applications will work with the new
 data-set.</p>
@@ -167,7 +175,7 @@ the current version deals with</p>
 <li>Affine transforms</li>
 <li>Nonlinear warps</li>
 </ul>
-<p>The <a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><tt class="xref py py-class docutils literal"><span class="pre">BaseReader</span></tt></a> class provides a convenient way of accessing this data for
+<p>The <a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><code class="xref py py-class docutils literal"><span class="pre">BaseReader</span></code></a> class provides a convenient way of accessing this data for
 the different subjects in the study, automatically applying the necessary geometrical transformations.</p>
 <p>Tabular data is commonly found in statistics and <em>infoviz</em>. It can be easily stored in tables and databases. In brain
 studies it can be demographic and clinical information as well as results in neuro-psychological tests or other
@@ -273,9 +281,9 @@ it relies in the following projects</p>
 <div class="section" id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li><a class="reference internal" href="../genindex.html"><em>Index</em></a></li>
-<li><a class="reference internal" href="../py-modindex.html"><em>Module Index</em></a></li>
-<li><a class="reference internal" href="../search.html"><em>Search Page</em></a></li>
+<li><a class="reference internal" href="../genindex.html"><span>Index</span></a></li>
+<li><a class="reference internal" href="../py-modindex.html"><span>Module Index</span></a></li>
+<li><a class="reference internal" href="../search.html"><span>Search Page</span></a></li>
 </ul>
 </div>
 
@@ -294,13 +302,13 @@ it relies in the following projects</p>
         <div class="left">
           
           <a href="../graphical/export_csv.html" title="Exporting variables"
-             accesskey="P">previous</a> |
+             accesskey="P" >previous</a> |
           <a href="read_and_filter.html" title="Read And Filter"
-             accesskey="N">next</a> |
+             accesskey="N" >next</a> |
           <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |
+              >modules</a> |
           <a href="../genindex.html" title="General Index"
-             accesskey="I">index</a>
+             accesskey="I" >index</a>
           
             <br/>
             <a href="../_sources/library/index.txt"
@@ -309,9 +317,9 @@ it relies in the following projects</p>
 
         <div class="right">
           
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Diego Angulo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
         </div>
         <div class="clearer"></div>

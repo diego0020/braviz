@@ -23,26 +23,31 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/fold_classes.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
     <link rel="top" title="Braviz Documentation" href="../index.html" />
     <link rel="up" title="Braviz Data Base" href="braviz_db.html" />
     <link rel="next" title="User Data" href="user_data.html" />
     <link rel="prev" title="Braviz Data Base" href="braviz_db.html" /> 
   </head>
-  <body>
+  <body role="document">
     
     <div class="header-wrapper">
       <div class="header">
+          <p class="logo"><a href="../index.html">
+            <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+          </a></p>
+          <!--
         <div class="headertitle"><a
-          href="../index.html"> Braviz Documentation </a></div>
+          href="../index.html"> Documentation </a></div>
+          -->
           <nav class="parents">
               <ol>
         <li><a href="../index.html"> Home </a> &raquo;</li>
-          <li><a href="index.html" >Braviz library</a> &raquo;</li>
-          <li><a href="read_and_filter.html" >Read And Filter</a> &raquo;</li>
-          <li><a href="braviz_db.html"  accesskey="U" >Braviz Data Base</a> &raquo;</li>
+          <li><a href="index.html"  >Braviz library</a> &raquo;</li>
+          <li><a href="read_and_filter.html"  >Read And Filter</a> &raquo;</li>
+          <li><a href="braviz_db.html"  accesskey="U"  >Braviz Data Base</a> &raquo;</li>
                   </ol>
           </nav>
        </div>
@@ -53,8 +58,11 @@
       <div class="content">
         <div class="sidebar" id="agogo-sidebar">
             
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+            </a></p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Tabular Data</a><ul>
@@ -90,7 +98,7 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="user_data.html"
                         title="next chapter">User Data</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -110,7 +118,7 @@
             
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="module-braviz.readAndFilter.tabular_data">
 <span id="tabular-data"></span><h1>Tabular Data<a class="headerlink" href="#module-braviz.readAndFilter.tabular_data" title="Permalink to this headline">¶</a></h1>
@@ -124,7 +132,7 @@ rest of the table.</p>
 variable. This parameters can be modified by the subject, and it is not enforced that values lay in this range, however
 applications may check this and give warnings if there is an inconsistency. This metadata is also useful for plotting.</p>
 <p>Nominal variables are stored as numerical labels. Metadata contains a table that maps numerical labels to strings. Which
-can be accessed with the function <a class="reference internal" href="#braviz.readAndFilter.tabular_data.get_labels_dict" title="braviz.readAndFilter.tabular_data.get_labels_dict"><tt class="xref py py-func docutils literal"><span class="pre">get_labels_dict()</span></tt></a>, for example</p>
+can be accessed with the function <a class="reference internal" href="#braviz.readAndFilter.tabular_data.get_labels_dict" title="braviz.readAndFilter.tabular_data.get_labels_dict"><code class="xref py py-func docutils literal"><span class="pre">get_labels_dict()</span></code></a>, for example</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">get_labels_dict</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 <span class="go">{</span>
 <span class="go">    1 : &quot;male&quot; ,</span>
@@ -132,14 +140,14 @@ can be accessed with the function <a class="reference internal" href="#braviz.re
 <span class="go">}</span>
 </pre></div>
 </div>
-<p>Several of the functions in this module return instances of <a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.15.2)"><tt class="xref py py-class docutils literal"><span class="pre">pandas.DataFrame</span></tt></a>.</p>
+<p>Several of the functions in this module return instances of <a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.16.0)"><code class="xref py py-class docutils literal"><span class="pre">pandas.DataFrame</span></code></a>.</p>
 <div class="section" id="subjects">
 <h2>Subjects<a class="headerlink" href="#subjects" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="read">
 <h3>Read<a class="headerlink" href="#read" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.get_subjects">
-<tt class="descname">get_subjects</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_subjects" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_subjects</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#get_subjects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_subjects" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a list subjects which exist in the database</p>
 </dd></dl>
 
@@ -148,14 +156,14 @@ can be accessed with the function <a class="reference internal" href="#braviz.re
 <h3>Modify<a class="headerlink" href="#modify" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.recursive_delete_subject">
-<tt class="descname">recursive_delete_subject</tt><big>(</big><em>subject</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.recursive_delete_subject" title="Permalink to this definition">¶</a></dt>
+<code class="descname">recursive_delete_subject</code><span class="sig-paren">(</span><em>subject</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#recursive_delete_subject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.recursive_delete_subject" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes a subject from the database</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">This may affect large amounts of information and can&#8217;t be reversed</p>
 </div>
 <p>Some references to the variable may remain in scenario data, subsamples or outside the database.
-There must not exist any geometrical structure (see <a class="reference internal" href="geom_db.html#module-braviz.readAndFilter.geom_db" title="braviz.readAndFilter.geom_db"><tt class="xref py py-mod docutils literal"><span class="pre">geom_db</span></tt></a>) associated with
+There must not exist any geometrical structure (see <a class="reference internal" href="geom_db.html#module-braviz.readAndFilter.geom_db" title="braviz.readAndFilter.geom_db"><code class="xref py py-mod docutils literal"><span class="pre">geom_db</span></code></a>) associated with
 the subject, if that is the case the operation will be aborted without modifying the database.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -175,15 +183,16 @@ the subject, if that is the case the operation will be aborted without modifying
 <h3>Read<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.get_variables">
-<tt class="descname">get_variables</tt><big>(</big><em>mask=None</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_variables" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_variables</code><span class="sig-paren">(</span><em>mask=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#get_variables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_variables" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets available variables</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mask</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; If not None, limit answer to results whose name match the given mask (sql <tt class="docutils literal"><span class="pre">like</span></tt> syntax)</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mask</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; If not None, limit answer to results whose name match the given mask (sql <code class="docutils literal"><span class="pre">like</span></code> syntax)</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.15.2)"><tt class="xref py py-class docutils literal"><span class="pre">pandas.DataFrame</span></tt></a> with variable indexes as index, and a single column with variable names</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>:class</em> &#8211;
+<cite>pandas.DataFrame</cite> with variable indexes as index, and a single column with variable names</td>
 </tr>
 </tbody>
 </table>
@@ -191,7 +200,7 @@ the subject, if that is the case the operation will be aborted without modifying
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.get_var_idx">
-<tt class="descname">get_var_idx</tt><big>(</big><em>var_name</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_var_idx" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_var_idx</code><span class="sig-paren">(</span><em>var_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#get_var_idx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_var_idx" title="Permalink to this definition">¶</a></dt>
 <dd><p>Index of variable with given name</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -199,7 +208,7 @@ the subject, if that is the case the operation will be aborted without modifying
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>var_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Variable name</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Index of variable with the given name if it exists, <tt class="docutils literal"><span class="pre">None</span></tt> otherwise</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Index of variable with the given name if it exists, <code class="docutils literal"><span class="pre">None</span></code> otherwise</td>
 </tr>
 </tbody>
 </table>
@@ -207,7 +216,7 @@ the subject, if that is the case the operation will be aborted without modifying
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.get_var_name">
-<tt class="descname">get_var_name</tt><big>(</big><em>var_idx</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_var_name" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_var_name</code><span class="sig-paren">(</span><em>var_idx</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#get_var_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_var_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Name of variable with given index</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -215,7 +224,7 @@ the subject, if that is the case the operation will be aborted without modifying
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>var_idx</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Variable index</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Variable name if it exists, <tt class="docutils literal"><span class="pre">&quot;?&quot;</span></tt> otherwise</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Variable name if it exists, <code class="docutils literal"><span class="pre">&quot;?&quot;</span></code> otherwise</td>
 </tr>
 </tbody>
 </table>
@@ -223,7 +232,7 @@ the subject, if that is the case the operation will be aborted without modifying
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.does_variable_name_exists">
-<tt class="descname">does_variable_name_exists</tt><big>(</big><em>var_name</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.does_variable_name_exists" title="Permalink to this definition">¶</a></dt>
+<code class="descname">does_variable_name_exists</code><span class="sig-paren">(</span><em>var_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#does_variable_name_exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.does_variable_name_exists" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find if the a variable with the given name exists in the database</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -231,8 +240,8 @@ the subject, if that is the case the operation will be aborted without modifying
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>var_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Variable name</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><tt class="docutils literal"><span class="pre">True</span></tt> if a variable with the given name exists,
-<tt class="docutils literal"><span class="pre">False</span></tt> otherwise</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">True</span></code> if a variable with the given name exists,
+<code class="docutils literal"><span class="pre">False</span></code> otherwise</td>
 </tr>
 </tbody>
 </table>
@@ -243,7 +252,7 @@ the subject, if that is the case the operation will be aborted without modifying
 <h3>Modify<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.register_new_variable">
-<tt class="descname">register_new_variable</tt><big>(</big><em>var_name</em>, <em>is_real=1</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.register_new_variable" title="Permalink to this definition">¶</a></dt>
+<code class="descname">register_new_variable</code><span class="sig-paren">(</span><em>var_name</em>, <em>is_real=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#register_new_variable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.register_new_variable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a new variable to the database</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -251,7 +260,7 @@ the subject, if that is the case the operation will be aborted without modifying
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>var_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name for the new variable, should be unique</li>
-<li><strong>is_real</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; Type of the new variable, <tt class="docutils literal"><span class="pre">True</span></tt> if it is real, <tt class="docutils literal"><span class="pre">False</span></tt> if it is nominal</li>
+<li><strong>is_real</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; Type of the new variable, <code class="docutils literal"><span class="pre">True</span></code> if it is real, <code class="docutils literal"><span class="pre">False</span></code> if it is nominal</li>
 </ul>
 </td>
 </tr>
@@ -264,7 +273,7 @@ the subject, if that is the case the operation will be aborted without modifying
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.recursive_delete_variable">
-<tt class="descname">recursive_delete_variable</tt><big>(</big><em>var_idx</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.recursive_delete_variable" title="Permalink to this definition">¶</a></dt>
+<code class="descname">recursive_delete_variable</code><span class="sig-paren">(</span><em>var_idx</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#recursive_delete_variable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.recursive_delete_variable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes a variable from all tables</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
@@ -286,17 +295,17 @@ the subject, if that is the case the operation will be aborted without modifying
 <h3>Special variables<a class="headerlink" href="#special-variables" title="Permalink to this headline">¶</a></h3>
 <dl class="data">
 <dt id="braviz.readAndFilter.tabular_data.LATERALITY">
-<tt class="descname">LATERALITY</tt><em class="property"> = None</em><a class="headerlink" href="#braviz.readAndFilter.tabular_data.LATERALITY" title="Permalink to this definition">¶</a></dt>
+<code class="descname">LATERALITY</code><em class="property"> = None</em><a class="headerlink" href="#braviz.readAndFilter.tabular_data.LATERALITY" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="data">
 <dt id="braviz.readAndFilter.tabular_data.LEFT_HANDED">
-<tt class="descname">LEFT_HANDED</tt><em class="property"> = None</em><a class="headerlink" href="#braviz.readAndFilter.tabular_data.LEFT_HANDED" title="Permalink to this definition">¶</a></dt>
+<code class="descname">LEFT_HANDED</code><em class="property"> = None</em><a class="headerlink" href="#braviz.readAndFilter.tabular_data.LEFT_HANDED" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="data">
 <dt id="braviz.readAndFilter.tabular_data.UBICAC">
-<tt class="descname">UBICAC</tt><em class="property"> = None</em><a class="headerlink" href="#braviz.readAndFilter.tabular_data.UBICAC" title="Permalink to this definition">¶</a></dt>
+<code class="descname">UBICAC</code><em class="property"> = None</em><a class="headerlink" href="#braviz.readAndFilter.tabular_data.UBICAC" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -307,7 +316,7 @@ the subject, if that is the case the operation will be aborted without modifying
 <h3>Read<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.get_data_frame_by_index">
-<tt class="descname">get_data_frame_by_index</tt><big>(</big><em>columns</em>, <em>col_name_index=False</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_data_frame_by_index" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_data_frame_by_index</code><span class="sig-paren">(</span><em>columns</em>, <em>col_name_index=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#get_data_frame_by_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_data_frame_by_index" title="Permalink to this definition">¶</a></dt>
 <dd><p>A data frame containing one column for each variable index in columns</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -315,7 +324,8 @@ the subject, if that is the case the operation will be aborted without modifying
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>columns</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; Variable indexes</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.15.2)"><tt class="xref py py-class docutils literal"><span class="pre">pandas.DataFrame</span></tt></a> with subject ids as index and one column for each variable</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>:class</em> &#8211;
+<cite>pandas.DataFrame</cite> with subject ids as index and one column for each variable</td>
 </tr>
 </tbody>
 </table>
@@ -323,7 +333,7 @@ the subject, if that is the case the operation will be aborted without modifying
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.get_data_frame_by_name">
-<tt class="descname">get_data_frame_by_name</tt><big>(</big><em>columns</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_data_frame_by_name" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_data_frame_by_name</code><span class="sig-paren">(</span><em>columns</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#get_data_frame_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_data_frame_by_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>A data frame containing one column for each variable name in columns</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -331,7 +341,8 @@ the subject, if that is the case the operation will be aborted without modifying
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>columns</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; Variable names</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.15.2)"><tt class="xref py py-class docutils literal"><span class="pre">pandas.DataFrame</span></tt></a> with subject ids as index and one column for each variable</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>:class</em> &#8211;
+<cite>pandas.DataFrame</cite> with subject ids as index and one column for each variable</td>
 </tr>
 </tbody>
 </table>
@@ -339,7 +350,7 @@ the subject, if that is the case the operation will be aborted without modifying
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.get_laterality">
-<tt class="descname">get_laterality</tt><big>(</big><em>subj_id</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_laterality" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_laterality</code><span class="sig-paren">(</span><em>subj_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#get_laterality"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_laterality" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the laterality for a given subject</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -355,7 +366,7 @@ the subject, if that is the case the operation will be aborted without modifying
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.get_var_value">
-<tt class="descname">get_var_value</tt><big>(</big><em>var_idx</em>, <em>subject</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_var_value" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_var_value</code><span class="sig-paren">(</span><em>var_idx</em>, <em>subject</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#get_var_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_var_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a single variable value</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -376,7 +387,7 @@ the subject, if that is the case the operation will be aborted without modifying
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.get_subject_variables">
-<tt class="descname">get_subject_variables</tt><big>(</big><em>subj_code</em>, <em>var_codes</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_subject_variables" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_subject_variables</code><span class="sig-paren">(</span><em>subj_code</em>, <em>var_codes</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#get_subject_variables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_subject_variables" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get several values for one subjects</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -388,7 +399,8 @@ the subject, if that is the case the operation will be aborted without modifying
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.15.2)"><tt class="xref py py-class docutils literal"><span class="pre">pandas.DataFrame</span></tt></a> with two columns: Variable name, and variable value; for each index in var_codes,
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>:class</em> &#8211;
+<cite>pandas.DataFrame</cite> with two columns: Variable name, and variable value; for each index in var_codes,
 which will be used as indexes in the DataFrame.</p>
 </td>
 </tr>
@@ -401,7 +413,7 @@ which will be used as indexes in the DataFrame.</p>
 <h3>Modify<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.updata_variable_value">
-<tt class="descname">updata_variable_value</tt><big>(</big><em>var_idx</em>, <em>subject</em>, <em>new_value</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.updata_variable_value" title="Permalink to this definition">¶</a></dt>
+<code class="descname">updata_variable_value</code><span class="sig-paren">(</span><em>var_idx</em>, <em>subject</em>, <em>new_value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#updata_variable_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.updata_variable_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates a single value for a variable and a subject</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -420,13 +432,13 @@ which will be used as indexes in the DataFrame.</p>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.update_multiple_variable_values">
-<tt class="descname">update_multiple_variable_values</tt><big>(</big><em>idx_subject_value_tuples</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.update_multiple_variable_values" title="Permalink to this definition">¶</a></dt>
+<code class="descname">update_multiple_variable_values</code><span class="sig-paren">(</span><em>idx_subject_value_tuples</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#update_multiple_variable_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.update_multiple_variable_values" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates values for variables and subjects</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>idx_subject_value_tuples</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; Tuples of the form <tt class="docutils literal"><span class="pre">(var_idx,</span> <span class="pre">subject,</span> <span class="pre">value)</span></tt> where var_idx and subject
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>idx_subject_value_tuples</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; Tuples of the form <code class="docutils literal"><span class="pre">(var_idx,</span> <span class="pre">subject,</span> <span class="pre">value)</span></code> where var_idx and subject
 are the variable and subject for whom the new value will be set.</td>
 </tr>
 </tbody>
@@ -435,7 +447,7 @@ are the variable and subject for whom the new value will be set.</td>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.update_variable_values">
-<tt class="descname">update_variable_values</tt><big>(</big><em>var_idx</em>, <em>tuples</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.update_variable_values" title="Permalink to this definition">¶</a></dt>
+<code class="descname">update_variable_values</code><span class="sig-paren">(</span><em>var_idx</em>, <em>tuples</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#update_variable_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.update_variable_values" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates values for one variable and some subjects</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -443,7 +455,7 @@ are the variable and subject for whom the new value will be set.</td>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>var_idx</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Variable index</li>
-<li><strong>tuples</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; Tuples of the form <tt class="docutils literal"><span class="pre">(subject,value)</span></tt> where subject is the subject id, and value
+<li><strong>tuples</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; Tuples of the form <code class="docutils literal"><span class="pre">(subject,value)</span></code> where subject is the subject id, and value
 is the new value for the variable.</li>
 </ul>
 </td>
@@ -454,13 +466,13 @@ is the new value for the variable.</li>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.add_data_frame">
-<tt class="descname">add_data_frame</tt><big>(</big><em>df</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.add_data_frame" title="Permalink to this definition">¶</a></dt>
+<code class="descname">add_data_frame</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#add_data_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.add_data_frame" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inserts a whole dataframe into the database</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>df</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.15.2)"><em>pandas.DataFrame</em></a>) &#8211; DataFrame with subject ids as index, and one column for each new variable.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>df</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.16.0)"><em>pandas.DataFrame</em></a>) &#8211; DataFrame with subject ids as index, and one column for each new variable.</td>
 </tr>
 </tbody>
 </table>
@@ -474,7 +486,7 @@ is the new value for the variable.</li>
 <h3>Read<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.is_variable_real">
-<tt class="descname">is_variable_real</tt><big>(</big><em>var_idx</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.is_variable_real" title="Permalink to this definition">¶</a></dt>
+<code class="descname">is_variable_real</code><span class="sig-paren">(</span><em>var_idx</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#is_variable_real"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.is_variable_real" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find if the variable is real or nominal</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -482,8 +494,8 @@ is the new value for the variable.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>var_idx</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Variable index</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><tt class="docutils literal"><span class="pre">False</span></tt> if the variable is Nominal,
-<tt class="docutils literal"><span class="pre">True</span></tt> otherwise</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">False</span></code> if the variable is Nominal,
+<code class="docutils literal"><span class="pre">True</span></code> otherwise</td>
 </tr>
 </tbody>
 </table>
@@ -491,7 +503,7 @@ is the new value for the variable.</li>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.is_variable_nominal">
-<tt class="descname">is_variable_nominal</tt><big>(</big><em>var_idx</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.is_variable_nominal" title="Permalink to this definition">¶</a></dt>
+<code class="descname">is_variable_nominal</code><span class="sig-paren">(</span><em>var_idx</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#is_variable_nominal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.is_variable_nominal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find if the variable is real or nominal</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -499,8 +511,8 @@ is the new value for the variable.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>var_idx</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Variable index</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><tt class="docutils literal"><span class="pre">True</span></tt> if the variable is Nominal,
-<tt class="docutils literal"><span class="pre">False</span></tt> otherwise</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">True</span></code> if the variable is Nominal,
+<code class="docutils literal"><span class="pre">False</span></code> otherwise</td>
 </tr>
 </tbody>
 </table>
@@ -508,7 +520,7 @@ is the new value for the variable.</li>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.is_variable_name_real">
-<tt class="descname">is_variable_name_real</tt><big>(</big><em>var_name</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.is_variable_name_real" title="Permalink to this definition">¶</a></dt>
+<code class="descname">is_variable_name_real</code><span class="sig-paren">(</span><em>var_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#is_variable_name_real"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.is_variable_name_real" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find if the variable is real or nominal</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -516,8 +528,8 @@ is the new value for the variable.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>var_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Variable name</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><tt class="docutils literal"><span class="pre">False</span></tt> if the variable is Nominal,
-<tt class="docutils literal"><span class="pre">True</span></tt> otherwise</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">False</span></code> if the variable is Nominal,
+<code class="docutils literal"><span class="pre">True</span></code> otherwise</td>
 </tr>
 </tbody>
 </table>
@@ -525,7 +537,7 @@ is the new value for the variable.</li>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.is_variable_name_nominal">
-<tt class="descname">is_variable_name_nominal</tt><big>(</big><em>var_name</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.is_variable_name_nominal" title="Permalink to this definition">¶</a></dt>
+<code class="descname">is_variable_name_nominal</code><span class="sig-paren">(</span><em>var_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#is_variable_name_nominal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.is_variable_name_nominal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find if the variable is real or nominal</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -533,8 +545,8 @@ is the new value for the variable.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>var_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Variable name</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><tt class="docutils literal"><span class="pre">True</span></tt> if the variable is Nominal,
-<tt class="docutils literal"><span class="pre">False</span></tt> otherwise</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">True</span></code> if the variable is Nominal,
+<code class="docutils literal"><span class="pre">False</span></code> otherwise</td>
 </tr>
 </tbody>
 </table>
@@ -542,7 +554,7 @@ is the new value for the variable.</li>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.are_variables_real">
-<tt class="descname">are_variables_real</tt><big>(</big><em>var_idxs</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.are_variables_real" title="Permalink to this definition">¶</a></dt>
+<code class="descname">are_variables_real</code><span class="sig-paren">(</span><em>var_idxs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#are_variables_real"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.are_variables_real" title="Permalink to this definition">¶</a></dt>
 <dd><p>For each variable in a list, find if it is real</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -551,7 +563,7 @@ is the new value for the variable.</li>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>var_idxs</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; variable indexes</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A dictionary with variable indexes as keys, and booleans as values as in
-<a class="reference internal" href="#braviz.readAndFilter.tabular_data.is_variable_real" title="braviz.readAndFilter.tabular_data.is_variable_real"><tt class="xref py py-func docutils literal"><span class="pre">is_variable_real()</span></tt></a></td>
+<a class="reference internal" href="#braviz.readAndFilter.tabular_data.is_variable_real" title="braviz.readAndFilter.tabular_data.is_variable_real"><code class="xref py py-func docutils literal"><span class="pre">is_variable_real()</span></code></a></td>
 </tr>
 </tbody>
 </table>
@@ -559,7 +571,7 @@ is the new value for the variable.</li>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.are_variables_nominal">
-<tt class="descname">are_variables_nominal</tt><big>(</big><em>var_idxs</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.are_variables_nominal" title="Permalink to this definition">¶</a></dt>
+<code class="descname">are_variables_nominal</code><span class="sig-paren">(</span><em>var_idxs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#are_variables_nominal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.are_variables_nominal" title="Permalink to this definition">¶</a></dt>
 <dd><p>For each variable in a list, find if it is real</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -568,7 +580,7 @@ is the new value for the variable.</li>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>var_idxs</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; variable indexes</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A dictionary with variable indexes as keys, and booleans as values as in
-<a class="reference internal" href="#braviz.readAndFilter.tabular_data.is_variable_nominal" title="braviz.readAndFilter.tabular_data.is_variable_nominal"><tt class="xref py py-func docutils literal"><span class="pre">is_variable_nominal()</span></tt></a></td>
+<a class="reference internal" href="#braviz.readAndFilter.tabular_data.is_variable_nominal" title="braviz.readAndFilter.tabular_data.is_variable_nominal"><code class="xref py py-func docutils literal"><span class="pre">is_variable_nominal()</span></code></a></td>
 </tr>
 </tbody>
 </table>
@@ -576,7 +588,7 @@ is the new value for the variable.</li>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.are_variables_names_real">
-<tt class="descname">are_variables_names_real</tt><big>(</big><em>var_names</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.are_variables_names_real" title="Permalink to this definition">¶</a></dt>
+<code class="descname">are_variables_names_real</code><span class="sig-paren">(</span><em>var_names</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#are_variables_names_real"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.are_variables_names_real" title="Permalink to this definition">¶</a></dt>
 <dd><p>For each variable in a list, find if it is real</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -585,7 +597,7 @@ is the new value for the variable.</li>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>var_names</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; variable names</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A dictionary with variable names as keys, and booleans as values as in
-<a class="reference internal" href="#braviz.readAndFilter.tabular_data.is_variable_name_real" title="braviz.readAndFilter.tabular_data.is_variable_name_real"><tt class="xref py py-func docutils literal"><span class="pre">is_variable_name_real()</span></tt></a></td>
+<a class="reference internal" href="#braviz.readAndFilter.tabular_data.is_variable_name_real" title="braviz.readAndFilter.tabular_data.is_variable_name_real"><code class="xref py py-func docutils literal"><span class="pre">is_variable_name_real()</span></code></a></td>
 </tr>
 </tbody>
 </table>
@@ -593,7 +605,7 @@ is the new value for the variable.</li>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.are_variables_names_nominal">
-<tt class="descname">are_variables_names_nominal</tt><big>(</big><em>var_names</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.are_variables_names_nominal" title="Permalink to this definition">¶</a></dt>
+<code class="descname">are_variables_names_nominal</code><span class="sig-paren">(</span><em>var_names</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#are_variables_names_nominal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.are_variables_names_nominal" title="Permalink to this definition">¶</a></dt>
 <dd><p>For each variable in a list, find if it is real</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -602,7 +614,7 @@ is the new value for the variable.</li>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>var_names</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; variable names</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A dictionary with variable names as keys, and booleans as values as in
-<a class="reference internal" href="#braviz.readAndFilter.tabular_data.is_variable_name_nominal" title="braviz.readAndFilter.tabular_data.is_variable_name_nominal"><tt class="xref py py-func docutils literal"><span class="pre">is_variable_name_nominal()</span></tt></a></td>
+<a class="reference internal" href="#braviz.readAndFilter.tabular_data.is_variable_name_nominal" title="braviz.readAndFilter.tabular_data.is_variable_name_nominal"><code class="xref py py-func docutils literal"><span class="pre">is_variable_name_nominal()</span></code></a></td>
 </tr>
 </tbody>
 </table>
@@ -610,7 +622,7 @@ is the new value for the variable.</li>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.get_labels_dict">
-<tt class="descname">get_labels_dict</tt><big>(</big><em>var_idx</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_labels_dict" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_labels_dict</code><span class="sig-paren">(</span><em>var_idx</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#get_labels_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_labels_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Map numerical labels to strings in nominal variables</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -627,7 +639,7 @@ values.</td>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.get_labels_dict_by_name">
-<tt class="descname">get_labels_dict_by_name</tt><big>(</big><em>var_name</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_labels_dict_by_name" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_labels_dict_by_name</code><span class="sig-paren">(</span><em>var_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#get_labels_dict_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_labels_dict_by_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Map numerical labels to strings in nominal variables</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -644,7 +656,7 @@ values.</td>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.get_minimum_value">
-<tt class="descname">get_minimum_value</tt><big>(</big><em>var_idx</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_minimum_value" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_minimum_value</code><span class="sig-paren">(</span><em>var_idx</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#get_minimum_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_minimum_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the minimum value for a real variable as recorded in meta-data</p>
 <p>If there is no metadata, it is calculated from the existing values</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -662,7 +674,7 @@ if there is no metadata, minimum from existing values.</td>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.get_maximum_value">
-<tt class="descname">get_maximum_value</tt><big>(</big><em>var_idx</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_maximum_value" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_maximum_value</code><span class="sig-paren">(</span><em>var_idx</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#get_maximum_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_maximum_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the maximum value for a real variable as recorded in meta-data</p>
 <p>If there is no metadata, it is calculated from the existing values</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -680,7 +692,7 @@ if there is no metadata, maximum from existing values.</td>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.get_min_max_values">
-<tt class="descname">get_min_max_values</tt><big>(</big><em>var_idx</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_min_max_values" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_min_max_values</code><span class="sig-paren">(</span><em>var_idx</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#get_min_max_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_min_max_values" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the minimum and maximum values for a real variable as recorded in meta-data</p>
 <p>If there is no metadata, they are calculated from the existing values</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -689,7 +701,7 @@ if there is no metadata, maximum from existing values.</td>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>var_idx</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Variable index</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><tt class="docutils literal"><span class="pre">(min_val,</span> <span class="pre">max_val)</span></tt>  values as recorded in the metadata,
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">(min_val,</span> <span class="pre">max_val)</span></code>  values as recorded in the metadata,
 if there is no metadata, they are calculated from existing values</td>
 </tr>
 </tbody>
@@ -698,7 +710,7 @@ if there is no metadata, they are calculated from existing values</td>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.get_min_max_values_by_name">
-<tt class="descname">get_min_max_values_by_name</tt><big>(</big><em>var_name</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_min_max_values_by_name" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_min_max_values_by_name</code><span class="sig-paren">(</span><em>var_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#get_min_max_values_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_min_max_values_by_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the minimum and maximum values for a real variable as recorded in meta-data</p>
 <p>If there is no metadata, they are calculated from the existing values</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -707,7 +719,7 @@ if there is no metadata, they are calculated from existing values</td>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>var_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Variable name</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><tt class="docutils literal"><span class="pre">(min_val,</span> <span class="pre">max_val)</span></tt>  values as recorded in the metadata,
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">(min_val,</span> <span class="pre">max_val)</span></code>  values as recorded in the metadata,
 if there is no metadata, they are calculated from existing values</td>
 </tr>
 </tbody>
@@ -716,7 +728,7 @@ if there is no metadata, they are calculated from existing values</td>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.get_min_max_opt_values_by_name">
-<tt class="descname">get_min_max_opt_values_by_name</tt><big>(</big><em>var_name</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_min_max_opt_values_by_name" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_min_max_opt_values_by_name</code><span class="sig-paren">(</span><em>var_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#get_min_max_opt_values_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_min_max_opt_values_by_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the minimum, maximum and optimal values for a real variable as recorded in meta-data</p>
 <p>If there is no metadata, they are calculated from the existing values</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -725,7 +737,7 @@ if there is no metadata, they are calculated from existing values</td>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>var_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Variable name</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><tt class="docutils literal"><span class="pre">(min_val,</span> <span class="pre">max_val,</span> <span class="pre">optimum_val)</span></tt>  values as recorded in the metadata,
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">(min_val,</span> <span class="pre">max_val,</span> <span class="pre">optimum_val)</span></code>  values as recorded in the metadata,
 if there is no metadata, they are calculated from existing values. In this case the optimum will
 be the mean of existing values.</td>
 </tr>
@@ -735,7 +747,7 @@ be the mean of existing values.</td>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.get_var_description">
-<tt class="descname">get_var_description</tt><big>(</big><em>var_idx</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_var_description" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_var_description</code><span class="sig-paren">(</span><em>var_idx</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#get_var_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_var_description" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get description for a variable</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -751,7 +763,7 @@ be the mean of existing values.</td>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.get_var_description_by_name">
-<tt class="descname">get_var_description_by_name</tt><big>(</big><em>var_name</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_var_description_by_name" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_var_description_by_name</code><span class="sig-paren">(</span><em>var_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#get_var_description_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_var_description_by_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get description for a variable</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -767,7 +779,7 @@ be the mean of existing values.</td>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.get_variable_normal_range">
-<tt class="descname">get_variable_normal_range</tt><big>(</big><em>var_idx</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_variable_normal_range" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_variable_normal_range</code><span class="sig-paren">(</span><em>var_idx</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#get_variable_normal_range"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_variable_normal_range" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the range of a given variable for the reference population</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -775,7 +787,7 @@ be the mean of existing values.</td>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>var_idx</strong> &#8211; Variable index</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><tt class="docutils literal"><span class="pre">(min_val,</span> <span class="pre">max_val)</span></tt> calculated over the values the variable takes in the reference population.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">(min_val,</span> <span class="pre">max_val)</span></code> calculated over the values the variable takes in the reference population.</td>
 </tr>
 </tbody>
 </table>
@@ -786,7 +798,7 @@ be the mean of existing values.</td>
 <h3>Modify<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.save_is_real">
-<tt class="descname">save_is_real</tt><big>(</big><em>var_idx</em>, <em>is_real</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_is_real" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save_is_real</code><span class="sig-paren">(</span><em>var_idx</em>, <em>is_real</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#save_is_real"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_is_real" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update variable type in the metadata</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -804,7 +816,7 @@ be the mean of existing values.</td>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.save_is_real_by_name">
-<tt class="descname">save_is_real_by_name</tt><big>(</big><em>var_name</em>, <em>is_real</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_is_real_by_name" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save_is_real_by_name</code><span class="sig-paren">(</span><em>var_name</em>, <em>is_real</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#save_is_real_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_is_real_by_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update variable type in the metadata</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -822,7 +834,7 @@ be the mean of existing values.</td>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.save_nominal_labels">
-<tt class="descname">save_nominal_labels</tt><big>(</big><em>var_idx</em>, <em>label_name_tuples</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_nominal_labels" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save_nominal_labels</code><span class="sig-paren">(</span><em>var_idx</em>, <em>label_name_tuples</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#save_nominal_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_nominal_labels" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update nominal variable labels</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -831,7 +843,7 @@ be the mean of existing values.</td>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>var_idx</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Variable index</li>
 <li><strong>label_name_tuples</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of tuples, the first component of each tuple is the numeric label, and the
-second component its meaning. For example <tt class="docutils literal"><span class="pre">(1,</span> <span class="pre">&quot;male&quot;)</span></tt></li>
+second component its meaning. For example <code class="docutils literal"><span class="pre">(1,</span> <span class="pre">&quot;male&quot;)</span></code></li>
 </ul>
 </td>
 </tr>
@@ -841,7 +853,7 @@ second component its meaning. For example <tt class="docutils literal"><span cla
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.save_nominal_labels_by_name">
-<tt class="descname">save_nominal_labels_by_name</tt><big>(</big><em>var_name</em>, <em>label_name_tuples</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_nominal_labels_by_name" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save_nominal_labels_by_name</code><span class="sig-paren">(</span><em>var_name</em>, <em>label_name_tuples</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#save_nominal_labels_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_nominal_labels_by_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update nominal variable labels</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -850,7 +862,7 @@ second component its meaning. For example <tt class="docutils literal"><span cla
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>var_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Variable name</li>
 <li><strong>label_name_tuples</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of tuples, the first component of each tuple is the numeric label, and the
-second component its meaning. For example <tt class="docutils literal"><span class="pre">(1,</span> <span class="pre">&quot;male&quot;)</span></tt></li>
+second component its meaning. For example <code class="docutils literal"><span class="pre">(1,</span> <span class="pre">&quot;male&quot;)</span></code></li>
 </ul>
 </td>
 </tr>
@@ -860,7 +872,7 @@ second component its meaning. For example <tt class="docutils literal"><span cla
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.save_real_meta">
-<tt class="descname">save_real_meta</tt><big>(</big><em>var_idx</em>, <em>min_value</em>, <em>max_value</em>, <em>opt_value</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_real_meta" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save_real_meta</code><span class="sig-paren">(</span><em>var_idx</em>, <em>min_value</em>, <em>max_value</em>, <em>opt_value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#save_real_meta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_real_meta" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update real variables&#8217; meta data</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -880,7 +892,7 @@ second component its meaning. For example <tt class="docutils literal"><span cla
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.save_real_meta_by_name">
-<tt class="descname">save_real_meta_by_name</tt><big>(</big><em>var_name</em>, <em>min_value</em>, <em>max_value</em>, <em>opt_value</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_real_meta_by_name" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save_real_meta_by_name</code><span class="sig-paren">(</span><em>var_name</em>, <em>min_value</em>, <em>max_value</em>, <em>opt_value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#save_real_meta_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_real_meta_by_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update real variables&#8217; meta data</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -900,7 +912,7 @@ second component its meaning. For example <tt class="docutils literal"><span cla
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.save_var_description">
-<tt class="descname">save_var_description</tt><big>(</big><em>var_idx</em>, <em>description</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_var_description" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save_var_description</code><span class="sig-paren">(</span><em>var_idx</em>, <em>description</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#save_var_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_var_description" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save or overwrite description for a variable</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -918,7 +930,7 @@ second component its meaning. For example <tt class="docutils literal"><span cla
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.save_var_description_by_name">
-<tt class="descname">save_var_description_by_name</tt><big>(</big><em>var_name</em>, <em>description</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_var_description_by_name" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save_var_description_by_name</code><span class="sig-paren">(</span><em>var_name</em>, <em>description</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#save_var_description_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_var_description_by_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save or overwrite description for a variable</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -940,7 +952,7 @@ second component its meaning. For example <tt class="docutils literal"><span cla
 <h2>Create New Database<a class="headerlink" href="#create-new-database" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.initialize_database">
-<tt class="descname">initialize_database</tt><big>(</big><em>path</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.tabular_data.initialize_database" title="Permalink to this definition">¶</a></dt>
+<code class="descname">initialize_database</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#initialize_database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.initialize_database" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new braviz database</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -970,13 +982,13 @@ second component its meaning. For example <tt class="docutils literal"><span cla
         <div class="left">
           
           <a href="braviz_db.html" title="Braviz Data Base"
-             accesskey="P">previous</a> |
+             accesskey="P" >previous</a> |
           <a href="user_data.html" title="User Data"
-             accesskey="N">next</a> |
+             accesskey="N" >next</a> |
           <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |
+              >modules</a> |
           <a href="../genindex.html" title="General Index"
-             accesskey="I">index</a>
+             accesskey="I" >index</a>
           
             <br/>
             <a href="../_sources/library/tabular_data.txt"
@@ -985,9 +997,9 @@ second component its meaning. For example <tt class="docutils literal"><span cla
 
         <div class="right">
           
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Diego Angulo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
         </div>
         <div class="clearer"></div>

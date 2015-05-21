@@ -23,25 +23,30 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/fold_classes.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
     <link rel="top" title="Braviz Documentation" href="../index.html" />
     <link rel="up" title="Braviz Applications" href="applications.html" />
     <link rel="next" title="Logic Bundles" href="logic_bundles.html" />
     <link rel="prev" title="Check Registration" href="check_reg.html" /> 
   </head>
-  <body>
+  <body role="document">
     
     <div class="header-wrapper">
       <div class="header">
+          <p class="logo"><a href="../index.html">
+            <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+          </a></p>
+          <!--
         <div class="headertitle"><a
-          href="../index.html"> Braviz Documentation </a></div>
+          href="../index.html"> Documentation </a></div>
+          -->
           <nav class="parents">
               <ol>
         <li><a href="../index.html"> Home </a> &raquo;</li>
-          <li><a href="index.html" >Visual Analytics with Braviz</a> &raquo;</li>
-          <li><a href="applications.html"  accesskey="U" >Braviz Applications</a> &raquo;</li>
+          <li><a href="index.html"  >Visual Analytics with Braviz</a> &raquo;</li>
+          <li><a href="applications.html"  accesskey="U"  >Braviz Applications</a> &raquo;</li>
                   </ol>
           </nav>
        </div>
@@ -52,8 +57,11 @@
       <div class="content">
         <div class="sidebar" id="agogo-sidebar">
             
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+            </a></p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">ROI Builder</a><ul>
@@ -85,7 +93,7 @@
             
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="roi-builder">
 <h1>ROI Builder<a class="headerlink" href="#roi-builder" title="Permalink to this headline">¶</a></h1>
@@ -124,7 +132,7 @@ ROIs.</p>
 <p class="last">You can press the right and left arrow keys in the keyboard to move trough the subjects in the list</p>
 </div>
 <div class="section" id="context-panel">
-<h3>Context Panel<a class="headerlink" href="#context-panel" title="Permalink to this headline">¶</a></h3>
+<span id="roi-builder-context-panel"></span><h3>Context Panel<a class="headerlink" href="#context-panel" title="Permalink to this headline">¶</a></h3>
 <img alt="Roi builder context panel" class="align-center" src="../_images/roi_context.png" />
 <p>The context panel allows you to add images and surfaces to the viewer so that you can better find the desired
 position for the ROI. The <em>Image</em> and <em>Contrast</em> control lets you choose an image modality and a contrast in case
@@ -248,9 +256,9 @@ current subject and current ROI will be saved.</p>
 
         <div class="right">
           
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Diego Angulo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
         </div>
         <div class="clearer"></div>

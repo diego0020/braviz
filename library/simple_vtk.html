@@ -23,25 +23,30 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/fold_classes.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
     <link rel="top" title="Braviz Documentation" href="../index.html" />
     <link rel="up" title="Visualization" href="visualization.html" />
     <link rel="next" title="Subject Viewer" href="subject_viewer.html" />
     <link rel="prev" title="Visualization" href="visualization.html" /> 
   </head>
-  <body>
+  <body role="document">
     
     <div class="header-wrapper">
       <div class="header">
+          <p class="logo"><a href="../index.html">
+            <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+          </a></p>
+          <!--
         <div class="headertitle"><a
-          href="../index.html"> Braviz Documentation </a></div>
+          href="../index.html"> Documentation </a></div>
+          -->
           <nav class="parents">
               <ol>
         <li><a href="../index.html"> Home </a> &raquo;</li>
-          <li><a href="index.html" >Braviz library</a> &raquo;</li>
-          <li><a href="visualization.html"  accesskey="U" >Visualization</a> &raquo;</li>
+          <li><a href="index.html"  >Braviz library</a> &raquo;</li>
+          <li><a href="visualization.html"  accesskey="U"  >Visualization</a> &raquo;</li>
                   </ol>
           </nav>
        </div>
@@ -52,8 +57,11 @@
       <div class="content">
         <div class="sidebar" id="agogo-sidebar">
             
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+            </a></p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Simple VTK Visualization</a><ul>
@@ -70,7 +78,7 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="subject_viewer.html"
                         title="next chapter">Subject Viewer</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -90,7 +98,7 @@
             
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <span class="target" id="module-braviz.visualization.simple_vtk"></span><div class="section" id="simple-vtk-visualization">
 <h1>Simple VTK Visualization<a class="headerlink" href="#simple-vtk-visualization" title="Permalink to this headline">¶</a></h1>
@@ -101,13 +109,13 @@
 do simple tests or to use interactively from the python console.</p>
 <dl class="class">
 <dt id="braviz.visualization.simple_vtk.SimpleVtkViewer">
-<em class="property">class </em><tt class="descname">SimpleVtkViewer</tt><a class="headerlink" href="#braviz.visualization.simple_vtk.SimpleVtkViewer" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">SimpleVtkViewer</code><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#SimpleVtkViewer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.SimpleVtkViewer" title="Permalink to this definition">¶</a></dt>
 <dd><p>A very simple windows with vtk renderers and interactors.</p>
 <p>This class is intended for interactive work and fast prototyping. As such it is very simple and limited.
-For full interactive applications consider using <a class="reference internal" href="subject_viewer.html#module-braviz.visualization.subject_viewer" title="braviz.visualization.subject_viewer"><tt class="xref py py-mod docutils literal"><span class="pre">subject_viewer</span></tt></a></p>
+For full interactive applications consider using <a class="reference internal" href="subject_viewer.html#module-braviz.visualization.subject_viewer" title="braviz.visualization.subject_viewer"><code class="xref py py-mod docutils literal"><span class="pre">subject_viewer</span></code></a></p>
 <dl class="method">
 <dt id="braviz.visualization.simple_vtk.SimpleVtkViewer.addImg">
-<tt class="descname">addImg</tt><big>(</big><em>img</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.SimpleVtkViewer.addImg" title="Permalink to this definition">¶</a></dt>
+<code class="descname">addImg</code><span class="sig-paren">(</span><em>img</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#SimpleVtkViewer.addImg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.SimpleVtkViewer.addImg" title="Permalink to this definition">¶</a></dt>
 <dd><p>Use this method to show an image inside an image plane widget.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -123,7 +131,7 @@ For full interactive applications consider using <a class="reference internal" h
 
 <dl class="method">
 <dt id="braviz.visualization.simple_vtk.SimpleVtkViewer.addPolyData">
-<tt class="descname">addPolyData</tt><big>(</big><em>polyData</em>, <em>LUT=None</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.SimpleVtkViewer.addPolyData" title="Permalink to this definition">¶</a></dt>
+<code class="descname">addPolyData</code><span class="sig-paren">(</span><em>polyData</em>, <em>LUT=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#SimpleVtkViewer.addPolyData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.SimpleVtkViewer.addPolyData" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a poly data to the viewer, a LUT can be set.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -144,13 +152,13 @@ For full interactive applications consider using <a class="reference internal" h
 
 <dl class="method">
 <dt id="braviz.visualization.simple_vtk.SimpleVtkViewer.clear_poly_data">
-<tt class="descname">clear_poly_data</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.SimpleVtkViewer.clear_poly_data" title="Permalink to this definition">¶</a></dt>
+<code class="descname">clear_poly_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#SimpleVtkViewer.clear_poly_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.SimpleVtkViewer.clear_poly_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes all polydata from the viewer</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="braviz.visualization.simple_vtk.SimpleVtkViewer.start">
-<tt class="descname">start</tt><big>(</big><em>reset=True</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.SimpleVtkViewer.start" title="Permalink to this definition">¶</a></dt>
+<code class="descname">start</code><span class="sig-paren">(</span><em>reset=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#SimpleVtkViewer.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.SimpleVtkViewer.start" title="Permalink to this definition">¶</a></dt>
 <dd><p>Call this method to start the interaction, interaction can be stopped by pressing &#8216;q&#8217; on the main window</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -173,22 +181,22 @@ For full interactive applications consider using <a class="reference internal" h
 </div>
 <dl class="class">
 <dt id="braviz.visualization.simple_vtk.persistentImagePlane">
-<em class="property">class </em><tt class="descname">persistentImagePlane</tt><big>(</big><em>orientation=0</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">persistentImagePlane</code><span class="sig-paren">(</span><em>orientation=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#persistentImagePlane"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane" title="Permalink to this definition">¶</a></dt>
 <dd><p>A vtkImagePlaneWidget which can keep its state between calls to SetInputData.</p>
 <p>It adds a second text message showing the world coordinates of the cursors
 This message can be further enhanced by using a label image and a label dictionary
 Additionally the values displayed in the first message can be replaced by values taken from another image, this
 is useful when the displayed image contains colors or other contexts that are not the main value (ex, fmri)
 Finally, this class generates custom events when moving the cursor and when changing the slice.</p>
-<dl class="staticmethod">
+<dl class="method">
 <dt id="braviz.visualization.simple_vtk.persistentImagePlane.On">
-<em class="property">static </em><tt class="descname">On</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane.On" title="Permalink to this definition">¶</a></dt>
+<code class="descname">On</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#persistentImagePlane.On"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane.On" title="Permalink to this definition">¶</a></dt>
 <dd><p>Turn the widget on</p>
 </dd></dl>
 
-<dl class="staticmethod">
+<dl class="method">
 <dt id="braviz.visualization.simple_vtk.persistentImagePlane.SetInputData">
-<em class="property">static </em><tt class="descname">SetInputData</tt><big>(</big><em>img</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane.SetInputData" title="Permalink to this definition">¶</a></dt>
+<code class="descname">SetInputData</code><span class="sig-paren">(</span><em>img</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#persistentImagePlane.SetInputData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane.SetInputData" title="Permalink to this definition">¶</a></dt>
 <dd><p>Changes the input data por the plane widget</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -200,9 +208,9 @@ Finally, this class generates custom events when moving the cursor and when chan
 </table>
 </dd></dl>
 
-<dl class="staticmethod">
+<dl class="method">
 <dt id="braviz.visualization.simple_vtk.persistentImagePlane.SetInteractor">
-<em class="property">static </em><tt class="descname">SetInteractor</tt><big>(</big><em>iact</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane.SetInteractor" title="Permalink to this definition">¶</a></dt>
+<code class="descname">SetInteractor</code><span class="sig-paren">(</span><em>iact</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#persistentImagePlane.SetInteractor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane.SetInteractor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Links the widget to an interactor</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -214,9 +222,9 @@ Finally, this class generates custom events when moving the cursor and when chan
 </table>
 </dd></dl>
 
-<dl class="staticmethod">
+<dl class="method">
 <dt id="braviz.visualization.simple_vtk.persistentImagePlane.addLabels">
-<em class="property">static </em><tt class="descname">addLabels</tt><big>(</big><em>label_img</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane.addLabels" title="Permalink to this definition">¶</a></dt>
+<code class="descname">addLabels</code><span class="sig-paren">(</span><em>label_img</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#persistentImagePlane.addLabels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane.addLabels" title="Permalink to this definition">¶</a></dt>
 <dd><p>A second image can be used to get labels for image coordinates (ex. aparc)</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -228,9 +236,9 @@ Finally, this class generates custom events when moving the cursor and when chan
 </table>
 </dd></dl>
 
-<dl class="staticmethod">
+<dl class="method">
 <dt id="braviz.visualization.simple_vtk.persistentImagePlane.get_label">
-<em class="property">static </em><tt class="descname">get_label</tt><big>(</big><em>x</em>, <em>y</em>, <em>z</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane.get_label" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_label</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>z</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#persistentImagePlane.get_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane.get_label" title="Permalink to this definition">¶</a></dt>
 <dd><p>Auxiliary function to get the label in a given coordinate (in mm)</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -250,9 +258,9 @@ Finally, this class generates custom events when moving the cursor and when chan
 </table>
 </dd></dl>
 
-<dl class="staticmethod">
+<dl class="method">
 <dt id="braviz.visualization.simple_vtk.persistentImagePlane.setLabelsLut">
-<em class="property">static </em><tt class="descname">setLabelsLut</tt><big>(</big><em>lut</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane.setLabelsLut" title="Permalink to this definition">¶</a></dt>
+<code class="descname">setLabelsLut</code><span class="sig-paren">(</span><em>lut</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#persistentImagePlane.setLabelsLut"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane.setLabelsLut" title="Permalink to this definition">¶</a></dt>
 <dd><p>A lookup table can be used to translate numeric labels into text labels</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -264,9 +272,9 @@ Finally, this class generates custom events when moving the cursor and when chan
 </table>
 </dd></dl>
 
-<dl class="staticmethod">
+<dl class="method">
 <dt id="braviz.visualization.simple_vtk.persistentImagePlane.set_orientation">
-<em class="property">static </em><tt class="descname">set_orientation</tt><big>(</big><em>orientation</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane.set_orientation" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_orientation</code><span class="sig-paren">(</span><em>orientation</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#persistentImagePlane.set_orientation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane.set_orientation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets image plane orientation</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -278,15 +286,15 @@ Finally, this class generates custom events when moving the cursor and when chan
 </table>
 </dd></dl>
 
-<dl class="staticmethod">
+<dl class="method">
 <dt id="braviz.visualization.simple_vtk.persistentImagePlane.text1_to_std">
-<em class="property">static </em><tt class="descname">text1_to_std</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane.text1_to_std" title="Permalink to this definition">¶</a></dt>
+<code class="descname">text1_to_std</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#persistentImagePlane.text1_to_std"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane.text1_to_std" title="Permalink to this definition">¶</a></dt>
 <dd><p>Turn text1 behaviour back to standard, reverts the effects of text1_value_from_img</p>
 </dd></dl>
 
-<dl class="staticmethod">
+<dl class="method">
 <dt id="braviz.visualization.simple_vtk.persistentImagePlane.text1_value_from_img">
-<em class="property">static </em><tt class="descname">text1_value_from_img</tt><big>(</big><em>img2</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane.text1_value_from_img" title="Permalink to this definition">¶</a></dt>
+<code class="descname">text1_value_from_img</code><span class="sig-paren">(</span><em>img2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#persistentImagePlane.text1_value_from_img"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane.text1_value_from_img" title="Permalink to this definition">¶</a></dt>
 <dd><p>Text 1 value can be read from a different image than the one been shown, useful for composed images</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -302,12 +310,12 @@ Finally, this class generates custom events when moving the cursor and when chan
 
 <dl class="class">
 <dt id="braviz.visualization.simple_vtk.OutlineActor">
-<em class="property">class </em><tt class="descname">OutlineActor</tt><a class="headerlink" href="#braviz.visualization.simple_vtk.OutlineActor" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">OutlineActor</code><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#OutlineActor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.OutlineActor" title="Permalink to this definition">¶</a></dt>
 <dd><p>A simple shortcut for displaying the outline of an object</p>
 <p>Encapsulates an outline filter, a mapper and an actor</p>
-<dl class="staticmethod">
+<dl class="method">
 <dt id="braviz.visualization.simple_vtk.OutlineActor.SetInputData">
-<em class="property">static </em><tt class="descname">SetInputData</tt><big>(</big><em>input_data</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.OutlineActor.SetInputData" title="Permalink to this definition">¶</a></dt>
+<code class="descname">SetInputData</code><span class="sig-paren">(</span><em>input_data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#OutlineActor.SetInputData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.OutlineActor.SetInputData" title="Permalink to this definition">¶</a></dt>
 <dd><p>For better compatibility with vtk methods style</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -319,9 +327,9 @@ Finally, this class generates custom events when moving the cursor and when chan
 </table>
 </dd></dl>
 
-<dl class="staticmethod">
+<dl class="method">
 <dt id="braviz.visualization.simple_vtk.OutlineActor.set_input_data">
-<em class="property">static </em><tt class="descname">set_input_data</tt><big>(</big><em>input_data</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.OutlineActor.set_input_data" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_input_data</code><span class="sig-paren">(</span><em>input_data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#OutlineActor.set_input_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.OutlineActor.set_input_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the input data for the outline</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -337,11 +345,11 @@ Finally, this class generates custom events when moving the cursor and when chan
 
 <dl class="class">
 <dt id="braviz.visualization.simple_vtk.OrientationAxes">
-<em class="property">class </em><tt class="descname">OrientationAxes</tt><a class="headerlink" href="#braviz.visualization.simple_vtk.OrientationAxes" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">OrientationAxes</code><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#OrientationAxes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.OrientationAxes" title="Permalink to this definition">¶</a></dt>
 <dd><p>An orientation cube with faces labeled for Right, Left, Anterior, Posterior, Superior and Inferior</p>
 <dl class="method">
 <dt id="braviz.visualization.simple_vtk.OrientationAxes.initialize">
-<tt class="descname">initialize</tt><big>(</big><em>render_window_interactor</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.OrientationAxes.initialize" title="Permalink to this definition">¶</a></dt>
+<code class="descname">initialize</code><span class="sig-paren">(</span><em>render_window_interactor</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#OrientationAxes.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.OrientationAxes.initialize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Link the orientation cube with an interactor</p>
 <p>render_window_interactor (vtkRenderWindowInteractor) : vtk interactor</p>
 </dd></dl>
@@ -350,13 +358,13 @@ Finally, this class generates custom events when moving the cursor and when chan
 
 <dl class="class">
 <dt id="braviz.visualization.simple_vtk.cursors">
-<em class="property">class </em><tt class="descname">cursors</tt><big>(</big><em>axis=0</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.cursors" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">cursors</code><span class="sig-paren">(</span><em>axis=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#cursors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.cursors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Emulates the cursors in vtkImagePlaneWidget</p>
 <p>There will be two copies of the cursors polydata, one in front and one at the back of the
-image plane, the separation between them is controlled by the <a class="reference internal" href="#braviz.visualization.simple_vtk.cursors.set_delta" title="braviz.visualization.simple_vtk.cursors.set_delta"><tt class="xref py py-meth docutils literal"><span class="pre">set_delta()</span></tt></a> method</p>
-<dl class="staticmethod">
+image plane, the separation between them is controlled by the <a class="reference internal" href="#braviz.visualization.simple_vtk.cursors.set_delta" title="braviz.visualization.simple_vtk.cursors.set_delta"><code class="xref py py-meth docutils literal"><span class="pre">set_delta()</span></code></a> method</p>
+<dl class="method">
 <dt id="braviz.visualization.simple_vtk.cursors.change_axis">
-<em class="property">static </em><tt class="descname">change_axis</tt><big>(</big><em>axis</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.cursors.change_axis" title="Permalink to this definition">¶</a></dt>
+<code class="descname">change_axis</code><span class="sig-paren">(</span><em>axis</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#cursors.change_axis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.cursors.change_axis" title="Permalink to this definition">¶</a></dt>
 <dd><p>Change the axis perpendicular to the image plane</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -368,9 +376,9 @@ image plane, the separation between them is controlled by the <a class="referenc
 </table>
 </dd></dl>
 
-<dl class="staticmethod">
+<dl class="method">
 <dt id="braviz.visualization.simple_vtk.cursors.set_cursor">
-<em class="property">static </em><tt class="descname">set_cursor</tt><big>(</big><em>x</em>, <em>y</em>, <em>z</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.cursors.set_cursor" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_cursor</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>z</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#cursors.set_cursor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.cursors.set_cursor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the position of the cursor</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -387,9 +395,9 @@ image plane, the separation between them is controlled by the <a class="referenc
 </table>
 </dd></dl>
 
-<dl class="staticmethod">
+<dl class="method">
 <dt id="braviz.visualization.simple_vtk.cursors.set_delta">
-<em class="property">static </em><tt class="descname">set_delta</tt><big>(</big><em>delta</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.cursors.set_delta" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_delta</code><span class="sig-paren">(</span><em>delta</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#cursors.set_delta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.cursors.set_delta" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets separation between front and back cursors.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -401,9 +409,9 @@ image plane, the separation between them is controlled by the <a class="referenc
 </table>
 </dd></dl>
 
-<dl class="staticmethod">
+<dl class="method">
 <dt id="braviz.visualization.simple_vtk.cursors.set_dimensions">
-<em class="property">static </em><tt class="descname">set_dimensions</tt><big>(</big><em>nx</em>, <em>ny</em>, <em>nz</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.cursors.set_dimensions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_dimensions</code><span class="sig-paren">(</span><em>nx</em>, <em>ny</em>, <em>nz</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#cursors.set_dimensions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.cursors.set_dimensions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the dimensions of the underlying image</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -420,9 +428,9 @@ image plane, the separation between them is controlled by the <a class="referenc
 </table>
 </dd></dl>
 
-<dl class="staticmethod">
+<dl class="method">
 <dt id="braviz.visualization.simple_vtk.cursors.set_origin">
-<em class="property">static </em><tt class="descname">set_origin</tt><big>(</big><em>x</em>, <em>y</em>, <em>z</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.cursors.set_origin" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_origin</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>z</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#cursors.set_origin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.cursors.set_origin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the origin of the underlying image</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -439,9 +447,9 @@ image plane, the separation between them is controlled by the <a class="referenc
 </table>
 </dd></dl>
 
-<dl class="staticmethod">
+<dl class="method">
 <dt id="braviz.visualization.simple_vtk.cursors.set_spacing">
-<em class="property">static </em><tt class="descname">set_spacing</tt><big>(</big><em>dx</em>, <em>dy</em>, <em>dz</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.cursors.set_spacing" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_spacing</code><span class="sig-paren">(</span><em>dx</em>, <em>dy</em>, <em>dz</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#cursors.set_spacing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.cursors.set_spacing" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the spacing of the underlying image</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -465,7 +473,7 @@ image plane, the separation between them is controlled by the <a class="referenc
 <h2>Other Utilities<a class="headerlink" href="#other-utilities" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="braviz.visualization.simple_vtk.save_ren_win_picture">
-<tt class="descname">save_ren_win_picture</tt><big>(</big><em>ren_win</em>, <em>file_name</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.save_ren_win_picture" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save_ren_win_picture</code><span class="sig-paren">(</span><em>ren_win</em>, <em>file_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#save_ren_win_picture"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.save_ren_win_picture" title="Permalink to this definition">¶</a></dt>
 <dd><p>Saves an screenshot of a render window</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -483,9 +491,9 @@ image plane, the separation between them is controlled by the <a class="referenc
 
 <dl class="function">
 <dt id="braviz.visualization.simple_vtk.build_grid">
-<tt class="descname">build_grid</tt><big>(</big><em>orig_img</em>, <em>slice</em>, <em>sampling_rate=5</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.build_grid" title="Permalink to this definition">¶</a></dt>
+<code class="descname">build_grid</code><span class="sig-paren">(</span><em>orig_img</em>, <em>img_slice</em>, <em>sampling_rate=5</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#build_grid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.build_grid" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates an homogenous grid, useful for showing the effects of transformations</p>
-<p>The grid dimensions are based on the orig_img, slice is used to position the grid along the x axis,
+<p>The grid dimensions are based on the orig_img, img_slice is used to position the grid along the x axis,
 For the moment only grids perpendicular to the x axis are available</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -493,7 +501,7 @@ For the moment only grids perpendicular to the x axis are available</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>orig_img</strong> (<a class="reference external" href="http://www.vtk.org/doc/nightly/html/classvtkImageData.html" title="See on vtk documentation"><em>vtkImageData</em></a>) &#8211; Image to base grid on</li>
-<li><strong>slice</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Slice of the image where the grid will be located (along the x asis)</li>
+<li><strong>img_slice</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Slice of the image where the grid will be located (along the x asis)</li>
 <li><strong>sampling_rate</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Density of the grid, there will be a line each <em>sampling_rate</em> voxels</li>
 </ul>
 </td>
@@ -504,7 +512,7 @@ For the moment only grids perpendicular to the x axis are available</p>
 
 <dl class="function">
 <dt id="braviz.visualization.simple_vtk.remove_nan_from_grid">
-<tt class="descname">remove_nan_from_grid</tt><big>(</big><em>grid</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.remove_nan_from_grid" title="Permalink to this definition">¶</a></dt>
+<code class="descname">remove_nan_from_grid</code><span class="sig-paren">(</span><em>grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#remove_nan_from_grid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.remove_nan_from_grid" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove missing values from a grid, it is necessary in some version of vtk to avoid crash</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -518,7 +526,7 @@ For the moment only grids perpendicular to the x axis are available</p>
 
 <dl class="function">
 <dt id="braviz.visualization.simple_vtk.get_arrow">
-<tt class="descname">get_arrow</tt><big>(</big><em>head</em>, <em>tail</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.get_arrow" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_arrow</code><span class="sig-paren">(</span><em>head</em>, <em>tail</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#get_arrow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.get_arrow" title="Permalink to this definition">¶</a></dt>
 <dd><p>create a polydata arrow, consider using vtkArrowSource</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -536,7 +544,7 @@ For the moment only grids perpendicular to the x axis are available</p>
 
 <dl class="function">
 <dt id="braviz.visualization.simple_vtk.get_window_level">
-<tt class="descname">get_window_level</tt><big>(</big><em>img</em><big>)</big><a class="headerlink" href="#braviz.visualization.simple_vtk.get_window_level" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_window_level</code><span class="sig-paren">(</span><em>img</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#get_window_level"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.get_window_level" title="Permalink to this definition">¶</a></dt>
 <dd><p>Automatically gets appropriate window and level values for displaying an image</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -568,13 +576,13 @@ For the moment only grids perpendicular to the x axis are available</p>
         <div class="left">
           
           <a href="visualization.html" title="Visualization"
-             accesskey="P">previous</a> |
+             accesskey="P" >previous</a> |
           <a href="subject_viewer.html" title="Subject Viewer"
-             accesskey="N">next</a> |
+             accesskey="N" >next</a> |
           <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |
+              >modules</a> |
           <a href="../genindex.html" title="General Index"
-             accesskey="I">index</a>
+             accesskey="I" >index</a>
           
             <br/>
             <a href="../_sources/library/simple_vtk.txt"
@@ -583,9 +591,9 @@ For the moment only grids perpendicular to the x axis are available</p>
 
         <div class="right">
           
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Diego Angulo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
         </div>
         <div class="clearer"></div>

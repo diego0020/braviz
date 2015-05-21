@@ -23,25 +23,30 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/fold_classes.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
     <link rel="top" title="Braviz Documentation" href="../index.html" />
     <link rel="up" title="Visualization" href="visualization.html" />
     <link rel="next" title="Checking image registration" href="checkboard_view.html" />
     <link rel="prev" title="Subject Viewer" href="subject_viewer.html" /> 
   </head>
-  <body>
+  <body role="document">
     
     <div class="header-wrapper">
       <div class="header">
+          <p class="logo"><a href="../index.html">
+            <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+          </a></p>
+          <!--
         <div class="headertitle"><a
-          href="../index.html"> Braviz Documentation </a></div>
+          href="../index.html"> Documentation </a></div>
+          -->
           <nav class="parents">
               <ol>
         <li><a href="../index.html"> Home </a> &raquo;</li>
-          <li><a href="index.html" >Braviz library</a> &raquo;</li>
-          <li><a href="visualization.html"  accesskey="U" >Visualization</a> &raquo;</li>
+          <li><a href="index.html"  >Braviz library</a> &raquo;</li>
+          <li><a href="visualization.html"  accesskey="U"  >Visualization</a> &raquo;</li>
                   </ol>
           </nav>
        </div>
@@ -52,15 +57,18 @@
       <div class="content">
         <div class="sidebar" id="agogo-sidebar">
             
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+            </a></p>
   <h4>Previous topic</h4>
   <p class="topless"><a href="subject_viewer.html"
                         title="previous chapter">Subject Viewer</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="checkboard_view.html"
                         title="next chapter">Checking image registration</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -80,19 +88,19 @@
             
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <span class="target" id="module-braviz.visualization.fmri_view"></span><div class="section" id="visualizaing-functional-data">
 <h1>Visualizaing functional data<a class="headerlink" href="#visualizaing-functional-data" title="Permalink to this headline">¶</a></h1>
 <p>This module contains low level utilities for displaying fMRI data. Check first if the classes in
-<a class="reference internal" href="subject_viewer.html#module-braviz.visualization.subject_viewer" title="braviz.visualization.subject_viewer"><tt class="xref py py-mod docutils literal"><span class="pre">subject_viewer</span></tt></a> can be used for your application.</p>
+<a class="reference internal" href="subject_viewer.html#module-braviz.visualization.subject_viewer" title="braviz.visualization.subject_viewer"><code class="xref py py-mod docutils literal"><span class="pre">subject_viewer</span></code></a> can be used for your application.</p>
 <dl class="class">
 <dt id="braviz.visualization.fmri_view.fMRI_blender">
-<em class="property">class </em><tt class="descname">fMRI_blender</tt><a class="headerlink" href="#braviz.visualization.fmri_view.fMRI_blender" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">fMRI_blender</code><a class="reference internal" href="../_modules/braviz/visualization/fmri_view.html#fMRI_blender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.fmri_view.fMRI_blender" title="Permalink to this definition">¶</a></dt>
 <dd><p>Blend an fMRI map with an structural image</p>
 <dl class="method">
 <dt id="braviz.visualization.fmri_view.fMRI_blender.get_blended_img">
-<tt class="descname">get_blended_img</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.fmri_view.fMRI_blender.get_blended_img" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_blended_img</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/fmri_view.html#fMRI_blender.get_blended_img"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.fmri_view.fMRI_blender.get_blended_img" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get blended image</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -106,7 +114,7 @@
 
 <dl class="method">
 <dt id="braviz.visualization.fmri_view.fMRI_blender.set_images">
-<tt class="descname">set_images</tt><big>(</big><em>mri_image</em>, <em>fmri_image</em><big>)</big><a class="headerlink" href="#braviz.visualization.fmri_view.fMRI_blender.set_images" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_images</code><span class="sig-paren">(</span><em>mri_image</em>, <em>fmri_image</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/fmri_view.html#fMRI_blender.set_images"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.fmri_view.fMRI_blender.set_images" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets structural and fMRI images</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -127,7 +135,7 @@
 
 <dl class="method">
 <dt id="braviz.visualization.fmri_view.fMRI_blender.set_luts">
-<tt class="descname">set_luts</tt><big>(</big><em>mri_lut</em>, <em>fmri_lut</em><big>)</big><a class="headerlink" href="#braviz.visualization.fmri_view.fMRI_blender.set_luts" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_luts</code><span class="sig-paren">(</span><em>mri_lut</em>, <em>fmri_lut</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/fmri_view.html#fMRI_blender.set_luts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.fmri_view.fMRI_blender.set_luts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set lookuptables for both images</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -147,7 +155,7 @@
 
 <dl class="function">
 <dt id="braviz.visualization.fmri_view.get_fmri_lut">
-<tt class="descname">get_fmri_lut</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.fmri_view.get_fmri_lut" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_fmri_lut</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/fmri_view.html#get_fmri_lut"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.fmri_view.get_fmri_lut" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a standard look up table for fMRI data</p>
 <p>If alpha is True, the opacity of the colors below the threshold will be less than one,
 more precisely, the opacity will be a ramp from 0 to 1 between 0 and the threshold</p>
@@ -172,11 +180,11 @@ minimum value shown</li>
 
 <dl class="class">
 <dt id="braviz.visualization.fmri_view.time_slice_viewer">
-<em class="property">class </em><tt class="descname">time_slice_viewer</tt><big>(</big><em>orientation=0</em><big>)</big><a class="headerlink" href="#braviz.visualization.fmri_view.time_slice_viewer" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">time_slice_viewer</code><span class="sig-paren">(</span><em>orientation=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/fmri_view.html#time_slice_viewer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.fmri_view.time_slice_viewer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class for displaying a single slice of a time-moment in BOLD time series</p>
-<dl class="staticmethod">
+<dl class="method">
 <dt id="braviz.visualization.fmri_view.time_slice_viewer.set_input">
-<em class="property">static </em><tt class="descname">set_input</tt><big>(</big><em>input_data</em>, <em>spatial_pos=0</em>, <em>time=0</em>, <em>orientation=0</em><big>)</big><a class="headerlink" href="#braviz.visualization.fmri_view.time_slice_viewer.set_input" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_input</code><span class="sig-paren">(</span><em>input_data</em>, <em>spatial_pos=0</em>, <em>time=0</em>, <em>orientation=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/fmri_view.html#time_slice_viewer.set_input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.fmri_view.time_slice_viewer.set_input" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the input 4D image, the position across the perpendicular axis, the time point and the orientation</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -194,9 +202,9 @@ minimum value shown</li>
 </table>
 </dd></dl>
 
-<dl class="staticmethod">
+<dl class="method">
 <dt id="braviz.visualization.fmri_view.time_slice_viewer.set_time_point">
-<em class="property">static </em><tt class="descname">set_time_point</tt><big>(</big><em>time</em><big>)</big><a class="headerlink" href="#braviz.visualization.fmri_view.time_slice_viewer.set_time_point" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_time_point</code><span class="sig-paren">(</span><em>time</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/fmri_view.html#time_slice_viewer.set_time_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.fmri_view.time_slice_viewer.set_time_point" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the time point at which the time series should be sampled</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -208,9 +216,9 @@ minimum value shown</li>
 </table>
 </dd></dl>
 
-<dl class="staticmethod">
+<dl class="method">
 <dt id="braviz.visualization.fmri_view.time_slice_viewer.set_window_level">
-<em class="property">static </em><tt class="descname">set_window_level</tt><big>(</big><em>window</em>, <em>level</em><big>)</big><a class="headerlink" href="#braviz.visualization.fmri_view.time_slice_viewer.set_window_level" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_window_level</code><span class="sig-paren">(</span><em>window</em>, <em>level</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/fmri_view.html#time_slice_viewer.set_window_level"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.fmri_view.time_slice_viewer.set_window_level" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets window and level for the display image</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -226,9 +234,9 @@ minimum value shown</li>
 </table>
 </dd></dl>
 
-<dl class="staticmethod">
+<dl class="method">
 <dt id="braviz.visualization.fmri_view.time_slice_viewer.set_z_spacing">
-<em class="property">static </em><tt class="descname">set_z_spacing</tt><big>(</big><em>spacing</em><big>)</big><a class="headerlink" href="#braviz.visualization.fmri_view.time_slice_viewer.set_z_spacing" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_z_spacing</code><span class="sig-paren">(</span><em>spacing</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/fmri_view.html#time_slice_viewer.set_z_spacing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.fmri_view.time_slice_viewer.set_z_spacing" title="Permalink to this definition">¶</a></dt>
 <dd><p>spacing in perpendicular axis, used to position the resulting slice in the right place</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -259,13 +267,13 @@ minimum value shown</li>
         <div class="left">
           
           <a href="subject_viewer.html" title="Subject Viewer"
-             accesskey="P">previous</a> |
+             accesskey="P" >previous</a> |
           <a href="checkboard_view.html" title="Checking image registration"
-             accesskey="N">next</a> |
+             accesskey="N" >next</a> |
           <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |
+              >modules</a> |
           <a href="../genindex.html" title="General Index"
-             accesskey="I">index</a>
+             accesskey="I" >index</a>
           
             <br/>
             <a href="../_sources/library/fmri_view.txt"
@@ -274,9 +282,9 @@ minimum value shown</li>
 
         <div class="right">
           
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Diego Angulo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
         </div>
         <div class="clearer"></div>

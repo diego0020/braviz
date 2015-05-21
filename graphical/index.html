@@ -23,19 +23,24 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/fold_classes.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
     <link rel="top" title="Braviz Documentation" href="../index.html" />
     <link rel="next" title="Braviz Concepts" href="concepts.html" />
     <link rel="prev" title="Braviz: Interactive brain data visualization" href="../index.html" /> 
   </head>
-  <body>
+  <body role="document">
     
     <div class="header-wrapper">
       <div class="header">
+          <p class="logo"><a href="../index.html">
+            <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+          </a></p>
+          <!--
         <div class="headertitle"><a
-          href="../index.html"> Braviz Documentation </a></div>
+          href="../index.html"> Documentation </a></div>
+          -->
           <nav class="parents">
               <ol>
         <li><a href="../index.html"> Home </a> &raquo;</li>
@@ -49,8 +54,11 @@
       <div class="content">
         <div class="sidebar" id="agogo-sidebar">
             
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+            </a></p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Visual Analytics with Braviz</a><ul>
@@ -76,7 +84,7 @@
             
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="visual-analytics-with-braviz">
 <h1>Visual Analytics with Braviz<a class="headerlink" href="#visual-analytics-with-braviz" title="Permalink to this headline">¶</a></h1>
@@ -161,7 +169,7 @@ until all applications stabilize and reconnect communications.</p>
 <div class="line"><br /></div>
 </div>
 <p><strong>How do I change the current project?</strong></p>
-<p>Use the configuration file <tt class="docutils literal"><span class="pre">braviz.cfg</span></tt> found at the braviz applications directory. For more information
+<p>Use the configuration file <code class="docutils literal"><span class="pre">braviz.cfg</span></code> found at the braviz applications directory. For more information
 read <a class="reference internal" href="configuration.html"><em>Configuring Braviz</em></a></p>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -224,9 +232,9 @@ read <a class="reference internal" href="configuration.html"><em>Configuring Bra
 
         <div class="right">
           
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Diego Angulo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
         </div>
         <div class="clearer"></div>
