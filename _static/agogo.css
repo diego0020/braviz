@@ -31,7 +31,7 @@ div.header, div.content, div.footer {
 
 div.header-wrapper {
   background: #ffffff;
-  border-bottom: 3px solid #1F414C;
+  // border-bottom: 3px solid #1F414C;
 }
 
 nav.parents ol {
@@ -726,12 +726,11 @@ margin-bottom: 1em;
 div#agogo-sidebar {
     max-width: 280px;
     position: fixed;
-    float: right;
     overflow: auto;
     height: auto;
     right: 50px;
     max-height: 90%;
-    margin-top: -5em;
+    top: 5%;
 }
 div.header, div.content, div.footer {
   max-width: 70em;
