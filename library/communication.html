@@ -23,25 +23,30 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/fold_classes.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
     <link rel="top" title="Braviz Documentation" href="../index.html" />
     <link rel="up" title="Interaction" href="interaction.html" />
     <link rel="next" title="R functions" href="r_funcs.html" />
     <link rel="prev" title="Braviz Qt Widgets" href="qt_widgets.html" /> 
   </head>
-  <body>
+  <body role="document">
     
     <div class="header-wrapper">
       <div class="header">
+          <p class="logo"><a href="../index.html">
+            <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+          </a></p>
+          <!--
         <div class="headertitle"><a
-          href="../index.html"> Braviz Documentation </a></div>
+          href="../index.html"> Documentation </a></div>
+          -->
           <nav class="parents">
               <ol>
         <li><a href="../index.html"> Home </a> &raquo;</li>
-          <li><a href="index.html" >Braviz library</a> &raquo;</li>
-          <li><a href="interaction.html"  accesskey="U" >Interaction</a> &raquo;</li>
+          <li><a href="index.html"  >Braviz library</a> &raquo;</li>
+          <li><a href="interaction.html"  accesskey="U"  >Interaction</a> &raquo;</li>
                   </ol>
           </nav>
        </div>
@@ -52,8 +57,11 @@
       <div class="content">
         <div class="sidebar" id="agogo-sidebar">
             
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+            </a></p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Braviz Inter Application Communication</a><ul>
@@ -72,7 +80,7 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="r_funcs.html"
                         title="next chapter">R functions</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -92,7 +100,7 @@
             
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <span class="target" id="module-braviz.interaction.connection"></span><div class="section" id="braviz-inter-application-communication">
 <h1>Braviz Inter Application Communication<a class="headerlink" href="#braviz-inter-application-communication" title="Permalink to this headline">¶</a></h1>
@@ -107,15 +115,15 @@ messages from it. On the other side it acts as a sink receiving messages from al
 It has two addresses, one for publishing messages, to which applications should subscribe,
 and a listening one, to which applications should send messages. These are the only two
 well known addresses in the network.</p>
-<p>The broker is implemented in <a class="reference internal" href="#braviz.interaction.connection.MessageServer" title="braviz.interaction.connection.MessageServer"><tt class="xref py py-class docutils literal"><span class="pre">MessageServer</span></tt></a>,
-and the client side is implement in <a class="reference internal" href="#braviz.interaction.connection.MessageClient" title="braviz.interaction.connection.MessageClient"><tt class="xref py py-class docutils literal"><span class="pre">MessageClient</span></tt></a>.
+<p>The broker is implemented in <a class="reference internal" href="#braviz.interaction.connection.MessageServer" title="braviz.interaction.connection.MessageServer"><code class="xref py py-class docutils literal"><span class="pre">MessageServer</span></code></a>,
+and the client side is implement in <a class="reference internal" href="#braviz.interaction.connection.MessageClient" title="braviz.interaction.connection.MessageClient"><code class="xref py py-class docutils literal"><span class="pre">MessageClient</span></code></a>.
 Both of these classes generate PyQt-Signals when they receive a message, and therefore are easy
 to connect to the rest of your application.</p>
 <div class="section" id="message-broker">
 <h2>Message Broker<a class="headerlink" href="#message-broker" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="braviz.interaction.connection.MessageServer">
-<em class="property">class </em><tt class="descname">MessageServer</tt><big>(</big><em>local_only=True</em><big>)</big><a class="headerlink" href="#braviz.interaction.connection.MessageServer" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">MessageServer</code><span class="sig-paren">(</span><em>local_only=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/connection.html#MessageServer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.connection.MessageServer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Acts as a message broker, listens for messages in one port, and broadcasts them in another port</p>
 <p>Also generates the <em>message_received</em> signal when it receives a message with the message string.
 The broadcast and receive addresses are binded to ephimeral ports, use the respective
@@ -124,37 +132,37 @@ properties to query them.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>local_only</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If <tt class="docutils literal"><span class="pre">True</span></tt> the server will only accept connections from localhost</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>local_only</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If <code class="docutils literal"><span class="pre">True</span></code> the server will only accept connections from localhost</td>
 </tr>
 </tbody>
 </table>
 <dl class="attribute">
 <dt id="braviz.interaction.connection.MessageServer.broadcast_address">
-<tt class="descname">broadcast_address</tt><a class="headerlink" href="#braviz.interaction.connection.MessageServer.broadcast_address" title="Permalink to this definition">¶</a></dt>
+<code class="descname">broadcast_address</code><a class="headerlink" href="#braviz.interaction.connection.MessageServer.broadcast_address" title="Permalink to this definition">¶</a></dt>
 <dd><p>The address in which this server broadcasts messages</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="braviz.interaction.connection.MessageServer.pause">
-<tt class="descname">pause</tt><a class="headerlink" href="#braviz.interaction.connection.MessageServer.pause" title="Permalink to this definition">¶</a></dt>
+<code class="descname">pause</code><a class="headerlink" href="#braviz.interaction.connection.MessageServer.pause" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pause the server, received messages will be ignored.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="braviz.interaction.connection.MessageServer.receive_address">
-<tt class="descname">receive_address</tt><a class="headerlink" href="#braviz.interaction.connection.MessageServer.receive_address" title="Permalink to this definition">¶</a></dt>
+<code class="descname">receive_address</code><a class="headerlink" href="#braviz.interaction.connection.MessageServer.receive_address" title="Permalink to this definition">¶</a></dt>
 <dd><p>The address in which the server listens for messages</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="braviz.interaction.connection.MessageServer.send_message">
-<tt class="descname">send_message</tt><big>(</big><em>msg</em><big>)</big><a class="headerlink" href="#braviz.interaction.connection.MessageServer.send_message" title="Permalink to this definition">¶</a></dt>
+<code class="descname">send_message</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/connection.html#MessageServer.send_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.connection.MessageServer.send_message" title="Permalink to this definition">¶</a></dt>
 <dd><p>Send a message in the broadcast address</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Message to broadcast</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; Message to broadcast, will be encoded as JSON</td>
 </tr>
 </tbody>
 </table>
@@ -162,13 +170,13 @@ properties to query them.</p>
 
 <dl class="method">
 <dt id="braviz.interaction.connection.MessageServer.start_server">
-<tt class="descname">start_server</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.connection.MessageServer.start_server" title="Permalink to this definition">¶</a></dt>
+<code class="descname">start_server</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/connection.html#MessageServer.start_server"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.connection.MessageServer.start_server" title="Permalink to this definition">¶</a></dt>
 <dd><p>Starts the server thread, called by the constructor</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="braviz.interaction.connection.MessageServer.stop_server">
-<tt class="descname">stop_server</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.connection.MessageServer.stop_server" title="Permalink to this definition">¶</a></dt>
+<code class="descname">stop_server</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/connection.html#MessageServer.stop_server"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.connection.MessageServer.stop_server" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stops the server thread</p>
 </dd></dl>
 
@@ -179,8 +187,8 @@ properties to query them.</p>
 <h2>Message Client<a class="headerlink" href="#message-client" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="braviz.interaction.connection.MessageClient">
-<em class="property">class </em><tt class="descname">MessageClient</tt><big>(</big><em>server_broadcast=None</em>, <em>server_receive=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.connection.MessageClient" title="Permalink to this definition">¶</a></dt>
-<dd><p>A client that connects to <a class="reference internal" href="#braviz.interaction.connection.MessageServer" title="braviz.interaction.connection.MessageServer"><tt class="xref py py-class docutils literal"><span class="pre">MessageServer</span></tt></a></p>
+<em class="property">class </em><code class="descname">MessageClient</code><span class="sig-paren">(</span><em>server_broadcast=None</em>, <em>server_receive=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/connection.html#MessageClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.connection.MessageClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>A client that connects to <a class="reference internal" href="#braviz.interaction.connection.MessageServer" title="braviz.interaction.connection.MessageServer"><code class="xref py py-class docutils literal"><span class="pre">MessageServer</span></code></a></p>
 <p>When it receives a message it emits the <em>message_received</em> signal with the message string.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -196,19 +204,19 @@ properties to query them.</p>
 </table>
 <dl class="method">
 <dt id="braviz.interaction.connection.MessageClient.connect_to_server">
-<tt class="descname">connect_to_server</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.connection.MessageClient.connect_to_server" title="Permalink to this definition">¶</a></dt>
+<code class="descname">connect_to_server</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/connection.html#MessageClient.connect_to_server"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.connection.MessageClient.connect_to_server" title="Permalink to this definition">¶</a></dt>
 <dd><p>Connect to the server, called by the constructor</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="braviz.interaction.connection.MessageClient.send_message">
-<tt class="descname">send_message</tt><big>(</big><em>msg</em><big>)</big><a class="headerlink" href="#braviz.interaction.connection.MessageClient.send_message" title="Permalink to this definition">¶</a></dt>
+<code class="descname">send_message</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/connection.html#MessageClient.send_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.connection.MessageClient.send_message" title="Permalink to this definition">¶</a></dt>
 <dd><p>Send a message</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Message to send to the server</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; Message to send to the server, will be encoded as JSON</td>
 </tr>
 </tbody>
 </table>
@@ -216,19 +224,19 @@ properties to query them.</p>
 
 <dl class="attribute">
 <dt id="braviz.interaction.connection.MessageClient.server_broadcast">
-<tt class="descname">server_broadcast</tt><a class="headerlink" href="#braviz.interaction.connection.MessageClient.server_broadcast" title="Permalink to this definition">¶</a></dt>
+<code class="descname">server_broadcast</code><a class="headerlink" href="#braviz.interaction.connection.MessageClient.server_broadcast" title="Permalink to this definition">¶</a></dt>
 <dd><p>The server broadcast address</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="braviz.interaction.connection.MessageClient.server_receive">
-<tt class="descname">server_receive</tt><a class="headerlink" href="#braviz.interaction.connection.MessageClient.server_receive" title="Permalink to this definition">¶</a></dt>
+<code class="descname">server_receive</code><a class="headerlink" href="#braviz.interaction.connection.MessageClient.server_receive" title="Permalink to this definition">¶</a></dt>
 <dd><p>The server receive address</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="braviz.interaction.connection.MessageClient.stop">
-<tt class="descname">stop</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.connection.MessageClient.stop" title="Permalink to this definition">¶</a></dt>
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/connection.html#MessageClient.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.connection.MessageClient.stop" title="Permalink to this definition">¶</a></dt>
 <dd><p>stop the client</p>
 </dd></dl>
 
@@ -236,10 +244,10 @@ properties to query them.</p>
 
 <dl class="class">
 <dt id="braviz.interaction.connection.PassiveMessageClient">
-<em class="property">class </em><tt class="descname">PassiveMessageClient</tt><big>(</big><em>server_broadcast=None</em>, <em>server_receive=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.connection.PassiveMessageClient" title="Permalink to this definition">¶</a></dt>
-<dd><p>A client that connects to <a class="reference internal" href="#braviz.interaction.connection.MessageServer" title="braviz.interaction.connection.MessageServer"><tt class="xref py py-class docutils literal"><span class="pre">MessageServer</span></tt></a></p>
+<em class="property">class </em><code class="descname">PassiveMessageClient</code><span class="sig-paren">(</span><em>server_broadcast=None</em>, <em>server_receive=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/connection.html#PassiveMessageClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.connection.PassiveMessageClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>A client that connects to <a class="reference internal" href="#braviz.interaction.connection.MessageServer" title="braviz.interaction.connection.MessageServer"><code class="xref py py-class docutils literal"><span class="pre">MessageServer</span></code></a></p>
 <p>When it receives a message it keeps it in memory. The last message may be polled using the
-method <a class="reference internal" href="#braviz.interaction.connection.PassiveMessageClient.get_last_message" title="braviz.interaction.connection.PassiveMessageClient.get_last_message"><tt class="xref py py-meth docutils literal"><span class="pre">get_last_message()</span></tt></a></p>
+method <a class="reference internal" href="#braviz.interaction.connection.PassiveMessageClient.get_last_message" title="braviz.interaction.connection.PassiveMessageClient.get_last_message"><code class="xref py py-meth docutils literal"><span class="pre">get_last_message()</span></code></a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -254,19 +262,19 @@ method <a class="reference internal" href="#braviz.interaction.connection.Passiv
 </table>
 <dl class="method">
 <dt id="braviz.interaction.connection.PassiveMessageClient.connect_to_server">
-<tt class="descname">connect_to_server</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.connection.PassiveMessageClient.connect_to_server" title="Permalink to this definition">¶</a></dt>
+<code class="descname">connect_to_server</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/connection.html#PassiveMessageClient.connect_to_server"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.connection.PassiveMessageClient.connect_to_server" title="Permalink to this definition">¶</a></dt>
 <dd><p>Connect to the server, called by the constructor</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="braviz.interaction.connection.PassiveMessageClient.get_last_message">
-<tt class="descname">get_last_message</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.connection.PassiveMessageClient.get_last_message" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_last_message</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/connection.html#PassiveMessageClient.get_last_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.connection.PassiveMessageClient.get_last_message" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the last received message and a consecutive number</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><tt class="docutils literal"><span class="pre">number,</span> <span class="pre">message_text</span></tt>; where the number will increase each time a new message arrives</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">number,</span> <span class="pre">message_text</span></code>; where the number will increase each time a new message arrives</td>
 </tr>
 </tbody>
 </table>
@@ -274,13 +282,13 @@ method <a class="reference internal" href="#braviz.interaction.connection.Passiv
 
 <dl class="method">
 <dt id="braviz.interaction.connection.PassiveMessageClient.send_message">
-<tt class="descname">send_message</tt><big>(</big><em>msg</em><big>)</big><a class="headerlink" href="#braviz.interaction.connection.PassiveMessageClient.send_message" title="Permalink to this definition">¶</a></dt>
+<code class="descname">send_message</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/connection.html#PassiveMessageClient.send_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.connection.PassiveMessageClient.send_message" title="Permalink to this definition">¶</a></dt>
 <dd><p>Send a message</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Message to send to the server</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; Message to send to the server</td>
 </tr>
 </tbody>
 </table>
@@ -288,19 +296,19 @@ method <a class="reference internal" href="#braviz.interaction.connection.Passiv
 
 <dl class="attribute">
 <dt id="braviz.interaction.connection.PassiveMessageClient.server_broadcast">
-<tt class="descname">server_broadcast</tt><a class="headerlink" href="#braviz.interaction.connection.PassiveMessageClient.server_broadcast" title="Permalink to this definition">¶</a></dt>
+<code class="descname">server_broadcast</code><a class="headerlink" href="#braviz.interaction.connection.PassiveMessageClient.server_broadcast" title="Permalink to this definition">¶</a></dt>
 <dd><p>The server broadcast address</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="braviz.interaction.connection.PassiveMessageClient.server_receive">
-<tt class="descname">server_receive</tt><a class="headerlink" href="#braviz.interaction.connection.PassiveMessageClient.server_receive" title="Permalink to this definition">¶</a></dt>
+<code class="descname">server_receive</code><a class="headerlink" href="#braviz.interaction.connection.PassiveMessageClient.server_receive" title="Permalink to this definition">¶</a></dt>
 <dd><p>The server receive address</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="braviz.interaction.connection.PassiveMessageClient.stop">
-<tt class="descname">stop</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.connection.PassiveMessageClient.stop" title="Permalink to this definition">¶</a></dt>
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/connection.html#PassiveMessageClient.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.connection.PassiveMessageClient.stop" title="Permalink to this definition">¶</a></dt>
 <dd><p>stop the client</p>
 </dd></dl>
 
@@ -308,14 +316,17 @@ method <a class="reference internal" href="#braviz.interaction.connection.Passiv
 
 <dl class="class">
 <dt id="braviz.interaction.connection.GenericMessageClient">
-<em class="property">class </em><tt class="descname">GenericMessageClient</tt><big>(</big><em>handler</em>, <em>server_broadcast=None</em>, <em>server_receive=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.connection.GenericMessageClient" title="Permalink to this definition">¶</a></dt>
-<dd><p>A client that connects to <a class="reference internal" href="#braviz.interaction.connection.MessageServer" title="braviz.interaction.connection.MessageServer"><tt class="xref py py-class docutils literal"><span class="pre">MessageServer</span></tt></a></p>
-<p>When it receives a message it calls <tt class="docutils literal"><span class="pre">handle_new_message</span></tt> on the handler</p>
+<em class="property">class </em><code class="descname">GenericMessageClient</code><span class="sig-paren">(</span><em>handler</em>, <em>server_broadcast=None</em>, <em>server_receive=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/connection.html#GenericMessageClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.connection.GenericMessageClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>A client that connects to <a class="reference internal" href="#braviz.interaction.connection.MessageServer" title="braviz.interaction.connection.MessageServer"><code class="xref py py-class docutils literal"><span class="pre">MessageServer</span></code></a></p>
+<p>When it receives a message it calls <code class="docutils literal"><span class="pre">handle_new_message</span></code> on the handler,
+optionally, if the handler hast the <code class="docutils literal"><span class="pre">handle_json_message</span></code>, it will be called with the
+raw json message as argument.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>handler</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><em>object</em></a>) &#8211; Must implement the <code class="docutils literal"><span class="pre">handle_new_message</span></code> method.</li>
 <li><strong>server_broadcast</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Address of the server broadcast port</li>
 <li><strong>server_receive</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Address of the server receive port</li>
 </ul>
@@ -325,13 +336,31 @@ method <a class="reference internal" href="#braviz.interaction.connection.Passiv
 </table>
 <dl class="method">
 <dt id="braviz.interaction.connection.GenericMessageClient.connect_to_server">
-<tt class="descname">connect_to_server</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.connection.GenericMessageClient.connect_to_server" title="Permalink to this definition">¶</a></dt>
+<code class="descname">connect_to_server</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/connection.html#GenericMessageClient.connect_to_server"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.connection.GenericMessageClient.connect_to_server" title="Permalink to this definition">¶</a></dt>
 <dd><p>Connect to the server, called by the constructor</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="braviz.interaction.connection.GenericMessageClient.send_json_message">
+<code class="descname">send_json_message</code><span class="sig-paren">(</span><em>net_msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/connection.html#GenericMessageClient.send_json_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.connection.GenericMessageClient.send_json_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a message already encoded as json</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This message will also bounce to the handler, be careful with loops</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>net_msg</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Message to send to the server</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="braviz.interaction.connection.GenericMessageClient.send_message">
-<tt class="descname">send_message</tt><big>(</big><em>msg</em><big>)</big><a class="headerlink" href="#braviz.interaction.connection.GenericMessageClient.send_message" title="Permalink to this definition">¶</a></dt>
+<code class="descname">send_message</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/connection.html#GenericMessageClient.send_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.connection.GenericMessageClient.send_message" title="Permalink to this definition">¶</a></dt>
 <dd><p>Send a message</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
@@ -341,7 +370,7 @@ method <a class="reference internal" href="#braviz.interaction.connection.Passiv
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Message to send to the server</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; Message to send to the server</td>
 </tr>
 </tbody>
 </table>
@@ -349,19 +378,19 @@ method <a class="reference internal" href="#braviz.interaction.connection.Passiv
 
 <dl class="attribute">
 <dt id="braviz.interaction.connection.GenericMessageClient.server_broadcast">
-<tt class="descname">server_broadcast</tt><a class="headerlink" href="#braviz.interaction.connection.GenericMessageClient.server_broadcast" title="Permalink to this definition">¶</a></dt>
+<code class="descname">server_broadcast</code><a class="headerlink" href="#braviz.interaction.connection.GenericMessageClient.server_broadcast" title="Permalink to this definition">¶</a></dt>
 <dd><p>The server broadcast address</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="braviz.interaction.connection.GenericMessageClient.server_receive">
-<tt class="descname">server_receive</tt><a class="headerlink" href="#braviz.interaction.connection.GenericMessageClient.server_receive" title="Permalink to this definition">¶</a></dt>
+<code class="descname">server_receive</code><a class="headerlink" href="#braviz.interaction.connection.GenericMessageClient.server_receive" title="Permalink to this definition">¶</a></dt>
 <dd><p>The server receive address</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="braviz.interaction.connection.GenericMessageClient.stop">
-<tt class="descname">stop</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.connection.GenericMessageClient.stop" title="Permalink to this definition">¶</a></dt>
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/connection.html#GenericMessageClient.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.connection.GenericMessageClient.stop" title="Permalink to this definition">¶</a></dt>
 <dd><p>stop the client</p>
 </dd></dl>
 
@@ -373,23 +402,23 @@ method <a class="reference internal" href="#braviz.interaction.connection.Passiv
 of the system</p>
 <dl class="class">
 <dt id="braviz.interaction.tornado_connection.MessageHandler">
-<em class="property">class </em><tt class="descname">MessageHandler</tt><big>(</big><em>application</em>, <em>request</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.interaction.tornado_connection.MessageHandler" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">MessageHandler</code><span class="sig-paren">(</span><em>application</em>, <em>request</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/tornado_connection.html#MessageHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.tornado_connection.MessageHandler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Allow querying for messages and sending messages through http</p>
 <dl class="docutils">
-<dt><strong>GET</strong> requests will receive json data <tt class="docutils literal"><span class="pre">{&quot;count&quot;:&lt;n&gt;,&quot;message&quot;,&lt;s&gt;}</span></tt> where count is a number</dt>
+<dt><strong>GET</strong> requests will receive json data <code class="docutils literal"><span class="pre">{&quot;count&quot;:&lt;n&gt;,&quot;message&quot;,&lt;s&gt;}</span></code> where count is a number</dt>
 <dd>that increases with any new message, and message is the text of the last message.</dd>
 </dl>
-<p><strong>POST</strong> requests allow to send messages. It is required to have a <tt class="docutils literal"><span class="pre">&quot;message&quot;</span></tt> parameter in the
+<p><strong>POST</strong> requests allow to send messages. It is required to have a <code class="docutils literal"><span class="pre">&quot;message&quot;</span></code> parameter in the
 request body</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="braviz.interaction.tornado_connection.LongPollMessageHandler">
-<em class="property">class </em><tt class="descname">LongPollMessageHandler</tt><big>(</big><em>application</em>, <em>request</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.interaction.tornado_connection.LongPollMessageHandler" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">LongPollMessageHandler</code><span class="sig-paren">(</span><em>application</em>, <em>request</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/tornado_connection.html#LongPollMessageHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.tornado_connection.LongPollMessageHandler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Allow querying for messages and sending messages through http</p>
-<p><strong>GET</strong> requests will receive json data <tt class="docutils literal"><span class="pre">{&quot;message&quot;,&lt;s&gt;}</span></tt>. This request will not return until a new
+<p><strong>GET</strong> requests will receive json data <code class="docutils literal"><span class="pre">{&quot;message&quot;,&lt;s&gt;}</span></code>. This request will not return until a new
 message is available. (Long poll)</p>
-<p><strong>POST</strong> requests allow to send messages. It is required to have a <tt class="docutils literal"><span class="pre">&quot;message&quot;</span></tt> parameter in the
+<p><strong>POST</strong> requests allow to send messages. It is required to have a <code class="docutils literal"><span class="pre">&quot;message&quot;</span></code> parameter in the
 request body</p>
 </dd></dl>
 
@@ -412,13 +441,13 @@ request body</p>
         <div class="left">
           
           <a href="qt_widgets.html" title="Braviz Qt Widgets"
-             accesskey="P">previous</a> |
+             accesskey="P" >previous</a> |
           <a href="r_funcs.html" title="R functions"
-             accesskey="N">next</a> |
+             accesskey="N" >next</a> |
           <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |
+              >modules</a> |
           <a href="../genindex.html" title="General Index"
-             accesskey="I">index</a>
+             accesskey="I" >index</a>
           
             <br/>
             <a href="../_sources/library/communication.txt"
@@ -427,9 +456,9 @@ request body</p>
 
         <div class="right">
           
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Diego Angulo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
         </div>
         <div class="clearer"></div>

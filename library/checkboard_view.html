@@ -23,25 +23,30 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/fold_classes.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
     <link rel="top" title="Braviz Documentation" href="../index.html" />
     <link rel="up" title="Visualization" href="visualization.html" />
     <link rel="next" title="The matplotlib widget" href="matplotlib_widget.html" />
     <link rel="prev" title="Visualizaing functional data" href="fmri_view.html" /> 
   </head>
-  <body>
+  <body role="document">
     
     <div class="header-wrapper">
       <div class="header">
+          <p class="logo"><a href="../index.html">
+            <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+          </a></p>
+          <!--
         <div class="headertitle"><a
-          href="../index.html"> Braviz Documentation </a></div>
+          href="../index.html"> Documentation </a></div>
+          -->
           <nav class="parents">
               <ol>
         <li><a href="../index.html"> Home </a> &raquo;</li>
-          <li><a href="index.html" >Braviz library</a> &raquo;</li>
-          <li><a href="visualization.html"  accesskey="U" >Visualization</a> &raquo;</li>
+          <li><a href="index.html"  >Braviz library</a> &raquo;</li>
+          <li><a href="visualization.html"  accesskey="U"  >Visualization</a> &raquo;</li>
                   </ol>
           </nav>
        </div>
@@ -52,15 +57,18 @@
       <div class="content">
         <div class="sidebar" id="agogo-sidebar">
             
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+            </a></p>
   <h4>Previous topic</h4>
   <p class="topless"><a href="fmri_view.html"
                         title="previous chapter">Visualizaing functional data</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="matplotlib_widget.html"
                         title="next chapter">The matplotlib widget</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -80,25 +88,25 @@
             
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <span class="target" id="module-braviz.visualization.checkerboard_view"></span><div class="section" id="checking-image-registration">
 <h1>Checking image registration<a class="headerlink" href="#checking-image-registration" title="Permalink to this headline">¶</a></h1>
 <p>This viewer and widget are designed to compare two images and check if the registration was correct.</p>
 <dl class="class">
 <dt id="braviz.visualization.checkerboard_view.CheckboardView">
-<em class="property">class </em><tt class="descname">CheckboardView</tt><big>(</big><em>render_window_interactor</em>, <em>reader</em>, <em>widget</em><big>)</big><a class="headerlink" href="#braviz.visualization.checkerboard_view.CheckboardView" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">CheckboardView</code><span class="sig-paren">(</span><em>render_window_interactor</em>, <em>reader</em>, <em>widget</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/checkerboard_view.html#CheckboardView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.checkerboard_view.CheckboardView" title="Permalink to this definition">¶</a></dt>
 <dd><p>Viewer to compare two images</p>
 <dl class="method">
 <dt id="braviz.visualization.checkerboard_view.CheckboardView.change_space">
-<tt class="descname">change_space</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.checkerboard_view.CheckboardView.change_space" title="Permalink to this definition">¶</a></dt>
+<code class="descname">change_space</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/checkerboard_view.html#CheckboardView.change_space"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.checkerboard_view.CheckboardView.change_space" title="Permalink to this definition">¶</a></dt>
 <dd><p>Change current coordinate system</p>
-<p>new_space (str) : new coordinate system, see <a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader.get" title="braviz.readAndFilter.base_reader.BaseReader.get"><tt class="xref py py-meth docutils literal"><span class="pre">get()</span></tt></a></p>
+<p>new_space (str) : new coordinate system, see <a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader.get" title="braviz.readAndFilter.base_reader.BaseReader.get"><code class="xref py py-meth docutils literal"><span class="pre">get()</span></code></a></p>
 </dd></dl>
 
 <dl class="method">
 <dt id="braviz.visualization.checkerboard_view.CheckboardView.get_number_of_image_slices">
-<tt class="descname">get_number_of_image_slices</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.checkerboard_view.CheckboardView.get_number_of_image_slices" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_number_of_image_slices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/checkerboard_view.html#CheckboardView.get_number_of_image_slices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.checkerboard_view.CheckboardView.get_number_of_image_slices" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the number of slices available in the current direction</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -112,10 +120,13 @@
 
 <dl class="method">
 <dt id="braviz.visualization.checkerboard_view.CheckboardView.reset_camera">
-<tt class="descname">reset_camera</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.checkerboard_view.CheckboardView.reset_camera" title="Permalink to this definition">¶</a></dt>
+<code class="descname">reset_camera</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/checkerboard_view.html#CheckboardView.reset_camera"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.checkerboard_view.CheckboardView.reset_camera" title="Permalink to this definition">¶</a></dt>
 <dd><p>resets the current camera to standard locations.</p>
-<blockquote>
-<div><ul class="simple">
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>position</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; <ul class="simple">
 <li>0: initial 3d view</li>
 <li>1: left</li>
 <li>2: right</li>
@@ -124,18 +135,15 @@
 <li>5: top</li>
 <li>6: bottom</li>
 </ul>
-</div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
+</td>
+</tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="method">
 <dt id="braviz.visualization.checkerboard_view.CheckboardView.set_image_slice">
-<tt class="descname">set_image_slice</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.checkerboard_view.CheckboardView.set_image_slice" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_image_slice</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/checkerboard_view.html#CheckboardView.set_image_slice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.checkerboard_view.CheckboardView.set_image_slice" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set plane widget slice</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -149,7 +157,7 @@
 
 <dl class="method">
 <dt id="braviz.visualization.checkerboard_view.CheckboardView.set_img1">
-<tt class="descname">set_img1</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.checkerboard_view.CheckboardView.set_img1" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_img1</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/checkerboard_view.html#CheckboardView.set_img1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.checkerboard_view.CheckboardView.set_img1" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the first image</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -157,9 +165,10 @@
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>subj</strong> &#8211; Subject image code</li>
-<li><strong>mod</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; modality (see <a class="reference internal" href="subject_viewer.html#braviz.visualization.subject_viewer.ImageManager.change_image_modality" title="braviz.visualization.subject_viewer.ImageManager.change_image_modality"><tt class="xref py py-meth docutils literal"><span class="pre">braviz.visualization.subject_viewer.ImageManager.change_image_modality()</span></tt></a>)</li>
+<li><strong>img_class</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; image class (see <a class="reference internal" href="subject_viewer.html#braviz.visualization.subject_viewer.ImageManager.change_image_modality" title="braviz.visualization.subject_viewer.ImageManager.change_image_modality"><code class="xref py py-meth docutils literal"><span class="pre">braviz.visualization.subject_viewer.ImageManager.change_image_modality()</span></code></a>)</li>
+<li><strong>img_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; image name (see <a class="reference internal" href="subject_viewer.html#braviz.visualization.subject_viewer.ImageManager.change_image_modality" title="braviz.visualization.subject_viewer.ImageManager.change_image_modality"><code class="xref py py-meth docutils literal"><span class="pre">braviz.visualization.subject_viewer.ImageManager.change_image_modality()</span></code></a>)</li>
 <li><strong>contrast</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; contrast for fMRI images</li>
-<li><strong>force</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; if <tt class="docutils literal"><span class="pre">True</span></tt> force reloading the data</li>
+<li><strong>force</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; if <code class="docutils literal"><span class="pre">True</span></code> force reloading the data</li>
 </ul>
 </td>
 </tr>
@@ -169,7 +178,7 @@
 
 <dl class="method">
 <dt id="braviz.visualization.checkerboard_view.CheckboardView.set_img2">
-<tt class="descname">set_img2</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.checkerboard_view.CheckboardView.set_img2" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_img2</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/checkerboard_view.html#CheckboardView.set_img2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.checkerboard_view.CheckboardView.set_img2" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the second image</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -177,9 +186,10 @@
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>subj</strong> &#8211; Subject image code</li>
-<li><strong>mod</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; modality (see <a class="reference internal" href="subject_viewer.html#braviz.visualization.subject_viewer.ImageManager.change_image_modality" title="braviz.visualization.subject_viewer.ImageManager.change_image_modality"><tt class="xref py py-meth docutils literal"><span class="pre">braviz.visualization.subject_viewer.ImageManager.change_image_modality()</span></tt></a>)</li>
+<li><strong>img_class</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; image class (see <a class="reference internal" href="subject_viewer.html#braviz.visualization.subject_viewer.ImageManager.change_image_modality" title="braviz.visualization.subject_viewer.ImageManager.change_image_modality"><code class="xref py py-meth docutils literal"><span class="pre">braviz.visualization.subject_viewer.ImageManager.change_image_modality()</span></code></a>)</li>
+<li><strong>img_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; image name (see <a class="reference internal" href="subject_viewer.html#braviz.visualization.subject_viewer.ImageManager.change_image_modality" title="braviz.visualization.subject_viewer.ImageManager.change_image_modality"><code class="xref py py-meth docutils literal"><span class="pre">braviz.visualization.subject_viewer.ImageManager.change_image_modality()</span></code></a>)</li>
 <li><strong>contrast</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; contrast for fMRI images</li>
-<li><strong>force</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; if <tt class="docutils literal"><span class="pre">True</span></tt> force reloading the data</li>
+<li><strong>force</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; if <code class="docutils literal"><span class="pre">True</span></code> force reloading the data</li>
 </ul>
 </td>
 </tr>
@@ -189,7 +199,7 @@
 
 <dl class="method">
 <dt id="braviz.visualization.checkerboard_view.CheckboardView.set_number_of_divisions">
-<tt class="descname">set_number_of_divisions</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.checkerboard_view.CheckboardView.set_number_of_divisions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_number_of_divisions</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/checkerboard_view.html#CheckboardView.set_number_of_divisions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.checkerboard_view.CheckboardView.set_number_of_divisions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set number of divisions in the checkboard pattern</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -203,7 +213,7 @@
 
 <dl class="method">
 <dt id="braviz.visualization.checkerboard_view.CheckboardView.set_orientation">
-<tt class="descname">set_orientation</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#braviz.visualization.checkerboard_view.CheckboardView.set_orientation" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_orientation</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/checkerboard_view.html#CheckboardView.set_orientation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.checkerboard_view.CheckboardView.set_orientation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets orientation of the plane widget</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -217,7 +227,7 @@
 
 <dl class="method">
 <dt id="braviz.visualization.checkerboard_view.CheckboardView.update_pipeline">
-<tt class="descname">update_pipeline</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.checkerboard_view.CheckboardView.update_pipeline" title="Permalink to this definition">¶</a></dt>
+<code class="descname">update_pipeline</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/checkerboard_view.html#CheckboardView.update_pipeline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.checkerboard_view.CheckboardView.update_pipeline" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates the whole visualization pipeline</p>
 </dd></dl>
 
@@ -225,24 +235,24 @@
 
 <dl class="class">
 <dt id="braviz.visualization.checkerboard_view.QCheckViewer">
-<em class="property">class </em><tt class="descname">QCheckViewer</tt><big>(</big><em>reader</em>, <em>parent</em><big>)</big><a class="headerlink" href="#braviz.visualization.checkerboard_view.QCheckViewer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Wraps the <a class="reference internal" href="#braviz.visualization.checkerboard_view.CheckboardView" title="braviz.visualization.checkerboard_view.CheckboardView"><tt class="xref py py-class docutils literal"><span class="pre">CheckboardView</span></tt></a> so that in can be connected to Qt applications.</p>
+<em class="property">class </em><code class="descname">QCheckViewer</code><span class="sig-paren">(</span><em>reader</em>, <em>parent</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/checkerboard_view.html#QCheckViewer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.checkerboard_view.QCheckViewer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wraps the <a class="reference internal" href="#braviz.visualization.checkerboard_view.CheckboardView" title="braviz.visualization.checkerboard_view.CheckboardView"><code class="xref py py-class docutils literal"><span class="pre">CheckboardView</span></code></a> so that in can be connected to Qt applications.</p>
 <dl class="method">
 <dt id="braviz.visualization.checkerboard_view.QCheckViewer.initialize_widget">
-<tt class="descname">initialize_widget</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.checkerboard_view.QCheckViewer.initialize_widget" title="Permalink to this definition">¶</a></dt>
+<code class="descname">initialize_widget</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/checkerboard_view.html#QCheckViewer.initialize_widget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.checkerboard_view.QCheckViewer.initialize_widget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Call this function <strong>after</strong> calling show on the widget or a parent</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="braviz.visualization.checkerboard_view.QCheckViewer.slice_change_handle">
-<tt class="descname">slice_change_handle</tt><big>(</big><em>new_slice</em><big>)</big><a class="headerlink" href="#braviz.visualization.checkerboard_view.QCheckViewer.slice_change_handle" title="Permalink to this definition">¶</a></dt>
+<code class="descname">slice_change_handle</code><span class="sig-paren">(</span><em>new_slice</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/checkerboard_view.html#QCheckViewer.slice_change_handle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.checkerboard_view.QCheckViewer.slice_change_handle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Emits a qt signal when the current slice is changed from vtk</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="braviz.visualization.checkerboard_view.QCheckViewer.viewer">
-<tt class="descname">viewer</tt><a class="headerlink" href="#braviz.visualization.checkerboard_view.QCheckViewer.viewer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Access to internal <a class="reference internal" href="#braviz.visualization.checkerboard_view.CheckboardView" title="braviz.visualization.checkerboard_view.CheckboardView"><tt class="xref py py-class docutils literal"><span class="pre">CheckboardView</span></tt></a> object</p>
+<code class="descname">viewer</code><a class="headerlink" href="#braviz.visualization.checkerboard_view.QCheckViewer.viewer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to internal <a class="reference internal" href="#braviz.visualization.checkerboard_view.CheckboardView" title="braviz.visualization.checkerboard_view.CheckboardView"><code class="xref py py-class docutils literal"><span class="pre">CheckboardView</span></code></a> object</p>
 </dd></dl>
 
 </dd></dl>
@@ -264,13 +274,13 @@
         <div class="left">
           
           <a href="fmri_view.html" title="Visualizaing functional data"
-             accesskey="P">previous</a> |
+             accesskey="P" >previous</a> |
           <a href="matplotlib_widget.html" title="The matplotlib widget"
-             accesskey="N">next</a> |
+             accesskey="N" >next</a> |
           <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |
+              >modules</a> |
           <a href="../genindex.html" title="General Index"
-             accesskey="I">index</a>
+             accesskey="I" >index</a>
           
             <br/>
             <a href="../_sources/library/checkboard_view.txt"
@@ -279,9 +289,9 @@
 
         <div class="right">
           
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Diego Angulo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
         </div>
         <div class="clearer"></div>

@@ -23,25 +23,30 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/fold_classes.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
     <link rel="top" title="Braviz Documentation" href="../index.html" />
     <link rel="up" title="Interaction" href="interaction.html" />
     <link rel="next" title="Braviz Qt Models" href="qt_models.html" />
     <link rel="prev" title="Interaction" href="interaction.html" /> 
   </head>
-  <body>
+  <body role="document">
     
     <div class="header-wrapper">
       <div class="header">
+          <p class="logo"><a href="../index.html">
+            <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+          </a></p>
+          <!--
         <div class="headertitle"><a
-          href="../index.html"> Braviz Documentation </a></div>
+          href="../index.html"> Documentation </a></div>
+          -->
           <nav class="parents">
               <ol>
         <li><a href="../index.html"> Home </a> &raquo;</li>
-          <li><a href="index.html" >Braviz library</a> &raquo;</li>
-          <li><a href="interaction.html"  accesskey="U" >Interaction</a> &raquo;</li>
+          <li><a href="index.html"  >Braviz library</a> &raquo;</li>
+          <li><a href="interaction.html"  accesskey="U"  >Interaction</a> &raquo;</li>
                   </ol>
           </nav>
        </div>
@@ -52,8 +57,11 @@
       <div class="content">
         <div class="sidebar" id="agogo-sidebar">
             
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+            </a></p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Braviz Qt Dialogs</a><ul>
@@ -71,7 +79,7 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="qt_models.html"
                         title="next chapter">Braviz Qt Models</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -91,7 +99,7 @@
             
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <span class="target" id="module-braviz.interaction.qt_dialogs"></span><div class="section" id="braviz-qt-dialogs">
 <h1>Braviz Qt Dialogs<a class="headerlink" href="#braviz-qt-dialogs" title="Permalink to this headline">¶</a></h1>
@@ -107,12 +115,12 @@ can be searched at the left.</p>
 <p>However there are several variations of this dialog which are appropriate for different tasks.</p>
 <dl class="class">
 <dt id="braviz.interaction.qt_dialogs.VariableSelectDialog">
-<em class="property">class </em><tt class="descname">VariableSelectDialog</tt><big>(</big><em>sample=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_dialogs.VariableSelectDialog" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">VariableSelectDialog</code><span class="sig-paren">(</span><em>sample=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_dialogs.html#VariableSelectDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_dialogs.VariableSelectDialog" title="Permalink to this definition">¶</a></dt>
 <dd><p><strong>Abstract</strong>, Implement common features for Outcome and Regressor Dialogs</p>
 <p>This class is incomplete, in order to get a full dialog consider using one of the inherited
 classes.</p>
 <p>In particular there is no ui associated with this class, in subclasses you should add a UI
-and then call <tt class="docutils literal"><span class="pre">finish_ui_setup</span></tt></p>
+and then call <code class="docutils literal"><span class="pre">finish_ui_setup</span></code></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -125,14 +133,14 @@ and then call <tt class="docutils literal"><span class="pre">finish_ui_setup</sp
 
 <dl class="class">
 <dt id="braviz.interaction.qt_dialogs.GenericVariableSelectDialog">
-<em class="property">class </em><tt class="descname">GenericVariableSelectDialog</tt><big>(</big><em>params</em>, <em>multiple=False</em>, <em>initial_selection_names=None</em>, <em>initial_selection_idx=None</em>, <em>sample=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_dialogs.GenericVariableSelectDialog" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">GenericVariableSelectDialog</code><span class="sig-paren">(</span><em>params</em>, <em>multiple=False</em>, <em>initial_selection_names=None</em>, <em>initial_selection_idx=None</em>, <em>sample=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_dialogs.html#GenericVariableSelectDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_dialogs.GenericVariableSelectDialog" title="Permalink to this definition">¶</a></dt>
 <dd><p>A dialog for selecting one or multiple variables with initial selection.</p>
-<p>This dialog is optimized for multiple selections, and it improves <a class="reference internal" href="#braviz.interaction.qt_dialogs.OutcomeSelectDialog" title="braviz.interaction.qt_dialogs.OutcomeSelectDialog"><tt class="xref py py-class docutils literal"><span class="pre">OutcomeSelectDialog</span></tt></a> in that</p>
+<p>This dialog is optimized for multiple selections, and it improves <a class="reference internal" href="#braviz.interaction.qt_dialogs.OutcomeSelectDialog" title="braviz.interaction.qt_dialogs.OutcomeSelectDialog"><code class="xref py py-class docutils literal"><span class="pre">OutcomeSelectDialog</span></code></a> in that</p>
 <blockquote>
 <div><ul class="simple">
-<li>In the <em>multiple</em> mode, the output dictionary includes a <tt class="docutils literal"><span class="pre">checked</span></tt> field with the codes of the selected variables</li>
-<li>In the <em>multiple</em> mode, initial selections can be set using the <tt class="docutils literal"><span class="pre">initial_selection_names</span></tt> and
-<tt class="docutils literal"><span class="pre">initial_selection_idx</span></tt> parameters in the constructor.</li>
+<li>In the <em>multiple</em> mode, the output dictionary includes a <code class="docutils literal"><span class="pre">checked</span></code> field with the codes of the selected variables</li>
+<li>In the <em>multiple</em> mode, initial selections can be set using the <code class="docutils literal"><span class="pre">initial_selection_names</span></code> and
+<code class="docutils literal"><span class="pre">initial_selection_idx</span></code> parameters in the constructor.</li>
 </ul>
 </div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -154,17 +162,17 @@ and then call <tt class="docutils literal"><span class="pre">finish_ui_setup</sp
 
 <dl class="class">
 <dt id="braviz.interaction.qt_dialogs.OutcomeSelectDialog">
-<em class="property">class </em><tt class="descname">OutcomeSelectDialog</tt><big>(</big><em>params_dict</em>, <em>multiple=False</em>, <em>sample=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_dialogs.OutcomeSelectDialog" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">OutcomeSelectDialog</code><span class="sig-paren">(</span><em>params_dict</em>, <em>multiple=False</em>, <em>sample=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_dialogs.html#OutcomeSelectDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_dialogs.OutcomeSelectDialog" title="Permalink to this definition">¶</a></dt>
 <dd><p>A dialog for selecting a single or multiple variable</p>
 <p>The constructor takes a dictionary which will be used to save the selection in the dialog.
 When the user clicks the <em>save and select</em> button, the dialog will close, and the current selection
-will be available in the <tt class="docutils literal"><span class="pre">selected_outcome</span></tt> field of the dictionary.</p>
-<p>If you need multiple variables consider using <a class="reference internal" href="#braviz.interaction.qt_dialogs.GenericVariableSelectDialog" title="braviz.interaction.qt_dialogs.GenericVariableSelectDialog"><tt class="xref py py-class docutils literal"><span class="pre">GenericVariableSelectDialog</span></tt></a>.</p>
-<p>If <tt class="docutils literal"><span class="pre">multiple</span> <span class="pre">=</span> <span class="pre">True</span></tt> is passed to the constructor the variable list will have check marks.
+will be available in the <code class="docutils literal"><span class="pre">selected_outcome</span></code> field of the dictionary.</p>
+<p>If you need multiple variables consider using <a class="reference internal" href="#braviz.interaction.qt_dialogs.GenericVariableSelectDialog" title="braviz.interaction.qt_dialogs.GenericVariableSelectDialog"><code class="xref py py-class docutils literal"><span class="pre">GenericVariableSelectDialog</span></code></a>.</p>
+<p>If <code class="docutils literal"><span class="pre">multiple</span> <span class="pre">=</span> <span class="pre">True</span></code> is passed to the constructor the variable list will have check marks.
 The output dictionary will still contain only one variable, but the list is available in
-the <tt class="docutils literal"><span class="pre">vars_list_model</span></tt> field. You may get a set of selected variables by calling
-<tt class="docutils literal"><span class="pre">dialog.vars_list_model.checked_set</span></tt></p>
-<p>The constructor also takes a <tt class="docutils literal"><span class="pre">sample</span></tt> parameter which can be used to set the sample used in the
+the <code class="docutils literal"><span class="pre">vars_list_model</span></code> field. You may get a set of selected variables by calling
+<code class="docutils literal"><span class="pre">dialog.vars_list_model.checked_set</span></code></p>
+<p>The constructor also takes a <code class="docutils literal"><span class="pre">sample</span></code> parameter which can be used to set the sample used in the
 right side plot.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -183,20 +191,20 @@ right side plot.</p>
 
 <dl class="class">
 <dt id="braviz.interaction.qt_dialogs.MultiPlotOutcomeSelectDialog">
-<em class="property">class </em><tt class="descname">MultiPlotOutcomeSelectDialog</tt><big>(</big><em>params_dict</em>, <em>sample=None</em>, <em>available_plots=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_dialogs.MultiPlotOutcomeSelectDialog" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">MultiPlotOutcomeSelectDialog</code><span class="sig-paren">(</span><em>params_dict</em>, <em>sample=None</em>, <em>available_plots=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_dialogs.html#MultiPlotOutcomeSelectDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_dialogs.MultiPlotOutcomeSelectDialog" title="Permalink to this definition">¶</a></dt>
 <dd><p>A dialog for selecting one variable with multiple plot options</p>
-<p>The selected variable will be available in the <tt class="docutils literal"><span class="pre">selected_outcome</span></tt> field of the
+<p>The selected variable will be available in the <code class="docutils literal"><span class="pre">selected_outcome</span></code> field of the
 <em>params_dict</em> dictionary.</p>
-<p>The constructor takes the <tt class="docutils literal"><span class="pre">available_plots</span></tt> argument, which contains a list of plots to make available
+<p>The constructor takes the <code class="docutils literal"><span class="pre">available_plots</span></code> argument, which contains a list of plots to make available
 in the dialog. This list should contain tuples of the following types</p>
 <blockquote>
 <div><ul class="simple">
-<li><tt class="docutils literal"><span class="pre">(&quot;scatter&quot;,</span> <span class="pre">None)</span></tt> : The default plot, <em>x</em> is the variable, and <em>y</em> is jitter</li>
-<li><tt class="docutils literal"><span class="pre">(&quot;scatter&quot;,</span> <span class="pre">var)</span></tt> : An scatter plot in which <em>x</em> is variable <em>var</em> and <em>y</em>
+<li><code class="docutils literal"><span class="pre">(&quot;scatter&quot;,</span> <span class="pre">None)</span></code> : The default plot, <em>x</em> is the variable, and <em>y</em> is jitter</li>
+<li><code class="docutils literal"><span class="pre">(&quot;scatter&quot;,</span> <span class="pre">var)</span></code> : An scatter plot in which <em>x</em> is variable <em>var</em> and <em>y</em>
 is the current variable.</li>
-<li><tt class="docutils literal"><span class="pre">(&quot;box&quot;,var)</span></tt> : A box plot using variable <em>var</em> for groups and the current variable for values</li>
-<li><tt class="docutils literal"><span class="pre">(&quot;interaction&quot;,</span> <span class="pre">vars)</span></tt> : A two factor box plot where the groups are the interaction between the variables
-in <em>vars</em> , which is a string with an <tt class="docutils literal"><span class="pre">*</span></tt> between the two names.</li>
+<li><code class="docutils literal"><span class="pre">(&quot;box&quot;,var)</span></code> : A box plot using variable <em>var</em> for groups and the current variable for values</li>
+<li><code class="docutils literal"><span class="pre">(&quot;interaction&quot;,</span> <span class="pre">vars)</span></code> : A two factor box plot where the groups are the interaction between the variables
+in <em>vars</em> , which is a string with an <code class="docutils literal"><span class="pre">*</span></code> between the two names.</li>
 </ul>
 </div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -216,18 +224,18 @@ in <em>vars</em> , which is a string with an <tt class="docutils literal"><span 
 
 <dl class="class">
 <dt id="braviz.interaction.qt_dialogs.SelectOneVariableWithFilter">
-<em class="property">class </em><tt class="descname">SelectOneVariableWithFilter</tt><big>(</big><em>params</em>, <em>accept_nominal=True</em>, <em>accept_real=True</em>, <em>sample=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_dialogs.SelectOneVariableWithFilter" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">SelectOneVariableWithFilter</code><span class="sig-paren">(</span><em>params</em>, <em>accept_nominal=True</em>, <em>accept_real=True</em>, <em>sample=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_dialogs.html#SelectOneVariableWithFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_dialogs.SelectOneVariableWithFilter" title="Permalink to this definition">¶</a></dt>
 <dd><p>A dialog for selecting one variable of an specific kind.</p>
-<p>This dialog behaves likes the <a class="reference internal" href="#braviz.interaction.qt_dialogs.OutcomeSelectDialog" title="braviz.interaction.qt_dialogs.OutcomeSelectDialog"><tt class="xref py py-class docutils literal"><span class="pre">OutcomeSelectDialog</span></tt></a>, but you may choose to accept only
-nominal or only real variables using the parameters <tt class="docutils literal"><span class="pre">accept_real</span></tt> and <tt class="docutils literal"><span class="pre">accept_nominal</span></tt> of the constructor.</p>
+<p>This dialog behaves likes the <a class="reference internal" href="#braviz.interaction.qt_dialogs.OutcomeSelectDialog" title="braviz.interaction.qt_dialogs.OutcomeSelectDialog"><code class="xref py py-class docutils literal"><span class="pre">OutcomeSelectDialog</span></code></a>, but you may choose to accept only
+nominal or only real variables using the parameters <code class="docutils literal"><span class="pre">accept_real</span></code> and <code class="docutils literal"><span class="pre">accept_nominal</span></code> of the constructor.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>params</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; Output will be written in this object</li>
-<li><strong>accept_nominal</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If <tt class="docutils literal"><span class="pre">False</span></tt> the select button will be disabled for nominal variables</li>
-<li><strong>accept_real</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If <tt class="docutils literal"><span class="pre">False</span></tt> the select button will be disabled for real variables</li>
+<li><strong>accept_nominal</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If <code class="docutils literal"><span class="pre">False</span></code> the select button will be disabled for nominal variables</li>
+<li><strong>accept_real</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If <code class="docutils literal"><span class="pre">False</span></code> the select button will be disabled for real variables</li>
 <li><strong>sample</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; Optional, list of subject indices to include in plot, if None, the whole sample is displayed</li>
 </ul>
 </td>
@@ -238,13 +246,13 @@ nominal or only real variables using the parameters <tt class="docutils literal"
 
 <dl class="class">
 <dt id="braviz.interaction.qt_dialogs.RegressorSelectDialog">
-<em class="property">class </em><tt class="descname">RegressorSelectDialog</tt><big>(</big><em>outcome_var</em>, <em>regressors_model</em>, <em>sample=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_dialogs.RegressorSelectDialog" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">RegressorSelectDialog</code><span class="sig-paren">(</span><em>outcome_var</em>, <em>regressors_model</em>, <em>sample=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_dialogs.html#RegressorSelectDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_dialogs.RegressorSelectDialog" title="Permalink to this definition">¶</a></dt>
 <dd><p>Dialog for selecting a secondary variable in the analysis.</p>
-<p>The <tt class="docutils literal"><span class="pre">outcome_var</span></tt> parameter of the constructor may be used to specify a variable of reference.
+<p>The <code class="docutils literal"><span class="pre">outcome_var</span></code> parameter of the constructor may be used to specify a variable of reference.
 The default plot would have current variable in the <em>x</em> axis and the <em>outcome_var</em> variable in the
 <em>y</em> axis. If <em>outcome_var</em> is None, the <em>y</em> axis will be jitter.</p>
-<p>The <tt class="docutils literal"><span class="pre">regressors_model</span></tt> parameter should be an instance of
-<a class="reference internal" href="qt_models.html#braviz.interaction.qt_models.AnovaRegressorsModel" title="braviz.interaction.qt_models.AnovaRegressorsModel"><tt class="xref py py-class docutils literal"><span class="pre">AnovaRegressorsModel</span></tt></a>. Variables will be added to and removed from
+<p>The <code class="docutils literal"><span class="pre">regressors_model</span></code> parameter should be an instance of
+<a class="reference internal" href="qt_models.html#braviz.interaction.qt_models.AnovaRegressorsModel" title="braviz.interaction.qt_models.AnovaRegressorsModel"><code class="xref py py-class docutils literal"><span class="pre">AnovaRegressorsModel</span></code></a>. Variables will be added to and removed from
 the model using the dialog.</p>
 <p>This dialog also allows the user to sort the variables according to a ginni index over the
 <em>outcome_var</em></p>
@@ -253,7 +261,7 @@ the model using the dialog.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>outcome_var</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Variable to use as reference. It will be the <em>y</em> axis of plots, look above
+<li><strong>outcome_var</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#unicode" title="(in Python v2.7)"><em>unicode</em></a>) &#8211; Variable to use as reference. It will be the <em>y</em> axis of plots, look above
 for more uses</li>
 <li><strong>regressors_model</strong> (<a class="reference internal" href="qt_models.html#braviz.interaction.qt_models.AnovaRegressorsModel" title="braviz.interaction.qt_models.AnovaRegressorsModel"><em>braviz.interaction.qt_models.AnovaRegressorsModel</em></a>) &#8211; All operations will update this model</li>
 <li><strong>sample</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; Optional, list of subject indices to include in plot, if None, the whole sample is displayed</li>
@@ -266,7 +274,7 @@ for more uses</li>
 
 <dl class="class">
 <dt id="braviz.interaction.qt_dialogs.ContextVariablesSelectDialog">
-<em class="property">class </em><tt class="descname">ContextVariablesSelectDialog</tt><big>(</big><em>variables_list=None</em>, <em>current_subject=None</em>, <em>editables_dict=None</em>, <em>sample=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_dialogs.ContextVariablesSelectDialog" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">ContextVariablesSelectDialog</code><span class="sig-paren">(</span><em>variables_list=None</em>, <em>current_subject=None</em>, <em>editables_dict=None</em>, <em>sample=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_dialogs.html#ContextVariablesSelectDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_dialogs.ContextVariablesSelectDialog" title="Permalink to this definition">¶</a></dt>
 <dd><p>A dialog for selecting multiple variables, and make some of them editable</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -292,14 +300,14 @@ keys are variable indices and values are booleans</li>
 <a class="reference internal image-reference" href="../_images/load_scenario.png"><img alt="Example of load scenario dialog" class="align-center" src="../_images/load_scenario.png" style="width: 90%;" /></a>
 <dl class="class">
 <dt id="braviz.interaction.qt_dialogs.LoadScenarioDialog">
-<em class="property">class </em><tt class="descname">LoadScenarioDialog</tt><big>(</big><em>app_name</em>, <em>out_dict=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_dialogs.LoadScenarioDialog" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">LoadScenarioDialog</code><span class="sig-paren">(</span><em>app_name</em>, <em>out_dict=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_dialogs.html#LoadScenarioDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_dialogs.LoadScenarioDialog" title="Permalink to this definition">¶</a></dt>
 <dd><p>Dialog that shows the user a list of available scenarios, with screen-shots, and allows him to select one</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>app_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Restrict the list of scenarios to those created with an specific application</li>
+<li><strong>app_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#unicode" title="(in Python v2.7)"><em>unicode</em></a>) &#8211; Restrict the list of scenarios to those created with an specific application</li>
 <li><strong>out_dict</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; When the dialog finishes this dictionary will contain the selected scenario data</li>
 </ul>
 </td>
@@ -310,17 +318,17 @@ keys are variable indices and values are booleans</li>
 
 <dl class="class">
 <dt id="braviz.interaction.qt_dialogs.SaveScenarioDialog">
-<em class="property">class </em><tt class="descname">SaveScenarioDialog</tt><big>(</big><em>app_name</em>, <em>state</em>, <em>params=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_dialogs.SaveScenarioDialog" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">SaveScenarioDialog</code><span class="sig-paren">(</span><em>app_name</em>, <em>state</em>, <em>params=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_dialogs.html#SaveScenarioDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_dialogs.SaveScenarioDialog" title="Permalink to this definition">¶</a></dt>
 <dd><p>A dialog for saving scenarios, it doesn&#8217;t save an screen-shot, this should be done afterwards by the application</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>app_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name of application for which the scenario is created</li>
+<li><strong>app_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#unicode" title="(in Python v2.7)"><em>unicode</em></a>) &#8211; Name of application for which the scenario is created</li>
 <li><strong>state</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; Dictionary of application state</li>
 <li><strong>params</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; Optional, when the dialog closes, this object will contain
-the key <tt class="docutils literal"><span class="pre">scn_id</span></tt> and its value will be the index of the newly created scenario.
+the key <code class="docutils literal"><span class="pre">scn_id</span></code> and its value will be the index of the newly created scenario.
 Use this to save a corresponding screen-shot</li>
 </ul>
 </td>
@@ -334,7 +342,7 @@ Use this to save a corresponding screen-shot</li>
 <h2>Bundles<a class="headerlink" href="#bundles" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="braviz.interaction.qt_dialogs.BundleSelectionDialog">
-<em class="property">class </em><tt class="descname">BundleSelectionDialog</tt><big>(</big><em>selected</em>, <em>names_dict</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_dialogs.BundleSelectionDialog" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">BundleSelectionDialog</code><span class="sig-paren">(</span><em>selected</em>, <em>names_dict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_dialogs.html#BundleSelectionDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_dialogs.BundleSelectionDialog" title="Permalink to this definition">¶</a></dt>
 <dd><p>Selects a set of bundles</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -352,7 +360,7 @@ Use this to save a corresponding screen-shot</li>
 
 <dl class="class">
 <dt id="braviz.interaction.qt_dialogs.LoadLogicBundle">
-<em class="property">class </em><tt class="descname">LoadLogicBundle</tt><a class="headerlink" href="#braviz.interaction.qt_dialogs.LoadLogicBundle" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">LoadLogicBundle</code><a class="reference internal" href="../_modules/braviz/interaction/qt_dialogs.html#LoadLogicBundle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_dialogs.LoadLogicBundle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loading a logic bundle from the database</p>
 <p>The dialog shows a preview of the tree associated with the bundle
 This tree will be available in the <em>data</em> attribute after the selection is accepted</p>
@@ -360,7 +368,7 @@ This tree will be available in the <em>data</em> attribute after the selection i
 
 <dl class="class">
 <dt id="braviz.interaction.qt_dialogs.SaveFibersBundleDialog">
-<em class="property">class </em><tt class="descname">SaveFibersBundleDialog</tt><big>(</big><em>checkpoints_list</em>, <em>operation_is_and</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_dialogs.SaveFibersBundleDialog" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">SaveFibersBundleDialog</code><span class="sig-paren">(</span><em>checkpoints_list</em>, <em>operation_is_and</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_dialogs.html#SaveFibersBundleDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_dialogs.SaveFibersBundleDialog" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save a bundle defined from a list of models</p>
 <p>The dialog asks for a name and a description, it also shows the list of structures and the operation.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -369,7 +377,7 @@ This tree will be available in the <em>data</em> attribute after the selection i
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>checkpoints_list</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of model names which define the bundle</li>
-<li><strong>operation_is_and</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If <tt class="docutils literal"><span class="pre">True</span></tt> the bundle is composed of the fibers that pass through
+<li><strong>operation_is_and</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If <code class="docutils literal"><span class="pre">True</span></code> the bundle is composed of the fibers that pass through
 <em>all</em> structures, otherwise it is composed of the fibers that pass throug <em>any</em> of the listed structures</li>
 </ul>
 </td>
@@ -380,7 +388,7 @@ This tree will be available in the <em>data</em> attribute after the selection i
 
 <dl class="class">
 <dt id="braviz.interaction.qt_dialogs.SaveLogicFibersBundleDialog">
-<em class="property">class </em><tt class="descname">SaveLogicFibersBundleDialog</tt><big>(</big><em>tree_model</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_dialogs.SaveLogicFibersBundleDialog" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">SaveLogicFibersBundleDialog</code><span class="sig-paren">(</span><em>tree_model</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_dialogs.html#SaveLogicFibersBundleDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_dialogs.SaveLogicFibersBundleDialog" title="Permalink to this definition">¶</a></dt>
 <dd><p>Saves a logic bundle</p>
 <p>This dialog shows a tree summarizing the dialog
 and it asks for a name and a description</p>
@@ -399,13 +407,13 @@ and it asks for a name and a description</p>
 <h2>Other<a class="headerlink" href="#other" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="braviz.interaction.qt_dialogs.InteractionSelectDialog">
-<em class="property">class </em><tt class="descname">InteractionSelectDialog</tt><big>(</big><em>regressors_model</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_dialogs.InteractionSelectDialog" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">InteractionSelectDialog</code><span class="sig-paren">(</span><em>regressors_model</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_dialogs.html#InteractionSelectDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_dialogs.InteractionSelectDialog" title="Permalink to this definition">¶</a></dt>
 <dd><p>A dialog for specifying interactions between variables</p>
 <p>The top panel contains a list of current variables, and the bottom panel contains a list of interaction terms
 The user may select two or more variables and click <em>Add single term</em> to add the product of the selected variables
 to the list of interactions. Clicking <em>Add all combinations</em> will add all possible combinations to the list.</p>
 <p>All operations will update the specified <em>regressors_model</em>, which should be an instance of
-<a class="reference internal" href="qt_models.html#braviz.interaction.qt_models.AnovaRegressorsModel" title="braviz.interaction.qt_models.AnovaRegressorsModel"><tt class="xref py py-class docutils literal"><span class="pre">AnovaRegressorsModel</span></tt></a></p>
+<a class="reference internal" href="qt_models.html#braviz.interaction.qt_models.AnovaRegressorsModel" title="braviz.interaction.qt_models.AnovaRegressorsModel"><code class="xref py py-class docutils literal"><span class="pre">AnovaRegressorsModel</span></code></a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -418,7 +426,7 @@ to the list of interactions. Clicking <em>Add all combinations</em> will add all
 
 <dl class="class">
 <dt id="braviz.interaction.qt_dialogs.NewVariableDialog">
-<em class="property">class </em><tt class="descname">NewVariableDialog</tt><a class="headerlink" href="#braviz.interaction.qt_dialogs.NewVariableDialog" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">NewVariableDialog</code><a class="reference internal" href="../_modules/braviz/interaction/qt_dialogs.html#NewVariableDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_dialogs.NewVariableDialog" title="Permalink to this definition">¶</a></dt>
 <dd><p>A dialog for creating new variables</p>
 <p>The dialog contains fields for entering a variable name and metadata, as well as a table view
 where values can be entered.</p>
@@ -444,13 +452,13 @@ change the variable name</p>
         <div class="left">
           
           <a href="interaction.html" title="Interaction"
-             accesskey="P">previous</a> |
+             accesskey="P" >previous</a> |
           <a href="qt_models.html" title="Braviz Qt Models"
-             accesskey="N">next</a> |
+             accesskey="N" >next</a> |
           <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |
+              >modules</a> |
           <a href="../genindex.html" title="General Index"
-             accesskey="I">index</a>
+             accesskey="I" >index</a>
           
             <br/>
             <a href="../_sources/library/qt_dialogs.txt"
@@ -459,9 +467,9 @@ change the variable name</p>
 
         <div class="right">
           
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Diego Angulo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
         </div>
         <div class="clearer"></div>

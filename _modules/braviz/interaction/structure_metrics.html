@@ -1,0 +1,834 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>braviz.interaction.structure_metrics &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.3b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="top" title="Braviz Documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body role="document">
+    
+    <div class="header-wrapper">
+      <div class="header">
+          <p class="logo"><a href="../../../index.html">
+            <img class="logo" src="../../../_static/Logo_Bravis_h.png" alt="Logo"/>
+          </a></p>
+          <!--
+        <div class="headertitle"><a
+          href="../../../index.html"> Documentation </a></div>
+          -->
+          <nav class="parents">
+              <ol>
+        <li><a href="../../../index.html"> Home </a> &raquo;</li>
+          <li><a href="../../index.html"  accesskey="U"  >Module code</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/Logo_Bravis_h.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for braviz.interaction.structure_metrics</h1><div class="highlight"><pre>
+<span class="c">##############################################################################</span>
+<span class="c">#    Braviz, Brain Data interactive visualization                            #</span>
+<span class="c">#    Copyright (C) 2014  Diego Angulo                                        #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    This program is free software: you can redistribute it and/or modify    #</span>
+<span class="c">#    it under the terms of the GNU Lesser General Public License as          #</span>
+<span class="c">#    published by  the Free Software Foundation, either version 3 of the     #</span>
+<span class="c">#    License, or (at your option) any later version.                         #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    This program is distributed in the hope that it will be useful,         #</span>
+<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
+<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
+<span class="c">#    GNU Lesser General Public License for more details.                     #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    You should have received a copy of the GNU Lesser General Public License#</span>
+<span class="c">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
+<span class="c">##############################################################################</span>
+
+
+<span class="sd">&quot;&quot;&quot;Functions for calculating or reading structure metrics&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">braviz</span>
+<span class="kn">import</span> <span class="nn">braviz.readAndFilter.tabular_data</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span>
+
+<span class="kn">from</span> <span class="nn">vtk.util</span> <span class="kn">import</span> <span class="n">numpy_support</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Diego&#39;</span>
+
+
+<div class="viewcode-block" id="get_mult_struct_metric"><a class="viewcode-back" href="../../../library/struc_proc.html#braviz.interaction.structure_metrics.get_mult_struct_metric">[docs]</a><span class="k">def</span> <span class="nf">get_mult_struct_metric</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">struct_names</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s">&#39;volume&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Aggregates a metric across multiple structures</span>
+
+<span class="sd">    The supported metrics are:</span>
+
+<span class="sd">        - *volume*: Total volume of the structures, read from freesurfer files</span>
+<span class="sd">        - *area*: Sum of the surface areas of each structure</span>
+<span class="sd">        - *nfibers*: Number of fibers that cross the structure, or number of fibers</span>
+<span class="sd">          in the bundle if structure is ``Fibs:*``</span>
+<span class="sd">        - *lfibers*: Mean length of fibers going through structure or in bundle</span>
+<span class="sd">        - *fa_fibers*: Mean fa of fibers crossing the structure or in bundle</span>
+<span class="sd">        - *fa_inside*: Mean fa inside the structures</span>
+<span class="sd">        - *md_inside*: Mean md inside the structures</span>
+
+<span class="sd">    if metric is nfiber,lfibers or fa_fibers :func:`get_fibers_metric` is used</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        reader (braviz.readAndFilter.base_reader.BaseReader) : Reader object used to read the data</span>
+<span class="sd">        struct_names (list) : List of structure names</span>
+<span class="sd">        code : Subject id</span>
+<span class="sd">        metric (str) : Metric to calculate, options are *volume*, *area* (surface area), *nfibers*, *lfibers*</span>
+<span class="sd">            *md_inside* and *fa_inside*</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A float number with the requested metric</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">if</span> <span class="n">metric</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;lfibers&#39;</span><span class="p">,</span> <span class="s">&#39;fa_fibers&#39;</span><span class="p">,</span> <span class="s">&#39;nfibers&#39;</span><span class="p">):</span>
+        <span class="c"># we need to get all the fibers</span>
+        <span class="k">if</span> <span class="n">metric</span> <span class="o">==</span> <span class="s">&#39;nfibers&#39;</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">get_fibers_metric</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">struct_names</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="s">&#39;number&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">metric</span> <span class="o">==</span> <span class="s">&#39;lfibers&#39;</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">get_fibers_metric</span><span class="p">(</span>
+                <span class="n">reader</span><span class="p">,</span> <span class="n">struct_names</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="s">&#39;mean_length&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">metric</span> <span class="o">==</span> <span class="s">&#39;fa_fibers&#39;</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">get_fibers_metric</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">struct_names</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="s">&#39;mean_fa&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">metric</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;area&#39;</span><span class="p">,</span> <span class="s">&#39;volume&#39;</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">struct</span> <span class="ow">in</span> <span class="n">struct_names</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">get_struct_metric</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">struct</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">metric</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+                <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s">&#39;nan&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">metric</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&quot;fa_inside&quot;</span><span class="p">,</span> <span class="s">&quot;md_inside&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">metric</span> <span class="o">==</span> <span class="s">&quot;fa_inside&quot;</span><span class="p">:</span>
+            <span class="n">img2</span> <span class="o">=</span> <span class="s">&quot;FA&quot;</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">mean_inside</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">struct_names</span><span class="p">,</span> <span class="n">img2</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">img2</span> <span class="o">=</span> <span class="s">&quot;MD&quot;</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">mean_inside</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">struct_names</span><span class="p">,</span> <span class="n">img2</span><span class="p">)</span>
+            <span class="c">#result *= 1e12</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Unknown metric&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;Unknown metric&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+</div>
+<div class="viewcode-block" id="get_struct_metric"><a class="viewcode-back" href="../../../library/struc_proc.html#braviz.interaction.structure_metrics.get_struct_metric">[docs]</a><span class="k">def</span> <span class="nf">get_struct_metric</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">struct_name</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s">&#39;volume&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates a metric for a specific structure</span>
+
+<span class="sd">    The supported metrics are:</span>
+
+<span class="sd">        - *volume*: Volume of the structure, read from freesurfer files</span>
+<span class="sd">        - *area*: Surfrace area of the structure</span>
+<span class="sd">        - *nfibers*: Number of fibers that cross the structure, or number of fibers in the bundle if structure is Fibs:*</span>
+<span class="sd">        - *lfibers*: Mean length of fibers going through structure or in bundle</span>
+<span class="sd">        - *fa_fibers*: Mean fa of fibers crossing the structure or in bundle</span>
+<span class="sd">        - *fa_inside*: Mean fa inside the structure</span>
+<span class="sd">        - *md_inside*: Mean md inside the structure</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        reader (braviz.readAndFilter.base_reader.BaseReader) : Reader object used to read the data</span>
+<span class="sd">        struct_name (str) : Name of an structure or of a named bundle (should start with *Fibs:*)</span>
+<span class="sd">        cod : Subject id</span>
+<span class="sd">        metric (str) : Look above for the options</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A float number with the requested metric</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># print &quot;calculating %s for %s (%s)&quot;%(metric,struct_name,code)</span>
+    <span class="k">if</span> <span class="n">metric</span> <span class="o">==</span> <span class="s">&#39;volume&#39;</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;model&#39;</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">struct_name</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="s">&#39;nan&#39;</span><span class="p">)</span>
+    <span class="c"># volume don&#39;t require the structure to exist</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">struct_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;Fib&#39;</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;model&#39;</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">struct_name</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> not found for subject </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">struct_name</span><span class="p">,</span> <span class="n">code</span><span class="p">))</span>
+            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="s">&#39;nan&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">metric</span> <span class="o">==</span> <span class="s">&#39;area&#39;</span><span class="p">:</span>
+        <span class="n">area</span><span class="p">,</span> <span class="n">volume</span> <span class="o">=</span> <span class="n">braviz</span><span class="o">.</span><span class="n">interaction</span><span class="o">.</span><span class="n">compute_volume_and_area</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">area</span>
+    <span class="k">elif</span> <span class="n">metric</span> <span class="o">==</span> <span class="s">&#39;nfibers&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">get_fibers_metric</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">struct_name</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="s">&#39;number&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">metric</span> <span class="o">==</span> <span class="s">&#39;lfibers&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">get_fibers_metric</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">struct_name</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="s">&#39;mean_length&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">metric</span> <span class="o">==</span> <span class="s">&#39;fa_fibers&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">get_fibers_metric</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">struct_name</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="s">&#39;mean_fa&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">metric</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&quot;fa_inside&quot;</span><span class="p">,</span> <span class="s">&quot;md_inside&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">metric</span> <span class="o">==</span> <span class="s">&quot;fa_inside&quot;</span><span class="p">:</span>
+            <span class="n">img2</span> <span class="o">=</span> <span class="s">&quot;FA&quot;</span>
+            <span class="k">return</span> <span class="n">mean_inside</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="p">(</span><span class="n">struct_name</span><span class="p">,),</span> <span class="n">img2</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">img2</span> <span class="o">=</span> <span class="s">&quot;MD&quot;</span>
+            <span class="k">return</span> <span class="n">mean_inside</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="p">(</span><span class="n">struct_name</span><span class="p">,),</span> <span class="n">img2</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;unknown metric </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">metric</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="get_fibers_metric"><a class="viewcode-back" href="../../../library/struc_proc.html#braviz.interaction.structure_metrics.get_fibers_metric">[docs]</a><span class="k">def</span> <span class="nf">get_fibers_metric</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">struct_name</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s">&#39;number&#39;</span><span class="p">,</span> <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates metrics for groups of fibers</span>
+
+<span class="sd">    struct_name can be the name of a freesurfer model, in which case the bundle will be the fibers that cross it,</span>
+<span class="sd">    if struct_name is a list of structures, the fibers crossing any of those structures will be used</span>
+<span class="sd">    finally struct_name can be a named fiber, which will be used as a bundle</span>
+
+<span class="sd">    metrics are number, mean_length and mean_fa, see :func:`get_struct_metric`</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        reader (braviz.readAndFilter.base_reader.BaseReader) : Reader object used to read the data</span>
+<span class="sd">        struct_name (str) : Name of an structure or of a named bundle (should start with *Fibs:*)</span>
+<span class="sd">        cod : Subject id</span>
+<span class="sd">        metric (str) : Options are *number*, *mean_length*, and *mean_fa*</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A float number with the requested metric</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># print &quot;calculating for subject %s&quot;%code</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">struct_name</span><span class="p">,</span> <span class="s">&quot;__iter__&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">struct_name</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">struct_name</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">struct_name</span><span class="p">)</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">struct_name</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">struct_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;Fibs:&#39;</span><span class="p">):</span>
+        <span class="c"># print &quot;we are dealing with special fibers&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">fibers</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="s">&#39;fibers&#39;</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">struct_name</span><span class="p">[</span><span class="mi">5</span><span class="p">:],</span> <span class="n">color</span><span class="o">=</span><span class="s">&#39;fa&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s">&#39;nan&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">n</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">fibers</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="s">&#39;fibers&#39;</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">waypoint</span><span class="o">=</span><span class="n">struct_name</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&#39;fa&#39;</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="s">&#39;or&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s">&#39;nan&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">n</span>
+    <span class="k">if</span> <span class="n">fibers</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="c"># print &quot;Problem loading fibers for subject %s&quot;%code</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s">&#39;nan&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">n</span>
+    <span class="k">elif</span> <span class="n">metric</span> <span class="o">==</span> <span class="s">&#39;number&#39;</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">fibers</span><span class="o">.</span><span class="n">GetNumberOfLines</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">metric</span> <span class="o">==</span> <span class="s">&#39;mean_length&#39;</span><span class="p">:</span>
+        <span class="n">desc</span> <span class="o">=</span> <span class="n">braviz</span><span class="o">.</span><span class="n">interaction</span><span class="o">.</span><span class="n">get_fiber_bundle_descriptors</span><span class="p">(</span><span class="n">fibers</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">desc</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">metric</span> <span class="o">==</span> <span class="s">&#39;mean_fa&#39;</span><span class="p">:</span>
+        <span class="n">desc</span> <span class="o">=</span> <span class="n">braviz</span><span class="o">.</span><span class="n">interaction</span><span class="o">.</span><span class="n">aggregate_fiber_scalar</span><span class="p">(</span>
+            <span class="n">fibers</span><span class="p">,</span> <span class="n">norm_factor</span><span class="o">=</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">255</span><span class="p">)</span>
+        <span class="k">del</span> <span class="n">fibers</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">desc</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&#39;unknowm fiber metric </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">metric</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="s">&#39;nan&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">n</span>
+
+</div>
+<div class="viewcode-block" id="cached_get_struct_metric_col"><a class="viewcode-back" href="../../../library/struc_proc.html#braviz.interaction.structure_metrics.cached_get_struct_metric_col">[docs]</a><span class="k">def</span> <span class="nf">cached_get_struct_metric_col</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">codes</span><span class="p">,</span> <span class="n">struct_name</span><span class="p">,</span> <span class="n">metric</span><span class="p">,</span>
+                                 <span class="n">state_variables</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">force_reload</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">laterality_dict</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    calculates a structure metrics for all subjects in a list of codes</span>
+
+<span class="sd">    It has a disk cache which is used to try to save results, and reload them instead of calculating again</span>
+<span class="sd">    if force_reload is True, a cached result will be ignored, and the column will be calculated again</span>
+
+<span class="sd">    A laterality_dict may be used for solving dominant and non dominant structures specifications</span>
+
+<span class="sd">    It has a dictionary of state_variables which can be used to monitor or cancel the calculation</span>
+<span class="sd">    from a different thread</span>
+<span class="sd">    The states variables are:</span>
+
+<span class="sd">        - &#39;struct_name&#39;: the requested structure name</span>
+<span class="sd">        - &#39;metric&#39; ; the requested metric</span>
+<span class="sd">        - &#39;working&#39; : Set to true at start of function, and to false just before returning</span>
+<span class="sd">        - &#39;output&#39; : A partial list of results will be stored here, this is the same object that will be returned</span>
+<span class="sd">        - &#39;number_calculated&#39; : number of metrics calculated</span>
+<span class="sd">        - &#39;number_requested&#39; : number of metrics requested (length of codes list)</span>
+<span class="sd">        - &#39;cancel&#39; : Set this to True, to cancel the operation and return before the next iteration</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        reader (braviz.readAndFilter.base_reader.BaseReader) : Reader object used to read the data and access cache</span>
+<span class="sd">        codes (list) : List of subject ids</span>
+<span class="sd">        struct_name (str) : Name of an structure or of a named bundle (should start with *Fibs:*)</span>
+<span class="sd">        metric (str) : See :func:`get_struct_metric` for options</span>
+<span class="sd">        state_variables (dict) : Used for sharing state with other threads, read above</span>
+<span class="sd">        force_reload (bool) : If ``True`` cache is ignored</span>
+<span class="sd">        laterality_dict (dict) : Dictionary with laterality of subjects. Values should be</span>
+<span class="sd">            &#39;l&#39; for left handed subjects and &#39;r&#39; otherwise. See :func:`braviz.readAndFilter.tabular_data.get_laterality`</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A list of floats of the same length as *codes* with the respective metrics for each subject</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">state_variables</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">state_variables</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">laterality_dict</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">laterality_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+    <span class="n">state_variables</span><span class="p">[</span><span class="s">&#39;struct_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">struct_name</span>
+    <span class="n">state_variables</span><span class="p">[</span><span class="s">&#39;metric&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">metric</span>
+    <span class="n">state_variables</span><span class="p">[</span><span class="s">&#39;working&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">state_variables</span><span class="p">[</span><span class="s">&#39;output&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">state_variables</span><span class="p">[</span><span class="s">&#39;number_calculated&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">state_variables</span><span class="p">[</span><span class="s">&#39;number_requested&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">codes</span><span class="p">)</span>
+    <span class="n">calc_function</span> <span class="o">=</span> <span class="n">get_struct_metric</span>
+    <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">:</span>
+        <span class="n">force_reload</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">struct_name</span><span class="p">,</span> <span class="s">&#39;__iter__&#39;</span><span class="p">):</span>
+        <span class="c"># we have multiple sequences</span>
+        <span class="n">calc_function</span> <span class="o">=</span> <span class="n">get_mult_struct_metric</span>
+        <span class="n">standard_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">struct_name</span><span class="p">)</span>
+        <span class="n">standard_list</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="s">&#39;column_</span><span class="si">%s</span><span class="s">_</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">struct_name</span><span class="p">))</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="p">,</span> <span class="s">&#39;_&#39;</span><span class="p">),</span> <span class="n">metric</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="p">,</span> <span class="s">&#39;_&#39;</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="s">&#39;column_</span><span class="si">%s</span><span class="s">_</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="n">struct_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="p">,</span> <span class="s">&#39;_&#39;</span><span class="p">),</span> <span class="n">metric</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="p">,</span> <span class="s">&#39;_&#39;</span><span class="p">))</span>
+    <span class="n">key</span> <span class="o">+=</span> <span class="s">&#39;;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">codes</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">force_reload</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">cached</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">load_from_cache</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">cached</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">cache_codes</span><span class="p">,</span> <span class="n">struct_metrics_col</span><span class="p">,</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">cached</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">struct_metrics_col</span><span class="p">))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">cache_codes</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">:</span>
+                <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;Cache looks wrong, recalculating&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">list</span><span class="p">(</span><span class="n">cache_codes</span><span class="p">)</span> <span class="o">==</span> <span class="nb">list</span><span class="p">(</span><span class="n">codes</span><span class="p">):</span>
+                <span class="n">state_variables</span><span class="p">[</span><span class="s">&#39;output&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">struct_metrics_col</span>
+                <span class="n">state_variables</span><span class="p">[</span><span class="s">&#39;working&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+                <span class="n">state_variables</span><span class="p">[</span><span class="s">&#39;number_calculated&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">return</span> <span class="n">struct_metrics_col</span>
+    <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Calculating </span><span class="si">%s</span><span class="s"> for structure </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">metric</span><span class="p">,</span> <span class="n">struct_name</span><span class="p">))</span>
+    <span class="n">temp_struct_metrics_col</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">code</span> <span class="ow">in</span> <span class="n">codes</span><span class="p">:</span>
+        <span class="n">cancel_calculation_flag</span> <span class="o">=</span> <span class="n">state_variables</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;cancel&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">cancel_calculation_flag</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;cancel flag received&quot;</span><span class="p">)</span>
+            <span class="n">state_variables</span><span class="p">[</span><span class="s">&#39;working&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="k">return</span>
+        <span class="n">struct_name2</span> <span class="o">=</span> <span class="n">solve_laterality</span><span class="p">(</span>
+            <span class="n">laterality_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="s">&#39;unknown&#39;</span><span class="p">),</span> <span class="n">struct_name</span><span class="p">)</span>
+        <span class="n">scalar</span> <span class="o">=</span> <span class="n">calc_function</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">struct_name2</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">metric</span><span class="p">)</span>
+        <span class="n">temp_struct_metrics_col</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">scalar</span><span class="p">)</span>
+        <span class="n">state_variables</span><span class="p">[</span><span class="s">&#39;number_calculated&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">temp_struct_metrics_col</span><span class="p">)</span>
+    <span class="n">reader</span><span class="o">.</span><span class="n">save_into_cache</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="n">codes</span><span class="p">,</span> <span class="n">temp_struct_metrics_col</span><span class="p">))</span>
+    <span class="n">state_variables</span><span class="p">[</span><span class="s">&#39;output&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_struct_metrics_col</span>
+    <span class="n">state_variables</span><span class="p">[</span><span class="s">&#39;working&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="k">return</span> <span class="n">temp_struct_metrics_col</span>
+
+</div>
+<span class="n">laterality_lut</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c"># dominant or non_dominant, right_handed or left_handed : resulting</span>
+    <span class="c"># hemisphere</span>
+    <span class="p">(</span><span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">):</span> <span class="s">&#39;l&#39;</span><span class="p">,</span>
+    <span class="p">(</span><span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="s">&#39;l&#39;</span><span class="p">):</span> <span class="s">&#39;r&#39;</span><span class="p">,</span>
+    <span class="p">(</span><span class="s">&#39;n&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">):</span> <span class="s">&#39;r&#39;</span><span class="p">,</span>
+    <span class="p">(</span><span class="s">&#39;n&#39;</span><span class="p">,</span> <span class="s">&#39;l&#39;</span><span class="p">):</span> <span class="s">&#39;l&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="get_right_or_left_hemisphere"><a class="viewcode-back" href="../../../library/struc_proc.html#braviz.interaction.structure_metrics.get_right_or_left_hemisphere">[docs]</a><span class="k">def</span> <span class="nf">get_right_or_left_hemisphere</span><span class="p">(</span><span class="n">hemisphere</span><span class="p">,</span> <span class="n">laterality</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Translates &#39;d&#39; (dominant) and &#39;n&#39; (non-dominant) into &#39;r&#39; (right) or &#39;l&#39; (left) using laterality,</span>
+
+<span class="sd">    laterality should be r (right handed) or l (left handed)</span>
+<span class="sd">    hemisphere can also be &#39;r&#39; or &#39;l&#39;; in this case the same letters will be returned</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        hemisphere (str) : Should be &#39;d&#39; for dominant, &#39;n&#39; for non-dominant, &#39;r&#39; for right or &#39;l&#39; for left</span>
+<span class="sd">        laterality (str) : Should be &#39;l&#39; for left handed subjects or &#39;r&#39; otherwise</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        &#39;r&#39; or &#39;l&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">hemisphere</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="s">&#39;n&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">laterality</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;r&#39;</span><span class="p">,</span> <span class="s">&#39;l&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;Unknown laterality&#39;</span><span class="p">)</span>
+        <span class="n">new_hemisphere</span> <span class="o">=</span> <span class="n">laterality_lut</span><span class="p">[(</span><span class="n">hemisphere</span><span class="p">,</span> <span class="n">laterality</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+    <span class="k">elif</span> <span class="n">hemisphere</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;r&#39;</span><span class="p">,</span> <span class="s">&#39;l&#39;</span><span class="p">):</span>
+        <span class="n">new_hemisphere</span> <span class="o">=</span> <span class="n">hemisphere</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;Unknwon hemisphere&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_hemisphere</span>
+
+</div>
+<div class="viewcode-block" id="solve_laterality"><a class="viewcode-back" href="../../../library/struc_proc.html#braviz.interaction.structure_metrics.solve_laterality">[docs]</a><span class="k">def</span> <span class="nf">solve_laterality</span><span class="p">(</span><span class="n">laterality</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    translates dominant and nondominant freesurfer names into right and left names,</span>
+
+<span class="sd">    laterality should be  &#39;l&#39; (left handed) or &#39;r&#39;</span>
+<span class="sd">    names is a list of names to translate</span>
+<span class="sd">    currently ``wm-[d|n|r|l]h-*`` , ``ctx-[d|n|r|l]h-*`` and fiber bundles ending in ``_[d|n|r|l]`` are supported</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        laterality (str) : Laterality of subject, &#39;l&#39; for left handed, &#39;r&#39; otherwise</span>
+<span class="sd">        names (list) : List of structure names, possibly with &#39;d&#39; and &#39;n&#39; sides, to translate to &#39;l&#39; and &#39;r&#39; sides.</span>
+<span class="sd">            Only cortical structures and named fibers are supported, read above.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">new_names</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">names</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">names2</span> <span class="o">=</span> <span class="p">(</span><span class="n">names</span><span class="p">,)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">names2</span> <span class="o">=</span> <span class="n">names</span>
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names2</span><span class="p">:</span>
+        <span class="n">new_name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;ctx-&#39;</span><span class="p">):</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="n">name</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+            <span class="n">new_name</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">name</span><span class="p">[:</span><span class="mi">4</span><span class="p">],</span> <span class="n">get_right_or_left_hemisphere</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">laterality</span><span class="p">),</span> <span class="n">name</span><span class="p">[</span><span class="mi">5</span><span class="p">:]))</span>
+        <span class="k">elif</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;wm-&#39;</span><span class="p">):</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="n">name</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+            <span class="n">new_name</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">name</span><span class="p">[:</span><span class="mi">3</span><span class="p">],</span> <span class="n">get_right_or_left_hemisphere</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">laterality</span><span class="p">),</span> <span class="n">name</span><span class="p">[</span><span class="mi">4</span><span class="p">:]))</span>
+        <span class="k">elif</span> <span class="n">name</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;_d&#39;</span><span class="p">,</span> <span class="s">&#39;_n&#39;</span><span class="p">,</span> <span class="s">&#39;_r&#39;</span><span class="p">,</span> <span class="s">&#39;_l&#39;</span><span class="p">):</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="n">get_right_or_left_hemisphere</span><span class="p">(</span><span class="n">name</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">laterality</span><span class="p">)</span>
+            <span class="n">new_name</span> <span class="o">=</span> <span class="n">name</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">h</span>
+        <span class="n">new_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">names</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">new_names</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">new_names</span>
+
+</div>
+<div class="viewcode-block" id="mean_inside"><a class="viewcode-back" href="../../../library/struc_proc.html#braviz.interaction.structure_metrics.mean_inside">[docs]</a><span class="k">def</span> <span class="nf">mean_inside</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">structures</span><span class="p">,</span> <span class="n">img2</span><span class="p">,</span> <span class="n">paradigm</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">contrast</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the mean value of img2 values inside of the structures listed</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        reader (braviz.readAndFilter.base_reader.BaseReader) : Reader object used to read the data</span>
+<span class="sd">        subject : Subject id</span>
+<span class="sd">        structures (list) : List of structure names</span>
+<span class="sd">        img2 (str) : Modality in which to calculate mean, must be FA, MD, MRI or fMRI</span>
+<span class="sd">        paradigm (str) : In case img2 is fMRI, the paradigm to use</span>
+<span class="sd">        contrast (int) : In case img2 is fMRI, the contrast to use</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The mean value of the image voxels that lay inside any of the listed structures</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">structures</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="s">&quot;nan&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">structures</span><span class="p">,</span> <span class="nb">basestring</span><span class="p">):</span>
+        <span class="n">structures</span> <span class="o">=</span> <span class="p">(</span><span class="n">structures</span><span class="p">,)</span>
+    <span class="c"># find label</span>
+    <span class="c"># print &quot;label:&quot;,label</span>
+    <span class="c"># find voxels in structure</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">aparc_img</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;LABEL&quot;</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;APARC&quot;</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="s">&quot;subject&quot;</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&quot;nii&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="s">&quot;nan&quot;</span><span class="p">)</span>
+    <span class="n">locations</span> <span class="o">=</span> <span class="p">[</span><span class="n">_get_locations</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">structures</span><span class="p">]</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">aparc_img</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">shape2</span> <span class="o">=</span> <span class="n">shape</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
+    <span class="n">locations</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape2</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">locations</span><span class="p">]</span>
+    <span class="n">locations2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">locations</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">locations3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">locations2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">indexes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">locations3</span><span class="p">)</span>
+    <span class="n">n_voxels</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">indexes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="c"># print indexes</span>
+    <span class="c"># find mm coordinates of voxels in aparc</span>
+    <span class="n">img_coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">indexes</span><span class="p">)</span>
+    <span class="n">ones</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">indexes</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="n">img_coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">img_coords</span><span class="p">,</span> <span class="n">ones</span><span class="p">))</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">aparc_img</span><span class="o">.</span><span class="n">get_affine</span><span class="p">()</span>
+    <span class="n">mm_coords</span> <span class="o">=</span> <span class="n">img_coords</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="c"># print mm_coords</span>
+
+    <span class="c"># find voxel coordinates in fa</span>
+    <span class="k">if</span> <span class="n">paradigm</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">target_img</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;IMAGE&quot;</span><span class="p">,</span><span class="n">subject</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">img2</span> <span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="s">&quot;subject&quot;</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&quot;nii&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">target_img</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s">&quot;FMRI&quot;</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="s">&quot;subject&quot;</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&quot;nii&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">paradigm</span><span class="p">,</span> <span class="n">contrast</span><span class="o">=</span><span class="n">contrast</span><span class="p">)</span>
+    <span class="n">t2</span> <span class="o">=</span> <span class="n">target_img</span><span class="o">.</span><span class="n">get_affine</span><span class="p">()</span>
+    <span class="n">t2i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">t2</span><span class="p">)</span>
+    <span class="n">fa_coords</span> <span class="o">=</span> <span class="n">mm_coords</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">t2i</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">fa_coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">fa_coords</span><span class="p">)</span>
+    <span class="n">fa_coords</span> <span class="o">=</span> <span class="n">fa_coords</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+
+    <span class="n">splitted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hsplit</span><span class="p">(</span><span class="n">fa_coords</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="n">fa_coords2</span> <span class="o">=</span> <span class="n">splitted</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">fa_data</span> <span class="o">=</span> <span class="n">target_img</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+    <span class="c">#sample and sum</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">fa_data</span><span class="p">[</span><span class="n">fa_coords2</span><span class="p">])</span>
+    <span class="n">res</span> <span class="o">/=</span> <span class="n">n_voxels</span>
+    <span class="k">return</span> <span class="n">res</span>
+
+</div>
+<div class="viewcode-block" id="AggregateInRoi"><a class="viewcode-back" href="../../../library/struc_proc.html#braviz.interaction.structure_metrics.AggregateInRoi">[docs]</a><span class="k">class</span> <span class="nc">AggregateInRoi</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class for doing repeated aggregations of image values inside different rois</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        reader (braviz.readAndFilter.base_reader.BaseReader) : Reader object used to read the data</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reader</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reader</span> <span class="o">=</span> <span class="n">reader</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">img_values</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mean</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">img</span> <span class="o">=</span> <span class="bp">None</span>
+
+<div class="viewcode-block" id="AggregateInRoi.load_image"><a class="viewcode-back" href="../../../library/struc_proc.html#braviz.interaction.structure_metrics.AggregateInRoi.load_image">[docs]</a>    <span class="k">def</span> <span class="nf">load_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">img_class</span><span class="p">,</span> <span class="n">img_name</span><span class="p">,</span> <span class="n">contrast</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Loads an image into the class</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            subject : subject id</span>
+<span class="sd">            space (str) : Coordinate system in which the roi is defined</span>
+<span class="sd">            img_class (str) : Image class in which to calculate mean or mode.</span>
+<span class="sd">            img_name (str) : Image name in the given img_class</span>
+<span class="sd">            contrast (int) : In case img_class is fMRI, the contrast to use</span>
+<span class="sd">            mean (bool) : If ``True`` :meth:`get_value` will return the mean inside the roi, otherwise it will</span>
+<span class="sd">                return the *mode*.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span>
+        <span class="k">if</span> <span class="n">img_class</span> <span class="o">==</span> <span class="s">&quot;DTI&quot;</span><span class="p">:</span>
+            <span class="n">img_class</span> <span class="o">=</span> <span class="s">&quot;IMAGE&quot;</span>
+            <span class="n">img_name</span> <span class="o">=</span> <span class="s">&quot;FA&quot;</span>
+        <span class="k">if</span> <span class="n">img_class</span> <span class="o">!=</span> <span class="s">&quot;FMRI&quot;</span><span class="p">:</span>
+            <span class="n">target_img</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="n">img_class</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="n">space</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&quot;nii&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">img_name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">target_img</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="n">img_class</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="n">space</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&quot;nii&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">img_name</span><span class="p">,</span> <span class="n">contrast</span><span class="o">=</span><span class="n">contrast</span><span class="p">)</span>
+
+        <span class="n">all_values</span> <span class="o">=</span> <span class="n">target_img</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">img_values</span> <span class="o">=</span> <span class="n">all_values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">img</span> <span class="o">=</span> <span class="n">target_img</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mean</span> <span class="o">=</span> <span class="n">mean</span>
+</div>
+<div class="viewcode-block" id="AggregateInRoi.get_value"><a class="viewcode-back" href="../../../library/struc_proc.html#braviz.interaction.structure_metrics.AggregateInRoi.get_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">roi_ctr</span><span class="p">,</span> <span class="n">roi_radius</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get mean or mode from the image inside an spherical roi</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            roi_ctr (tuple) : Coordinates of the roi center</span>
+<span class="sd">            roi_radius (float) : Sphere radius</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The mean or mode of the image inside the sphere, according to the data set using :meth:`load_image`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">target_img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">img</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="n">target_img</span><span class="o">.</span><span class="n">get_shape</span><span class="p">()</span>
+        <span class="n">affine</span> <span class="o">=</span> <span class="n">target_img</span><span class="o">.</span><span class="n">get_affine</span><span class="p">()</span>
+
+        <span class="c"># Calculate bounding box for sphere</span>
+        <span class="n">i_affine</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">affine</span><span class="p">)</span>
+        <span class="n">ctr_h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">ctr_h</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">roi_ctr</span>
+        <span class="n">ctr_img_h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">i_affine</span><span class="p">,</span> <span class="n">ctr_h</span><span class="p">)</span>
+        <span class="n">ctr_img</span> <span class="o">=</span> <span class="n">ctr_img_h</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">/</span> <span class="n">ctr_img_h</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">max_factor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">i_affine</span><span class="o">.</span><span class="n">diagonal</span><span class="p">()))</span> <span class="o">*</span> <span class="n">roi_radius</span>
+        <span class="n">bb_x0</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">ctr_img</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">max_factor</span><span class="p">))</span>
+        <span class="n">bb_x1</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">ctr_img</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">max_factor</span><span class="p">))</span>
+
+        <span class="n">bb_y0</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ctr_img</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">max_factor</span><span class="p">)</span>
+        <span class="n">bb_y1</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">ctr_img</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">max_factor</span><span class="p">))</span>
+
+        <span class="n">bb_z0</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ctr_img</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">max_factor</span><span class="p">)</span>
+        <span class="n">bb_z1</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">ctr_img</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">max_factor</span><span class="p">))</span>
+        <span class="c"># create numpy grid</span>
+        <span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mgrid</span><span class="p">[</span><span class="n">bb_x0</span><span class="p">:</span><span class="n">bb_x1</span><span class="p">,</span> <span class="n">bb_y0</span><span class="p">:</span><span class="n">bb_y1</span><span class="p">,</span> <span class="n">bb_z0</span><span class="p">:</span><span class="n">bb_z1</span><span class="p">]</span>
+        <span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">rollaxis</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="n">points</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="n">points_h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">points</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">points</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))))</span>
+        <span class="n">points_world_h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">affine</span><span class="p">,</span> <span class="n">points_h</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">points_world</span> <span class="o">=</span> <span class="n">points_world_h</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">divisor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">points_world_h</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">:],</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">points_world</span> <span class="o">=</span> <span class="n">points_world</span> <span class="o">/</span> <span class="n">divisor</span>
+        <span class="n">r_sq</span> <span class="o">=</span> <span class="n">roi_radius</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">offsets</span> <span class="o">=</span> <span class="n">points_world</span> <span class="o">-</span> <span class="n">roi_ctr</span>
+        <span class="n">dist_sq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">offsets</span> <span class="o">*</span> <span class="n">offsets</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">inside</span> <span class="o">=</span> <span class="p">(</span><span class="n">dist_sq</span> <span class="o">&lt;=</span> <span class="n">r_sq</span><span class="p">)</span>
+
+        <span class="n">points_inside</span> <span class="o">=</span> <span class="n">points</span><span class="p">[</span><span class="n">inside</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="n">all_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_values</span>
+        <span class="n">values_inside</span> <span class="o">=</span> <span class="n">all_values</span><span class="p">[</span>
+            <span class="n">points_inside</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">points_inside</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">points_inside</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="n">ans</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">values_inside</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ans</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="n">values_inside</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">ans</span>
+
+</div></div>
+<div class="viewcode-block" id="aggregate_in_roi"><a class="viewcode-back" href="../../../library/struc_proc.html#braviz.interaction.structure_metrics.aggregate_in_roi">[docs]</a><span class="k">def</span> <span class="nf">aggregate_in_roi</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">roi_ctr</span><span class="p">,</span> <span class="n">roi_radius</span><span class="p">,</span> <span class="n">roi_space</span><span class="p">,</span> <span class="n">img2</span><span class="p">,</span> <span class="n">paradigm</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">contrast</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Aggregate values from an image inside a spherical roi</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        reader (braviz.readAndFilter.base_reader.BaseReader) : Reader object used to read the data</span>
+<span class="sd">        subject : subject id</span>
+<span class="sd">        roi_ctr (tuple) : Coordinates of the roi center</span>
+<span class="sd">        roi_radius (float) : Sphere radius</span>
+<span class="sd">        roi_space (str) : Coordinate system in which the roi is defined</span>
+<span class="sd">        img2 (str) : Modality in which to calculate mean or mode.</span>
+<span class="sd">        paradigm (str) : In case img2 is fMRI, the paradigm to use</span>
+<span class="sd">        contrast (int) : In case img2 is fMRI, the contrast to use</span>
+<span class="sd">        mean (bool) : If will return the mean inside the roi, otherwise it will</span>
+<span class="sd">            return the *mode*.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Mean or mode of the image inside a sphere</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">paradigm</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">target_img</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;IMAGE&quot;</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">img2</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="n">roi_space</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&quot;nii&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">target_img</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s">&quot;fmri&quot;</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="n">roi_space</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&quot;nii&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">paradigm</span><span class="p">,</span> <span class="n">contrast</span><span class="o">=</span><span class="n">contrast</span><span class="p">)</span>
+    <span class="n">r_sq</span> <span class="o">=</span> <span class="n">roi_radius</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">target_img</span><span class="o">.</span><span class="n">get_shape</span><span class="p">()</span>
+    <span class="n">affine</span> <span class="o">=</span> <span class="n">target_img</span><span class="o">.</span><span class="n">get_affine</span><span class="p">()</span>
+    <span class="c"># create numpy grid</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mgrid</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">:</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">0</span><span class="p">:</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">rollaxis</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">shape</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="n">points_h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">points</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">points</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))))</span>
+    <span class="n">points_world_h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">affine</span><span class="p">,</span> <span class="n">points_h</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">points_world</span> <span class="o">=</span> <span class="n">points_world_h</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">divisor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">points_world_h</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">:],</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">points_world</span> <span class="o">=</span> <span class="n">points_world</span> <span class="o">/</span> <span class="n">divisor</span>
+
+    <span class="n">offsets</span> <span class="o">=</span> <span class="n">points_world</span> <span class="o">-</span> <span class="n">roi_ctr</span>
+    <span class="n">dist_sq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">offsets</span> <span class="o">*</span> <span class="n">offsets</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">inside</span> <span class="o">=</span> <span class="p">(</span><span class="n">dist_sq</span> <span class="o">&lt;=</span> <span class="n">r_sq</span><span class="p">)</span>
+
+    <span class="n">points_inside</span> <span class="o">=</span> <span class="n">points</span><span class="p">[</span><span class="n">inside</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="n">all_values</span> <span class="o">=</span> <span class="n">target_img</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+    <span class="n">values_inside</span> <span class="o">=</span> <span class="n">all_values</span><span class="p">[</span>
+        <span class="n">points_inside</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">points_inside</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">points_inside</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]]</span>
+    <span class="k">if</span> <span class="n">mean</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">values_inside</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="n">values_inside</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">ans</span>
+
+</div>
+<span class="k">def</span> <span class="nf">_get_locations</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">struct_name</span><span class="p">):</span>
+
+    <span class="n">label</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;Model&quot;</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">struct_name</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">struct_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;wm&quot;</span><span class="p">):</span>
+        <span class="n">aparc_img</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;LABEL&quot;</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;WMPARC&quot;</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="s">&quot;subject&quot;</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&quot;nii&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">aparc_img</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;LABEL&quot;</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;APARC&quot;</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="s">&quot;subject&quot;</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&quot;nii&quot;</span><span class="p">)</span>
+    <span class="n">aparc_data</span> <span class="o">=</span> <span class="n">aparc_img</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">aparc_data</span> <span class="o">==</span> <span class="n">label</span>
+
+
+<div class="viewcode-block" id="get_scalar_from_fiber_ploydata"><a class="viewcode-back" href="../../../library/struc_proc.html#braviz.interaction.structure_metrics.get_scalar_from_fiber_ploydata">[docs]</a><span class="k">def</span> <span class="nf">get_scalar_from_fiber_ploydata</span><span class="p">(</span><span class="n">poly_data</span><span class="p">,</span> <span class="n">scalar</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the number of lines, mean length or mean color from a polydata bundle</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        poly_data (vtkPolyData) : Poly Data containing only lines</span>
+<span class="sd">        scalar (str) : may be &quot;number&quot;,&quot;mean_length&quot;, or &quot;mean_color&quot;</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The requested scalar</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pd</span> <span class="o">=</span> <span class="n">poly_data</span>
+    <span class="k">if</span> <span class="n">scalar</span> <span class="o">==</span> <span class="s">&quot;number&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">GetNumberOfLines</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">scalar</span> <span class="o">==</span> <span class="s">&quot;mean_length&quot;</span><span class="p">:</span>
+        <span class="n">lengths</span> <span class="o">=</span> <span class="n">braviz</span><span class="o">.</span><span class="n">interaction</span><span class="o">.</span><span class="n">compute_fiber_lengths</span><span class="p">(</span><span class="n">pd</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">lengths</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">n</span>
+    <span class="k">elif</span> <span class="n">scalar</span> <span class="o">==</span> <span class="s">&quot;mean_color&quot;</span><span class="p">:</span>
+        <span class="n">desc</span> <span class="o">=</span> <span class="n">braviz</span><span class="o">.</span><span class="n">interaction</span><span class="o">.</span><span class="n">aggregate_fiber_scalar</span><span class="p">(</span><span class="n">pd</span><span class="p">,</span> <span class="n">norm_factor</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">desc</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">n</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Unknown metric </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">scalar</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Unknown metric </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">scalar</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="get_fiber_scalars_from_db"><a class="viewcode-back" href="../../../library/struc_proc.html#braviz.interaction.structure_metrics.get_fiber_scalars_from_db">[docs]</a><span class="k">def</span> <span class="nf">get_fiber_scalars_from_db</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">subj_id</span><span class="p">,</span> <span class="n">db_id</span><span class="p">,</span> <span class="n">scalar</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the number of lines, mean length mean fa or mean md from a database fiber</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        reader (braviz.readAndFilter.base_reader.BaseReader) : Reader object used to read the data</span>
+<span class="sd">        subj_id : Subject id</span>
+<span class="sd">        db_id : Bundle database id</span>
+<span class="sd">        scalar (str) : may be &quot;number&quot;,&quot;mean_length&quot;, or &quot;mean_fa&quot; or &quot;mean_md&quot;</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The requested scalar, or &#39;nan&#39; if there was an error</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">scalar</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&quot;number&quot;</span><span class="p">,</span> <span class="s">&quot;mean_length&quot;</span><span class="p">):</span>
+            <span class="n">pd</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;FIBERS&quot;</span><span class="p">,</span> <span class="n">subj_id</span><span class="p">,</span> <span class="n">db_id</span><span class="o">=</span><span class="n">db_id</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">get_scalar_from_fiber_ploydata</span><span class="p">(</span><span class="n">pd</span><span class="p">,</span> <span class="n">scalar</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">scalar</span> <span class="o">==</span> <span class="s">&quot;mean_fa&quot;</span><span class="p">:</span>
+            <span class="n">fiber</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;FIBERS&quot;</span><span class="p">,</span> <span class="n">subj_id</span><span class="p">,</span>
+                               <span class="n">db_id</span><span class="o">=</span><span class="n">db_id</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">scalars</span><span class="o">=</span><span class="s">&quot;fa_p&quot;</span><span class="p">)</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="n">get_scalar_from_fiber_ploydata</span><span class="p">(</span><span class="n">fiber</span><span class="p">,</span> <span class="s">&quot;mean_color&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">n</span>
+        <span class="k">elif</span> <span class="n">scalar</span> <span class="o">==</span> <span class="s">&quot;mean_md&quot;</span><span class="p">:</span>
+            <span class="n">fiber</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;FIBERS&quot;</span><span class="p">,</span> <span class="n">subj_id</span><span class="p">,</span>
+                               <span class="n">db_id</span><span class="o">=</span><span class="n">db_id</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">scalars</span><span class="o">=</span><span class="s">&quot;md_p&quot;</span><span class="p">)</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="n">get_scalar_from_fiber_ploydata</span><span class="p">(</span><span class="n">fiber</span><span class="p">,</span> <span class="s">&quot;mean_color&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">n</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Couldn&#39;t calculate </span><span class="si">%s</span><span class="s"> for subject </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">scalar</span><span class="p">,</span> <span class="n">subj_id</span><span class="p">))</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="s">&quot;nan&quot;</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="get_fiber_scalars_from_waypoints"><a class="viewcode-back" href="../../../library/struc_proc.html#braviz.interaction.structure_metrics.get_fiber_scalars_from_waypoints">[docs]</a><span class="k">def</span> <span class="nf">get_fiber_scalars_from_waypoints</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">subj_id</span><span class="p">,</span> <span class="n">waypoints</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="n">scalar</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the number of lines, mean length mean fa or mean md from a fiber created using waypoints</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        reader (braviz.readAndFilter.base_reader.BaseReader) : Reader object used to read the data</span>
+<span class="sd">        subj_id : Subject id</span>
+<span class="sd">        waypoints (list) : List of structure names</span>
+<span class="sd">        operation (str) : &quot;and&quot; if it required for lines to pass through *all* waypoints, &quot;or&quot; if they can pass</span>
+<span class="sd">            through *any* of them</span>
+<span class="sd">        scalar (str) : may be &quot;number&quot;,&quot;mean_length&quot;, or &quot;mean_fa&quot; or &quot;mean_md&quot;</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The requested scalar, or &#39;nan&#39; if there was an error</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">lat</span> <span class="o">=</span> <span class="n">braviz</span><span class="o">.</span><span class="n">readAndFilter</span><span class="o">.</span><span class="n">tabular_data</span><span class="o">.</span><span class="n">get_laterality</span><span class="p">(</span><span class="n">subj_id</span><span class="p">)</span>
+        <span class="n">waypoints2</span> <span class="o">=</span> <span class="n">solve_laterality</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span> <span class="n">waypoints</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">scalar</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&quot;number&quot;</span><span class="p">,</span> <span class="s">&quot;mean_length&quot;</span><span class="p">):</span>
+            <span class="n">pd</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="s">&quot;FIBERS&quot;</span><span class="p">,</span> <span class="n">subj_id</span><span class="p">,</span> <span class="n">waypoint</span><span class="o">=</span><span class="n">waypoints2</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="n">operation</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">get_scalar_from_fiber_ploydata</span><span class="p">(</span><span class="n">pd</span><span class="p">,</span> <span class="n">scalar</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">scalar</span> <span class="o">==</span> <span class="s">&quot;mean_fa&quot;</span><span class="p">:</span>
+            <span class="n">fiber</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;FIBERS&quot;</span><span class="p">,</span> <span class="n">subj_id</span><span class="p">,</span>
+                               <span class="n">waypoint</span><span class="o">=</span><span class="n">waypoints2</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="n">operation</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">scalars</span><span class="o">=</span><span class="s">&quot;fa_p&quot;</span><span class="p">)</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="n">get_scalar_from_fiber_ploydata</span><span class="p">(</span><span class="n">fiber</span><span class="p">,</span> <span class="s">&quot;mean_color&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">n</span>
+        <span class="k">elif</span> <span class="n">scalar</span> <span class="o">==</span> <span class="s">&quot;mean_md&quot;</span><span class="p">:</span>
+            <span class="n">fiber</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;FIBERS&quot;</span><span class="p">,</span> <span class="n">subj_id</span><span class="p">,</span>
+                               <span class="n">waypoint</span><span class="o">=</span><span class="n">waypoints2</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="n">operation</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">scalars</span><span class="o">=</span><span class="s">&quot;md_p&quot;</span><span class="p">)</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="n">get_scalar_from_fiber_ploydata</span><span class="p">(</span><span class="n">fiber</span><span class="p">,</span> <span class="s">&quot;mean_color&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">n</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Couldn&#39;t calculate </span><span class="si">%s</span><span class="s"> for subject </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">scalar</span><span class="p">,</span> <span class="n">subj_id</span><span class="p">))</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="s">&quot;nan&quot;</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+                
+
+                
+
+                
+
+          
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

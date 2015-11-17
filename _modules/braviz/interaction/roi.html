@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>braviz.interaction.roi &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.3b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="top" title="Braviz Documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body role="document">
+    
+    <div class="header-wrapper">
+      <div class="header">
+          <p class="logo"><a href="../../../index.html">
+            <img class="logo" src="../../../_static/Logo_Bravis_h.png" alt="Logo"/>
+          </a></p>
+          <!--
+        <div class="headertitle"><a
+          href="../../../index.html"> Documentation </a></div>
+          -->
+          <nav class="parents">
+              <ol>
+        <li><a href="../../../index.html"> Home </a> &raquo;</li>
+          <li><a href="../../index.html"  accesskey="U"  >Module code</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/Logo_Bravis_h.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for braviz.interaction.roi</h1><div class="highlight"><pre>
+<span class="c">##############################################################################</span>
+<span class="c">#    Braviz, Brain Data interactive visualization                            #</span>
+<span class="c">#    Copyright (C) 2014  Diego Angulo                                        #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    This program is free software: you can redistribute it and/or modify    #</span>
+<span class="c">#    it under the terms of the GNU Lesser General Public License as          #</span>
+<span class="c">#    published by  the Free Software Foundation, either version 3 of the     #</span>
+<span class="c">#    License, or (at your option) any later version.                         #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    This program is distributed in the hope that it will be useful,         #</span>
+<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
+<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
+<span class="c">#    GNU Lesser General Public License for more details.                     #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    You should have received a copy of the GNU Lesser General Public License#</span>
+<span class="c">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
+<span class="c">##############################################################################</span>
+
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+
+<span class="kn">import</span> <span class="nn">vtk</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">vtk.numpy_interface</span> <span class="kn">import</span> <span class="n">dataset_adapter</span> <span class="k">as</span> <span class="n">dsa</span>
+
+<span class="kn">import</span> <span class="nn">nibabel</span> <span class="kn">as</span> <span class="nn">nib</span>
+
+
+<span class="kn">import</span> <span class="nn">braviz</span>
+<span class="kn">from</span> <span class="nn">braviz.readAndFilter</span> <span class="kn">import</span> <span class="n">geom_db</span>
+
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;da.angulo39&#39;</span>
+
+
+<div class="viewcode-block" id="export_roi"><a class="viewcode-back" href="../../../library/struc_proc.html#braviz.interaction.roi.export_roi">[docs]</a><span class="k">def</span> <span class="nf">export_roi</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">roi_id</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">out_file</span><span class="p">,</span> <span class="n">reader</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Save an image from a roi into a file</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        subject : Subject id</span>
+<span class="sd">        roi_id : ROI database id</span>
+<span class="sd">        space (str) : Coordinate system for output image</span>
+<span class="sd">        out_file (str) : Path for the output file</span>
+<span class="sd">        reader (braviz.readAndFilter.base_reader.BaseReader) : Reader object used to read the data, if None, the</span>
+<span class="sd">            one returned by :func:`braviz.readAndFilter.BravizAutoReader` will be used</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">sphere_img</span><span class="p">,</span> <span class="n">affine</span> <span class="o">=</span> <span class="n">generate_roi_image</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">roi_id</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">reader</span><span class="p">)</span>
+    <span class="n">nib_image</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">Nifti1Image</span><span class="p">(</span><span class="n">sphere_img</span><span class="p">,</span> <span class="n">affine</span><span class="p">)</span>
+    <span class="n">nib_image</span><span class="o">.</span><span class="n">update_header</span><span class="p">()</span>
+    <span class="n">nib_image</span><span class="o">.</span><span class="n">to_filename</span><span class="p">(</span><span class="n">out_file</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="generate_roi_image"><a class="viewcode-back" href="../../../library/struc_proc.html#braviz.interaction.roi.generate_roi_image">[docs]</a><span class="k">def</span> <span class="nf">generate_roi_image</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">roi_id</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">reader</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">out_format</span><span class="o">=</span><span class="s">&quot;nii&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates an image representation of an spherical ROI</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        subject : Subject id</span>
+<span class="sd">        roi_id : ROI database id</span>
+<span class="sd">        space (str) : Coordinate system for output image</span>
+<span class="sd">        reader (braviz.readAndFilter.base_reader.BaseReader) : Reader object used to read the data, if None, the</span>
+<span class="sd">            one returned by :func:`braviz.readAndFilter.BravizAutoReader` will be used</span>
+<span class="sd">        format (str) : By default a numpy array, affine matrix pair is returned. If ``out_format=&quot;vtk&quot;``,</span>
+<span class="sd">            a vtkImageData object is returned</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A numpy array and a numpy affine transform by default. If ``out_format=&quot;vtk&quot;`` a vtkImageData</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">reader</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="n">braviz</span><span class="o">.</span><span class="n">readAndFilter</span><span class="o">.</span><span class="n">BravizAutoReader</span><span class="p">()</span>
+
+    <span class="n">r</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">geom_db</span><span class="o">.</span><span class="n">load_sphere</span><span class="p">(</span><span class="n">roi_id</span><span class="p">,</span> <span class="n">subject</span><span class="p">)</span>
+    <span class="n">sphere_space</span> <span class="o">=</span> <span class="n">geom_db</span><span class="o">.</span><span class="n">get_roi_space</span><span class="p">(</span><span class="n">roi_id</span><span class="o">=</span><span class="n">roi_id</span><span class="p">)</span>
+    <span class="n">sphere_src</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkSphereSource</span><span class="p">()</span>
+    <span class="n">sphere_src</span><span class="o">.</span><span class="n">SetRadius</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+    <span class="n">sphere_src</span><span class="o">.</span><span class="n">SetPhiResolution</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+    <span class="n">sphere_src</span><span class="o">.</span><span class="n">SetThetaResolution</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+    <span class="n">sphere_src</span><span class="o">.</span><span class="n">SetCenter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+    <span class="n">sphere_src</span><span class="o">.</span><span class="n">Update</span><span class="p">()</span>
+    <span class="n">sphere_pd</span> <span class="o">=</span> <span class="n">sphere_src</span><span class="o">.</span><span class="n">GetOutput</span><span class="p">()</span>
+    <span class="n">sphere_world</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">transform_points_to_space</span><span class="p">(</span>
+        <span class="n">sphere_pd</span><span class="p">,</span> <span class="n">sphere_space</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">inverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">sphere_out</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">transform_points_to_space</span><span class="p">(</span>
+        <span class="n">sphere_world</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">inverse</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+    <span class="n">black_image</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;MRI&quot;</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="n">space</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&quot;vtk&quot;</span><span class="p">)</span>
+    <span class="n">nimg</span> <span class="o">=</span> <span class="n">dsa</span><span class="o">.</span><span class="n">WrapDataObject</span><span class="p">(</span><span class="n">black_image</span><span class="p">)</span>
+
+    <span class="c"># zero the image</span>
+    <span class="n">zero_array</span> <span class="o">=</span> <span class="n">nimg</span><span class="o">.</span><span class="n">PointData</span><span class="p">[</span><span class="s">&#39;ImageScalars&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+    <span class="n">black_image</span><span class="o">.</span><span class="n">GetPointData</span><span class="p">()</span><span class="o">.</span><span class="n">RemoveArray</span><span class="p">(</span><span class="s">&#39;ImageScalars&#39;</span><span class="p">)</span>
+    <span class="n">nimg</span><span class="o">.</span><span class="n">PointData</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">zero_array</span><span class="p">,</span> <span class="s">&#39;ImageScalars&#39;</span><span class="p">)</span>
+    <span class="n">black_image</span><span class="o">.</span><span class="n">GetPointData</span><span class="p">()</span><span class="o">.</span><span class="n">SetActiveScalars</span><span class="p">(</span><span class="s">&quot;ImageScalars&quot;</span><span class="p">)</span>
+
+    <span class="n">pol2sten</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkPolyDataToImageStencil</span><span class="p">()</span>
+    <span class="n">pol2sten</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="n">sphere_out</span><span class="p">)</span>
+    <span class="n">pol2sten</span><span class="o">.</span><span class="n">SetOutputOrigin</span><span class="p">(</span><span class="n">black_image</span><span class="o">.</span><span class="n">GetOrigin</span><span class="p">())</span>
+    <span class="n">pol2sten</span><span class="o">.</span><span class="n">SetOutputSpacing</span><span class="p">(</span><span class="n">black_image</span><span class="o">.</span><span class="n">GetSpacing</span><span class="p">())</span>
+    <span class="n">pol2sten</span><span class="o">.</span><span class="n">SetOutputWholeExtent</span><span class="p">(</span><span class="n">black_image</span><span class="o">.</span><span class="n">GetExtent</span><span class="p">())</span>
+
+    <span class="n">pol2sten</span><span class="o">.</span><span class="n">Update</span><span class="p">()</span>
+
+    <span class="n">imgstenc</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkImageStencil</span><span class="p">()</span>
+    <span class="n">imgstenc</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="n">black_image</span><span class="p">)</span>
+    <span class="n">imgstenc</span><span class="o">.</span><span class="n">SetStencilConnection</span><span class="p">(</span><span class="n">pol2sten</span><span class="o">.</span><span class="n">GetOutputPort</span><span class="p">())</span>
+    <span class="n">imgstenc</span><span class="o">.</span><span class="n">SetBackgroundValue</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">imgstenc</span><span class="o">.</span><span class="n">SetReverseStencil</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">imgstenc</span><span class="o">.</span><span class="n">Update</span><span class="p">()</span>
+
+    <span class="n">sphere_img</span> <span class="o">=</span> <span class="n">imgstenc</span><span class="o">.</span><span class="n">GetOutput</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">out_format</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s">&quot;vtk&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">sphere_img</span>
+
+    <span class="n">out_nimg</span> <span class="o">=</span> <span class="n">dsa</span><span class="o">.</span><span class="n">WrapDataObject</span><span class="p">(</span><span class="n">sphere_img</span><span class="p">)</span>
+    <span class="n">out_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">out_nimg</span><span class="o">.</span><span class="n">GetPointData</span><span class="p">()[</span><span class="s">&quot;ImageScalars&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
+        <span class="n">sphere_img</span><span class="o">.</span><span class="n">GetDimensions</span><span class="p">(),</span> <span class="n">order</span><span class="o">=</span><span class="s">&quot;F&quot;</span><span class="p">))</span>
+    <span class="n">affine</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">affine</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">sphere_img</span><span class="o">.</span><span class="n">GetOrigin</span><span class="p">()</span>
+    <span class="n">affine</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">affine</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">affine</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">sphere_img</span><span class="o">.</span><span class="n">GetSpacing</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">out_data</span><span class="p">,</span> <span class="n">affine</span>
+
+</div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">braviz.readAndFilter</span> <span class="kn">import</span> <span class="n">images</span><span class="p">,</span> <span class="n">config_file</span>
+    <span class="kn">from</span> <span class="nn">braviz.visualization</span> <span class="kn">import</span> <span class="n">simple_vtk</span>
+    <span class="kn">import</span> <span class="nn">nibabel</span> <span class="kn">as</span> <span class="nn">nib</span>
+
+    <span class="n">subj</span> <span class="o">=</span> <span class="n">config_file</span><span class="o">.</span><span class="n">get_apps_config</span><span class="p">()</span><span class="o">.</span><span class="n">get_default_subject</span><span class="p">()</span>
+    <span class="n">export_roi</span><span class="p">(</span><span class="n">subj</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&quot;subject&quot;</span><span class="p">,</span> <span class="s">&quot;/home/diego/test.nii&quot;</span><span class="p">)</span>
+
+    <span class="n">nimg</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&quot;/home/diego/test.nii&quot;</span><span class="p">)</span>
+    <span class="n">vimg</span> <span class="o">=</span> <span class="n">images</span><span class="o">.</span><span class="n">nibNii2vtk</span><span class="p">(</span><span class="n">nimg</span><span class="p">)</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">braviz</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">simple_vtk</span><span class="o">.</span><span class="n">SimpleVtkViewer</span><span class="p">()</span>
+    <span class="n">v</span><span class="o">.</span><span class="n">addImg</span><span class="p">(</span><span class="n">vimg</span><span class="p">)</span>
+    <span class="n">v</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+                
+
+                
+
+                
+
+          
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

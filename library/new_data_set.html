@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Set-up Braviz on a New Data-Set &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.3b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="top" title="Braviz Documentation" href="../index.html" /> 
+  </head>
+  <body role="document">
+    
+    <div class="header-wrapper">
+      <div class="header">
+          <p class="logo"><a href="../index.html">
+            <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+          </a></p>
+          <!--
+        <div class="headertitle"><a
+          href="../index.html"> Documentation </a></div>
+          -->
+          <nav class="parents">
+              <ol>
+        <li><a href="../index.html"> Home </a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Set-up Braviz on a New Data-Set</a><ul>
+<li><a class="reference internal" href="#process-spatial-data">Process Spatial Data</a></li>
+<li><a class="reference internal" href="#create-a-data-reader">Create a data reader</a></li>
+<li><a class="reference internal" href="#create-directory-for-dynamic-data">Create directory for dynamic data</a></li>
+<li><a class="reference internal" href="#create-configuration-files">Create configuration files</a></li>
+<li><a class="reference internal" href="#import-tabular-data">Import tabular data</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="set-up-braviz-on-a-new-data-set">
+<h1>Set-up Braviz on a New Data-Set<a class="headerlink" href="#set-up-braviz-on-a-new-data-set" title="Permalink to this headline">¶</a></h1>
+<p>This guide shows hot to prepare data, and how to configure Braviz
+in order to work with new data-sets.</p>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<div class="section" id="process-spatial-data">
+<h2>Process Spatial Data<a class="headerlink" href="#process-spatial-data" title="Permalink to this headline">¶</a></h2>
+<p>In order to take full advantage of Braviz, it is recommended to run the
+following programs on your data</p>
+<blockquote>
+<div><ul class="simple">
+<li>FreeSurfer segmentation, surface reconstructions and parcellation</li>
+<li>Model reconstruction of freeSurfer segmentations</li>
+<li>Tracula</li>
+<li>Fitting tensors, and creating FA, MD and DTI images</li>
+<li>Deterministic tractography</li>
+<li>SPM first level analysis of functional paradigms</li>
+<li>SPM-Dartel registration</li>
+</ul>
+</div></blockquote>
+<p>In the currently configured projects deterministic tractography and tensor fitting
+was done using Camino. All of the items in the above list are mandatory except the
+FreeSurfer pipeline. The scripts used during the kmc400 project are available
+on <a class="reference external" href="https://github.com/imaginebog/kmc_proc">github</a> as a reference, however for large
+projects it is worth using a pipeline framework as Loni or NiPype.</p>
+</div>
+<div class="section" id="create-a-data-reader">
+<h2>Create a data reader<a class="headerlink" href="#create-a-data-reader" title="Permalink to this headline">¶</a></h2>
+<p>All access to spatial data goes through Braviz, data readers, in this way the
+system can be isolated from the underlying file structure. By building an appropriate
+reader it is even possible to have data on a remote system. All readers should
+inherit from <code class="xref py py-class docutils literal"><span class="pre">BaseReader</span></code>, and implement the abstract methods.</p>
+<p>These readers should be located on the <a class="reference internal" href="read_and_filter.html#module-braviz.readAndFilter" title="braviz.readAndFilter"><code class="xref py py-mod docutils literal"><span class="pre">braviz.readAndFilter</span></code></a> module, in a module named
+as the project, in lowercase. For example the reader for a project called <em>foobar</em> the module should be called
+<em>braviz.readAndFilter.foobar</em>, and inside the module there should be a class named <em>FooBarReader</em>.</p>
+<p>Two full readers are already implemented. The first one (<code class="xref py py-mod docutils literal"><span class="pre">braviz.readAndFilter.kmc40</span></code>) was for the KMC pilot study.
+The file system in this reader was organized first by subject and then by data type. In other words, all of the data
+belonging to a subject was contained in the same folder. Additionally the braviz cache and dynamic data was written to
+the same folder that contains the spatial data.</p>
+<p>The  (<code class="xref py py-mod docutils literal"><span class="pre">braviz.readAndFilter.kmc400</span></code>) module contains the reader for the full KMC. This study contains images from
+about 250 subjects, and therefore it was not practical to copy spatial data to all machines. Therefore usually
+data is shared through <em>samba</em> as read only, and dynamic data and cache are kept locally on each machine. In this case,
+data is tored first by data type, and then by subject, so that the Freesurfer&#8217;s <em>SUBJECTS_DIR</em> can be used directly.</p>
+<p>Both of these readers operate in a similar way, the main difference is in the routes required to load files from disk.
+The common operations are coded in the <code class="xref py py-mod docutils literal"><span class="pre">kmc_abstract</span></code> module. Feel free to use any of these modules as a basis
+for your new reader.</p>
+<p>The important areas that must be modified are:</p>
+<ul class="simple">
+<li>The indices of available fMRI pardigms and images</li>
+<li>The locations of files</li>
+<li>The transformations between coordinate systems</li>
+<li>If required, custom functions to read files and convert to numpy or  vtk.</li>
+</ul>
+<p>Remember that the end objective is having a reader that conforms to the <a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><code class="xref py py-class docutils literal"><span class="pre">BaseReader</span></code></a>
+interface. Also
+notice that there are several static methods that need to be implemented. Inside these methods it may be
+useful to use the hosts configuration file, which can be accessed using the function
+<code class="xref py py-func docutils literal"><span class="pre">get_hosts_config()</span></code>.</p>
+</div>
+<div class="section" id="create-directory-for-dynamic-data">
+<h2>Create directory for dynamic data<a class="headerlink" href="#create-directory-for-dynamic-data" title="Permalink to this headline">¶</a></h2>
+<p>Braviz will generate the database file and cache directory automatically. The only requirement is
+to create a directory with a folder called <em>braviz_data</em> inside. Please make sure you have write permissions on
+these two directories.</p>
+</div>
+<div class="section" id="create-configuration-files">
+<h2>Create configuration files<a class="headerlink" href="#create-configuration-files" title="Permalink to this headline">¶</a></h2>
+<p>To run braviz with using the new project you need to specify it in the <em>braviz.cfg</em> configuration file, which
+is located in the <em>braviz.applications</em> folder. For example, to run Braviz using the <em>FooBar</em> data set, the configuration
+file should look like this</p>
+<div class="highlight-cfg"><div class="highlight"><pre><span class="k">[Braviz]</span>
+<span class="na">project</span> <span class="o">=</span> <span class="s">foobar</span>
+</pre></div>
+</div>
+<p>Also remember to set the <em>Default_Variables</em> and <em>default_subject</em> fields appropriately (see <a class="reference internal" href="configuring.html"><em>Configuring</em></a>).</p>
+<p>A new <em>_hosts</em> configuration file can be added to enter configuration parameters unique to each host.
+For the sample projecct
+<em>foobar</em> this file would need to be named <em>foobar_hosts.cfg</em>,
+and located in the <em>braviz.applications</em> folder (see <a class="reference internal" href="configuring.html"><em>Configuring</em></a>)</p>
+</div>
+<div class="section" id="import-tabular-data">
+<h2>Import tabular data<a class="headerlink" href="#import-tabular-data" title="Permalink to this headline">¶</a></h2>
+<p>The final step is importing some tabular data into the system. This can be done via the
+import variables dialog (see <code class="xref doc docutils literal"><span class="pre">from_excel</span></code>), or by using the <a class="reference internal" href="applications.html#module-braviz.applications.parse_spss_file" title="braviz.applications.parse_spss_file"><code class="xref py py-mod docutils literal"><span class="pre">parse_spss_file</span></code></a>
+command line applicetion.</p>
+<p>Notice that only subjects with tabular data will appear in braviz.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+          <a href="../py-modindex.html" title="Python Module Index"
+              >modules</a> |
+          <a href="../genindex.html" title="General Index"
+             accesskey="I" >index</a>
+          
+            <br/>
+            <a href="../_sources/library/new_data_set.txt"
+               rel="nofollow">Show Source</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

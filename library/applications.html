@@ -23,23 +23,28 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/fold_classes.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
     <link rel="top" title="Braviz Documentation" href="../index.html" />
     <link rel="up" title="Braviz library" href="index.html" />
     <link rel="prev" title="Geometric Processing" href="struc_proc.html" /> 
   </head>
-  <body>
+  <body role="document">
     
     <div class="header-wrapper">
       <div class="header">
+          <p class="logo"><a href="../index.html">
+            <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+          </a></p>
+          <!--
         <div class="headertitle"><a
-          href="../index.html"> Braviz Documentation </a></div>
+          href="../index.html"> Documentation </a></div>
+          -->
           <nav class="parents">
               <ol>
         <li><a href="../index.html"> Home </a> &raquo;</li>
-          <li><a href="index.html"  accesskey="U" >Braviz library</a> &raquo;</li>
+          <li><a href="index.html"  accesskey="U"  >Braviz library</a> &raquo;</li>
                   </ol>
           </nav>
        </div>
@@ -50,8 +55,11 @@
       <div class="content">
         <div class="sidebar" id="agogo-sidebar">
             
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+            </a></p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Applications</a><ul>
@@ -100,7 +108,7 @@
   <h4>Previous topic</h4>
   <p class="topless"><a href="struc_proc.html"
                         title="previous chapter">Geometric Processing</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -120,12 +128,12 @@
             
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <span class="target" id="module-braviz.applications"></span><div class="section" id="applications">
 <h1>Applications<a class="headerlink" href="#applications" title="Permalink to this headline">¶</a></h1>
 <p>The applications module is where all end-user applications live. Python files in this modules should be
-executable. This module also contains the configuration files used in <a class="reference internal" href="configuring.html#module-braviz.readAndFilter.config_file" title="braviz.readAndFilter.config_file: Read Braviz Configuration files"><tt class="xref py py-mod docutils literal"><span class="pre">braviz.readAndFilter.config_file</span></tt></a>.</p>
+executable. This module also contains the configuration files used in <a class="reference internal" href="configuring.html#module-braviz.readAndFilter.config_file" title="braviz.readAndFilter.config_file: Read Braviz Configuration files"><code class="xref py py-mod docutils literal"><span class="pre">braviz.readAndFilter.config_file</span></code></a>.</p>
 <p>This page will contain an overview of the scripts located in this module and some guidelines on creating new
 applications. For documentation from the user point of view please look at</p>
 <p><a class="reference internal" href="../graphical/index.html"><em>Visual Analytics with Braviz</em></a></p>
@@ -269,7 +277,7 @@ Variable normalization and model fitting are done in R via  <a class="reference 
 <span id="command-line-applications"></span><h2>Command line applications<a class="headerlink" href="#module-braviz.applications.parse_spss_file" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="parse-spss-files">
 <h3>Parse spss files<a class="headerlink" href="#parse-spss-files" title="Permalink to this headline">¶</a></h3>
-<p>Access a spss <tt class="docutils literal"><span class="pre">*.sav</span></tt> file to read variables and metadata, specifically</p>
+<p>Access a spss <code class="docutils literal"><span class="pre">*.sav</span></code> file to read variables and metadata, specifically</p>
 <blockquote>
 <div><ul class="simple">
 <li>variable descriptions</li>
@@ -279,7 +287,7 @@ Variable normalization and model fitting are done in R via  <a class="reference 
 <li>textual variable values</li>
 </ul>
 </div></blockquote>
-<p>To see help on this command, call it with the <a href="#id2"><span class="problematic" id="id3">``</span></a>-h```flag.</p>
+<p>To see help on this command, call it with the <code class="docutils literal"><span class="pre">-h</span></code> flag.</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">usage: parse_spss_file.py [-h] [-d] [-m] [-c] [-s] [-v] spss_file index_col</span>
 
 <span class="go">Import data from spss files</span>
@@ -300,14 +308,14 @@ Variable normalization and model fitting are done in R via  <a class="reference 
 </div>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">Using the <tt class="docutils literal"><span class="pre">-s</span></tt> will overwrite existing values in the database</p>
+<p class="last">Using the <code class="docutils literal"><span class="pre">-s</span></code> will overwrite existing values in the database</p>
 </div>
 <span class="target" id="module-braviz.applications.calculate_descriptors"></span></div>
 <div class="section" id="calculate-descriptors">
 <h3>Calculate descriptors<a class="headerlink" href="#calculate-descriptors" title="Permalink to this headline">¶</a></h3>
 <p>Calculate geometric descriptors from segmented structures (ASEG only) in all available subjects.
-The results are saved into a database called <tt class="docutils literal"><span class="pre">descriptors.sqlite</span></tt> in the dynamic data root
-(see <a class="reference internal" href="read_and_filter.html#module-braviz.readAndFilter" title="braviz.readAndFilter"><tt class="xref py py-mod docutils literal"><span class="pre">braviz.readAndFilter</span></tt></a>). The geometric descriptors are</p>
+The results are saved into a database called <code class="docutils literal"><span class="pre">descriptors.sqlite</span></code> in the dynamic data root
+(see <a class="reference internal" href="read_and_filter.html#module-braviz.readAndFilter" title="braviz.readAndFilter"><code class="xref py py-mod docutils literal"><span class="pre">braviz.readAndFilter</span></code></a>). The geometric descriptors are</p>
 <blockquote>
 <div><ul class="simple">
 <li>Volume</li>
@@ -327,7 +335,7 @@ split the job on 4 processes use</p>
 <span class="target" id="module-braviz.applications.populate_cache"></span></div>
 <div class="section" id="populate-cache">
 <h3>Populate cache<a class="headerlink" href="#populate-cache" title="Permalink to this headline">¶</a></h3>
-<p>Fill the braviz disk cache (see <a class="reference internal" href="read_low_level.html#module-braviz.readAndFilter.cache" title="braviz.readAndFilter.cache"><tt class="xref py py-mod docutils literal"><span class="pre">braviz.readAndFilter.cache</span></tt></a>) with commonly used data.
+<p>Fill the braviz disk cache (see <a class="reference internal" href="read_low_level.html#module-braviz.readAndFilter.cache" title="braviz.readAndFilter.cache"><code class="xref py py-mod docutils literal"><span class="pre">braviz.readAndFilter.cache</span></code></a>) with commonly used data.
 The script takes as argument the number of processes to use. For example, to use 3 processes
 call it like</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">python -m braviz.applications.calculate_descriptors 3</span>
@@ -337,7 +345,7 @@ call it like</p>
 <div class="section" id="braviz-web-server">
 <h3>Braviz web server<a class="headerlink" href="#braviz-web-server" title="Permalink to this headline">¶</a></h3>
 <p>Launches the <a class="reference external" href="tornado.readthedocs.org">Tornado</a> web server. It will listen for http requests on port 8100.</p>
-<p>Notice that D3 visualization applications like <a class="reference internal" href="#module-braviz.applications.parallel_coordinates" title="braviz.applications.parallel_coordinates"><tt class="xref py py-mod docutils literal"><span class="pre">parallel_coordinates</span></tt></a> will attempt
+<p>Notice that D3 visualization applications like <a class="reference internal" href="#module-braviz.applications.parallel_coordinates" title="braviz.applications.parallel_coordinates"><code class="xref py py-mod docutils literal"><span class="pre">parallel_coordinates</span></code></a> will attempt
 to launch the server process if it is not found. It should not be required to launch it manually.</p>
 <p>The server is capable or relying braviz communication messages (see <a class="reference internal" href="communication.html"><em>Braviz Inter Application Communication</em></a>) to
 web applications.</p>
@@ -367,11 +375,11 @@ of the data base.</p>
         <div class="left">
           
           <a href="struc_proc.html" title="Geometric Processing"
-             accesskey="P">previous</a> |
+             accesskey="P" >previous</a> |
           <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |
+              >modules</a> |
           <a href="../genindex.html" title="General Index"
-             accesskey="I">index</a>
+             accesskey="I" >index</a>
           
             <br/>
             <a href="../_sources/library/applications.txt"
@@ -380,9 +388,9 @@ of the data base.</p>
 
         <div class="right">
           
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Diego Angulo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
         </div>
         <div class="clearer"></div>

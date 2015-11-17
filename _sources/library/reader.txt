@@ -33,8 +33,8 @@ The get method
 Coordinate systems
 ------------------
 
-    .. automethod:: BaseReader.move_img_to_world(self,img,source_space,subj,interpolate=False)
-    .. automethod:: BaseReader.move_img_from_world(self,img,target_space,subj,interpolate=False)
+    .. automethod:: BaseReader.move_img_to_subject(self,img,source_space,subj,interpolate=False)
+    .. automethod:: BaseReader.move_img_from_subject(self,img,target_space,subj,interpolate=False)
     .. automethod:: BaseReader.transform_points_to_space(self, point_set, space, subj, inverse=False)
 
 Cache

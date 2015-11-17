@@ -23,25 +23,30 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/fold_classes.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
     <link rel="top" title="Braviz Documentation" href="../index.html" />
     <link rel="up" title="Interaction" href="interaction.html" />
     <link rel="next" title="Braviz Inter Application Communication" href="communication.html" />
     <link rel="prev" title="Braviz Qt Models" href="qt_models.html" /> 
   </head>
-  <body>
+  <body role="document">
     
     <div class="header-wrapper">
       <div class="header">
+          <p class="logo"><a href="../index.html">
+            <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+          </a></p>
+          <!--
         <div class="headertitle"><a
-          href="../index.html"> Braviz Documentation </a></div>
+          href="../index.html"> Documentation </a></div>
+          -->
           <nav class="parents">
               <ol>
         <li><a href="../index.html"> Home </a> &raquo;</li>
-          <li><a href="index.html" >Braviz library</a> &raquo;</li>
-          <li><a href="interaction.html"  accesskey="U" >Interaction</a> &raquo;</li>
+          <li><a href="index.html"  >Braviz library</a> &raquo;</li>
+          <li><a href="interaction.html"  accesskey="U"  >Interaction</a> &raquo;</li>
                   </ol>
           </nav>
        </div>
@@ -52,15 +57,18 @@
       <div class="content">
         <div class="sidebar" id="agogo-sidebar">
             
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+            </a></p>
   <h4>Previous topic</h4>
   <p class="topless"><a href="qt_models.html"
                         title="previous chapter">Braviz Qt Models</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="communication.html"
                         title="next chapter">Braviz Inter Application Communication</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -80,16 +88,16 @@
             
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <span class="target" id="module-braviz.interaction.qt_widgets"></span><div class="section" id="braviz-qt-widgets">
 <h1>Braviz Qt Widgets<a class="headerlink" href="#braviz-qt-widgets" title="Permalink to this headline">¶</a></h1>
 <p>This module contain PyQt widgets that may be used in several applications.</p>
 <dl class="class">
 <dt id="braviz.interaction.qt_widgets.ListValidator">
-<em class="property">class </em><tt class="descname">ListValidator</tt><big>(</big><em>valid_options</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_widgets.ListValidator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Can be applied to <a class="reference external" href="http://qt-project.org/doc/qt-4.8/QLineEdit.html" title="See on Qt documentation"><tt class="xref py py-obj docutils literal"><span class="pre">QLineEdit</span></tt></a> so that it will only accept input from a list of possible values.</p>
-<p>Can be used together with <a class="reference external" href="http://qt-project.org/doc/qt-4.8/QCompleter.html" title="See on Qt documentation"><tt class="xref py py-obj docutils literal"><span class="pre">QCompleter</span></tt></a></p>
+<em class="property">class </em><code class="descname">ListValidator</code><span class="sig-paren">(</span><em>valid_options</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_widgets.html#ListValidator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_widgets.ListValidator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Can be applied to <a class="reference external" href="http://qt-project.org/doc/qt-4.8/QLineEdit.html" title="See on Qt documentation"><code class="xref py py-obj docutils literal"><span class="pre">QLineEdit</span></code></a> so that it will only accept input from a list of possible values.</p>
+<p>Can be used together with <a class="reference external" href="http://qt-project.org/doc/qt-4.8/QCompleter.html" title="See on Qt documentation"><code class="xref py py-obj docutils literal"><span class="pre">QCompleter</span></code></a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -102,7 +110,7 @@
 
 <dl class="class">
 <dt id="braviz.interaction.qt_widgets.ContextVariablesPanel">
-<em class="property">class </em><tt class="descname">ContextVariablesPanel</tt><big>(</big><em>parent</em>, <em>title='Context'</em>, <em>initial_variable_idxs=None</em>, <em>initial_subject=None</em>, <em>app=None</em>, <em>sample=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_widgets.ContextVariablesPanel" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">ContextVariablesPanel</code><span class="sig-paren">(</span><em>parent</em>, <em>title='Context'</em>, <em>initial_variable_idxs=None</em>, <em>initial_subject=None</em>, <em>app=None</em>, <em>sample=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_widgets.html#ContextVariablesPanel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_widgets.ContextVariablesPanel" title="Permalink to this definition">¶</a></dt>
 <dd><p>A panel that displays and allows to edit variables for a given subject.</p>
 <p>The context menu of the panel allows the user to select variables and to make some of them editable.
 In this case a <em>save changes</em> button will also be displayed. Pressing it will cause the changes to be
@@ -116,7 +124,7 @@ written into the databases</p>
 <li><strong>title</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Title for the widget</li>
 <li><strong>initial_variable_idxs</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of variable indices to display at start</li>
 <li><strong>initial_subject</strong> &#8211; Id of the initial subject whose variable values will be displayed</li>
-<li><strong>app</strong> &#8211; Optional, an application with the <tt class="docutils literal"><span class="pre">save_screenshot</span></tt> and <tt class="docutils literal"><span class="pre">get_state_dict</span></tt> method.
+<li><strong>app</strong> &#8211; Optional, an application with the <code class="docutils literal"><span class="pre">save_screenshot</span></code> and <code class="docutils literal"><span class="pre">get_state_dict</span></code> method.
 In this case a scenario will be automatically created whenever a variable is first modified.</li>
 <li><strong>sample</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; list of subjects. This sample will be passed on to the variable select dialog deployed
 by the panel.</li>
@@ -127,7 +135,7 @@ by the panel.</li>
 </table>
 <dl class="method">
 <dt id="braviz.interaction.qt_widgets.ContextVariablesPanel.create_context_menu">
-<tt class="descname">create_context_menu</tt><big>(</big><em>pos</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_widgets.ContextVariablesPanel.create_context_menu" title="Permalink to this definition">¶</a></dt>
+<code class="descname">create_context_menu</code><span class="sig-paren">(</span><em>pos</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_widgets.html#ContextVariablesPanel.create_context_menu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_widgets.ContextVariablesPanel.create_context_menu" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a context menu which gives the user the option to open a dialog to select variables</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -141,19 +149,19 @@ by the panel.</li>
 
 <dl class="method">
 <dt id="braviz.interaction.qt_widgets.ContextVariablesPanel.get_editables">
-<tt class="descname">get_editables</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.qt_widgets.ContextVariablesPanel.get_editables" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_editables</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_widgets.html#ContextVariablesPanel.get_editables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_widgets.ContextVariablesPanel.get_editables" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a list of tuples (var_code, editable) indicating which variables are editable</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="braviz.interaction.qt_widgets.ContextVariablesPanel.get_variables">
-<tt class="descname">get_variables</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.qt_widgets.ContextVariablesPanel.get_variables" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_variables</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_widgets.html#ContextVariablesPanel.get_variables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_widgets.ContextVariablesPanel.get_variables" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a list of current variable codes</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="braviz.interaction.qt_widgets.ContextVariablesPanel.set_sample">
-<tt class="descname">set_sample</tt><big>(</big><em>new_sample</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_widgets.ContextVariablesPanel.set_sample" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_sample</code><span class="sig-paren">(</span><em>new_sample</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_widgets.html#ContextVariablesPanel.set_sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_widgets.ContextVariablesPanel.set_sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the sample used in the variable selection dialogs</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -167,7 +175,7 @@ by the panel.</li>
 
 <dl class="method">
 <dt id="braviz.interaction.qt_widgets.ContextVariablesPanel.set_subject">
-<tt class="descname">set_subject</tt><big>(</big><em>subject_id</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_widgets.ContextVariablesPanel.set_subject" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_subject</code><span class="sig-paren">(</span><em>subject_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_widgets.html#ContextVariablesPanel.set_subject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_widgets.ContextVariablesPanel.set_subject" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the current subject to which variable values are associated</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -181,7 +189,7 @@ by the panel.</li>
 
 <dl class="method">
 <dt id="braviz.interaction.qt_widgets.ContextVariablesPanel.set_variables">
-<tt class="descname">set_variables</tt><big>(</big><em>variables</em>, <em>editables=None</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_widgets.ContextVariablesPanel.set_variables" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_variables</code><span class="sig-paren">(</span><em>variables</em>, <em>editables=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_widgets.html#ContextVariablesPanel.set_variables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_widgets.ContextVariablesPanel.set_variables" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets a new set of variables for the panel</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -203,7 +211,7 @@ be modifiable by the user</li>
 <a class="reference internal image-reference" href="../_images/context_panel.png"><img alt="Context panel example" class="align-center" src="../_images/context_panel.png" style="width: 90%;" /></a>
 <dl class="class">
 <dt id="braviz.interaction.qt_widgets.RotatedLabel">
-<em class="property">class </em><tt class="descname">RotatedLabel</tt><big>(</big><em>parent</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_widgets.RotatedLabel" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">RotatedLabel</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_widgets.html#RotatedLabel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_widgets.RotatedLabel" title="Permalink to this definition">¶</a></dt>
 <dd><p>A vertical label useful for labeling rows of data</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -215,7 +223,7 @@ be modifiable by the user</li>
 </table>
 <dl class="method">
 <dt id="braviz.interaction.qt_widgets.RotatedLabel.set_color">
-<tt class="descname">set_color</tt><big>(</big><em>color</em><big>)</big><a class="headerlink" href="#braviz.interaction.qt_widgets.RotatedLabel.set_color" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_color</code><span class="sig-paren">(</span><em>color</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_widgets.html#RotatedLabel.set_color"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_widgets.RotatedLabel.set_color" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the color of the label</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -247,13 +255,13 @@ be modifiable by the user</li>
         <div class="left">
           
           <a href="qt_models.html" title="Braviz Qt Models"
-             accesskey="P">previous</a> |
+             accesskey="P" >previous</a> |
           <a href="communication.html" title="Braviz Inter Application Communication"
-             accesskey="N">next</a> |
+             accesskey="N" >next</a> |
           <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |
+              >modules</a> |
           <a href="../genindex.html" title="General Index"
-             accesskey="I">index</a>
+             accesskey="I" >index</a>
           
             <br/>
             <a href="../_sources/library/qt_widgets.txt"
@@ -262,9 +270,9 @@ be modifiable by the user</li>
 
         <div class="right">
           
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Diego Angulo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
         </div>
         <div class="clearer"></div>

@@ -18,7 +18,7 @@ ROIs
 .. autofunction:: get_roi_space
 
 .. autofunction:: create_roi
-
+.. autofunction:: recursive_delete_roi
 
 Spheres
 --------

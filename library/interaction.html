@@ -23,24 +23,29 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/fold_classes.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
     <link rel="top" title="Braviz Documentation" href="../index.html" />
     <link rel="up" title="Braviz library" href="index.html" />
     <link rel="next" title="Braviz Qt Dialogs" href="qt_dialogs.html" />
     <link rel="prev" title="D3 based visualizations" href="d3_viz.html" /> 
   </head>
-  <body>
+  <body role="document">
     
     <div class="header-wrapper">
       <div class="header">
+          <p class="logo"><a href="../index.html">
+            <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+          </a></p>
+          <!--
         <div class="headertitle"><a
-          href="../index.html"> Braviz Documentation </a></div>
+          href="../index.html"> Documentation </a></div>
+          -->
           <nav class="parents">
               <ol>
         <li><a href="../index.html"> Home </a> &raquo;</li>
-          <li><a href="index.html"  accesskey="U" >Braviz library</a> &raquo;</li>
+          <li><a href="index.html"  accesskey="U"  >Braviz library</a> &raquo;</li>
                   </ol>
           </nav>
        </div>
@@ -51,8 +56,11 @@
       <div class="content">
         <div class="sidebar" id="agogo-sidebar">
             
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+            </a></p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Interaction</a><ul>
@@ -75,7 +83,7 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="qt_dialogs.html"
                         title="next chapter">Braviz Qt Dialogs</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -95,7 +103,7 @@
             
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <span class="target" id="module-braviz.interaction"></span><div class="section" id="interaction">
 <h1>Interaction<a class="headerlink" href="#interaction" title="Permalink to this headline">¶</a></h1>
@@ -108,34 +116,34 @@ operating systems, and behave as they expect.</p>
 <p>Graphical interfaces can be built by code, or using the <a class="reference external" href="http://doc.qt.io/qt-5/qtdesigner-manual.html">Qt Designer</a>.
 The second is preferred for large
 applications as it gives you better feedback. You can even sit down with target users and design the interface together
-using this tool. GUI generated using Qt Designer are stored as xml files with <em>.ui</em> extension, the <tt class="docutils literal"><span class="pre">qt_guis</span></tt> folder
+using this tool. GUI generated using Qt Designer are stored as xml files with <em>.ui</em> extension, the <code class="docutils literal"><span class="pre">qt_guis</span></code> folder
 contains all such used in braviz applications as well as images and other assets. This files are converted into python
 modules using the function</p>
 <dl class="function">
 <dt id="braviz.interaction.generate_qt_guis.update_guis">
-<tt class="descname">update_guis</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.interaction.generate_qt_guis.update_guis" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates python gui files in the <tt class="docutils literal"><span class="pre">braviz.interaction.qt_guis</span></tt> directory</p>
+<code class="descname">update_guis</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/generate_qt_guis.html#update_guis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.generate_qt_guis.update_guis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates python gui files in the <code class="docutils literal"><span class="pre">braviz.interaction.qt_guis</span></code> directory</p>
 <p>This function generates python files from .ui files in the mentioned folder, as well as
-the <tt class="docutils literal"><span class="pre">resources_rc.py</span></tt> file from <tt class="docutils literal"><span class="pre">resources.qrc</span></tt> qt resources file.</p>
+the <code class="docutils literal"><span class="pre">resources_rc.py</span></code> file from <code class="docutils literal"><span class="pre">resources.qrc</span></code> qt resources file.</p>
 </dd></dl>
 
 <div class="toctree-wrapper compound">
 </div>
 <div class="section" id="dialogs">
 <h3>Dialogs<a class="headerlink" href="#dialogs" title="Permalink to this headline">¶</a></h3>
-<p>The <a class="reference internal" href="qt_dialogs.html#module-braviz.interaction.qt_dialogs" title="braviz.interaction.qt_dialogs"><tt class="xref py py-mod docutils literal"><span class="pre">qt_dialogs</span></tt></a> contains Braviz common dialogs which can be reused across applications.</p>
+<p>The <a class="reference internal" href="qt_dialogs.html#module-braviz.interaction.qt_dialogs" title="braviz.interaction.qt_dialogs"><code class="xref py py-mod docutils literal"><span class="pre">qt_dialogs</span></code></a> contains Braviz common dialogs which can be reused across applications.</p>
 <p>See <a class="reference internal" href="qt_dialogs.html"><em>Braviz Qt Dialogs</em></a></p>
 </div>
 <div class="section" id="models">
 <h3>Models<a class="headerlink" href="#models" title="Permalink to this headline">¶</a></h3>
-<p>The <a class="reference internal" href="qt_models.html#module-braviz.interaction.qt_models" title="braviz.interaction.qt_models"><tt class="xref py py-mod docutils literal"><span class="pre">qt_models</span></tt></a> contains qt models which can be used in the
+<p>The <a class="reference internal" href="qt_models.html#module-braviz.interaction.qt_models" title="braviz.interaction.qt_models"><code class="xref py py-mod docutils literal"><span class="pre">qt_models</span></code></a> contains qt models which can be used in the
 <a class="reference external" href="http://qt-project.org/doc/qt-4.8/model-view-programming.html">Model / View</a> Qt pattern.</p>
 <p>See <a class="reference internal" href="qt_models.html"><em>Braviz Qt Models</em></a></p>
 </div>
 <div class="section" id="widgets">
 <h3>Widgets<a class="headerlink" href="#widgets" title="Permalink to this headline">¶</a></h3>
-<p>The <a class="reference internal" href="qt_widgets.html#module-braviz.interaction.qt_widgets" title="braviz.interaction.qt_widgets"><tt class="xref py py-mod docutils literal"><span class="pre">qt_widgets</span></tt></a> contains specific braviz widgets which can be reused across applications.
-Notice that visualization related widgets are found inside the <a class="reference internal" href="visualization.html#module-braviz.visualization" title="braviz.visualization"><tt class="xref py py-mod docutils literal"><span class="pre">visualization</span></tt></a> module.</p>
+<p>The <a class="reference internal" href="qt_widgets.html#module-braviz.interaction.qt_widgets" title="braviz.interaction.qt_widgets"><code class="xref py py-mod docutils literal"><span class="pre">qt_widgets</span></code></a> contains specific braviz widgets which can be reused across applications.
+Notice that visualization related widgets are found inside the <a class="reference internal" href="visualization.html#module-braviz.visualization" title="braviz.visualization"><code class="xref py py-mod docutils literal"><span class="pre">visualization</span></code></a> module.</p>
 <p>See <a class="reference internal" href="qt_widgets.html"><em>Braviz Qt Widgets</em></a></p>
 </div>
 </div>
@@ -151,7 +159,7 @@ coordinate the whole system.</p>
 <div class="section" id="r-statistical-processing">
 <h2>R Statistical processing<a class="headerlink" href="#r-statistical-processing" title="Permalink to this headline">¶</a></h2>
 <p>Braviz connects with the R software using the <cite>RPy2 &lt;http://rpy.sourceforge.net/&gt;</cite> package.
-These statistical functions are isolated in the module <a class="reference internal" href="r_funcs.html#module-braviz.interaction.r_functions" title="braviz.interaction.r_functions"><tt class="xref py py-mod docutils literal"><span class="pre">r_functions</span></tt></a></p>
+These statistical functions are isolated in the module <a class="reference internal" href="r_funcs.html#module-braviz.interaction.r_functions" title="braviz.interaction.r_functions"><code class="xref py py-mod docutils literal"><span class="pre">r_functions</span></code></a></p>
 <p>See <a class="reference internal" href="r_funcs.html"><em>R functions</em></a></p>
 <div class="toctree-wrapper compound">
 </div>
@@ -160,7 +168,7 @@ These statistical functions are isolated in the module <a class="reference inter
 <h2>Structures processing<a class="headerlink" href="#structures-processing" title="Permalink to this headline">¶</a></h2>
 <p>Sometimes it is required to perform additional processing steps on the geometrical structure returned by braviz. For
 example calculating scalar measure or descriptors. This module intends to group such functions. Notice that when the
-intend of the processing is improving visualizations, functions should be located in <a class="reference internal" href="visualization.html#module-braviz.visualization" title="braviz.visualization"><tt class="xref py py-mod docutils literal"><span class="pre">braviz.visualization</span></tt></a>.</p>
+intend of the processing is improving visualizations, functions should be located in <a class="reference internal" href="visualization.html#module-braviz.visualization" title="braviz.visualization"><code class="xref py py-mod docutils literal"><span class="pre">braviz.visualization</span></code></a>.</p>
 <p>See <a class="reference internal" href="struc_proc.html"><em>Geometric Processing</em></a></p>
 <div class="toctree-wrapper compound">
 </div>
@@ -182,13 +190,13 @@ intend of the processing is improving visualizations, functions should be locate
         <div class="left">
           
           <a href="d3_viz.html" title="D3 based visualizations"
-             accesskey="P">previous</a> |
+             accesskey="P" >previous</a> |
           <a href="qt_dialogs.html" title="Braviz Qt Dialogs"
-             accesskey="N">next</a> |
+             accesskey="N" >next</a> |
           <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |
+              >modules</a> |
           <a href="../genindex.html" title="General Index"
-             accesskey="I">index</a>
+             accesskey="I" >index</a>
           
             <br/>
             <a href="../_sources/library/interaction.txt"
@@ -197,9 +205,9 @@ intend of the processing is improving visualizations, functions should be locate
 
         <div class="right">
           
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Diego Angulo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
         </div>
         <div class="clearer"></div>

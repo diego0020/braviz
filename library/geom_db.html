@@ -23,26 +23,31 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/fold_classes.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
     <link rel="top" title="Braviz Documentation" href="../index.html" />
     <link rel="up" title="Braviz Data Base" href="braviz_db.html" />
     <link rel="next" title="Bundles Database" href="bundles_db.html" />
     <link rel="prev" title="User Data" href="user_data.html" /> 
   </head>
-  <body>
+  <body role="document">
     
     <div class="header-wrapper">
       <div class="header">
+          <p class="logo"><a href="../index.html">
+            <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+          </a></p>
+          <!--
         <div class="headertitle"><a
-          href="../index.html"> Braviz Documentation </a></div>
+          href="../index.html"> Documentation </a></div>
+          -->
           <nav class="parents">
               <ol>
         <li><a href="../index.html"> Home </a> &raquo;</li>
-          <li><a href="index.html" >Braviz library</a> &raquo;</li>
-          <li><a href="read_and_filter.html" >Read And Filter</a> &raquo;</li>
-          <li><a href="braviz_db.html"  accesskey="U" >Braviz Data Base</a> &raquo;</li>
+          <li><a href="index.html"  >Braviz library</a> &raquo;</li>
+          <li><a href="read_and_filter.html"  >Read And Filter</a> &raquo;</li>
+          <li><a href="braviz_db.html"  accesskey="U"  >Braviz Data Base</a> &raquo;</li>
                   </ol>
           </nav>
        </div>
@@ -53,8 +58,11 @@
       <div class="content">
         <div class="sidebar" id="agogo-sidebar">
             
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+            </a></p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Geometric Data</a><ul>
@@ -71,7 +79,7 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="bundles_db.html"
                         title="next chapter">Bundles Database</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -91,7 +99,7 @@
             
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <span class="target" id="module-braviz.readAndFilter.geom_db"></span><div class="section" id="geometric-data">
 <h1>Geometric Data<a class="headerlink" href="#geometric-data" title="Permalink to this headline">¶</a></h1>
@@ -102,7 +110,7 @@ about the structure (roi), and a table for each roi type which stores its concre
 <h2>ROIs<a class="headerlink" href="#rois" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="braviz.readAndFilter.geom_db.roi_name_exists">
-<tt class="descname">roi_name_exists</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.geom_db.roi_name_exists" title="Permalink to this definition">¶</a></dt>
+<code class="descname">roi_name_exists</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/geom_db.html#roi_name_exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.geom_db.roi_name_exists" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if a ROI with the given name exists</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -110,7 +118,7 @@ about the structure (roi), and a table for each roi type which stores its concre
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; ROI name</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><tt class="docutils literal"><span class="pre">True</span></tt> if a ROI with the given name exists in the database, <tt class="docutils literal"><span class="pre">False</span></tt> otherwise.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">True</span></code> if a ROI with the given name exists in the database, <code class="docutils literal"><span class="pre">False</span></code> otherwise.</td>
 </tr>
 </tbody>
 </table>
@@ -118,7 +126,7 @@ about the structure (roi), and a table for each roi type which stores its concre
 
 <dl class="function">
 <dt id="braviz.readAndFilter.geom_db.get_roi_id">
-<tt class="descname">get_roi_id</tt><big>(</big><em>roi_name</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.geom_db.get_roi_id" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_roi_id</code><span class="sig-paren">(</span><em>roi_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/geom_db.html#get_roi_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.geom_db.get_roi_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find the id of a ROI</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -134,7 +142,7 @@ about the structure (roi), and a table for each roi type which stores its concre
 
 <dl class="function">
 <dt id="braviz.readAndFilter.geom_db.get_roi_name">
-<tt class="descname">get_roi_name</tt><big>(</big><em>roi_id</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.geom_db.get_roi_name" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_roi_name</code><span class="sig-paren">(</span><em>roi_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/geom_db.html#get_roi_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.geom_db.get_roi_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find the name of a ROI</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -150,7 +158,7 @@ about the structure (roi), and a table for each roi type which stores its concre
 
 <dl class="function">
 <dt id="braviz.readAndFilter.geom_db.get_roi_type">
-<tt class="descname">get_roi_type</tt><big>(</big><em>name=None</em>, <em>roi_id=None</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.geom_db.get_roi_type" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_roi_type</code><span class="sig-paren">(</span><em>name=None</em>, <em>roi_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/geom_db.html#get_roi_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.geom_db.get_roi_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the type of a ROI</p>
 <p>Only one of the two arguments is required, roi_id is preferred</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -163,7 +171,8 @@ about the structure (roi), and a table for each roi type which stores its concre
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">ROI type as a string, see <a class="reference internal" href="#braviz.readAndFilter.geom_db.create_roi" title="braviz.readAndFilter.geom_db.create_roi"><tt class="xref py py-func docutils literal"><span class="pre">create_roi()</span></tt></a> for options</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>ROI type as a string, see</em> &#8211;
+func:<cite>create_roi</cite> for options</p>
 </td>
 </tr>
 </tbody>
@@ -172,7 +181,7 @@ about the structure (roi), and a table for each roi type which stores its concre
 
 <dl class="function">
 <dt id="braviz.readAndFilter.geom_db.get_roi_space">
-<tt class="descname">get_roi_space</tt><big>(</big><em>name=None</em>, <em>roi_id=None</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.geom_db.get_roi_space" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_roi_space</code><span class="sig-paren">(</span><em>name=None</em>, <em>roi_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/geom_db.html#get_roi_space"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.geom_db.get_roi_space" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve the coordinate systems of a ROI</p>
 <p>Only one of the two arguments is required, roi_id is preferred</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -185,7 +194,8 @@ about the structure (roi), and a table for each roi type which stores its concre
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">coordinate system as a string, see <a class="reference internal" href="#braviz.readAndFilter.geom_db.create_roi" title="braviz.readAndFilter.geom_db.create_roi"><tt class="xref py py-func docutils literal"><span class="pre">create_roi()</span></tt></a> for options</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>coordinate system as a string, see</em> &#8211;
+func:<cite>create_roi</cite> for options</p>
 </td>
 </tr>
 </tbody>
@@ -194,7 +204,7 @@ about the structure (roi), and a table for each roi type which stores its concre
 
 <dl class="function">
 <dt id="braviz.readAndFilter.geom_db.create_roi">
-<tt class="descname">create_roi</tt><big>(</big><em>name</em>, <em>roi_type</em>, <em>coords</em>, <em>desc=''</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.geom_db.create_roi" title="Permalink to this definition">¶</a></dt>
+<code class="descname">create_roi</code><span class="sig-paren">(</span><em>name</em>, <em>roi_type</em>, <em>coords</em>, <em>desc=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/geom_db.html#create_roi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.geom_db.create_roi" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a new ROI</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -213,7 +223,7 @@ about the structure (roi), and a table for each roi type which stores its concre
 </li>
 <li><strong>coords</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; <p>coordinate system, options are</p>
 <ul>
-<li>world</li>
+<li>subject</li>
 <li>talairach</li>
 <li>dartel</li>
 </ul>
@@ -229,13 +239,31 @@ about the structure (roi), and a table for each roi type which stores its concre
 </table>
 </dd></dl>
 
+<dl class="function">
+<dt id="braviz.readAndFilter.geom_db.recursive_delete_roi">
+<code class="descname">recursive_delete_roi</code><span class="sig-paren">(</span><em>roi_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/geom_db.html#recursive_delete_roi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.geom_db.recursive_delete_roi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes a ROI from the database, including all its values.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This may delete large amounts of information and can&#8217;t be reversed</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>roi_id</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; ROI id</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 <div class="section" id="spheres">
 <h2>Spheres<a class="headerlink" href="#spheres" title="Permalink to this headline">¶</a></h2>
-<p>Spheres are saved as a center <tt class="docutils literal"><span class="pre">(x,y,z)</span></tt> and a radius.</p>
+<p>Spheres are saved as a center <code class="docutils literal"><span class="pre">(x,y,z)</span></code> and a radius.</p>
 <dl class="function">
 <dt id="braviz.readAndFilter.geom_db.load_sphere">
-<tt class="descname">load_sphere</tt><big>(</big><em>sphere_id</em>, <em>subject</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.geom_db.load_sphere" title="Permalink to this definition">¶</a></dt>
+<code class="descname">load_sphere</code><span class="sig-paren">(</span><em>sphere_id</em>, <em>subject</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/geom_db.html#load_sphere"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.geom_db.load_sphere" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads a sphere for a subject</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -247,7 +275,7 @@ about the structure (roi), and a table for each roi type which stores its concre
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><tt class="docutils literal"><span class="pre">(r,x,y,z)</span></tt> where <tt class="docutils literal"><span class="pre">r</span></tt> is the radius of the sphere and <tt class="docutils literal"><span class="pre">(x,y,z)</span></tt> is its center.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal"><span class="pre">(r,x,y,z)</span></code> where <code class="docutils literal"><span class="pre">r</span></code> is the radius of the sphere and <code class="docutils literal"><span class="pre">(x,y,z)</span></code> is its center.</p>
 </td>
 </tr>
 </tbody>
@@ -256,7 +284,7 @@ about the structure (roi), and a table for each roi type which stores its concre
 
 <dl class="function">
 <dt id="braviz.readAndFilter.geom_db.get_available_spheres_df">
-<tt class="descname">get_available_spheres_df</tt><big>(</big><em>space=None</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.geom_db.get_available_spheres_df" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_available_spheres_df</code><span class="sig-paren">(</span><em>space=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/geom_db.html#get_available_spheres_df"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.geom_db.get_available_spheres_df" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get available spheres</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -264,7 +292,8 @@ about the structure (roi), and a table for each roi type which stores its concre
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>space</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Optional, filter to only rois in a certain space</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.15.2)"><tt class="xref py py-class docutils literal"><span class="pre">DataFrame</span></tt></a> with columns for sphere id, and number of subjects with the ROI defined; indexed
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>:class</em> &#8211;
+<cite>~pandas.DataFrame</cite> with columns for sphere id, and number of subjects with the ROI defined; indexed
 by name</td>
 </tr>
 </tbody>
@@ -273,7 +302,7 @@ by name</td>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.geom_db.get_all_spheres">
-<tt class="descname">get_all_spheres</tt><big>(</big><em>sphere_id</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.geom_db.get_all_spheres" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all_spheres</code><span class="sig-paren">(</span><em>sphere_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/geom_db.html#get_all_spheres"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.geom_db.get_all_spheres" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a DataFrame of all the subjects spheres with a given id</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -281,7 +310,8 @@ by name</td>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sphere_id</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; ROI id</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.15.2)"><tt class="xref py py-class docutils literal"><span class="pre">pandas.DataFrame</span></tt></a> with columns for radius, center x, center y and center z; indexed by subject</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>:class</em> &#8211;
+<cite>pandas.DataFrame</cite> with columns for radius, center x, center y and center z; indexed by subject</td>
 </tr>
 </tbody>
 </table>
@@ -289,7 +319,7 @@ by name</td>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.geom_db.subjects_with_sphere">
-<tt class="descname">subjects_with_sphere</tt><big>(</big><em>sphere_id</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.geom_db.subjects_with_sphere" title="Permalink to this definition">¶</a></dt>
+<code class="descname">subjects_with_sphere</code><span class="sig-paren">(</span><em>sphere_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/geom_db.html#subjects_with_sphere"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.geom_db.subjects_with_sphere" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get subjects who have a certain sphere defined</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -305,7 +335,7 @@ by name</td>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.geom_db.save_sphere">
-<tt class="descname">save_sphere</tt><big>(</big><em>sphere_id</em>, <em>subject</em>, <em>radius</em>, <em>center</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.geom_db.save_sphere" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save_sphere</code><span class="sig-paren">(</span><em>sphere_id</em>, <em>subject</em>, <em>radius</em>, <em>center</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/geom_db.html#save_sphere"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.geom_db.save_sphere" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save a sphere for a given subject into the database</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -325,7 +355,7 @@ by name</td>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.geom_db.copy_spheres">
-<tt class="descname">copy_spheres</tt><big>(</big><em>orig_id</em>, <em>dest_id</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.geom_db.copy_spheres" title="Permalink to this definition">¶</a></dt>
+<code class="descname">copy_spheres</code><span class="sig-paren">(</span><em>orig_id</em>, <em>dest_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/geom_db.html#copy_spheres"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.geom_db.copy_spheres" title="Permalink to this definition">¶</a></dt>
 <dd><p>Copies spheres from one ROI to another</p>
 <p>Copies the definitions of spheres for each subject from one ROI to another ROI</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -345,10 +375,10 @@ by name</td>
 </div>
 <div class="section" id="lines">
 <h2>Lines<a class="headerlink" href="#lines" title="Permalink to this headline">¶</a></h2>
-<p>Lines are saved as a starting point <tt class="docutils literal"><span class="pre">(xo,yo,zo)</span></tt> and an end point <tt class="docutils literal"><span class="pre">(xf,yf,zf)</span></tt></p>
+<p>Lines are saved as a starting point <code class="docutils literal"><span class="pre">(xo,yo,zo)</span></code> and an end point <code class="docutils literal"><span class="pre">(xf,yf,zf)</span></code></p>
 <dl class="function">
 <dt id="braviz.readAndFilter.geom_db.load_line">
-<tt class="descname">load_line</tt><big>(</big><em>line_id</em>, <em>subject</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.geom_db.load_line" title="Permalink to this definition">¶</a></dt>
+<code class="descname">load_line</code><span class="sig-paren">(</span><em>line_id</em>, <em>subject</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/geom_db.html#load_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.geom_db.load_line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves a line for a given subject</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -360,7 +390,7 @@ by name</td>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><tt class="docutils literal"><span class="pre">(xo,yo,zo,xf,yf,zf)</span></tt> where <tt class="docutils literal"><span class="pre">(xo,yo,zo)</span></tt> is the line origin and <tt class="docutils literal"><span class="pre">(xf,yf,zf)</span></tt> is the end.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal"><span class="pre">(xo,yo,zo,xf,yf,zf)</span></code> where <code class="docutils literal"><span class="pre">(xo,yo,zo)</span></code> is the line origin and <code class="docutils literal"><span class="pre">(xf,yf,zf)</span></code> is the end.</p>
 </td>
 </tr>
 </tbody>
@@ -369,13 +399,14 @@ by name</td>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.geom_db.get_available_lines_df">
-<tt class="descname">get_available_lines_df</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.readAndFilter.geom_db.get_available_lines_df" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_available_lines_df</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/geom_db.html#get_available_lines_df"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.geom_db.get_available_lines_df" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get available lines</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.15.2)"><tt class="xref py py-class docutils literal"><span class="pre">DataFrame</span></tt></a> with columns for line id, and number of subjects with the ROI defined; indexed
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><em>:class</em> &#8211;
+<cite>~pandas.DataFrame</cite> with columns for line id, and number of subjects with the ROI defined; indexed
 by name</td>
 </tr>
 </tbody>
@@ -384,7 +415,7 @@ by name</td>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.geom_db.subjects_with_line">
-<tt class="descname">subjects_with_line</tt><big>(</big><em>line_id</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.geom_db.subjects_with_line" title="Permalink to this definition">¶</a></dt>
+<code class="descname">subjects_with_line</code><span class="sig-paren">(</span><em>line_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/geom_db.html#subjects_with_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.geom_db.subjects_with_line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get subjects who have a certain line defined</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -400,7 +431,7 @@ by name</td>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.geom_db.save_line">
-<tt class="descname">save_line</tt><big>(</big><em>line_id</em>, <em>subject</em>, <em>point1</em>, <em>point2</em><big>)</big><a class="headerlink" href="#braviz.readAndFilter.geom_db.save_line" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save_line</code><span class="sig-paren">(</span><em>line_id</em>, <em>subject</em>, <em>point1</em>, <em>point2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/geom_db.html#save_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.geom_db.save_line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save a line from a given subject into the database</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -436,13 +467,13 @@ by name</td>
         <div class="left">
           
           <a href="user_data.html" title="User Data"
-             accesskey="P">previous</a> |
+             accesskey="P" >previous</a> |
           <a href="bundles_db.html" title="Bundles Database"
-             accesskey="N">next</a> |
+             accesskey="N" >next</a> |
           <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |
+              >modules</a> |
           <a href="../genindex.html" title="General Index"
-             accesskey="I">index</a>
+             accesskey="I" >index</a>
           
             <br/>
             <a href="../_sources/library/geom_db.txt"
@@ -451,9 +482,9 @@ by name</td>
 
         <div class="right">
           
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Diego Angulo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
         </div>
         <div class="clearer"></div>

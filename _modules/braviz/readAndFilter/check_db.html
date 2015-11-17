@@ -1,0 +1,254 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>braviz.readAndFilter.check_db &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.3b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="top" title="Braviz Documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body role="document">
+    
+    <div class="header-wrapper">
+      <div class="header">
+          <p class="logo"><a href="../../../index.html">
+            <img class="logo" src="../../../_static/Logo_Bravis_h.png" alt="Logo"/>
+          </a></p>
+          <!--
+        <div class="headertitle"><a
+          href="../../../index.html"> Documentation </a></div>
+          -->
+          <nav class="parents">
+              <ol>
+        <li><a href="../../../index.html"> Home </a> &raquo;</li>
+          <li><a href="../../index.html"  accesskey="U"  >Module code</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/Logo_Bravis_h.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for braviz.readAndFilter.check_db</h1><div class="highlight"><pre>
+<span class="c">##############################################################################</span>
+<span class="c">#    Braviz, Brain Data interactive visualization                            #</span>
+<span class="c">#    Copyright (C) 2014  Diego Angulo                                        #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    This program is free software: you can redistribute it and/or modify    #</span>
+<span class="c">#    it under the terms of the GNU Lesser General Public License as          #</span>
+<span class="c">#    published by  the Free Software Foundation, either version 3 of the     #</span>
+<span class="c">#    License, or (at your option) any later version.                         #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    This program is distributed in the hope that it will be useful,         #</span>
+<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
+<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
+<span class="c">#    GNU Lesser General Public License for more details.                     #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    You should have received a copy of the GNU Lesser General Public License#</span>
+<span class="c">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
+<span class="c">##############################################################################</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Checks completeness of the braviz database</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;diego&#39;</span>
+
+<span class="kn">from</span> <span class="nn">braviz.readAndFilter</span> <span class="kn">import</span> <span class="n">tabular_data</span>
+<span class="kn">from</span> <span class="nn">braviz.readAndFilter</span> <span class="kn">import</span> <span class="n">log_db</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">sqlite3</span>
+
+
+<div class="viewcode-block" id="verify_db_completeness"><a class="viewcode-back" href="../../../library/braviz_db.html#braviz.readAndFilter.check_db.verify_db_completeness">[docs]</a><span class="k">def</span> <span class="nf">verify_db_completeness</span><span class="p">(</span><span class="n">database_file</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Verifies that all tables exist in the braviz data base.</span>
+<span class="sd">    If any are missing they are constructed.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        database_file (str) : Path of the database file that should be ckecked, if None, the database defined</span>
+<span class="sd">            by the configuration file will be used.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">database_file</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">tabular_data</span><span class="o">.</span><span class="n">get_connection</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">database_file</span><span class="p">)</span>
+
+    <span class="c"># tabular data</span>
+    <span class="kn">from</span> <span class="nn">braviz.readAndFilter</span> <span class="kn">import</span> <span class="n">tabular_data_db_creation</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">_check_tables</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="p">(</span><span class="s">&quot;variables&quot;</span><span class="p">,</span> <span class="s">&quot;subjects&quot;</span><span class="p">,</span> <span class="s">&quot;var_descriptions&quot;</span><span class="p">,</span> <span class="s">&quot;var_values&quot;</span><span class="p">,</span> <span class="s">&quot;nom_meta&quot;</span><span class="p">,</span> <span class="s">&quot;ratio_meta&quot;</span><span class="p">)):</span>
+        <span class="n">tabular_data_db_creation</span><span class="o">.</span><span class="n">create_data_base</span><span class="p">(</span><span class="n">conn</span><span class="o">=</span><span class="n">conn</span><span class="p">)</span>
+
+    <span class="c"># user db</span>
+    <span class="kn">from</span> <span class="nn">braviz.readAndFilter</span> <span class="kn">import</span> <span class="n">user_data_db_creation</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">_check_tables</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="p">(</span><span class="s">&quot;applications&quot;</span><span class="p">,</span> <span class="s">&quot;scenarios&quot;</span><span class="p">,</span> <span class="s">&quot;vars_scenarios&quot;</span><span class="p">,</span> <span class="s">&quot;subj_samples&quot;</span><span class="p">,</span> <span class="s">&quot;subj_comments&quot;</span><span class="p">,)):</span>
+        <span class="n">user_data_db_creation</span><span class="o">.</span><span class="n">create_tables</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+    <span class="n">user_data_db_creation</span><span class="o">.</span><span class="n">update_current_applications</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+
+    <span class="c"># bundles db</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">_check_tables</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="p">(</span><span class="s">&quot;fiber_bundles&quot;</span><span class="p">,)):</span>
+        <span class="kn">from</span> <span class="nn">braviz.readAndFilter</span> <span class="kn">import</span> <span class="n">bundles_db_creation</span>
+        <span class="n">bundles_db_creation</span><span class="o">.</span><span class="n">create_bundles_table</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+        <span class="n">bundles_db_creation</span><span class="o">.</span><span class="n">add_named_bundes_to_table</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+    <span class="n">_check_named_tracts</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+
+    <span class="c"># geom db</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">_check_tables</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="p">(</span><span class="s">&quot;geom_rois&quot;</span><span class="p">,</span> <span class="s">&quot;geom_spheres&quot;</span><span class="p">,</span> <span class="s">&quot;geom_lines&quot;</span><span class="p">,)):</span>
+        <span class="kn">from</span> <span class="nn">braviz.readAndFilter</span> <span class="kn">import</span> <span class="n">geometry_db_creation</span>
+        <span class="n">geometry_db_creation</span><span class="o">.</span><span class="n">create_geom_rois_tables</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+        <span class="n">geometry_db_creation</span><span class="o">.</span><span class="n">create_lines_table</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+        <span class="n">geometry_db_creation</span><span class="o">.</span><span class="n">create_spheres_table</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+
+</div>
+<span class="k">def</span> <span class="nf">_check_table</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">table_name</span><span class="p">):</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT count(*) FROM sqlite_master WHERE type=&#39;table&#39; and name = ? &quot;</span>
+    <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">table_name</span><span class="p">,))</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">res</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
+
+<span class="k">def</span> <span class="nf">_check_named_tracts</span><span class="p">(</span><span class="n">conn</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">braviz.readAndFilter</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">braviz</span><span class="o">.</span><span class="n">readAndFilter</span><span class="o">.</span><span class="n">BravizAutoReader</span><span class="p">()</span>
+    <span class="n">named_tracts</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;FIBERS&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">existing_tracts</span> <span class="o">=</span> <span class="p">{</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="s">&quot;SELECT bundle_name FROM fiber_bundles&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()}</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">named_tracts</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">existing_tracts</span><span class="p">:</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;INSERT INTO fiber_bundles (bundle_name, bundle_type, bundle_data) VALUES (?, 0, ?) &quot;&quot;&quot;</span>
+            <span class="k">with</span> <span class="n">conn</span><span class="p">:</span>
+                <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">_check_tables</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">tables</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">logging</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tables</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">_check_table</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;Table </span><span class="si">%s</span><span class="s"> not found&quot;</span> <span class="o">%</span> <span class="n">t</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">False</span>
+    <span class="k">return</span> <span class="bp">True</span>
+
+
+<span class="k">def</span> <span class="nf">verify_log_db</span><span class="p">(</span><span class="n">database_file</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Verifies that all log tables exist in the braviz log data base.</span>
+<span class="sd">    If any are missing they are created.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        database_file (str) : Path of the database file that should be ckecked, if None, the database defined</span>
+<span class="sd">            by the configuration file will be used.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">database_file</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">log_db</span><span class="o">.</span><span class="n">get_log_connection</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">database_file</span><span class="p">)</span>
+    <span class="c"># log db</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">_check_tables</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="p">(</span><span class="s">&quot;sessions&quot;</span><span class="p">,</span><span class="s">&quot;events&quot;</span><span class="p">,</span><span class="s">&quot;annotations&quot;</span><span class="p">)):</span>
+        <span class="kn">from</span> <span class="nn">braviz.readAndFilter</span> <span class="kn">import</span> <span class="n">log_db_creation</span>
+        <span class="n">log_db_creation</span><span class="o">.</span><span class="n">create_tables</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">braviz.utilities</span> <span class="kn">import</span> <span class="n">configure_logger_from_conf</span>
+    <span class="n">configure_logger_from_conf</span><span class="p">(</span><span class="s">&quot;check_db_integrity&quot;</span><span class="p">)</span>
+    <span class="n">verify_db_completeness</span><span class="p">()</span>
+    <span class="n">verify_log_db</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+                
+
+                
+
+                
+
+          
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

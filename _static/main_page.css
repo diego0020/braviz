@@ -6,6 +6,11 @@ div.document {
 float : none;
 }
 
+div.document h1 {
+  line-height: 120%;
+  display: None;
+}
+
 div#profile{
 text-align: center;
 }
@@ -34,11 +39,11 @@ div#profile a div.section{
     border: outset lightgrey;
 }
 div#profile div.section:hover  {
-background-color: rgb(186, 189, 182);
+background-color: #A6C0AF;
 }
 
 div#profile div.section:hover h3 {
-background-color: #3465a4;
+background-color: #225935;
 color: white;
 }
 
@@ -64,6 +69,12 @@ padding-bottom: .5em;
 font-size: 150%;
 }
 
+div.main-logo img.logo{
+    margin: 0px auto;
+    display:block;
+    max-width: 90%;
+}
+
 
 @media screen and (min-width: 1150px){
 div#profile div.section{
@@ -73,3 +84,5 @@ div#profile div.section p{
 position: absolute;
 }
 }
+
+

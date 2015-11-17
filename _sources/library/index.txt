@@ -105,7 +105,7 @@ Adapting to a new project
 
 Configuring braviz to work with a new dataset.
 
-[Not yet available]
+:doc:`new_data_set`
 
 Interactive work and simple scripts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

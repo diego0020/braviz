@@ -1,0 +1,319 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>braviz.readAndFilter.images &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.3b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="top" title="Braviz Documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body role="document">
+    
+    <div class="header-wrapper">
+      <div class="header">
+          <p class="logo"><a href="../../../index.html">
+            <img class="logo" src="../../../_static/Logo_Bravis_h.png" alt="Logo"/>
+          </a></p>
+          <!--
+        <div class="headertitle"><a
+          href="../../../index.html"> Documentation </a></div>
+          -->
+          <nav class="parents">
+              <ol>
+        <li><a href="../../../index.html"> Home </a> &raquo;</li>
+          <li><a href="../../index.html"  accesskey="U"  >Module code</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/Logo_Bravis_h.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for braviz.readAndFilter.images</h1><div class="highlight"><pre>
+<span class="c">##############################################################################</span>
+<span class="c">#    Braviz, Brain Data interactive visualization                            #</span>
+<span class="c">#    Copyright (C) 2014  Diego Angulo                                        #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    This program is free software: you can redistribute it and/or modify    #</span>
+<span class="c">#    it under the terms of the GNU Lesser General Public License as          #</span>
+<span class="c">#    published by  the Free Software Foundation, either version 3 of the     #</span>
+<span class="c">#    License, or (at your option) any later version.                         #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    This program is distributed in the hope that it will be useful,         #</span>
+<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
+<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
+<span class="c">#    GNU Lesser General Public License for more details.                     #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    You should have received a copy of the GNU Lesser General Public License#</span>
+<span class="c">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
+<span class="c">##############################################################################</span>
+
+
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">nibabel</span> <span class="kn">as</span> <span class="nn">nib</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">vtk</span>
+<span class="kn">from</span> <span class="nn">vtk.numpy_interface</span> <span class="kn">import</span> <span class="n">dataset_adapter</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;diego&#39;</span>
+
+
+<div class="viewcode-block" id="write_vtk_image"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.images.write_vtk_image">[docs]</a><span class="k">def</span> <span class="nf">write_vtk_image</span><span class="p">(</span><span class="n">image_data</span><span class="p">,</span> <span class="n">out_file</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Write a vtkImage to disk as a nifti file</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        image_data (vtkImageData) : Image to write</span>
+<span class="sd">        out_file (str) : Path to output nifti file</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">dz</span> <span class="o">=</span> <span class="n">image_data</span><span class="o">.</span><span class="n">GetDimensions</span><span class="p">()</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">dz</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="n">dx</span><span class="p">),</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">dy</span><span class="p">),</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">dz</span><span class="p">)):</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">image_data</span><span class="o">.</span><span class="n">GetScalarComponentAsDouble</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+    <span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">,</span> <span class="n">sz</span> <span class="o">=</span> <span class="n">image_data</span><span class="o">.</span><span class="n">GetSpacing</span><span class="p">()</span>
+    <span class="n">ox</span><span class="p">,</span> <span class="n">oy</span><span class="p">,</span> <span class="n">oz</span> <span class="o">=</span> <span class="n">image_data</span><span class="o">.</span><span class="n">GetOrigin</span><span class="p">()</span>
+    <span class="n">af</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">af</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">af</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">af</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">,</span> <span class="n">sz</span>
+    <span class="n">af</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">af</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">af</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">ox</span><span class="p">,</span> <span class="n">oy</span><span class="p">,</span> <span class="n">oz</span>
+    <span class="n">nib_img</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">Nifti1Image</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">affine</span><span class="o">=</span><span class="n">af</span><span class="p">)</span>
+    <span class="n">nib_img</span><span class="o">.</span><span class="n">to_filename</span><span class="p">(</span><span class="n">out_file</span><span class="p">)</span>
+
+    <span class="k">return</span>
+
+</div>
+<div class="viewcode-block" id="write_nib_image"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.images.write_nib_image">[docs]</a><span class="k">def</span> <span class="nf">write_nib_image</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">affine</span><span class="p">,</span> <span class="n">out_file</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Writes nifti image to disk</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data (numpy.ndarray) : Voxel data</span>
+<span class="sd">        affine (numpy.ndarray) : Image transformation</span>
+<span class="sd">        out_file (str) : Path to output file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">nib_img</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">Nifti1Image</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">affine</span><span class="o">=</span><span class="n">affine</span><span class="p">)</span>
+    <span class="n">nib_img</span><span class="o">.</span><span class="n">to_filename</span><span class="p">(</span><span class="n">out_file</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> written&quot;</span><span class="p">,</span><span class="n">out_file</span><span class="p">)</span>
+    <span class="k">return</span>
+
+</div>
+<div class="viewcode-block" id="numpy2vtk_img"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.images.numpy2vtk_img">[docs]</a><span class="k">def</span> <span class="nf">numpy2vtk_img</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">data_type</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Transform a 3d numpy array into a vtk image data object</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        d (numpy.ndarray) : Voxel data</span>
+<span class="sd">        data_type (str) : Data type of voxel data, if None attempts to read from the array</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        vtkImageData</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">array_data_type</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">dtype</span>
+
+    <span class="k">if</span> <span class="n">data_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">array_data_type</span> <span class="o">==</span> <span class="n">data_type</span>
+
+    <span class="n">importer</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkImageImport</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
+    <span class="n">importer</span><span class="o">.</span><span class="n">SetDataScalarTypeToShort</span><span class="p">()</span>  <span class="c"># default</span>
+    <span class="k">if</span> <span class="n">array_data_type</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">array_data_type</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">type</span>
+    <span class="k">if</span> <span class="n">array_data_type</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">:</span>
+        <span class="n">importer</span><span class="o">.</span><span class="n">SetDataScalarTypeToDouble</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">array_data_type</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">:</span>
+        <span class="n">importer</span><span class="o">.</span><span class="n">SetDataScalarTypeToFloat</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">array_data_type</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">:</span>
+        <span class="n">importer</span><span class="o">.</span><span class="n">SetDataScalarTypeToInt</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">array_data_type</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">:</span>
+        <span class="n">importer</span><span class="o">.</span><span class="n">SetDataScalarTypeToShort</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">array_data_type</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">:</span>
+        <span class="n">importer</span><span class="o">.</span><span class="n">SetDataScalarTypeToUnsignedChar</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;casting to float64&quot;</span><span class="p">)</span>
+        <span class="n">importer</span><span class="o">.</span><span class="n">SetDataScalarTypeToDouble</span><span class="p">()</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="c">#======================================</span>
+    <span class="n">dstring</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="s">&#39;F&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tostring</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">array_data_type</span><span class="o">.</span><span class="n">byteorder</span> <span class="o">==</span> <span class="s">&#39;&gt;&#39;</span><span class="p">:</span>
+        <span class="c"># Fix byte order</span>
+        <span class="n">dflat_l</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="s">&#39;F&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">format_string</span> <span class="o">=</span> <span class="s">&#39;&lt;</span><span class="si">%i</span><span class="s">d&#39;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">dflat_l</span><span class="p">)</span>
+        <span class="n">dstring</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">format_string</span><span class="p">,</span> <span class="o">*</span><span class="n">dflat_l</span><span class="p">)</span>
+        <span class="c"># importer.SetDataScalarTypeToInt()</span>
+    <span class="n">importer</span><span class="o">.</span><span class="n">SetNumberOfScalarComponents</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">importer</span><span class="o">.</span><span class="n">CopyImportVoidPointer</span><span class="p">(</span><span class="n">dstring</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">dstring</span><span class="p">))</span>
+    <span class="n">dshape</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">importer</span><span class="o">.</span><span class="n">SetDataExtent</span><span class="p">(</span>
+        <span class="mi">0</span><span class="p">,</span> <span class="n">dshape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dshape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dshape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">importer</span><span class="o">.</span><span class="n">SetWholeExtent</span><span class="p">(</span>
+        <span class="mi">0</span><span class="p">,</span> <span class="n">dshape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dshape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dshape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">importer</span><span class="o">.</span><span class="n">Update</span><span class="p">()</span>
+    <span class="n">imgData</span> <span class="o">=</span> <span class="n">importer</span><span class="o">.</span><span class="n">GetOutput</span><span class="p">()</span>
+    <span class="c"># return imgData</span>
+    <span class="n">out_img</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkImageData</span><span class="p">()</span>
+    <span class="n">out_img</span><span class="o">.</span><span class="n">DeepCopy</span><span class="p">(</span><span class="n">imgData</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out_img</span>
+
+</div>
+<div class="viewcode-block" id="nifti_rgb2vtk"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.images.nifti_rgb2vtk">[docs]</a><span class="k">def</span> <span class="nf">nifti_rgb2vtk</span><span class="p">(</span><span class="n">nifti_rgb</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Reads 4D rgb nifti images</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        nifti_rgb (nibabel.spatialimages.SpatialImage) : 4D Nifti image object</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        vtkImageData with rgb scalars</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">nifti_rgb</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+    <span class="n">data2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">rollaxis</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">importer</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkImageImport</span><span class="p">()</span>
+
+    <span class="n">importer</span><span class="o">.</span><span class="n">SetDataScalarTypeToUnsignedChar</span><span class="p">()</span>
+    <span class="n">importer</span><span class="o">.</span><span class="n">SetNumberOfScalarComponents</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">dstring</span> <span class="o">=</span> <span class="n">data2</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="s">&#39;F&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tostring</span><span class="p">()</span>
+    <span class="n">importer</span><span class="o">.</span><span class="n">CopyImportVoidPointer</span><span class="p">(</span><span class="n">dstring</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">dstring</span><span class="p">))</span>
+    <span class="n">dshape</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">importer</span><span class="o">.</span><span class="n">SetDataExtent</span><span class="p">(</span>
+        <span class="mi">0</span><span class="p">,</span> <span class="n">dshape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dshape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dshape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">importer</span><span class="o">.</span><span class="n">SetWholeExtent</span><span class="p">(</span>
+        <span class="mi">0</span><span class="p">,</span> <span class="n">dshape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dshape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dshape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">importer</span><span class="o">.</span><span class="n">Update</span><span class="p">()</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">importer</span><span class="o">.</span><span class="n">GetOutput</span><span class="p">()</span>
+
+    <span class="n">out_img</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkImageData</span><span class="p">()</span>
+    <span class="n">out_img</span><span class="o">.</span><span class="n">DeepCopy</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out_img</span>
+
+</div>
+<div class="viewcode-block" id="nibNii2vtk"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.images.nibNii2vtk">[docs]</a><span class="k">def</span> <span class="nf">nibNii2vtk</span><span class="p">(</span><span class="n">nii</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Transform a nifti image read by nibabel into a vtkImageData ignoring transformations</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        nii (nibabel.spatialimages.SpatialImage) : Nifti image object</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        vtkImageData, transformations are ignored, you should apply them afterwards</span>
+<span class="sd">        see :func:`~braviz.readAndFilter.transforms.applyTransform`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">nii</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">numpy2vtk_img</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="vtk2numpy"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.images.vtk2numpy">[docs]</a><span class="k">def</span> <span class="nf">vtk2numpy</span><span class="p">(</span><span class="n">vtk_image</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Transform a vtk image into a numpy array</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vtk_image (vtkImageData) : vtk image</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A numpy array of the same shape as the image</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">wrapped_vtk_image</span> <span class="o">=</span> <span class="n">dataset_adapter</span><span class="o">.</span><span class="n">WrapDataObject</span><span class="p">(</span><span class="n">vtk_image</span><span class="p">)</span>
+    <span class="n">new_dimensions</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">vtk_image</span><span class="o">.</span><span class="n">GetDimensions</span><span class="p">())</span><span class="o">+</span><span class="p">[</span><span class="n">vtk_image</span><span class="o">.</span><span class="n">GetNumberOfScalarComponents</span><span class="p">()]</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">wrapped_vtk_image</span><span class="o">.</span><span class="n">GetPointData</span><span class="p">()[</span><span class="s">&quot;ImageScalars&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">new_dimensions</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s">&quot;F&quot;</span><span class="p">))</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span>
+</pre></div></div>
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+                
+
+                
+
+                
+
+          
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

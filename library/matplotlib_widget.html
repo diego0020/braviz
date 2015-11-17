@@ -23,25 +23,30 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/fold_classes.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
     <link rel="top" title="Braviz Documentation" href="../index.html" />
     <link rel="up" title="Visualization" href="visualization.html" />
     <link rel="next" title="D3 based visualizations" href="d3_viz.html" />
     <link rel="prev" title="Checking image registration" href="checkboard_view.html" /> 
   </head>
-  <body>
+  <body role="document">
     
     <div class="header-wrapper">
       <div class="header">
+          <p class="logo"><a href="../index.html">
+            <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+          </a></p>
+          <!--
         <div class="headertitle"><a
-          href="../index.html"> Braviz Documentation </a></div>
+          href="../index.html"> Documentation </a></div>
+          -->
           <nav class="parents">
               <ol>
         <li><a href="../index.html"> Home </a> &raquo;</li>
-          <li><a href="index.html" >Braviz library</a> &raquo;</li>
-          <li><a href="visualization.html"  accesskey="U" >Visualization</a> &raquo;</li>
+          <li><a href="index.html"  >Braviz library</a> &raquo;</li>
+          <li><a href="visualization.html"  accesskey="U"  >Visualization</a> &raquo;</li>
                   </ol>
           </nav>
        </div>
@@ -52,8 +57,11 @@
       <div class="content">
         <div class="sidebar" id="agogo-sidebar">
             
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+            </a></p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">The matplotlib widget</a><ul>
@@ -78,7 +86,7 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="d3_viz.html"
                         title="next chapter">D3 based visualizations</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -98,7 +106,7 @@
             
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <span class="target" id="module-braviz.visualization.matplotlib_qt_widget"></span><div class="section" id="the-matplotlib-widget">
 <h1>The matplotlib widget<a class="headerlink" href="#the-matplotlib-widget" title="Permalink to this headline">¶</a></h1>
@@ -106,12 +114,12 @@
 is capable of displaying different types of plots, which are implemented separately.</p>
 <div class="section" id="main-widget">
 <h2>Main Widget<a class="headerlink" href="#main-widget" title="Permalink to this headline">¶</a></h2>
-<p>The <a class="reference internal" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget" title="braviz.visualization.matplotlib_qt_widget.MatplotWidget"><tt class="xref py py-class docutils literal"><span class="pre">MatplotWidget</span></tt></a> is a Qt Widget which can be inserted into Qt Applications. It can generate different kinds
+<p>The <a class="reference internal" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget" title="braviz.visualization.matplotlib_qt_widget.MatplotWidget"><code class="xref py py-class docutils literal"><span class="pre">MatplotWidget</span></code></a> is a Qt Widget which can be inserted into Qt Applications. It can generate different kinds
 of plots, and all the plots should implement tooltips and context menus for the data shown. Also it should be possible
 to highlight specific data-points inside each plot.</p>
 <dl class="class">
 <dt id="braviz.visualization.matplotlib_qt_widget.MatplotWidget">
-<em class="property">class </em><tt class="descname">MatplotWidget</tt><big>(</big><em>parent=None</em>, <em>dpi=100</em>, <em>initial_message=None</em><big>)</big><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">MatplotWidget</code><span class="sig-paren">(</span><em>parent=None</em>, <em>dpi=100</em>, <em>initial_message=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/matplotlib_qt_widget.html#MatplotWidget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget" title="Permalink to this definition">¶</a></dt>
 <dd><p>A Matplotlib Qt Widget capable of drawing different kinds of plots</p>
 <p>It emits the following signals</p>
 <blockquote>
@@ -123,14 +131,14 @@ to highlight specific data-points inside each plot.</p>
 <p>Both of them include the id of the clicked point.</p>
 <dl class="method">
 <dt id="braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_bars">
-<tt class="descname">draw_bars</tt><big>(</big><em>data</em>, <em>ylims=None</em>, <em>orientation='vertical'</em>, <em>group_labels=None</em><big>)</big><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_bars" title="Permalink to this definition">¶</a></dt>
+<code class="descname">draw_bars</code><span class="sig-paren">(</span><em>data</em>, <em>ylims=None</em>, <em>orientation='vertical'</em>, <em>group_labels=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/matplotlib_qt_widget.html#MatplotWidget.draw_bars"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_bars" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws a bar chart</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>data</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.15.2)"><em>pandas.DataFrame</em></a>) &#8211; Data frame to draw, the first column will be the height of the bars,
+<li><strong>data</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/version/0.17.0/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.17.0)"><em>pandas.DataFrame</em></a>) &#8211; Data frame to draw, the first column will be the height of the bars,
 the optional second column will be used to group data</li>
 <li><strong>ylims</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; minimum and maximum y axis values</li>
 <li><strong>orientation</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Orientation of the bars, can be &#8220;vertical&#8221; or &#8220;horizontal&#8221;</li>
@@ -144,22 +152,22 @@ the optional second column will be used to group data</li>
 
 <dl class="method">
 <dt id="braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_boxplot">
-<tt class="descname">draw_boxplot</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_boxplot" title="Permalink to this definition">¶</a></dt>
+<code class="descname">draw_boxplot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/matplotlib_qt_widget.html#MatplotWidget.draw_boxplot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_boxplot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draw a boxplot to illustrate anova results in the matplot widget, not yet implemented</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_coefficients_plot">
-<tt class="descname">draw_coefficients_plot</tt><big>(</big><em>coefficients_df</em>, <em>draw_intecept=False</em><big>)</big><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_coefficients_plot" title="Permalink to this definition">¶</a></dt>
+<code class="descname">draw_coefficients_plot</code><span class="sig-paren">(</span><em>coefficients_df</em>, <em>draw_intecept=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/matplotlib_qt_widget.html#MatplotWidget.draw_coefficients_plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_coefficients_plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws a coefficient plot to show the results of a linear regression</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>coefficients_df</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.15.2)"><em>pandas.DataFrame</em></a>) &#8211; DataFrame containing the 95% confidence interval as CI_95,
+<li><strong>coefficients_df</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/version/0.17.0/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.17.0)"><em>pandas.DataFrame</em></a>) &#8211; DataFrame containing the 95% confidence interval as CI_95,
 the standard error (Std_error), Slope, and indexed by coefficient names.</li>
-<li><strong>draw_intecept</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; if <tt class="docutils literal"><span class="pre">True</span></tt> the intercept coefficient (first in the DataFrame) will be draw
+<li><strong>draw_intecept</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; if <code class="docutils literal"><span class="pre">True</span></code> the intercept coefficient (first in the DataFrame) will be draw
 otherwise it will be ignored.</li>
 </ul>
 </td>
@@ -170,23 +178,23 @@ otherwise it will be ignored.</li>
 
 <dl class="method">
 <dt id="braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_histogram">
-<tt class="descname">draw_histogram</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_histogram" title="Permalink to this definition">¶</a></dt>
+<code class="descname">draw_histogram</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/matplotlib_qt_widget.html#MatplotWidget.draw_histogram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_histogram" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws a histogram of the data, not yet implemented</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_intercept">
-<tt class="descname">draw_intercept</tt><big>(</big><em>data</em>, <em>y_name</em>, <em>groups=None</em>, <em>ylabel=None</em>, <em>ci_plot=True</em>, <em>color=None</em>, <em>group_labels=None</em><big>)</big><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_intercept" title="Permalink to this definition">¶</a></dt>
+<code class="descname">draw_intercept</code><span class="sig-paren">(</span><em>data</em>, <em>y_name</em>, <em>groups=None</em>, <em>ylabel=None</em>, <em>ci_plot=True</em>, <em>color=None</em>, <em>group_labels=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/matplotlib_qt_widget.html#MatplotWidget.draw_intercept"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_intercept" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws a plot to show the mean of different data groups</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>data</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.15.2)"><em>pandas.DataFrame</em></a>) &#8211; DataFrame with numerical data</li>
+<li><strong>data</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/version/0.17.0/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.17.0)"><em>pandas.DataFrame</em></a>) &#8211; DataFrame with numerical data</li>
 <li><strong>y_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; <em>data</em> column containing the y axis data</li>
 <li><strong>groups</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; optional, column containing group numerical labels</li>
-<li><strong>ci_plot</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; if <tt class="docutils literal"><span class="pre">True</span></tt> draw a confidence interval</li>
+<li><strong>ci_plot</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; if <code class="docutils literal"><span class="pre">True</span></code> draw a confidence interval</li>
 <li><strong>color</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; Optional, color to use for the plot</li>
 <li><strong>group_labels</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; Optional, labels for the different groups</li>
 </ul>
@@ -198,7 +206,7 @@ otherwise it will be ignored.</li>
 
 <dl class="method">
 <dt id="braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_message">
-<tt class="descname">draw_message</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_message" title="Permalink to this definition">¶</a></dt>
+<code class="descname">draw_message</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/matplotlib_qt_widget.html#MatplotWidget.draw_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_message" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws a message on the widget</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -212,7 +220,7 @@ otherwise it will be ignored.</li>
 
 <dl class="method">
 <dt id="braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_residuals">
-<tt class="descname">draw_residuals</tt><big>(</big><em>residuals</em>, <em>fitted</em>, <em>names=None</em><big>)</big><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_residuals" title="Permalink to this definition">¶</a></dt>
+<code class="descname">draw_residuals</code><span class="sig-paren">(</span><em>residuals</em>, <em>fitted</em>, <em>names=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/matplotlib_qt_widget.html#MatplotWidget.draw_residuals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_residuals" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates two plot which can be used to diagnose the residuals of a distribution.</p>
 <blockquote>
 <div><ul class="simple">
@@ -225,8 +233,8 @@ otherwise it will be ignored.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>residuals</strong> (<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><em>numpy.ndarray</em></a>) &#8211; Array of residuals</li>
-<li><strong>fitted</strong> (<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><em>numpy.ndarray</em></a>) &#8211; Array of fitted values</li>
+<li><strong>residuals</strong> (<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.10)"><em>numpy.ndarray</em></a>) &#8211; Array of residuals</li>
+<li><strong>fitted</strong> (<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.10)"><em>numpy.ndarray</em></a>) &#8211; Array of fitted values</li>
 <li><strong>names</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; Names to display as tooltips for each point</li>
 </ul>
 </td>
@@ -237,22 +245,22 @@ otherwise it will be ignored.</li>
 
 <dl class="method">
 <dt id="braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_scatter">
-<tt class="descname">draw_scatter</tt><big>(</big><em>data</em>, <em>x_name</em>, <em>y_name</em>, <em>xlabel=None</em>, <em>ylabel=None</em>, <em>reg_line=True</em>, <em>hue_var=None</em>, <em>hue_labels=None</em>, <em>qualitative_map=True</em>, <em>x_labels=None</em><big>)</big><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_scatter" title="Permalink to this definition">¶</a></dt>
+<code class="descname">draw_scatter</code><span class="sig-paren">(</span><em>data</em>, <em>x_name</em>, <em>y_name</em>, <em>xlabel=None</em>, <em>ylabel=None</em>, <em>reg_line=True</em>, <em>hue_var=None</em>, <em>hue_labels=None</em>, <em>qualitative_map=True</em>, <em>x_labels=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/matplotlib_qt_widget.html#MatplotWidget.draw_scatter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_scatter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws a scatter plot</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>data</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.15.2)"><em>pandas.DataFrame</em></a>) &#8211; DataFrame with numerical data</li>
+<li><strong>data</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/version/0.17.0/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.17.0)"><em>pandas.DataFrame</em></a>) &#8211; DataFrame with numerical data</li>
 <li><strong>x_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name of the column containing the data for the <em>x</em> axis</li>
 <li><strong>y_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name of the column containing the data for the <em>y</em> axis</li>
 <li><strong>x_label</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Optional, label for the <em>x</em> axis, if not given <em>x_name</em> will be used</li>
 <li><strong>y_label</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Optional, label for the <em>y</em> axis, if not given <em>y_name</em> will be used</li>
-<li><strong>reg_line</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If <tt class="docutils literal"><span class="pre">True</span></tt> draw a line showing a linear regression between the two variables</li>
+<li><strong>reg_line</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If <code class="docutils literal"><span class="pre">True</span></code> draw a line showing a linear regression between the two variables</li>
 <li><strong>hue_var</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Optional, Name of the column containing the data for the color</li>
 <li><strong>hue_labels</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; Optional, Labels to use for each level of the <em>hue_var</em></li>
-<li><strong>qualitative_map</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If <tt class="docutils literal"><span class="pre">True</span></tt> use a qualitative color map, otherwise use a sequential color map</li>
+<li><strong>qualitative_map</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; If <code class="docutils literal"><span class="pre">True</span></code> use a qualitative color map, otherwise use a sequential color map</li>
 <li><strong>x_labels</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; Optional, specify positions and values for tickmarks in the x axis</li>
 </ul>
 </td>
@@ -263,7 +271,7 @@ otherwise it will be ignored.</li>
 
 <dl class="method">
 <dt id="braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_spider_plot">
-<tt class="descname">draw_spider_plot</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_spider_plot" title="Permalink to this definition">¶</a></dt>
+<code class="descname">draw_spider_plot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/matplotlib_qt_widget.html#MatplotWidget.draw_spider_plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_spider_plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draw a spider plot in the matplot widget, not yet implemented</p>
 </dd></dl>
 
@@ -272,8 +280,8 @@ otherwise it will be ignored.</li>
 </div>
 <div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
-<p>This simple Qt Application illustrates the use of the <a class="reference internal" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget" title="braviz.visualization.matplotlib_qt_widget.MatplotWidget"><tt class="xref py py-class docutils literal"><span class="pre">MatplotWidget</span></tt></a>. You can view the full script
-<a class="reference download internal" href="../_downloads/matplot_w.py"><tt class="xref download docutils literal"><span class="pre">here</span></tt></a>.</p>
+<p>This simple Qt Application illustrates the use of the <a class="reference internal" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget" title="braviz.visualization.matplotlib_qt_widget.MatplotWidget"><code class="xref py py-class docutils literal"><span class="pre">MatplotWidget</span></code></a>. You can view the full script
+<a class="reference download internal" href="../_downloads/matplot_w.py"><code class="xref download docutils literal"><span class="pre">here</span></code></a>.</p>
 <p>The first part of the scripts import the required libraries and creates a simple Qt Frame we will use for testing</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">PyQt4</span> <span class="kn">import</span> <span class="n">QtGui</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
@@ -317,7 +325,7 @@ otherwise it will be ignored.</li>
 </div>
 <p>Running just the above fragments will create the following window</p>
 <img alt="Initial view of the widget" class="align-center" src="../_images/matplot_w1.png" />
-<p>Clicking on the button will call the methods inside <tt class="docutils literal"><span class="pre">self.plot_funcs</span></tt> consecutively. Each of this methods illustrate
+<p>Clicking on the button will call the methods inside <code class="docutils literal"><span class="pre">self.plot_funcs</span></code> consecutively. Each of this methods illustrate
 a type of plot.</p>
 <div class="section" id="bar-plots">
 <h3>Bar plots<a class="headerlink" href="#bar-plots" title="Permalink to this headline">¶</a></h3>
@@ -357,7 +365,7 @@ example we are going to generate it artificially.</p>
 </div>
 <img alt="Coefficients plot example" class="align-center" src="../_images/matplot_w4.png" />
 <p>In this example the only coefficient that appears to be significant is number nine.
-Also notice there is no <tt class="docutils literal"><span class="pre">(intercept)</span></tt> in the plot.</p>
+Also notice there is no <code class="docutils literal"><span class="pre">(intercept)</span></code> in the plot.</p>
 </div>
 <div class="section" id="scatter-plots">
 <h3>Scatter plots<a class="headerlink" href="#scatter-plots" title="Permalink to this headline">¶</a></h3>
@@ -429,11 +437,11 @@ create additional plot types.</p>
 <p>All plots should be subclasses of the abstract class</p>
 <dl class="class">
 <dt id="braviz.visualization.matplotlib_qt_widget.AbstractPlot">
-<em class="property">class </em><tt class="descname">AbstractPlot</tt><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.AbstractPlot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base class for plots used inside the <a class="reference internal" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget" title="braviz.visualization.matplotlib_qt_widget.MatplotWidget"><tt class="xref py py-class docutils literal"><span class="pre">MatplotWidget</span></tt></a></p>
+<em class="property">class </em><code class="descname">AbstractPlot</code><a class="reference internal" href="../_modules/braviz/visualization/matplotlib_qt_widget.html#AbstractPlot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.AbstractPlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for plots used inside the <a class="reference internal" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget" title="braviz.visualization.matplotlib_qt_widget.MatplotWidget"><code class="xref py py-class docutils literal"><span class="pre">MatplotWidget</span></code></a></p>
 <dl class="method">
 <dt id="braviz.visualization.matplotlib_qt_widget.AbstractPlot.add_subjects">
-<tt class="descname">add_subjects</tt><big>(</big><em>subjs</em><big>)</big><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.AbstractPlot.add_subjects" title="Permalink to this definition">¶</a></dt>
+<code class="descname">add_subjects</code><span class="sig-paren">(</span><em>subjs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/matplotlib_qt_widget.html#AbstractPlot.add_subjects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.AbstractPlot.add_subjects" title="Permalink to this definition">¶</a></dt>
 <dd><p>Should highlight the specified points in the plot</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -447,7 +455,7 @@ create additional plot types.</p>
 
 <dl class="method">
 <dt id="braviz.visualization.matplotlib_qt_widget.AbstractPlot.get_last_id">
-<tt class="descname">get_last_id</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.AbstractPlot.get_last_id" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_last_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/matplotlib_qt_widget.html#AbstractPlot.get_last_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.AbstractPlot.get_last_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the id of the point last signaled with the cursor. This is used by the MatplotWidget to create
 a context menu</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -462,14 +470,15 @@ a context menu</p>
 
 <dl class="method">
 <dt id="braviz.visualization.matplotlib_qt_widget.AbstractPlot.get_tooltip">
-<tt class="descname">get_tooltip</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.AbstractPlot.get_tooltip" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_tooltip</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/matplotlib_qt_widget.html#AbstractPlot.get_tooltip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.AbstractPlot.get_tooltip" title="Permalink to this definition">¶</a></dt>
 <dd><p>Request a tooltip at a given position</p>
 <p>Return an empty string if there is no tooltip for that position</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>event</strong> (<a class="reference external" href="http://matplotlib.sourceforge.net/api/backend_bases_api.html#matplotlib.backend_bases.MouseEvent" title="(in Matplotlib v1.4.2)"><em>matplotlib.backend_bases.MouseEvent</em></a>) &#8211; Matplotlib MouseEvent that caused the request,</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>event</strong> (<a class="reference external" href="http://matplotlib.sourceforge.net/api/backend_bases_api.html#matplotlib.backend_bases.MouseEvent" title="(in Matplotlib v1.5.0)"><em>matplotlib.backend_bases.MouseEvent</em></a>) &#8211; Matplotlib MouseEvent that caused the request,
+extract the position from here</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">string to show as tooltip, empty string if you don&#8217;t want to show anything</td>
 </tr>
@@ -479,7 +488,7 @@ a context menu</p>
 
 <dl class="method">
 <dt id="braviz.visualization.matplotlib_qt_widget.AbstractPlot.highlight">
-<tt class="descname">highlight</tt><big>(</big><em>subj</em><big>)</big><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.AbstractPlot.highlight" title="Permalink to this definition">¶</a></dt>
+<code class="descname">highlight</code><span class="sig-paren">(</span><em>subj</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/matplotlib_qt_widget.html#AbstractPlot.highlight"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.AbstractPlot.highlight" title="Permalink to this definition">¶</a></dt>
 <dd><p>Should highlight one point in the plot</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -493,7 +502,7 @@ a context menu</p>
 
 <dl class="method">
 <dt id="braviz.visualization.matplotlib_qt_widget.AbstractPlot.redraw">
-<tt class="descname">redraw</tt><big>(</big><big>)</big><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.AbstractPlot.redraw" title="Permalink to this definition">¶</a></dt>
+<code class="descname">redraw</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/matplotlib_qt_widget.html#AbstractPlot.redraw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.AbstractPlot.redraw" title="Permalink to this definition">¶</a></dt>
 <dd><p>Should redraw its contents, called when the widget is resized</p>
 </dd></dl>
 
@@ -502,24 +511,24 @@ a context menu</p>
 <p>The currently available plots are</p>
 <dl class="class">
 <dt id="braviz.visualization.matplotlib_qt_widget.MessagePlot">
-<em class="property">class </em><tt class="descname">MessagePlot</tt><big>(</big><em>axes</em>, <em>message</em><big>)</big><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.MessagePlot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Draws a text message into a <a class="reference internal" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget" title="braviz.visualization.matplotlib_qt_widget.MatplotWidget"><tt class="xref py py-class docutils literal"><span class="pre">MatplotWidget</span></tt></a></p>
-<p>To create this plot call <a class="reference internal" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_scatter" title="braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_scatter"><tt class="xref py py-class docutils literal"><span class="pre">MatplotWidget.draw_scatter</span></tt></a></p>
+<em class="property">class </em><code class="descname">MessagePlot</code><span class="sig-paren">(</span><em>axes</em>, <em>message</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/matplotlib_qt_widget.html#MessagePlot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.MessagePlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws a text message into a <a class="reference internal" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget" title="braviz.visualization.matplotlib_qt_widget.MatplotWidget"><code class="xref py py-class docutils literal"><span class="pre">MatplotWidget</span></code></a></p>
+<p>To create this plot call <a class="reference internal" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_scatter" title="braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_scatter"><code class="xref py py-class docutils literal"><span class="pre">MatplotWidget.draw_scatter</span></code></a></p>
 </dd></dl>
 
 <dl class="class">
 <dt id="braviz.visualization.matplotlib_qt_widget.MatplotBarPlot">
-<em class="property">class </em><tt class="descname">MatplotBarPlot</tt><big>(</big><em>axes</em>, <em>data</em>, <em>ylims=None</em>, <em>orientation='vertical'</em>, <em>group_labels=None</em><big>)</big><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.MatplotBarPlot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Draws a bar plot on the <a class="reference internal" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget" title="braviz.visualization.matplotlib_qt_widget.MatplotWidget"><tt class="xref py py-class docutils literal"><span class="pre">MatplotWidget</span></tt></a>.</p>
+<em class="property">class </em><code class="descname">MatplotBarPlot</code><span class="sig-paren">(</span><em>axes</em>, <em>data</em>, <em>ylims=None</em>, <em>orientation='vertical'</em>, <em>group_labels=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/matplotlib_qt_widget.html#MatplotBarPlot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.MatplotBarPlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws a bar plot on the <a class="reference internal" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget" title="braviz.visualization.matplotlib_qt_widget.MatplotWidget"><code class="xref py py-class docutils literal"><span class="pre">MatplotWidget</span></code></a>.</p>
 <p>Bars are sorted from smallest to biggest,
 they also may be colored with respect to a nominal variable.
-To create a bar plot call <a class="reference internal" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_bars" title="braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_bars"><tt class="xref py py-meth docutils literal"><span class="pre">MatplotWidget.draw_bars()</span></tt></a></p>
+To create a bar plot call <a class="reference internal" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_bars" title="braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_bars"><code class="xref py py-meth docutils literal"><span class="pre">MatplotWidget.draw_bars()</span></code></a></p>
 </dd></dl>
 
 <dl class="class">
 <dt id="braviz.visualization.matplotlib_qt_widget.ScatterPlot">
-<em class="property">class </em><tt class="descname">ScatterPlot</tt><big>(</big><em>axes</em>, <em>data</em>, <em>x_var</em>, <em>y_var</em>, <em>xlabel=None</em>, <em>ylabel=None</em>, <em>reg_line=True</em>, <em>hue_var=None</em>, <em>hue_labels=None</em>, <em>qualitative_map=True</em>, <em>x_ticks=None</em><big>)</big><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.ScatterPlot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Draws an scatter plot in <a class="reference internal" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget" title="braviz.visualization.matplotlib_qt_widget.MatplotWidget"><tt class="xref py py-class docutils literal"><span class="pre">MatplotWidget</span></tt></a>.</p>
+<em class="property">class </em><code class="descname">ScatterPlot</code><span class="sig-paren">(</span><em>axes</em>, <em>data</em>, <em>x_var</em>, <em>y_var</em>, <em>xlabel=None</em>, <em>ylabel=None</em>, <em>reg_line=True</em>, <em>hue_var=None</em>, <em>hue_labels=None</em>, <em>qualitative_map=True</em>, <em>x_ticks=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/matplotlib_qt_widget.html#ScatterPlot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.ScatterPlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws an scatter plot in <a class="reference internal" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget" title="braviz.visualization.matplotlib_qt_widget.MatplotWidget"><code class="xref py py-class docutils literal"><span class="pre">MatplotWidget</span></code></a>.</p>
 <p>The plot may contain</p>
 <blockquote>
 <div><ul class="simple">
@@ -527,31 +536,31 @@ To create a bar plot call <a class="reference internal" href="#braviz.visualizat
 <li>data from different groups painted with different colors</li>
 </ul>
 </div></blockquote>
-<p>To create this plot call <a class="reference internal" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_scatter" title="braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_scatter"><tt class="xref py py-class docutils literal"><span class="pre">MatplotWidget.draw_scatter</span></tt></a></p>
+<p>To create this plot call <a class="reference internal" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_scatter" title="braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_scatter"><code class="xref py py-class docutils literal"><span class="pre">MatplotWidget.draw_scatter</span></code></a></p>
 </dd></dl>
 
 <dl class="class">
 <dt id="braviz.visualization.matplotlib_qt_widget.ResidualsDiagnosticPlot">
-<em class="property">class </em><tt class="descname">ResidualsDiagnosticPlot</tt><big>(</big><em>figure</em>, <em>residuals</em>, <em>fitted</em>, <em>names=None</em><big>)</big><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.ResidualsDiagnosticPlot" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">ResidualsDiagnosticPlot</code><span class="sig-paren">(</span><em>figure</em>, <em>residuals</em>, <em>fitted</em>, <em>names=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/matplotlib_qt_widget.html#ResidualsDiagnosticPlot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.ResidualsDiagnosticPlot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates two plots to analyze distributions of residuals from a regression.</p>
 <p>The first one shows the distribution of the residuals with respect to the outcome variable. This should be used
 to check the hypothesis that the variance must be constant across this range.</p>
 <p>The second one shows a histogram of the residuals. This should be used to verify that the residuals distribution is
 close to normal.</p>
-<p>To create this plot call <a class="reference internal" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_residuals" title="braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_residuals"><tt class="xref py py-class docutils literal"><span class="pre">MatplotWidget.draw_residuals</span></tt></a></p>
+<p>To create this plot call <a class="reference internal" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_residuals" title="braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_residuals"><code class="xref py py-class docutils literal"><span class="pre">MatplotWidget.draw_residuals</span></code></a></p>
 </dd></dl>
 
 <dl class="class">
 <dt id="braviz.visualization.matplotlib_qt_widget.InterceptPlot">
-<em class="property">class </em><tt class="descname">InterceptPlot</tt><big>(</big><em>axes</em>, <em>data</em>, <em>y_var</em>, <em>groups=None</em>, <em>y_label=None</em>, <em>ci_plot=True</em>, <em>color=None</em>, <em>group_labels=None</em><big>)</big><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.InterceptPlot" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">InterceptPlot</code><span class="sig-paren">(</span><em>axes</em>, <em>data</em>, <em>y_var</em>, <em>groups=None</em>, <em>y_label=None</em>, <em>ci_plot=True</em>, <em>color=None</em>, <em>group_labels=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/matplotlib_qt_widget.html#InterceptPlot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.InterceptPlot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws a plot to show the mean of different data groups</p>
 <p>Optionally a confidence interval can be added.
-To create this plot call <a class="reference internal" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_intercept" title="braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_intercept"><tt class="xref py py-class docutils literal"><span class="pre">MatplotWidget.draw_intercept</span></tt></a></p>
+To create this plot call <a class="reference internal" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_intercept" title="braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_intercept"><code class="xref py py-class docutils literal"><span class="pre">MatplotWidget.draw_intercept</span></code></a></p>
 </dd></dl>
 
 <dl class="class">
 <dt id="braviz.visualization.matplotlib_qt_widget.CoefficientsPlot">
-<em class="property">class </em><tt class="descname">CoefficientsPlot</tt><big>(</big><em>axes</em>, <em>coefs_df</em>, <em>draw_intercept=False</em><big>)</big><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.CoefficientsPlot" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">CoefficientsPlot</code><span class="sig-paren">(</span><em>axes</em>, <em>coefs_df</em>, <em>draw_intercept=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/matplotlib_qt_widget.html#CoefficientsPlot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.matplotlib_qt_widget.CoefficientsPlot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws a coefficient plot to illustrate the results of a linear regression.</p>
 <p>The plot shows the 95% confidence intervals and standard errors. For a coefficient to
 be significant it&#8217;s confidence intervals should not cross the zero line. For it to have an important
@@ -564,8 +573,8 @@ The expected columns are</p>
 <li>Std_error : The standard error magnitude</li>
 <li>Slope : slope of the coefficients in the regression</li>
 </ul>
-<p>Also the first row in the dataframe should be the intercept, this will be ignored if <em>intercept</em> is <tt class="docutils literal"><span class="pre">False</span></tt>.</p>
-<p>Use <a class="reference internal" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_coefficients_plot" title="braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_coefficients_plot"><tt class="xref py py-meth docutils literal"><span class="pre">MatplotWidget.draw_coefficients_plot()</span></tt></a> to draw create this plot.</p>
+<p>Also the first row in the dataframe should be the intercept, this will be ignored if <em>intercept</em> is <code class="docutils literal"><span class="pre">False</span></code>.</p>
+<p>Use <a class="reference internal" href="#braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_coefficients_plot" title="braviz.visualization.matplotlib_qt_widget.MatplotWidget.draw_coefficients_plot"><code class="xref py py-meth docutils literal"><span class="pre">MatplotWidget.draw_coefficients_plot()</span></code></a> to draw create this plot.</p>
 </dd></dl>
 
 </div>
@@ -586,13 +595,13 @@ The expected columns are</p>
         <div class="left">
           
           <a href="checkboard_view.html" title="Checking image registration"
-             accesskey="P">previous</a> |
+             accesskey="P" >previous</a> |
           <a href="d3_viz.html" title="D3 based visualizations"
-             accesskey="N">next</a> |
+             accesskey="N" >next</a> |
           <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |
+              >modules</a> |
           <a href="../genindex.html" title="General Index"
-             accesskey="I">index</a>
+             accesskey="I" >index</a>
           
             <br/>
             <a href="../_sources/library/matplotlib_widget.txt"
@@ -601,9 +610,9 @@ The expected columns are</p>
 
         <div class="right">
           
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Diego Angulo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
         </div>
         <div class="clearer"></div>

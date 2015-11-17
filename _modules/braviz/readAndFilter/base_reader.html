@@ -1,0 +1,608 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>braviz.readAndFilter.base_reader &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.3b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="top" title="Braviz Documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body role="document">
+    
+    <div class="header-wrapper">
+      <div class="header">
+          <p class="logo"><a href="../../../index.html">
+            <img class="logo" src="../../../_static/Logo_Bravis_h.png" alt="Logo"/>
+          </a></p>
+          <!--
+        <div class="headertitle"><a
+          href="../../../index.html"> Documentation </a></div>
+          -->
+          <nav class="parents">
+              <ol>
+        <li><a href="../../../index.html"> Home </a> &raquo;</li>
+          <li><a href="../../index.html"  accesskey="U"  >Module code</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/Logo_Bravis_h.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for braviz.readAndFilter.base_reader</h1><div class="highlight"><pre>
+<span class="c">##############################################################################</span>
+<span class="c">#    Braviz, Brain Data interactive visualization                            #</span>
+<span class="c">#    Copyright (C) 2014  Diego Angulo                                        #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    This program is free software: you can redistribute it and/or modify    #</span>
+<span class="c">#    it under the terms of the GNU Lesser General Public License as          #</span>
+<span class="c">#    published by  the Free Software Foundation, either version 3 of the     #</span>
+<span class="c">#    License, or (at your option) any later version.                         #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    This program is distributed in the hope that it will be useful,         #</span>
+<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
+<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
+<span class="c">#    GNU Lesser General Public License for more details.                     #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    You should have received a copy of the GNU Lesser General Public License#</span>
+<span class="c">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
+<span class="c">##############################################################################</span>
+
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span>
+
+<span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">import</span> <span class="nn">tempfile</span>
+
+<span class="kn">from</span> <span class="nn">braviz.readAndFilter.cache</span> <span class="kn">import</span> <span class="n">cache_function</span><span class="p">,</span> <span class="n">CacheContainer</span>
+
+<span class="n">_auto_temp_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tempfile</span><span class="o">.</span><span class="n">gettempdir</span><span class="p">(),</span> <span class="s">&quot;braviz_temp&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="BaseReader"><a class="viewcode-back" href="../../../library/reader.html#braviz.readAndFilter.base_reader.BaseReader">[docs]</a><span class="k">class</span> <span class="nc">BaseReader</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Provide access to projects&#39; non-tabular data</span>
+
+<span class="sd">Project readers provide a common interface to each projects underlying data. All project readers should be inherited</span>
+<span class="sd">from this class. Most data access is carried out through the :meth:`get` method. Underneath this method locates the</span>
+<span class="sd">appropriate data files and transformations, and returns the requested data in the requested coordinates system.</span>
+
+<span class="sd">An instance of this class will always return empty lists when indexes are requested and raise exceptions when</span>
+<span class="sd">data is requested. To get a more useful class you should create your own subclass.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+    <span class="n">_memory_cache_container</span> <span class="o">=</span> <span class="n">CacheContainer</span><span class="p">()</span>
+
+<div class="viewcode-block" id="BaseReader.__init__"><a class="viewcode-back" href="../../../library/reader.html#braviz.readAndFilter.base_reader.BaseReader.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_cache</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The base reader handles a memory cache for speeding repeated access for the same data.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            max_cache (int) : The maximum amount of memory in MB that can be used for cache</span>
+<span class="sd">            **kwargs : Ignored, maybe used by derived classes</span>
+
+<span class="sd">        Note that subclasses may have more arguments in their constructors.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_memory_cache_container</span><span class="o">.</span><span class="n">max_cache</span> <span class="o">=</span> <span class="n">max_cache</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__static_root</span> <span class="o">=</span> <span class="n">_auto_temp_dir</span>
+        <span class="k">return</span>
+</div>
+    <span class="nd">@cache_function</span><span class="p">(</span><span class="n">_memory_cache_container</span><span class="p">)</span>
+<div class="viewcode-block" id="BaseReader.get"><a class="viewcode-back" href="../../../library/reader.html#braviz.readAndFilter.base_reader.BaseReader.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">subj_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="s">&#39;subject&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Provides access to geometric data in an specified coordinate system.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data (str): Case insensitive, the type of data requested. Currently the possible values are</span>
+
+<span class="sd">                ===========  =====================================================</span>
+<span class="sd">                Ids          ids of all subjects in the study as a list</span>
+
+<span class="sd">                             Returns a list of ids</span>
+<span class="sd">                -----------  -----------------------------------------------------</span>
+<span class="sd">                IMAGE        structural image of the given subject</span>
+<span class="sd">                             requires ``name=&lt;modality&gt;``. The available modalities</span>
+<span class="sd">                             depend of the project, but some common values are</span>
+<span class="sd">                             MRI, FA, and MD.</span>
+
+<span class="sd">                             Use ``index=True`` to get a list of available modalities.</span>
+
+<span class="sd">                             All of these are single channel images.</span>
+<span class="sd">                             Other modalities</span>
+<span class="sd">                             may be available under DTI and Label.</span>
+
+<span class="sd">                             Returns a nibabel image object,</span>
+<span class="sd">                             use ``format=&quot;VTK&quot;`` to</span>
+<span class="sd">                             receive a vtkImageData instead.</span>
+<span class="sd">                -----------  -----------------------------------------------------</span>
+<span class="sd">                DTI          RGB DTI image</span>
+
+<span class="sd">                             returns a nibabel image object, use ``format=&quot;VTK&quot;`` to</span>
+<span class="sd">                             receive a vtkImageData instead.</span>
+<span class="sd">                -----------  -----------------------------------------------------</span>
+<span class="sd">                Label        Read Label Map images</span>
+
+<span class="sd">                             requires ``name=&lt;map&gt;``. Some common maps are</span>
+
+<span class="sd">                             APARC: FreeSurfer Aparc (Auto Parcelation) image</span>
+<span class="sd">                             WMPARC: FreeSurfer WMParc (White Matter Parcelation) image</span>
+
+<span class="sd">                             use ``index=True`` to get a list of available maps</span>
+
+<span class="sd">                             returns a nibabel image object, use ``format=&quot;VTK&quot;`` to</span>
+<span class="sd">                             receive a vtkImageData instead.</span>
+
+<span class="sd">                             use ``lut=True`` to get a vtkLookupTable</span>
+<span class="sd">                -----------  -----------------------------------------------------</span>
+<span class="sd">                fMRI         SPM t-score map</span>
+
+<span class="sd">                             returns a nibabel image object, use ``format=&quot;VTK&quot;`` to</span>
+<span class="sd">                             receive a vtkImageData instead.</span>
+
+<span class="sd">                             Requires ``name=&lt;paradigm&gt;``</span>
+
+<span class="sd">                             Optionally you may specify ``contrast=&lt;int&gt;``</span>
+
+<span class="sd">                             ``contrasts_dict`` = True will return a dictionary with</span>
+<span class="sd">                             the available for contrasts for the specified paradigm.</span>
+
+<span class="sd">                             ``SPM = True`` will return a :class:`~braviz.readAndFilter.read_spm.SpmFileReader`</span>
+<span class="sd">                              with the data contained in the *spm.mat* file.</span>
+<span class="sd">                -----------  -----------------------------------------------------</span>
+<span class="sd">                BOLD         SPM, pre-processed bold series</span>
+
+<span class="sd">                             Only available as a 4d nibabel object</span>
+<span class="sd">                -----------  -----------------------------------------------------</span>
+<span class="sd">                Model        Reconstruction of FreeSurfer segmented structure</span>
+
+<span class="sd">                             ``index=True`` returns a list of available models</span>
+
+<span class="sd">                             ``name=&lt;model&gt;`` returns a vtkPolyData, unless one of the</span>
+<span class="sd">                             following options is also specified</span>
+
+<span class="sd">                             ``color=True`` returns the standard FreeSurfer color</span>
+<span class="sd">                             associated with the given model</span>
+
+<span class="sd">                             ``volume=True`` returns the volume of the given structure</span>
+<span class="sd">                             read from the FreeSurfer stats files</span>
+
+<span class="sd">                             ``label=True`` returns the integer which identifies the</span>
+<span class="sd">                             structure in the Aparc or WMparc image</span>
+<span class="sd">                -----------  -----------------------------------------------------</span>
+<span class="sd">                Surf         FreeSurfer brain cortex surface reconstruction</span>
+
+<span class="sd">                             Requires ``name=&lt;surface&gt;`` and ``hemi=&lt;r|l&gt;`` where</span>
+<span class="sd">                             surface is *orig, pial, white, smoothwm, inflated or sphere*</span>
+
+<span class="sd">                             ``normals=False`` returns a polydata without normals</span>
+
+<span class="sd">                             ``scalars=&lt;name&gt;`` add the given scalars to the polydata</span>
+<span class="sd">                             (look Surf_Scalar)</span>
+<span class="sd">                -----------  -----------------------------------------------------</span>
+<span class="sd">                Surf_Scalar  Scalars for a FreeSurfer surfaces</span>
+
+<span class="sd">                             ``index = True`` returns a list of available scalars</span>
+
+<span class="sd">                             ``scalars=&lt;name&gt;`` and ``hemi=&lt;&#39;r&#39;|&#39;l&#39;&gt;`` will return a numpy array with the</span>
+<span class="sd">                             scalar data.</span>
+
+<span class="sd">                             ``lut=True`` will return a vtkLookupTable appropriate for the given scalars.</span>
+<span class="sd">                -----------  -----------------------------------------------------</span>
+<span class="sd">                Fibers       Tractography</span>
+
+<span class="sd">                             Returns a polydata containing polylines. The following options are available</span>
+
+<span class="sd">                             ``color=&lt;&#39;orient&#39;|&#39;rand&#39;|None&gt;`` By default fibers are colored according to the</span>
+<span class="sd">                             direction. &#39;rand&#39; will give a different color for each polyline so that they can be</span>
+<span class="sd">                             distinguished. Use None when you intend to display the fibers using scalar data and</span>
+<span class="sd">                             a lookup table</span>
+
+<span class="sd">                             ``scalars=&lt;&#39;fa_p&#39;,&#39;fa_l&#39;,&#39;md_p&#39;,&#39;md_l&#39;,&#39;length&#39;,&#39;aparc&#39;,&#39;wmparc&#39;&gt;`` will attach the</span>
+<span class="sd">                             given scalar data to the polydata. fa stands for Fractional Anisotropy and md for</span>
+<span class="sd">                             mean diffusivity. _p stands for a value for each point, while _l will create a value for</span>
+<span class="sd">                             each line equal to the mean across the line. aparc and wmpar will attach the integer label</span>
+<span class="sd">                             of the nearest voxel in the corresponding image.</span>
+
+<span class="sd">                             ``lut=True`` can be used together with ``scalars`` to get an appropriate lookup table</span>
+
+<span class="sd">                             ``waypoint = &lt;model&gt;`` will filter the tractography to the lines that pass through the</span>
+<span class="sd">                             given structure</span>
+
+<span class="sd">                             ``waypoint = &lt;model-list&gt;`` will filter the tractography to the lines that pass through</span>
+<span class="sd">                             all models in the list. If ``operation=&#39;or&#39;`` is also specified the behaviour changes to</span>
+<span class="sd">                             the lines that pass through at least one of the models in the list.</span>
+
+<span class="sd">                             ``ids=True`` will return the ids of the polylines, based in the whole tractography, that</span>
+<span class="sd">                             cross the specified waypoints.</span>
+
+<span class="sd">                             ``name=&lt;tract-name&gt;`` can be used to access tracts defined through python functions. To get</span>
+<span class="sd">                             a list of such available tracts add ``index=True``</span>
+
+<span class="sd">                             ``db-id=&lt;id&gt;`` returns a tract stored in the database with the given index</span>
+<span class="sd">                -----------  -----------------------------------------------------</span>
+<span class="sd">                Tracula      Tracula probabilistic tractography</span>
+
+<span class="sd">                             ``index=True`` returns a list of available bundles</span>
+
+<span class="sd">                             ``name=&lt;bundle&gt;`` returns the isosurface at 0.20 of the maximum aposteriori probability</span>
+<span class="sd">                             for the given bundle. Use ``contour=&lt;percentage&gt;`` to change this value.</span>
+
+<span class="sd">                             ``map=True`` returns the probability map as an image</span>
+
+<span class="sd">                             ``color=True`` returns the standard FreeSurfer color associated with the bundle.</span>
+<span class="sd">                ===========  =====================================================</span>
+
+<span class="sd">            subj_id: The id of the subject whose data is requested. Use data=&#39;ids&#39; to get a list of available subjects</span>
+
+<span class="sd">            space (str): The coordinate systems in which the result is requested. Available spaces are</span>
+
+<span class="sd">                ===============   ==================================</span>
+<span class="sd">                subject           Defined by the subject&#39;s MRI image</span>
+
+<span class="sd">                talairach         MRI image after applying an affine transformation to the Talairach coordinates</span>
+
+<span class="sd">                dartel            Non-linear warp towards a template</span>
+
+<span class="sd">                diff              Defined by the diffusion images</span>
+
+<span class="sd">                fmri-&lt;pdgm&gt;       Defined by the SPM results</span>
+
+<span class="sd">                native            Ignores all transformations, raw voxels data</span>
+<span class="sd">                ===============   ==================================</span>
+
+<span class="sd">                Notice that some data types are not available in every space, in this case an exception will be risen.</span>
+<span class="sd">            **kwargs: Arguments specific to each data type</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">subj_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_decode_subject</span><span class="p">(</span><span class="n">subj_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">subj_id</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</div>
+    <span class="k">def</span> <span class="nf">_decode_subject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Transforms the subject into the standard format, should be called at the start of all public methods</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">subj</span>
+
+<div class="viewcode-block" id="BaseReader.move_img_to_subject"><a class="viewcode-back" href="../../../library/reader.html#braviz.readAndFilter.base_reader.BaseReader.move_img_to_subject">[docs]</a>    <span class="k">def</span> <span class="nf">move_img_to_subject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">source_space</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">interpolate</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Resamples an image into the subject coordinate system</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            img (vtkImageData): source image</span>
+<span class="sd">            source_space (str): source image coordinate system</span>
+<span class="sd">            subj: Subject to whom the image belongs</span>
+<span class="sd">            interpolate (bool): If False nearest neighbours interpolation is applied, useful for label maps</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Resliced image in subject coordinate system</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</div>
+<div class="viewcode-block" id="BaseReader.move_img_from_subject"><a class="viewcode-back" href="../../../library/reader.html#braviz.readAndFilter.base_reader.BaseReader.move_img_from_subject">[docs]</a>    <span class="k">def</span> <span class="nf">move_img_from_subject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">target_space</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">interpolate</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Resamples an image from the subject coordinates into some other coordinate system</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            img (vtkImageData): source image</span>
+<span class="sd">            target_space (str): destination coordinate system</span>
+<span class="sd">            subj: Subject to whom the image belongs</span>
+<span class="sd">            interpolate (bool): If False nearest neighbours interpolation is applied, useful for label maps</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Resliced image in *target_space* coordinates</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</div>
+<div class="viewcode-block" id="BaseReader.transform_points_to_space"><a class="viewcode-back" href="../../../library/reader.html#braviz.readAndFilter.base_reader.BaseReader.transform_points_to_space">[docs]</a>    <span class="k">def</span> <span class="nf">transform_points_to_space</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point_set</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">inverse</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Transforms a set of points into another coordinate system</span>
+
+<span class="sd">        By defaults moves from subject coordinates to another system, but these behaviour is reversed if the</span>
+<span class="sd">        *inverse* parameter is True. At the moment, to move from an arbitrary coordinate system to another it is</span>
+<span class="sd">        necessary to use the subject coordinates as stopover</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            point_set (vtkPolyData,vtkPoints,vtkDataSet): source points</span>
+<span class="sd">            space (str): origin or destination coordinate system, depending on *inverse*</span>
+<span class="sd">            subj: Subject to whom the points belong</span>
+<span class="sd">            inverse (bool): If false points are moved from subject to *space*, else the points are moved from</span>
+<span class="sd">                *space* to subject.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Transformed points</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</div>
+<div class="viewcode-block" id="BaseReader.clear_mem_cache"><a class="viewcode-back" href="../../../library/reader.html#braviz.readAndFilter.base_reader.BaseReader.clear_mem_cache">[docs]</a>    <span class="k">def</span> <span class="nf">clear_mem_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clears the contents of the memory cache</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Clearing cache&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_memory_cache_container</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="BaseReader.save_into_cache"><a class="viewcode-back" href="../../../library/reader.html#braviz.readAndFilter.base_reader.BaseReader.save_into_cache">[docs]</a>    <span class="k">def</span> <span class="nf">save_into_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Saves some data into a cache, uses vtkDataWriter or :mod:`cPickle` for python objects.</span>
+
+<span class="sd">        Data is stored using a *key*. This value is required to retrieve the data or to overwrite it.</span>
+<span class="sd">        To retrieve data use :func:`load_from_cache`.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key(str): Unique value used to reference the data into the cache,</span>
+<span class="sd">                if data with the same key exists it will be overwritten</span>
+<span class="sd">            data: Data object to store</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            True if the value was successfully saved, False if there was a problem</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">False</span>
+</div>
+<div class="viewcode-block" id="BaseReader.load_from_cache"><a class="viewcode-back" href="../../../library/reader.html#braviz.readAndFilter.base_reader.BaseReader.load_from_cache">[docs]</a>    <span class="k">def</span> <span class="nf">load_from_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Loads data stored into cache with :func:`save_into_cache`</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key(str): Key used to store the object</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            If successful returns the object as it was previously stored.</span>
+
+<span class="sd">            In case of failure returns `None`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">None</span>
+</div>
+<div class="viewcode-block" id="BaseReader.clear_cache_dir"><a class="viewcode-back" href="../../../library/reader.html#braviz.readAndFilter.base_reader.BaseReader.clear_cache_dir">[docs]</a>    <span class="k">def</span> <span class="nf">clear_cache_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">last_word</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clears all the contents of the disk cache</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            last_word (bool) : If True goes on to clear the cache, otherwise does nothing</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">shutil</span>
+        <span class="k">if</span> <span class="n">last_word</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="n">cache_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_dyn_data_root</span><span class="p">(),</span> <span class="s">&#39;.braviz_cache&#39;</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&quot;If you are sure you want to delete the cache dir, call this function with a True argument&quot;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BaseReader.get_data_root"><a class="viewcode-back" href="../../../library/reader.html#braviz.readAndFilter.base_reader.BaseReader.get_data_root">[docs]</a>    <span class="k">def</span> <span class="nf">get_data_root</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the root directory from which this instance reads data</span>
+
+<span class="sd">        This directory should be readable by the current user</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__static_root</span>
+</div>
+<div class="viewcode-block" id="BaseReader.get_dyn_data_root"><a class="viewcode-back" href="../../../library/reader.html#braviz.readAndFilter.base_reader.BaseReader.get_dyn_data_root">[docs]</a>    <span class="k">def</span> <span class="nf">get_dyn_data_root</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the root directory into which this instance stores cache and data</span>
+
+<span class="sd">        This directory should be writable by the current user</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__static_root</span>
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="BaseReader.get_auto_data_root"><a class="viewcode-back" href="../../../library/reader.html#braviz.readAndFilter.base_reader.BaseReader.get_auto_data_root">[docs]</a>    <span class="k">def</span> <span class="nf">get_auto_data_root</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the root directory that would be used by an auto_reader to read data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">_auto_temp_dir</span>
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="BaseReader.get_auto_dyn_data_root"><a class="viewcode-back" href="../../../library/reader.html#braviz.readAndFilter.base_reader.BaseReader.get_auto_dyn_data_root">[docs]</a>    <span class="k">def</span> <span class="nf">get_auto_dyn_data_root</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the root directory that would be used by an auto_reader to store data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">_auto_temp_dir</span>
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="BaseReader.clear_dynamic_data_dir"><a class="viewcode-back" href="../../../library/reader.html#braviz.readAndFilter.base_reader.BaseReader.clear_dynamic_data_dir">[docs]</a>    <span class="k">def</span> <span class="nf">clear_dynamic_data_dir</span><span class="p">(</span><span class="n">dir_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clears data written by braviz from a directory</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dir_name (str) : Path to the root location where data was written, this is,</span>
+<span class="sd">                the value returned by :meth:`get_dyn_data_root` in the reader that stored the data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_name</span><span class="p">,</span> <span class="s">&quot;logs&quot;</span><span class="p">))</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_name</span><span class="p">,</span> <span class="s">&quot;.braviz_cache&quot;</span><span class="p">))</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_name</span><span class="p">,</span> <span class="s">&quot;braviz_data&quot;</span><span class="p">,</span> <span class="s">&quot;scenarios&quot;</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">sub_dir</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&quot;logs&quot;</span><span class="p">,</span> <span class="s">&quot;.braviz_cache&quot;</span><span class="p">,</span> <span class="s">&quot;braviz_data&quot;</span><span class="p">):</span>
+                <span class="n">top</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_name</span><span class="p">,</span> <span class="n">sub_dir</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">topdown</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+                    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+                        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+                    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">:</span>
+                        <span class="n">os</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+            <span class="k">pass</span>
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="BaseReader.initialize_dynamic_data_dir"><a class="viewcode-back" href="../../../library/reader.html#braviz.readAndFilter.base_reader.BaseReader.initialize_dynamic_data_dir">[docs]</a>    <span class="k">def</span> <span class="nf">initialize_dynamic_data_dir</span><span class="p">(</span><span class="n">dir_name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates the basic directory structure used for braviz starting at the specified path.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dir_name(str): The path where the structure will be created.</span>
+<span class="sd">                If None, the value returned by :meth:`get_auto_dyn_data_root` will be used</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">braviz.readAndFilter</span> <span class="kn">import</span> <span class="n">check_db</span>
+        <span class="k">if</span> <span class="n">dir_name</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">dir_name</span> <span class="o">=</span> <span class="n">BaseReader</span><span class="o">.</span><span class="n">get_auto_dyn_data_root</span><span class="p">()</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_name</span><span class="p">,</span> <span class="s">&quot;logs&quot;</span><span class="p">))</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_name</span><span class="p">,</span> <span class="s">&quot;.braviz_cache&quot;</span><span class="p">))</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_name</span><span class="p">,</span> <span class="s">&quot;braviz_data&quot;</span><span class="p">,</span> <span class="s">&quot;scenarios&quot;</span><span class="p">))</span>
+        <span class="n">check_db</span><span class="o">.</span><span class="n">verify_db_completeness</span><span class="p">()</span>
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="BaseReader.get_auto_reader"><a class="viewcode-back" href="../../../library/reader.html#braviz.readAndFilter.base_reader.BaseReader.get_auto_reader">[docs]</a>    <span class="k">def</span> <span class="nf">get_auto_reader</span><span class="p">(</span><span class="o">**</span><span class="n">kw_args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialized a based on known nodes file&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">BaseReader</span><span class="p">()</span>
+
+    <span class="c">#======================END OF PUBLIC API===============================</span>
+</div>
+    <span class="k">def</span> <span class="nf">_process_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a suitable key for a cache file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data_root_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_dyn_data_root</span><span class="p">())</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">key</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">+</span> <span class="n">data_root_length</span> <span class="o">&gt;</span> <span class="mi">250</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">digest</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ilegal</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;_&#39;</span><span class="p">,</span> <span class="s">&#39;&lt;&#39;</span><span class="p">,</span> <span class="s">&#39;&gt;&#39;</span><span class="p">,</span> <span class="s">&#39;:&#39;</span><span class="p">,</span> <span class="s">&#39;&quot;&#39;</span><span class="p">,</span> <span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">&quot;</span><span class="p">,</span> <span class="s">&#39;|&#39;</span><span class="p">,</span> <span class="s">&#39;?&#39;</span><span class="p">,</span> <span class="s">&#39;*&#39;</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">il</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ilegal</span><span class="p">):</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">il</span><span class="p">,</span> <span class="s">&#39;</span><span class="si">%d</span><span class="s">_&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">key</span>
+
+    <span class="k">def</span> <span class="nf">__raise_error</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Raises an IOError</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s">&quot;Data not available in BaseReader&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">subj</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="s">&#39;subject&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Internal: decode instruction and dispatch&quot;&quot;&quot;</span>
+        <span class="c">#Deprecated</span>
+        <span class="k">assert</span> <span class="n">space</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s">&quot;world&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">data</span> <span class="o">==</span> <span class="s">&#39;IMAGE&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">kw</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;index&quot;</span><span class="p">):</span>
+                <span class="k">return</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__raise_error</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">data</span> <span class="o">==</span> <span class="s">&quot;DTI&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__raise_error</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">data</span> <span class="o">==</span> <span class="s">&#39;IDS&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="k">elif</span> <span class="n">data</span> <span class="o">==</span> <span class="s">&#39;MODEL&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">kw</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;index&quot;</span><span class="p">):</span>
+                <span class="k">return</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__raise_error</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">data</span> <span class="o">==</span> <span class="s">&#39;SURF&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__raise_error</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">data</span> <span class="o">==</span> <span class="s">&#39;SURF_SCALAR&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">kw</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;index&quot;</span><span class="p">):</span>
+                <span class="k">return</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__raise_error</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">data</span> <span class="o">==</span> <span class="s">&#39;FIBERS&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__raise_error</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">data</span> <span class="o">==</span> <span class="s">&#39;TENSORS&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__raise_error</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">data</span> <span class="o">==</span> <span class="s">&quot;LABEL&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">kw</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;index&quot;</span><span class="p">):</span>
+                <span class="k">return</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__raise_error</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">data</span> <span class="o">==</span> <span class="s">&quot;FMRI&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">kw</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;index&quot;</span><span class="p">):</span>
+                <span class="k">return</span> <span class="nb">frozenset</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__raise_error</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">data</span> <span class="o">==</span> <span class="s">&#39;BOLD&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__raise_error</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">data</span> <span class="o">==</span> <span class="s">&quot;TRACULA&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">kw</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;index&quot;</span><span class="p">):</span>
+                <span class="k">return</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__raise_error</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Data type not available&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Data type not available&quot;</span><span class="p">))</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+                
+
+                
+
+                
+
+          
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

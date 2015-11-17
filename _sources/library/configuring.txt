@@ -20,9 +20,15 @@ The ``project`` field defines the project that will be used in the following ses
 :class:`~braviz.readAndFilter.base_reader.BaseReader` subclass that will be used, and according to it the location for
 the database and cache files.
 
-The ``logger`` field can take the values ``console`` or ``file``. In the first case all logging is done to the terminal,
+The ``server_port`` field contains the port in which the Braviz Web server will listen for http connections.
+
+The ``logger`` field can take the values ``console``, ``file`` or ``web_logger``. In the first case all logging is done to the terminal,
 in the second case it is stored in the ``logs`` directory inside
 :meth:`~braviz.readAndFilter.base_reader.BaseReader.get_auto_dyn_data_root`
+Finally, logging messages are sent ass HTTP requests to the address specified in the ``web_logger_server`` field of this section.
+
+
+
 
 Default_Variables
 ^^^^^^^^^^^^^^^^^^

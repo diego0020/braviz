@@ -77,7 +77,7 @@ Read
 Modify
 ^^^^^^
 
-.. autofunction:: updata_variable_value
+.. autofunction:: update_variable_value
 .. autofunction:: update_multiple_variable_values
 .. autofunction:: update_variable_values
 .. autofunction:: add_data_frame

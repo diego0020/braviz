@@ -1,0 +1,396 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>braviz.readAndFilter.config_file &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.3b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="top" title="Braviz Documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body role="document">
+    
+    <div class="header-wrapper">
+      <div class="header">
+          <p class="logo"><a href="../../../index.html">
+            <img class="logo" src="../../../_static/Logo_Bravis_h.png" alt="Logo"/>
+          </a></p>
+          <!--
+        <div class="headertitle"><a
+          href="../../../index.html"> Documentation </a></div>
+          -->
+          <nav class="parents">
+              <ol>
+        <li><a href="../../../index.html"> Home </a> &raquo;</li>
+          <li><a href="../../index.html"  accesskey="U"  >Module code</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/Logo_Bravis_h.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for braviz.readAndFilter.config_file</h1><div class="highlight"><pre>
+<span class="c">##############################################################################</span>
+<span class="c">#    Braviz, Brain Data interactive visualization                            #</span>
+<span class="c">#    Copyright (C) 2014  Diego Angulo                                        #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    This program is free software: you can redistribute it and/or modify    #</span>
+<span class="c">#    it under the terms of the GNU Lesser General Public License as          #</span>
+<span class="c">#    published by  the Free Software Foundation, either version 3 of the     #</span>
+<span class="c">#    License, or (at your option) any later version.                         #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    This program is distributed in the hope that it will be useful,         #</span>
+<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
+<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
+<span class="c">#    GNU Lesser General Public License for more details.                     #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    You should have received a copy of the GNU Lesser General Public License#</span>
+<span class="c">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
+<span class="c">##############################################################################</span>
+
+
+<span class="sd">&quot;&quot;&quot;Contains a class for accessing Braviz configuration from configuration files and functions to access such files&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">ConfigParser</span> <span class="kn">import</span> <span class="n">RawConfigParser</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">import</span> <span class="nn">vtk</span>
+
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Diego&#39;</span>
+
+
+<div class="viewcode-block" id="BravizConfig"><a class="viewcode-back" href="../../../library/configuring.html#braviz.readAndFilter.config_file.BravizConfig">[docs]</a><span class="k">class</span> <span class="nc">BravizConfig</span><span class="p">(</span><span class="n">RawConfigParser</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;Holds Braviz configuration&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BravizConfig.get_background"><a class="viewcode-back" href="../../../library/configuring.html#braviz.readAndFilter.config_file.BravizConfig.get_background">[docs]</a>    <span class="k">def</span> <span class="nf">get_background</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Background color from a configuration file</span>
+
+<span class="sd">        .. deprecated:: 3.0b</span>
+<span class="sd">           Use a gray or degraded gray background</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple : RGB value as a float tuple</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">back_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;VTK&#39;</span><span class="p">,</span> <span class="s">&#39;background&#39;</span><span class="p">)</span>
+        <span class="n">back_list</span> <span class="o">=</span> <span class="n">back_string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">)</span>
+        <span class="n">back_nums</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">back_list</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">back_nums</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BravizConfig.get_interaction_style"><a class="viewcode-back" href="../../../library/configuring.html#braviz.readAndFilter.config_file.BravizConfig.get_interaction_style">[docs]</a>    <span class="k">def</span> <span class="nf">get_interaction_style</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Interaction style from a configuration file</span>
+
+<span class="sd">        .. deprecated:: 3.0b</span>
+<span class="sd">           Use TrackballCamera</span>
+
+<span class="sd">        Checks if the intraction style is a valid vtk interaction style and returns vtk name</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            vtkInteractorStyle class</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">vtk_attrs</span> <span class="o">=</span> <span class="nb">dir</span><span class="p">(</span><span class="n">vtk</span><span class="p">)</span>
+        <span class="n">upper_vtk_attrs</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="n">vtk_attrs</span><span class="p">)</span>
+        <span class="n">custom_interactor_style</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;VTK&#39;</span><span class="p">,</span> <span class="s">&#39;interaction_style&#39;</span><span class="p">)</span>
+        <span class="n">interaction_style</span> <span class="o">=</span> <span class="s">&#39;vtkInteractorStyle</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">custom_interactor_style</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">upper_vtk_attrs</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">interaction_style</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&#39;Erroneous interactor_style value </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span>
+                      <span class="n">custom_interactor_style</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s">&#39;Erroneous interactor_style value </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">custom_interactor_style</span><span class="p">)</span>
+        <span class="n">style</span> <span class="o">=</span> <span class="n">vtk_attrs</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">style</span>
+</div>
+<div class="viewcode-block" id="BravizConfig.get_default_variables"><a class="viewcode-back" href="../../../library/configuring.html#braviz.readAndFilter.config_file.BravizConfig.get_default_variables">[docs]</a>    <span class="k">def</span> <span class="nf">get_default_variables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Default variables from configuration file</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict : A dictionary containing the default variables. The keys are</span>
+<span class="sd">            ``{&quot;nom1&quot;,&quot;nom2&quot;,&quot;ratio1&quot;,&quot;ratio2&quot;,&quot;lat&quot;}``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">nom1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;Default_Variables&#39;</span><span class="p">,</span> <span class="s">&#39;nominal1&#39;</span><span class="p">)</span>
+        <span class="n">nom2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;Default_Variables&#39;</span><span class="p">,</span> <span class="s">&#39;nominal2&#39;</span><span class="p">)</span>
+        <span class="n">ratio1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;Default_Variables&#39;</span><span class="p">,</span> <span class="s">&#39;numeric1&#39;</span><span class="p">)</span>
+        <span class="n">ratio2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;Default_Variables&#39;</span><span class="p">,</span> <span class="s">&#39;numeric2&#39;</span><span class="p">)</span>
+        <span class="n">lat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;Default_Variables&#39;</span><span class="p">,</span> <span class="s">&#39;laterality&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span><span class="s">&quot;nom1&quot;</span><span class="p">:</span> <span class="n">nom1</span><span class="p">,</span> <span class="s">&quot;nom2&quot;</span><span class="p">:</span> <span class="n">nom2</span><span class="p">,</span> <span class="s">&quot;ratio1&quot;</span><span class="p">:</span> <span class="n">ratio1</span><span class="p">,</span> <span class="s">&quot;ratio2&quot;</span><span class="p">:</span> <span class="n">ratio2</span><span class="p">,</span> <span class="s">&quot;lat&quot;</span><span class="p">:</span> <span class="n">lat</span><span class="p">}</span>
+</div>
+<div class="viewcode-block" id="BravizConfig.get_laterality"><a class="viewcode-back" href="../../../library/configuring.html#braviz.readAndFilter.config_file.BravizConfig.get_laterality">[docs]</a>    <span class="k">def</span> <span class="nf">get_laterality</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Laterality from configuration file</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A tuple ``(lat, left)`` where *lat* is the name of the nominal variable containing laterality information</span>
+<span class="sd">             and *left* is the label (integer) this variable takes for left-handed subjects.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">lat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;Default_Variables&#39;</span><span class="p">,</span> <span class="s">&#39;laterality&#39;</span><span class="p">)</span>
+        <span class="n">left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s">&#39;Default_Variables&#39;</span><span class="p">,</span> <span class="s">&#39;left_handed_label&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">lat</span><span class="p">,</span> <span class="n">left</span>
+</div>
+<div class="viewcode-block" id="BravizConfig.get_default_subject"><a class="viewcode-back" href="../../../library/configuring.html#braviz.readAndFilter.config_file.BravizConfig.get_default_subject">[docs]</a>    <span class="k">def</span> <span class="nf">get_default_subject</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Default subject from configuration file</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            An integer containing the code for the chosen default subject</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s">&#39;Defaults&#39;</span><span class="p">,</span> <span class="s">&#39;default_subject&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BravizConfig.get_reference_population"><a class="viewcode-back" href="../../../library/configuring.html#braviz.readAndFilter.config_file.BravizConfig.get_reference_population">[docs]</a>    <span class="k">def</span> <span class="nf">get_reference_population</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reference population from configuration file</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A tuple ``(var,label)`` where *var* is the name of the nominal variable that separates the reference population</span>
+<span class="sd">            and *label* is the integer value this variable takes for the reference population</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">var</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;Default_Variables&#39;</span><span class="p">,</span> <span class="s">&#39;reference_pop_var&#39;</span><span class="p">)</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s">&#39;Default_Variables&#39;</span><span class="p">,</span> <span class="s">&#39;reference_pop_label&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">var</span><span class="p">,</span> <span class="n">label</span>
+</div>
+    <span class="k">def</span> <span class="nf">get_project_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;Braviz&quot;</span><span class="p">,</span> <span class="s">&quot;project&quot;</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="get_apps_config"><a class="viewcode-back" href="../../../library/configuring.html#braviz.readAndFilter.config_file.get_apps_config">[docs]</a><span class="k">def</span> <span class="nf">get_apps_config</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Reads configuration from the &#39;braviz.applications&#39; directory :class:`BravizConfig`</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        lala (str): mamama :class:`BravizConfig`</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        BravizConfig : An instance of :class:`BravizConfig` containing the configuration specified in the file at</span>
+<span class="sd">        the applications directory</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">apps_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&quot;..&quot;</span><span class="p">,</span> <span class="s">&quot;applications&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">get_config</span><span class="p">(</span><span class="n">apps_dir</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="get_config"><a class="viewcode-back" href="../../../library/configuring.html#braviz.readAndFilter.config_file.get_config">[docs]</a><span class="k">def</span> <span class="nf">get_config</span><span class="p">(</span><span class="n">custom_dir</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Read Braviz configuration file</span>
+
+<span class="sd">    A default configuration file is read at the library directory. A secondary configuration can also be read,</span>
+<span class="sd">    and in this case its values will overwrite default ones.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        custom_dir (str) : Location of a secondary configuration file.</span>
+<span class="sd">            For convenience a file can also be passed and the directory containing it will be used</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        BravizConfig : An instance of :class:`BravizConfig` containing the configuration specified in the file at</span>
+<span class="sd">        the specified directory</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">config_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span>
+    <span class="n">config_file_name</span> <span class="o">=</span> <span class="s">&#39;braviz.cfg&#39;</span>
+    <span class="n">default_config_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">config_dir</span><span class="p">,</span> <span class="n">config_file_name</span><span class="p">)</span>
+    <span class="n">config_files</span> <span class="o">=</span> <span class="p">[</span><span class="n">default_config_name</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">custom_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">custom_dir</span><span class="p">):</span>
+            <span class="n">custom_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">custom_dir</span><span class="p">)</span>
+        <span class="n">custom_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">custom_dir</span><span class="p">)</span>
+        <span class="n">full_config_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">custom_dir</span><span class="p">,</span> <span class="n">config_file_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">full_config_name</span><span class="p">):</span>
+            <span class="n">make_default_config</span><span class="p">(</span><span class="n">full_config_name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">config_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">full_config_name</span><span class="p">)</span>
+        <span class="c"># print config_files</span>
+    <span class="n">braviz_conf</span> <span class="o">=</span> <span class="n">BravizConfig</span><span class="p">()</span>
+    <span class="n">braviz_conf</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">config_files</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">braviz_conf</span>
+
+</div>
+<div class="viewcode-block" id="make_default_config"><a class="viewcode-back" href="../../../library/configuring.html#braviz.readAndFilter.config_file.make_default_config">[docs]</a><span class="k">def</span> <span class="nf">make_default_config</span><span class="p">(</span><span class="n">default_config_name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Creates a configuration file with default parameters and stores it</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        default_config_name (str) : Name used to store the default configuration,</span>
+<span class="sd">            if ``None`` it stored as `braviz.cfg` in the directory containing this library</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">default_config_name</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">config_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span>
+        <span class="n">config_file_name</span> <span class="o">=</span> <span class="s">&#39;braviz.cfg&#39;</span>
+        <span class="n">default_config_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">config_dir</span><span class="p">,</span> <span class="n">config_file_name</span><span class="p">)</span>
+    <span class="n">braviz_conf</span> <span class="o">=</span> <span class="n">BravizConfig</span><span class="p">()</span>
+
+    <span class="n">braviz_conf</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="s">&#39;Braviz&#39;</span><span class="p">)</span>
+    <span class="n">braviz_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;Braviz&#39;</span><span class="p">,</span> <span class="s">&#39;project&#39;</span><span class="p">,</span> <span class="s">&#39;kmc400&#39;</span><span class="p">)</span>
+    <span class="n">braviz_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;Braviz&#39;</span><span class="p">,</span> <span class="s">&#39;server_port&#39;</span><span class="p">,</span> <span class="s">&#39;8100&#39;</span><span class="p">)</span>
+    <span class="n">braviz_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;Braviz&#39;</span><span class="p">,</span> <span class="s">&#39;logger&#39;</span><span class="p">,</span> <span class="s">&#39;console&#39;</span><span class="p">)</span>
+    <span class="n">braviz_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;Braviz&#39;</span><span class="p">,</span> <span class="s">&#39;web_logger_server&#39;</span><span class="p">,</span> <span class="s">&#39;127.0.0.1:8050&#39;</span><span class="p">)</span>
+
+    <span class="n">braviz_conf</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="s">&quot;Default_Variables&quot;</span><span class="p">)</span>
+    <span class="n">braviz_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;Default_Variables&#39;</span><span class="p">,</span> <span class="s">&#39;nominal1&#39;</span><span class="p">,</span> <span class="s">&#39;ubicac&#39;</span><span class="p">)</span>
+    <span class="n">braviz_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;Default_Variables&#39;</span><span class="p">,</span> <span class="s">&#39;nominal2&#39;</span><span class="p">,</span> <span class="s">&#39;BIRTH_sexo5&#39;</span><span class="p">)</span>
+    <span class="n">braviz_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;Default_Variables&#39;</span><span class="p">,</span> <span class="s">&#39;numeric1&#39;</span><span class="p">,</span> <span class="s">&#39;WASI_FSIQ_4&#39;</span><span class="p">)</span>
+    <span class="n">braviz_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;Default_Variables&#39;</span><span class="p">,</span> <span class="s">&#39;numeric2&#39;</span><span class="p">,</span> <span class="s">&#39;BIRTH_peso5&#39;</span><span class="p">)</span>
+    <span class="n">braviz_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
+        <span class="s">&#39;Default_Variables&#39;</span><span class="p">,</span> <span class="s">&#39;laterality&#39;</span><span class="p">,</span> <span class="s">&#39;LAT_EdinburgHandedness&#39;</span><span class="p">)</span>
+    <span class="n">braviz_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;Default_Variables&#39;</span><span class="p">,</span> <span class="s">&#39;left_handed_label&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">braviz_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;Default_Variables&#39;</span><span class="p">,</span> <span class="s">&#39;reference_pop_var&#39;</span><span class="p">,</span> <span class="s">&#39;ubicac&#39;</span><span class="p">)</span>
+    <span class="n">braviz_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;Default_Variables&#39;</span><span class="p">,</span> <span class="s">&#39;reference_pop_label&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+    <span class="n">braviz_conf</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="s">&quot;Defaults&quot;</span><span class="p">)</span>
+    <span class="n">braviz_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;Defaults&#39;</span><span class="p">,</span> <span class="s">&#39;default_subject&#39;</span><span class="p">,</span> <span class="mi">119</span><span class="p">)</span>
+
+    <span class="n">braviz_conf</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="s">&#39;VTK&#39;</span><span class="p">)</span>
+    <span class="n">braviz_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;VTK&#39;</span><span class="p">,</span> <span class="s">&#39;Background&#39;</span><span class="p">,</span> <span class="s">&#39;0.1 0.1 0.2&#39;</span><span class="p">)</span>
+    <span class="n">braviz_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;VTK&#39;</span><span class="p">,</span> <span class="s">&#39;Interaction_Style&#39;</span><span class="p">,</span> <span class="s">&#39;TrackballCamera&#39;</span><span class="p">)</span>
+
+    <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">default_config_name</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">config_file</span><span class="p">:</span>
+            <span class="n">braviz_conf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;default configuration file created in </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span>
+                 <span class="n">default_config_name</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;couldn&#39;t create default configuration file in </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span>
+                  <span class="n">default_config_name</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">braviz_conf</span>
+
+</div>
+<div class="viewcode-block" id="get_host_config"><a class="viewcode-back" href="../../../library/configuring.html#braviz.readAndFilter.config_file.get_host_config">[docs]</a><span class="k">def</span> <span class="nf">get_host_config</span><span class="p">(</span><span class="n">project</span><span class="p">,</span> <span class="n">hostname</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Reads host configuration for a given project</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        project (str) : The name of the project. This function will look for a file called ``&lt;project&gt;_hosts.cfg``</span>
+<span class="sd">            in the directory containing the module :mod:`braviz.applications`</span>
+<span class="sd">        hostname (str) : Name of host to get configuration. If ``None`` the name of the current host,</span>
+<span class="sd">            as returned by :func:`platform.node` will be used</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict : A dictionary containing the requested configuration parameters.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">hostname</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">platform</span>
+        <span class="n">hostname</span> <span class="o">=</span> <span class="n">platform</span><span class="o">.</span><span class="n">node</span><span class="p">()</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">RawConfigParser</span><span class="p">()</span>
+    <span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&quot;..&quot;</span><span class="p">,</span> <span class="s">&quot;applications&quot;</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">_hosts.cfg&quot;</span> <span class="o">%</span> <span class="n">project</span><span class="p">)</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">config</span><span class="o">.</span><span class="n">has_section</span><span class="p">(</span><span class="n">hostname</span><span class="p">):</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;No exact match found, trying default&quot;</span><span class="p">)</span>
+        <span class="n">hostname</span> <span class="o">=</span> <span class="s">&quot;default&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">config</span><span class="o">.</span><span class="n">has_section</span><span class="p">(</span><span class="n">hostname</span><span class="p">):</span>
+            <span class="n">apps_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">file_name</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s">&quot;Unknown host </span><span class="si">%s</span><span class="se">\n</span><span class="s">Please modify the </span><span class="si">%s</span><span class="s">_hosts.cfg file in </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="n">hostname</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="n">apps_dir</span><span class="p">))</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="n">hostname</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">items</span>
+</div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">config_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span>
+    <span class="n">config_file_name</span> <span class="o">=</span> <span class="s">&#39;braviz.cfg&#39;</span>
+    <span class="n">default_config_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">config_dir</span><span class="p">,</span> <span class="n">config_file_name</span><span class="p">)</span>
+    <span class="n">make_default_config</span><span class="p">(</span><span class="n">default_config_name</span><span class="p">)</span>
+    <span class="c"># config_dir = os.path.join(config_dir, &quot;..&quot;, &quot;applications&quot;)</span>
+    <span class="c"># default_config_name = os.path.join(config_dir, config_file_name)</span>
+    <span class="c"># make_default_config(default_config_name)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+                
+
+                
+
+                
+
+          
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

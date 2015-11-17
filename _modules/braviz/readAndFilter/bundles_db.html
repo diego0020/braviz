@@ -1,0 +1,343 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>braviz.readAndFilter.bundles_db &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.3b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="top" title="Braviz Documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body role="document">
+    
+    <div class="header-wrapper">
+      <div class="header">
+          <p class="logo"><a href="../../../index.html">
+            <img class="logo" src="../../../_static/Logo_Bravis_h.png" alt="Logo"/>
+          </a></p>
+          <!--
+        <div class="headertitle"><a
+          href="../../../index.html"> Documentation </a></div>
+          -->
+          <nav class="parents">
+              <ol>
+        <li><a href="../../../index.html"> Home </a> &raquo;</li>
+          <li><a href="../../index.html"  accesskey="U"  >Module code</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/Logo_Bravis_h.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for braviz.readAndFilter.bundles_db</h1><div class="highlight"><pre>
+<span class="c">##############################################################################</span>
+<span class="c">#    Braviz, Brain Data interactive visualization                            #</span>
+<span class="c">#    Copyright (C) 2014  Diego Angulo                                        #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    This program is free software: you can redistribute it and/or modify    #</span>
+<span class="c">#    it under the terms of the GNU Lesser General Public License as          #</span>
+<span class="c">#    published by  the Free Software Foundation, either version 3 of the     #</span>
+<span class="c">#    License, or (at your option) any later version.                         #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    This program is distributed in the hope that it will be useful,         #</span>
+<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
+<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
+<span class="c">#    GNU Lesser General Public License for more details.                     #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    You should have received a copy of the GNU Lesser General Public License#</span>
+<span class="c">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
+<span class="c">##############################################################################</span>
+
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Diego&#39;</span>
+
+<span class="kn">import</span> <span class="nn">cPickle</span>
+
+<span class="kn">from</span> <span class="nn">braviz.readAndFilter.tabular_data</span> <span class="kn">import</span> <span class="n">get_connection</span>
+
+
+<div class="viewcode-block" id="get_bundle_ids_and_names"><a class="viewcode-back" href="../../../library/bundles_db.html#braviz.readAndFilter.bundles_db.get_bundle_ids_and_names">[docs]</a><span class="k">def</span> <span class="nf">get_bundle_ids_and_names</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Available bundles</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A list of tuples ``(id,name)`` where id is the bundle id and name is the bundle name</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT bundle_id, bundle_name FROM fiber_bundles&quot;</span>
+    <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+</div>
+<div class="viewcode-block" id="get_bundle_details"><a class="viewcode-back" href="../../../library/bundles_db.html#braviz.readAndFilter.bundles_db.get_bundle_details">[docs]</a><span class="k">def</span> <span class="nf">get_bundle_details</span><span class="p">(</span><span class="n">bundle_id</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Low Level, Get all data from a given bundle</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bundle_id (int) : Bundle id</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ``(name,type,data)`` where name is the bundle name, type is the bundle type and data is the raw data for the</span>
+<span class="sd">        bundle. The current types are</span>
+
+<span class="sd">            ========    ==========================     ==================================</span>
+<span class="sd">            Type        Description                    Data contents</span>
+<span class="sd">            ========    ==========================     ==================================</span>
+<span class="sd">            0           Alias to named fiber           str containing fiber name</span>
+<span class="sd">            1           Waypoints ``and``              pickled waypoints list</span>
+<span class="sd">            2           Waypoints ``or``               pickled waypoints list</span>
+<span class="sd">            10          Hierarchical                   pickled nodes dictionary</span>
+<span class="sd">            ========    ==========================     ==================================</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT bundle_name, bundle_type, bundle_data FROM fiber_bundles WHERE bundle_id = ?&quot;</span>
+    <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">bundle_id</span><span class="p">,))</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">res</span>
+
+</div>
+<div class="viewcode-block" id="get_bundle_name"><a class="viewcode-back" href="../../../library/bundles_db.html#braviz.readAndFilter.bundles_db.get_bundle_name">[docs]</a><span class="k">def</span> <span class="nf">get_bundle_name</span><span class="p">(</span><span class="n">bundle_id</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Name of a bundle in the database</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bundle_id (int) : Bundle id</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Bundle name</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT bundle_name FROM fiber_bundles WHERE bundle_id = ?&quot;</span>
+    <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">bundle_id</span><span class="p">,))</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+</div>
+<div class="viewcode-block" id="check_if_name_exists"><a class="viewcode-back" href="../../../library/bundles_db.html#braviz.readAndFilter.bundles_db.check_if_name_exists">[docs]</a><span class="k">def</span> <span class="nf">check_if_name_exists</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if a bundle with the given name exists in the database</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name (str) : Bundle name</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ``True`` if a bundle with this name exists, ``False`` otherwise</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT * FROM fiber_bundles WHERE bundle_name = ?&quot;</span>
+    <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,))</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">res</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span>
+
+</div>
+<div class="viewcode-block" id="save_checkpoints_bundle"><a class="viewcode-back" href="../../../library/bundles_db.html#braviz.readAndFilter.bundles_db.save_checkpoints_bundle">[docs]</a><span class="k">def</span> <span class="nf">save_checkpoints_bundle</span><span class="p">(</span><span class="n">bundle_name</span><span class="p">,</span> <span class="n">operation_is_and</span><span class="p">,</span> <span class="n">waypoints</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Saves a bundle defined using checkpoints</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bundle_name (str) : Name for the bundle</span>
+<span class="sd">        operation_is_and (bool) : ``True`` if the bundle contains fibers that should</span>
+<span class="sd">            pass through all waypoint, ``False`` if fibers may pass through any waypoint</span>
+<span class="sd">        waypoints (list) : List of waypoints, these should be structure names.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">waypoints</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">waypoints</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">operation_is_and</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">btype</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">btype</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="nb">buffer</span><span class="p">(</span><span class="n">cPickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">waypoints</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;INSERT OR FAIL INTO fiber_bundles (bundle_name, bundle_type, bundle_data) VALUES (?,?,?) &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">bundle_name</span><span class="p">,</span> <span class="n">btype</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+</div>
+<div class="viewcode-block" id="get_bundles_list"><a class="viewcode-back" href="../../../library/bundles_db.html#braviz.readAndFilter.bundles_db.get_bundles_list">[docs]</a><span class="k">def</span> <span class="nf">get_bundles_list</span><span class="p">(</span><span class="n">bundle_type</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get available bundles</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bundle_type (int) : Optional, restrict only to a certain type, see :func:`.get_bundle_details`</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A list containing the names of the available bundles</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">con</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">bundle_type</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT bundle_name FROM fiber_bundles&quot;</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()]</span>
+        <span class="k">return</span> <span class="n">res</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT bundle_name FROM fiber_bundles WHERE bundle_type = ?&quot;</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">bundle_type</span><span class="p">,))</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()]</span>
+        <span class="k">return</span> <span class="n">res</span>
+
+</div>
+<div class="viewcode-block" id="save_logic_bundle"><a class="viewcode-back" href="../../../library/bundles_db.html#braviz.readAndFilter.bundles_db.save_logic_bundle">[docs]</a><span class="k">def</span> <span class="nf">save_logic_bundle</span><span class="p">(</span><span class="n">bundle_name</span><span class="p">,</span> <span class="n">logic_tree_dict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Saves a logic bundle into the database</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bundle_name (str) : Name for the bundle</span>
+<span class="sd">        logic_tree_dict (dict) : Dictionary describing the bundle, see :func:`.get_logic_bundle_dict`</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tree_blob</span> <span class="o">=</span> <span class="nb">buffer</span><span class="p">(</span><span class="n">cPickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">logic_tree_dict</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;INSERT OR FAIL INTO fiber_bundles (bundle_name, bundle_type, bundle_data) VALUES (?,10,?) &quot;&quot;&quot;</span>
+    <span class="n">con</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
+    <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">bundle_name</span><span class="p">,</span> <span class="n">tree_blob</span><span class="p">))</span>
+    <span class="n">con</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+</div>
+<div class="viewcode-block" id="get_logic_bundle_dict"><a class="viewcode-back" href="../../../library/bundles_db.html#braviz.readAndFilter.bundles_db.get_logic_bundle_dict">[docs]</a><span class="k">def</span> <span class="nf">get_logic_bundle_dict</span><span class="p">(</span><span class="n">bundle_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">bundle_name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Retrieves a logic bundle from the database</span>
+
+<span class="sd">    Only one of the arguments is required, bundle_id is preferred</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bundle_id (int) : Bundle id</span>
+<span class="sd">        bundle_name (str) : Bundle name</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">        A nested dictionary with the specification of the logic bundle. The hierarchy is represented as a tree, where</span>
+<span class="sd">        each node is a dictionary. The returned dictionary represents the top node of this tree. There are three types</span>
+<span class="sd">        of nodes: logical, structures and rois. All nodes are dictionaries with three keys : ``&quot;node_type&quot;``,</span>
+<span class="sd">        ``&quot;value&quot;`` and ``&quot;extra_data&quot;``</span>
+
+<span class="sd">        - Logic nodes: Value is a string which can take the values ``&quot;OR&quot;`` , ``&quot;AND&quot;`` or ``&quot;NOT&quot;``. Extra_data holds</span>
+<span class="sd">          a list of children nodes. OR nodes represent the union from the sets returned by each child, AND</span>
+<span class="sd">          represent an intersection, and NOT subtracts the union from the reference set (the whole tractography).</span>
+
+<span class="sd">        - Structure nodes: Leaf node, its value contains the name of an structure. It represents the fibers that</span>
+<span class="sd">          cross such structure.</span>
+
+<span class="sd">        - ROI nodes: Leaf node, its extra_data contains the database id for a ROI</span>
+<span class="sd">          (see :mod:`~braviz.readAndFilter.geom_db`). It represents fibers that cross such ROI.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">con</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">bundle_id</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT bundle_data FROM fiber_bundles WHERE bundle_name = ?&quot;</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">bundle_name</span><span class="p">,))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT bundle_data FROM fiber_bundles WHERE bundle_id = ?&quot;</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">bundle_id</span><span class="p">,))</span>
+    <span class="n">r1</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">r1</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Fiber doesn&#39;t exist&quot;</span><span class="p">)</span>
+    <span class="n">data_buf</span> <span class="o">=</span> <span class="n">r1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">data_dict</span> <span class="o">=</span> <span class="n">cPickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">data_buf</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">data_dict</span>
+
+</div>
+<span class="k">def</span> <span class="nf">remove_bundle</span><span class="p">(</span><span class="n">bundle_id</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Deletes a fiber bundle from the database</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bundle_id (int) : Bundle id</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">con</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;DELETE FROM fiber_bundles WHERE bundle_id = ?&quot;</span>
+    <span class="k">with</span> <span class="n">con</span><span class="p">:</span>
+        <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,(</span><span class="n">bundle_id</span><span class="p">,</span> <span class="p">))</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+                
+
+                
+
+                
+
+          
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

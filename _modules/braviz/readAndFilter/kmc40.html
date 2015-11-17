@@ -1,0 +1,489 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>braviz.readAndFilter.kmc40 &mdash; Braviz Documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.3b',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/fold_classes.js"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="top" title="Braviz Documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body role="document">
+    
+    <div class="header-wrapper">
+      <div class="header">
+          <p class="logo"><a href="../../../index.html">
+            <img class="logo" src="../../../_static/Logo_Bravis_h.png" alt="Logo"/>
+          </a></p>
+          <!--
+        <div class="headertitle"><a
+          href="../../../index.html"> Documentation </a></div>
+          -->
+          <nav class="parents">
+              <ol>
+        <li><a href="../../../index.html"> Home </a> &raquo;</li>
+          <li><a href="../../index.html"  accesskey="U"  >Module code</a> &raquo;</li>
+                  </ol>
+          </nav>
+       </div>
+    </div>
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="sidebar" id="agogo-sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/Logo_Bravis_h.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for braviz.readAndFilter.kmc40</h1><div class="highlight"><pre>
+<span class="c">##############################################################################</span>
+<span class="c">#    Braviz, Brain Data interactive visualization                            #</span>
+<span class="c">#    Copyright (C) 2014  Diego Angulo                                        #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    This program is free software: you can redistribute it and/or modify    #</span>
+<span class="c">#    it under the terms of the GNU Lesser General Public License as          #</span>
+<span class="c">#    published by  the Free Software Foundation, either version 3 of the     #</span>
+<span class="c">#    License, or (at your option) any later version.                         #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    This program is distributed in the hope that it will be useful,         #</span>
+<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
+<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
+<span class="c">#    GNU Lesser General Public License for more details.                     #</span>
+<span class="c">#                                                                            #</span>
+<span class="c">#    You should have received a copy of the GNU Lesser General Public License#</span>
+<span class="c">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
+<span class="c">##############################################################################</span>
+
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">braviz.readAndFilter.config_file</span> <span class="kn">import</span> <span class="n">get_host_config</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">import</span> <span class="nn">nibabel</span> <span class="kn">as</span> <span class="nn">nib</span>
+
+<span class="kn">from</span> <span class="nn">numpy.linalg</span> <span class="kn">import</span> <span class="n">inv</span>
+
+
+<span class="kn">from</span> <span class="nn">braviz.readAndFilter.cache</span> <span class="kn">import</span> <span class="n">memo_ten</span>
+<span class="kn">from</span> <span class="nn">braviz.readAndFilter.images</span> <span class="kn">import</span> <span class="n">numpy2vtk_img</span><span class="p">,</span> <span class="n">nifti_rgb2vtk</span><span class="p">,</span> <span class="n">nibNii2vtk</span>
+
+<span class="kn">from</span> <span class="nn">braviz.readAndFilter.readDartelTransform</span> <span class="kn">import</span> <span class="n">dartel2GridTransform_cached</span>
+<span class="kn">from</span> <span class="nn">braviz.readAndFilter.kmc_abstract</span> <span class="kn">import</span> <span class="n">KmcAbstractReader</span>
+<span class="kn">from</span> <span class="nn">braviz.readAndFilter.transforms</span> <span class="kn">import</span> <span class="n">applyTransform</span><span class="p">,</span> <span class="n">readFreeSurferTransform</span><span class="p">,</span> <span class="n">readFlirtMatrix</span>
+<span class="kn">from</span> <span class="nn">braviz.visualization.create_lut</span> <span class="kn">import</span> <span class="n">get_colorbrewer_lut</span>
+
+
+<div class="viewcode-block" id="Kmc40Reader"><a class="viewcode-back" href="../../../library/reader.html#braviz.readAndFilter.kmc40.Kmc40Reader">[docs]</a><span class="k">class</span> <span class="nc">Kmc40Reader</span><span class="p">(</span><span class="n">KmcAbstractReader</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Braviz reader class designed to work with the file structure and data from the KMC pilot</span>
+
+<span class="sd">This project contains 50 subjects (40 preterms).</span>
+<span class="sd">Data is organized into folders, and path and names for the different files can be derived from data type and id.</span>
+<span class="sd">The constructor requires the root to this structure</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">max_cache</span><span class="o">=</span><span class="mi">2000</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The path pointing to the __root of the file structure must be set here&quot;&quot;&quot;</span>
+        <span class="n">KmcAbstractReader</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">max_cache</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_available_images</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">((</span><span class="s">&quot;MRI&quot;</span><span class="p">,</span> <span class="s">&quot;FA&quot;</span><span class="p">,</span> <span class="s">&quot;MD&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_functional_paradigms</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">((</span><span class="s">&quot;PRECISION&quot;</span><span class="p">,</span> <span class="s">&quot;POWERGRIP&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_named_bundles</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">((</span><span class="s">&quot;cortico_spinal_l&quot;</span><span class="p">,</span> <span class="s">&quot;cortico_spinal_r&quot;</span><span class="p">,</span> <span class="s">&quot;cortico_spinal_n&quot;</span><span class="p">,</span> <span class="s">&quot;cortico_spinal_d&quot;</span><span class="p">,</span>
+                                         <span class="s">&quot;corpus_callosum&quot;</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_getIds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Auxiliary function to get the available ids&quot;&quot;&quot;</span>
+        <span class="n">contents</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_data_root</span><span class="p">())</span>
+        <span class="n">numbers</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&#39;[0-9]+$&#39;</span><span class="p">)</span>
+        <span class="n">ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">contents</span> <span class="k">if</span> <span class="n">numbers</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">]</span>
+        <span class="n">ids</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ids</span>
+
+    <span class="k">def</span> <span class="nf">_decode_subject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subj</span><span class="p">):</span>
+        <span class="n">subj</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">subj</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">subj</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">subj</span> <span class="o">=</span> <span class="s">&quot;0&quot;</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">subj</span><span class="p">))</span> <span class="o">+</span> <span class="n">subj</span>
+        <span class="k">return</span> <span class="n">subj</span>
+
+    <span class="k">def</span> <span class="nf">_get_img</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_name</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span>  <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Auxiliary function to read nifti images&quot;&quot;&quot;</span>
+        <span class="c"># path=self.getDataRoot()+&#39;/&#39;+subj+&#39;/MRI&#39;</span>
+        <span class="k">if</span> <span class="n">image_name</span> <span class="o">==</span> <span class="s">&#39;MRI&#39;</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_data_root</span><span class="p">(),</span> <span class="n">subj</span><span class="p">,</span> <span class="s">&#39;MRI&#39;</span><span class="p">)</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">-MRI-full.nii.gz&#39;</span> <span class="o">%</span> <span class="n">subj</span>
+        <span class="k">elif</span> <span class="n">image_name</span> <span class="o">==</span> <span class="s">&#39;FA&#39;</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_data_root</span><span class="p">(),</span> <span class="n">subj</span><span class="p">,</span> <span class="s">&#39;camino&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">space</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;diff&#39;</span><span class="p">):</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;FA_masked.nii.gz&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;FA_mri_masked.nii.gz&#39;</span>
+        <span class="k">elif</span> <span class="n">image_name</span> <span class="o">==</span> <span class="s">&quot;MD&quot;</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_data_root</span><span class="p">(),</span> <span class="n">subj</span><span class="p">,</span> <span class="s">&#39;camino&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">space</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;diff&#39;</span><span class="p">):</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;MD_masked.nii.gz&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;MD_mri_masked.nii.gz&#39;</span>
+        <span class="k">elif</span> <span class="n">image_name</span> <span class="o">==</span> <span class="s">&quot;DTI&quot;</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_data_root</span><span class="p">(),</span> <span class="n">subj</span><span class="p">,</span> <span class="s">&#39;camino&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">space</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;diff&#39;</span><span class="p">):</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;rgb_dti_masked.nii.gz&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;rgb_dti_mri_masked.nii.gz&#39;</span>
+        <span class="k">elif</span> <span class="n">image_name</span> <span class="o">==</span> <span class="s">&#39;APARC&#39;</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_data_root</span><span class="p">(),</span> <span class="n">subj</span><span class="p">,</span> <span class="s">&#39;Models&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">kw</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;wm&quot;</span><span class="p">):</span>
+                <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;deprecated, use WMPARC instead&quot;</span><span class="p">)</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_data_root</span><span class="p">(),</span> <span class="n">subj</span><span class="p">,</span> <span class="s">&#39;Models3&#39;</span><span class="p">)</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;wmparc.nii.gz&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;aparc+aseg.nii.gz&#39;</span>
+        <span class="k">elif</span> <span class="n">image_name</span> <span class="o">==</span> <span class="s">&quot;WMPARC&quot;</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_data_root</span><span class="p">(),</span> <span class="n">subj</span><span class="p">,</span> <span class="s">&#39;Models3&#39;</span><span class="p">)</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;wmparc.nii.gz&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&#39;Unknown image type </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">image_name</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;Unknown image type </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">image_name</span><span class="p">)</span>
+        <span class="n">wholeName</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">img</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">wholeName</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">IOError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;File </span><span class="si">%s</span><span class="s"> not found&quot;</span> <span class="o">%</span> <span class="n">wholeName</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;File not found&#39;</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">kw</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;format&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">==</span> <span class="s">&#39;VTK&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">image_name</span> <span class="o">==</span> <span class="s">&quot;MD&quot;</span><span class="p">:</span>
+                <span class="n">img_data</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+                <span class="n">img_data</span> <span class="o">*=</span> <span class="mf">1e12</span>
+                <span class="n">vtkImg</span> <span class="o">=</span> <span class="n">numpy2vtk_img</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">image_name</span> <span class="o">==</span> <span class="s">&quot;DTI&quot;</span><span class="p">:</span>
+                <span class="n">vtkImg</span> <span class="o">=</span> <span class="n">nifti_rgb2vtk</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">vtkImg</span> <span class="o">=</span> <span class="n">nibNii2vtk</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">space</span> <span class="o">==</span> <span class="s">&#39;native&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">vtkImg</span>
+
+            <span class="n">interpolate</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">if</span> <span class="n">image_name</span> <span class="ow">in</span> <span class="p">{</span><span class="s">&#39;APARC&#39;</span><span class="p">,</span> <span class="s">&quot;WMPARC&quot;</span><span class="p">}:</span>
+                <span class="n">interpolate</span> <span class="o">=</span> <span class="bp">False</span>
+                <span class="c"># print &quot;turning off interpolate&quot;</span>
+
+            <span class="n">img2</span> <span class="o">=</span> <span class="n">applyTransform</span><span class="p">(</span>
+                <span class="n">vtkImg</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">inv</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">get_affine</span><span class="p">()),</span> <span class="n">interpolate</span><span class="o">=</span><span class="n">interpolate</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">space</span> <span class="o">==</span> <span class="s">&quot;diff&quot;</span> <span class="ow">and</span> <span class="p">(</span><span class="n">image_name</span> <span class="ow">in</span> <span class="p">{</span><span class="s">&quot;FA&quot;</span><span class="p">,</span> <span class="s">&quot;MD&quot;</span><span class="p">,</span> <span class="s">&quot;DTI&quot;</span><span class="p">}):</span>
+                <span class="k">return</span> <span class="n">img2</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_move_img_from_world</span><span class="p">(</span><span class="n">subj</span><span class="p">,</span> <span class="n">img2</span><span class="p">,</span> <span class="n">interpolate</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="n">space</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">space</span> <span class="o">==</span> <span class="s">&quot;diff&quot;</span> <span class="ow">and</span> <span class="p">(</span><span class="n">image_name</span> <span class="ow">in</span> <span class="p">{</span><span class="s">&quot;FA&quot;</span><span class="p">,</span> <span class="s">&quot;MD&quot;</span><span class="p">,</span> <span class="s">&quot;DTI&quot;</span><span class="p">}):</span>
+            <span class="k">return</span> <span class="n">img</span>
+        <span class="k">elif</span> <span class="n">space</span> <span class="o">==</span> <span class="s">&quot;subject&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">img</span>
+        <span class="k">elif</span> <span class="n">space</span> <span class="o">==</span> <span class="s">&quot;diff&quot;</span><span class="p">:</span>
+            <span class="c"># read transform:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_data_root</span><span class="p">(),</span> <span class="n">subj</span><span class="p">,</span> <span class="s">&#39;camino&#39;</span><span class="p">)</span>
+            <span class="c">#matrix = readFlirtMatrix(&#39;surf2diff.mat&#39;, &#39;FA.nii.gz&#39;, &#39;orig.nii.gz&#39;, path)</span>
+            <span class="n">matrix</span> <span class="o">=</span> <span class="n">readFlirtMatrix</span><span class="p">(</span>
+                <span class="s">&#39;diff2surf.mat&#39;</span><span class="p">,</span> <span class="s">&#39;FA.nii.gz&#39;</span><span class="p">,</span> <span class="s">&#39;orig.nii.gz&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+            <span class="n">affine</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">get_affine</span><span class="p">()</span>
+            <span class="n">aff2</span> <span class="o">=</span> <span class="n">matrix</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">affine</span><span class="p">)</span>
+            <span class="n">img2</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">Nifti1Image</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">get_data</span><span class="p">(),</span> <span class="n">aff2</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">img2</span>
+        <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Returned nifti image is in native space&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="k">def</span> <span class="nf">_move_img_from_world</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">img2</span><span class="p">,</span> <span class="n">interpolate</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="s">&#39;subject&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;moves an image from the subject coordinate space to talairach or dartel spaces&quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">space</span> <span class="o">==</span> <span class="s">&#39;subject&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">img2</span>
+        <span class="k">elif</span> <span class="n">space</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;template&#39;</span><span class="p">,</span> <span class="s">&#39;dartel&#39;</span><span class="p">):</span>
+
+            <span class="n">dartel_warp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_spm_grid_transform</span><span class="p">(</span><span class="n">subj</span><span class="p">,</span> <span class="s">&quot;dartel&quot;</span><span class="p">,</span> <span class="s">&quot;back&quot;</span><span class="p">)</span>
+            <span class="n">img3</span> <span class="o">=</span> <span class="n">applyTransform</span><span class="p">(</span><span class="n">img2</span><span class="p">,</span> <span class="n">dartel_warp</span><span class="p">,</span> <span class="n">origin2</span><span class="o">=</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="o">-</span><span class="mi">126</span><span class="p">,</span> <span class="o">-</span><span class="mi">72</span><span class="p">),</span> <span class="n">dimension2</span><span class="o">=</span><span class="p">(</span><span class="mi">121</span><span class="p">,</span> <span class="mi">145</span><span class="p">,</span> <span class="mi">121</span><span class="p">),</span>
+                                  <span class="n">spacing2</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">),</span> <span class="n">interpolate</span><span class="o">=</span><span class="n">interpolate</span><span class="p">)</span>
+            <span class="c"># origin, dimension and spacing come from template</span>
+            <span class="k">return</span> <span class="n">img3</span>
+        <span class="k">elif</span> <span class="n">space</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s">&#39;ta&#39;</span><span class="p">:</span>
+            <span class="n">talairach_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_talairach_transform_name</span><span class="p">(</span><span class="n">subj</span><span class="p">)</span>
+            <span class="n">transform</span> <span class="o">=</span> <span class="n">readFreeSurferTransform</span><span class="p">(</span><span class="n">talairach_file</span><span class="p">)</span>
+            <span class="n">img3</span> <span class="o">=</span> <span class="n">applyTransform</span><span class="p">(</span><span class="n">img2</span><span class="p">,</span> <span class="n">inv</span><span class="p">(</span><span class="n">transform</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="o">-</span><span class="mi">120</span><span class="p">,</span> <span class="o">-</span><span class="mi">110</span><span class="p">),</span> <span class="p">(</span><span class="mi">190</span><span class="p">,</span> <span class="mi">230</span><span class="p">,</span> <span class="mi">230</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                                  <span class="n">interpolate</span><span class="o">=</span><span class="n">interpolate</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">img3</span>
+        <span class="k">elif</span> <span class="n">space</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;func&#39;</span><span class="p">,</span> <span class="s">&#39;fmri&#39;</span><span class="p">):</span>
+            <span class="c"># functional space</span>
+            <span class="n">paradigm</span> <span class="o">=</span> <span class="n">space</span><span class="p">[</span><span class="mi">5</span><span class="p">:]</span>
+            <span class="c"># print paradigm</span>
+            <span class="n">paradigm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_paradigm_name</span><span class="p">(</span><span class="n">paradigm</span><span class="p">)</span>
+            <span class="n">transform</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_func_transform</span><span class="p">(</span><span class="n">subj</span><span class="p">,</span> <span class="n">paradigm</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+            <span class="n">img3</span> <span class="o">=</span> <span class="n">applyTransform</span><span class="p">(</span><span class="n">img2</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="n">origin2</span><span class="o">=</span><span class="p">(</span><span class="mi">78</span><span class="p">,</span> <span class="o">-</span><span class="mi">112</span><span class="p">,</span> <span class="o">-</span><span class="mi">50</span><span class="p">),</span> <span class="n">dimension2</span><span class="o">=</span><span class="p">(</span><span class="mi">79</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">68</span><span class="p">),</span>
+                                  <span class="n">spacing2</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+                                  <span class="n">interpolate</span><span class="o">=</span><span class="n">interpolate</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">img3</span>
+        <span class="k">elif</span> <span class="n">space</span> <span class="o">==</span> <span class="s">&quot;diff&quot;</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_base_fibs_dir_name</span><span class="p">(</span><span class="n">subj</span><span class="p">)</span>
+            <span class="c"># notice we are reading the inverse transform diff -&gt; world</span>
+            <span class="n">trans</span> <span class="o">=</span> <span class="n">readFlirtMatrix</span><span class="p">(</span>
+                <span class="s">&#39;diff2surf.mat&#39;</span><span class="p">,</span> <span class="s">&#39;FA.nii.gz&#39;</span><span class="p">,</span> <span class="s">&#39;orig.nii.gz&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+            <span class="n">img3</span> <span class="o">=</span> <span class="n">applyTransform</span><span class="p">(</span><span class="n">img2</span><span class="p">,</span> <span class="n">trans</span><span class="p">,</span> <span class="n">interpolate</span><span class="o">=</span><span class="n">interpolate</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">img3</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&#39;Unknown space </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">space</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;Unknown space </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">space</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_move_img_to_subject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">img2</span><span class="p">,</span> <span class="n">interpolate</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="s">&#39;subject&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;moves an image from the subject coordinate space to talairach or dartel spaces&quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">space</span> <span class="o">==</span> <span class="s">&#39;subject&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">img2</span>
+        <span class="k">elif</span> <span class="n">space</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;template&#39;</span><span class="p">,</span> <span class="s">&#39;dartel&#39;</span><span class="p">):</span>
+
+            <span class="n">dartel_warp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_spm_grid_transform</span><span class="p">(</span><span class="s">&quot;dartel&quot;</span><span class="p">,</span> <span class="s">&quot;forw&quot;</span><span class="p">)</span>
+            <span class="n">img3</span> <span class="o">=</span> <span class="n">applyTransform</span><span class="p">(</span><span class="n">img2</span><span class="p">,</span> <span class="n">dartel_warp</span><span class="p">,</span> <span class="n">origin2</span><span class="o">=</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="o">-</span><span class="mi">126</span><span class="p">,</span> <span class="o">-</span><span class="mi">72</span><span class="p">),</span> <span class="n">dimension2</span><span class="o">=</span><span class="p">(</span><span class="mi">121</span><span class="p">,</span> <span class="mi">145</span><span class="p">,</span> <span class="mi">121</span><span class="p">),</span>
+                                  <span class="n">spacing2</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">),</span> <span class="n">interpolate</span><span class="o">=</span><span class="n">interpolate</span><span class="p">)</span>
+            <span class="c"># origin, dimension and spacing come from template</span>
+            <span class="k">return</span> <span class="n">img3</span>
+        <span class="k">elif</span> <span class="n">space</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s">&#39;ta&#39;</span><span class="p">:</span>
+            <span class="n">talairach_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_talairach_transform_name</span><span class="p">(</span><span class="n">subj</span><span class="p">)</span>
+            <span class="n">transform</span> <span class="o">=</span> <span class="n">readFreeSurferTransform</span><span class="p">(</span><span class="n">talairach_file</span><span class="p">)</span>
+            <span class="n">img3</span> <span class="o">=</span> <span class="n">applyTransform</span><span class="p">(</span><span class="n">img2</span><span class="p">,</span> <span class="n">inv</span><span class="p">(</span><span class="n">transform</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="o">-</span><span class="mi">120</span><span class="p">,</span> <span class="o">-</span><span class="mi">110</span><span class="p">),</span> <span class="p">(</span><span class="mi">190</span><span class="p">,</span> <span class="mi">230</span><span class="p">,</span> <span class="mi">230</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                                  <span class="n">interpolate</span><span class="o">=</span><span class="n">interpolate</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">img3</span>
+        <span class="k">elif</span> <span class="n">space</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;func&#39;</span><span class="p">,</span> <span class="s">&#39;fmri&#39;</span><span class="p">):</span>
+            <span class="c"># functional space</span>
+            <span class="n">paradigm</span> <span class="o">=</span> <span class="n">space</span><span class="p">[</span><span class="mi">5</span><span class="p">:]</span>
+            <span class="n">paradigm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_paradigm_name</span><span class="p">(</span><span class="n">paradigm</span><span class="p">)</span>
+            <span class="n">transform</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_func_transform</span><span class="p">(</span><span class="n">subj</span><span class="p">,</span> <span class="n">paradigm</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+            <span class="n">img3</span> <span class="o">=</span> <span class="n">applyTransform</span><span class="p">(</span><span class="n">img2</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="n">origin2</span><span class="o">=</span><span class="p">(</span><span class="mi">78</span><span class="p">,</span> <span class="o">-</span><span class="mi">112</span><span class="p">,</span> <span class="o">-</span><span class="mi">50</span><span class="p">),</span> <span class="n">dimension2</span><span class="o">=</span><span class="p">(</span><span class="mi">79</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">68</span><span class="p">),</span>
+                                  <span class="n">spacing2</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+                                  <span class="n">interpolate</span><span class="o">=</span><span class="n">interpolate</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">img3</span>
+        <span class="k">elif</span> <span class="n">space</span> <span class="o">==</span> <span class="s">&quot;diff&quot;</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_base_fibs_dir_name</span><span class="p">(</span><span class="n">subj</span><span class="p">)</span>
+            <span class="c"># notice we are reading the inverse transform diff -&gt; world</span>
+            <span class="n">trans</span> <span class="o">=</span> <span class="n">readFlirtMatrix</span><span class="p">(</span>
+                <span class="s">&#39;diff2surf.mat&#39;</span><span class="p">,</span> <span class="s">&#39;FA.nii.gz&#39;</span><span class="p">,</span> <span class="s">&#39;orig.nii.gz&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+            <span class="n">img3</span> <span class="o">=</span> <span class="n">applyTransform</span><span class="p">(</span><span class="n">img2</span><span class="p">,</span> <span class="n">trans</span><span class="p">,</span> <span class="n">interpolate</span><span class="o">=</span><span class="n">interpolate</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">img3</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&#39;Unknown space </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">space</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;Unknown space </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">space</span><span class="p">)</span>
+
+    <span class="c">#==========Free Surfer================</span>
+    <span class="k">def</span> <span class="nf">_get_free_surfer_models_dir_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_data_root</span><span class="p">(),</span> <span class="n">subject</span><span class="p">,</span> <span class="s">&#39;Models3&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_talairach_transform_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;xfm extension&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_data_root</span><span class="p">(),</span> <span class="n">subject</span><span class="p">,</span> <span class="s">&#39;Surf&#39;</span><span class="p">,</span> <span class="s">&#39;talairach.xfm&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_free_surfer_stats_dir_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_data_root</span><span class="p">(),</span> <span class="n">subject</span><span class="p">,</span> <span class="s">&#39;Models&#39;</span><span class="p">,</span> <span class="s">&#39;stats&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_freesurfer_lut_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_data_root</span><span class="p">(),</span> <span class="s">&#39;FreeSurferColorLUT.txt&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_free_surfer_morph_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subj</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_data_root</span><span class="p">(),</span> <span class="nb">str</span><span class="p">(</span><span class="n">subj</span><span class="p">),</span> <span class="s">&#39;Surf&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_free_surfer_labels_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subj</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_data_root</span><span class="p">(),</span> <span class="nb">str</span><span class="p">(</span><span class="n">subj</span><span class="p">),</span> <span class="s">&#39;Surf&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_freesurfer_surf_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_data_root</span><span class="p">(),</span> <span class="nb">str</span><span class="p">(</span><span class="n">subj</span><span class="p">),</span> <span class="s">&quot;Surf&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_tracula_map_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subj</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s">&quot;Tracula data not available&quot;</span><span class="p">)</span>
+
+    <span class="c">#=============Camino==================</span>
+    <span class="k">def</span> <span class="nf">_get_base_fibs_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subj</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_data_root</span><span class="p">(),</span> <span class="n">subj</span><span class="p">,</span> <span class="s">&#39;camino&#39;</span><span class="p">,</span> <span class="s">&#39;streams.vtk&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_base_fibs_dir_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Must contain &#39;diff2surf.mat&#39;, &#39;fa.nii.gz&#39;, &#39;orig.nii.gz&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_data_root</span><span class="p">(),</span> <span class="n">subj</span><span class="p">,</span> <span class="s">&#39;camino&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_fa_img_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;FA.nii.gz&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_get_orig_img_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;orig.nii.gz&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_get_md_lut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">lut</span> <span class="o">=</span> <span class="n">get_colorbrewer_lut</span><span class="p">(</span><span class="mf">6e-10</span><span class="p">,</span> <span class="mf">11e-10</span><span class="p">,</span> <span class="s">&quot;YlGnBu&quot;</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">lut</span>
+
+    <span class="c">#==========SPM================</span>
+    <span class="k">def</span> <span class="nf">_get_paradigm_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paradigm_name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">paradigm_name</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_get_paradigm_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">spm</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;If spm is True return the directory containing spm.mat, else return its parent&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">spm</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_data_root</span><span class="p">(),</span> <span class="n">subject</span><span class="p">,</span> <span class="s">&#39;spm&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_data_root</span><span class="p">(),</span> <span class="n">subject</span><span class="p">,</span> <span class="s">&#39;spm&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_spm_grid_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">paradigm</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">assume_bad_matrix</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the spm non linear registration transform grid associated to the paradigm</span>
+<span class="sd">        Use paradigm=dartel to get the transform associated to the dartel normalization</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">direction</span> <span class="ow">in</span> <span class="p">{</span><span class="s">&quot;forw&quot;</span><span class="p">,</span> <span class="s">&quot;back&quot;</span><span class="p">}</span>
+        <span class="n">cache_key</span> <span class="o">=</span> <span class="s">&quot;y_</span><span class="si">%s</span><span class="s">_</span><span class="si">%s</span><span class="s">_</span><span class="si">%s</span><span class="s">.vtk&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">paradigm</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">direction</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">paradigm</span> <span class="o">==</span> <span class="s">&quot;dartel&quot;</span><span class="p">:</span>
+            <span class="n">y_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">get_data_root</span><span class="p">(),</span> <span class="s">&#39;Dartel&#39;</span><span class="p">,</span> <span class="s">&quot;y_</span><span class="si">%s</span><span class="s">-</span><span class="si">%s</span><span class="s">.nii.gz&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">direction</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">y_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">get_data_root</span><span class="p">(),</span> <span class="n">subject</span><span class="p">,</span> <span class="s">&#39;spm&#39;</span><span class="p">,</span> <span class="n">paradigm</span><span class="p">,</span> <span class="s">&#39;y_seg_</span><span class="si">%s</span><span class="s">.nii.gz&#39;</span> <span class="o">%</span> <span class="n">direction</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dartel2GridTransform_cached</span><span class="p">(</span><span class="n">y_file</span><span class="p">,</span> <span class="n">cache_key</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">assume_bad_matrix</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_read_func_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">paradigm_name</span><span class="p">,</span> <span class="n">inverse</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="n">paradigm_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_paradigm_name</span><span class="p">(</span><span class="n">paradigm_name</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_data_root</span><span class="p">(),</span> <span class="n">subject</span><span class="p">,</span> <span class="s">&quot;spm&quot;</span><span class="p">)</span>
+        <span class="n">T1_func</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">paradigm_name</span><span class="p">,</span> <span class="s">&#39;T1.nii.gz&#39;</span><span class="p">)</span>
+        <span class="n">T1_world</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s">&#39;T1&#39;</span><span class="p">,</span> <span class="s">&#39;T1.nii.gz&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_func_transform_internal</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">paradigm_name</span><span class="p">,</span> <span class="n">inverse</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">T1_func</span><span class="p">,</span> <span class="n">T1_world</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="nd">@memo_ten</span>
+    <span class="k">def</span> <span class="nf">get_auto_data_root</span><span class="p">():</span>
+        <span class="n">project_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">config</span> <span class="o">=</span> <span class="n">get_host_config</span><span class="p">(</span><span class="n">project_name</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">raise</span>
+        <span class="n">data_root</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s">&quot;data root&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isabs</span><span class="p">(</span><span class="n">data_root</span><span class="p">):</span>
+            <span class="n">data_root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span><span class="s">&quot;../applications&quot;</span><span class="p">,</span><span class="n">data_root</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data_root</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="nd">@memo_ten</span>
+    <span class="k">def</span> <span class="nf">get_auto_dyn_data_root</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">Kmc40Reader</span><span class="o">.</span><span class="n">get_auto_data_root</span><span class="p">()</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_auto_reader</span><span class="p">(</span><span class="o">**</span><span class="n">kw_args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialized a kmc40Reader based on the computer name&quot;&quot;&quot;</span>
+        <span class="n">project_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">config</span> <span class="o">=</span> <span class="n">get_host_config</span><span class="p">(</span><span class="n">project_name</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">raise</span>
+        <span class="n">data_root</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s">&quot;data root&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isabs</span><span class="p">(</span><span class="n">data_root</span><span class="p">):</span>
+            <span class="n">data_root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span><span class="s">&quot;../applications&quot;</span><span class="p">,</span><span class="n">data_root</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">kw_args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;max_cache&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">max_cache</span> <span class="o">=</span> <span class="n">kw_args</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;max_cache&#39;</span><span class="p">)</span>
+
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Max cache set to </span><span class="si">%.2f</span><span class="s"> MB&quot;</span> <span class="o">%</span> <span class="n">max_cache</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">max_cache</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s">&quot;memory (mb)&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">Kmc40Reader</span><span class="p">(</span><span class="n">data_root</span><span class="p">,</span> <span class="n">max_cache</span><span class="o">=</span><span class="n">max_cache</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          
+                
+
+                
+
+                
+
+          
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Diego Angulo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+        
+  </body>
+</html>

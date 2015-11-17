@@ -23,25 +23,30 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/fold_classes.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
     <link rel="top" title="Braviz Documentation" href="../index.html" />
     <link rel="up" title="Braviz Interface Elements" href="general.html" />
     <link rel="next" title="Braviz Applications" href="applications.html" />
     <link rel="prev" title="Creating Samples" href="samples.html" /> 
   </head>
-  <body>
+  <body role="document">
     
     <div class="header-wrapper">
       <div class="header">
+          <p class="logo"><a href="../index.html">
+            <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+          </a></p>
+          <!--
         <div class="headertitle"><a
-          href="../index.html"> Braviz Documentation </a></div>
+          href="../index.html"> Documentation </a></div>
+          -->
           <nav class="parents">
               <ol>
         <li><a href="../index.html"> Home </a> &raquo;</li>
-          <li><a href="index.html" >Visual Analytics with Braviz</a> &raquo;</li>
-          <li><a href="general.html"  accesskey="U" >Braviz Interface Elements</a> &raquo;</li>
+          <li><a href="index.html"  >Visual Analytics with Braviz</a> &raquo;</li>
+          <li><a href="general.html"  accesskey="U"  >Braviz Interface Elements</a> &raquo;</li>
                   </ol>
           </nav>
        </div>
@@ -52,8 +57,11 @@
       <div class="content">
         <div class="sidebar" id="agogo-sidebar">
             
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Logo_Bravis_h.png" alt="Logo"/>
+            </a></p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Configuring Braviz</a><ul>
@@ -78,7 +86,7 @@
             
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="configuring-braviz">
 <h1>Configuring Braviz<a class="headerlink" href="#configuring-braviz" title="Permalink to this headline">¶</a></h1>
@@ -87,7 +95,9 @@ at the braviz applications directory and can be opened in any text editor.</p>
 <p>The file will look like this</p>
 <div class="highlight-cfg"><div class="highlight"><pre><span class="k">[Braviz]</span>
 <span class="na">project</span> <span class="o">=</span> <span class="s">kmc400</span>
+<span class="na">server_port</span> <span class="o">=</span> <span class="s">8100</span>
 <span class="na">logger</span> <span class="o">=</span> <span class="s">console</span>
+<span class="na">web_logger_server</span> <span class="o">=</span> <span class="s">127.0.0.1:8050</span>
 
 <span class="k">[Default_Variables]</span>
 <span class="na">nominal1</span> <span class="o">=</span> <span class="s">ubicac</span>
@@ -112,7 +122,7 @@ at the braviz applications directory and can be opened in any text editor.</p>
 <p>The first field in this section contains the name of the current project. If you have several projects you may
 select one by changing this field.</p>
 <p>The <em>logger</em> field is used to select where program output is stored. It can be the terminal, or it can be stored
-in a file. The valid values are <tt class="docutils literal"><span class="pre">console</span></tt> and <tt class="docutils literal"><span class="pre">log</span></tt>.</p>
+in a file. The valid values are <code class="docutils literal"><span class="pre">console</span></code> and <code class="docutils literal"><span class="pre">log</span></code>.</p>
 </div>
 <div class="section" id="default-variables">
 <h2>Default variables<a class="headerlink" href="#default-variables" title="Permalink to this headline">¶</a></h2>
@@ -132,7 +142,7 @@ the value that the variable takes on subjects from the reference population.</p>
 <div class="section" id="changing-file-location-advanced">
 <h2>Changing file location (advanced)<a class="headerlink" href="#changing-file-location-advanced" title="Permalink to this headline">¶</a></h2>
 <p>There is another configuration file associated to each project. For a project called <em>kmc400</em> this file
-will be called <tt class="docutils literal"><span class="pre">kmc400_hosts.cfg</span></tt>. This file contains a list of entries like this one</p>
+will be called <code class="docutils literal"><span class="pre">kmc400_hosts.cfg</span></code>. This file contains a list of entries like this one</p>
 <div class="highlight-cfg"><div class="highlight"><pre><span class="k">[Echer]</span>
 <span class="na">data root</span> <span class="o">=</span> <span class="s">H:/kmc400</span>
 <span class="na">dynamic data root</span> <span class="o">=</span> <span class="s">H:/kmc400-braviz</span>
@@ -180,9 +190,9 @@ after your machine. The <em>data root</em> field contains the root path to the p
 
         <div class="right">
           
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Diego Angulo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
         </div>
         <div class="clearer"></div>
