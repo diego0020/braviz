@@ -107,7 +107,7 @@
 
 <span class="kn">import</span> <span class="nn">vtk</span>
 <span class="kn">from</span> <span class="nn">braviz.readAndFilter.cache</span> <span class="kn">import</span> <span class="n">memoize</span>
-
+<span class="kn">import</span> <span class="nn">braviz.visualization.simple_vtk</span>
 <span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Diego&#39;</span>
 
 
@@ -122,7 +122,7 @@
 <span class="sd">    Use methods *GetOutput* and *GetOutputPort* to extract the output</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fmri_img</span><span class="p">,</span> <span class="n">mri_img</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">alfa</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fmri_img</span><span class="p">,</span> <span class="n">mri_img</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">alfa</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a blend object</span>
 
@@ -137,6 +137,9 @@
 <span class="sd">            alfa (bool) : If True colors of t-score map will fade below *threshold*</span>
 <span class="sd">            threshold (float) : Value at which colors start to fade (invisible at zero)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">window</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">level</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">window</span><span class="p">,</span> <span class="n">level</span> <span class="o">=</span> <span class="n">braviz</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">simple_vtk</span><span class="o">.</span><span class="n">estimate_window_level</span><span class="p">(</span><span class="n">mri_img</span><span class="p">)</span>
 
         <span class="n">fmri_mapper</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkImageMapToColors</span><span class="p">()</span>
         <span class="n">fmri_mapper</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="n">fmri_img</span><span class="p">)</span>

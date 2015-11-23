@@ -156,10 +156,10 @@
     <span class="k">def</span> <span class="nf">_decode_subject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subj</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">subj</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_move_img_from_world</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">img2</span><span class="p">,</span> <span class="n">interpolate</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="s">&#39;world&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;moves an image from the world coordinate space to talairach or dartel spaces&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">_move_img_from_world</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">img2</span><span class="p">,</span> <span class="n">interpolate</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="s">&#39;subject&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;moves an image from the subject coordinate space to talairach or dartel spaces&quot;&quot;&quot;</span>
         <span class="n">space</span> <span class="o">=</span> <span class="n">space</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">space</span> <span class="o">==</span> <span class="s">&#39;world&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">space</span> <span class="o">==</span> <span class="s">&#39;subject&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">img2</span>
         <span class="k">elif</span> <span class="n">space</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;template&#39;</span><span class="p">,</span> <span class="s">&#39;dartel&#39;</span><span class="p">):</span>
             <span class="n">dartel_warp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_spm_grid_transform</span><span class="p">(</span><span class="n">subj</span><span class="p">,</span> <span class="s">&quot;dartel&quot;</span><span class="p">,</span> <span class="s">&quot;back&quot;</span><span class="p">)</span>
@@ -196,12 +196,12 @@
             <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&#39;Unknown space </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">space</span><span class="p">)</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;Unknown space </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">space</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_move_img_to_world</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">img2</span><span class="p">,</span> <span class="n">interpolate</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="s">&#39;world&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;moves an image from the world coordinate space to talairach or dartel spaces&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">_move_img_to_subject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">img2</span><span class="p">,</span> <span class="n">interpolate</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="s">&#39;subject&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;moves an image from the subject coordinate space to talairach or dartel spaces&quot;&quot;&quot;</span>
         <span class="n">space</span> <span class="o">=</span> <span class="n">space</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">space</span> <span class="o">==</span> <span class="s">&#39;world&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">space</span> <span class="o">==</span> <span class="s">&#39;subject&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">img2</span>
-        <span class="n">ref</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;image&quot;</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="s">&quot;world&quot;</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&quot;vtk&quot;</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;mri&quot;</span><span class="p">)</span>
+        <span class="n">ref</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;image&quot;</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="s">&quot;subject&quot;</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&quot;vtk&quot;</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;mri&quot;</span><span class="p">)</span>
         <span class="n">origin</span> <span class="o">=</span> <span class="n">ref</span><span class="o">.</span><span class="n">GetOrigin</span><span class="p">()</span>
         <span class="n">spacing</span> <span class="o">=</span> <span class="n">ref</span><span class="o">.</span><span class="n">GetSpacing</span><span class="p">()</span>
         <span class="n">dims</span> <span class="o">=</span> <span class="n">ref</span><span class="o">.</span><span class="n">GetDimensions</span><span class="p">()</span>
@@ -331,7 +331,7 @@
 
         <span class="k">if</span> <span class="n">space</span> <span class="o">==</span> <span class="s">&quot;diff&quot;</span> <span class="ow">and</span> <span class="p">(</span><span class="n">image_name</span> <span class="ow">in</span> <span class="p">{</span><span class="s">&quot;FA&quot;</span><span class="p">,</span> <span class="s">&quot;MD&quot;</span><span class="p">,</span> <span class="s">&quot;DTI&quot;</span><span class="p">}):</span>
             <span class="k">return</span> <span class="n">img</span>
-        <span class="k">elif</span> <span class="n">space</span> <span class="o">==</span> <span class="s">&quot;world&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">space</span> <span class="o">==</span> <span class="s">&quot;subject&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">img</span>
         <span class="k">elif</span> <span class="n">space</span> <span class="o">==</span> <span class="s">&quot;diff&quot;</span><span class="p">:</span>
             <span class="c"># read transform:</span>
@@ -352,7 +352,7 @@
             <span class="n">aff2</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">affine</span><span class="p">)</span>
             <span class="n">img2</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">Nifti1Image</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">get_data</span><span class="p">(),</span> <span class="n">aff2</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">img2</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;Returned nifti image is in world space&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;Returned nifti image is in subject space&quot;</span><span class="p">)</span>
 
     <span class="c">#==========Free Surfer================</span>
     <span class="k">def</span> <span class="nf">_get_free_surfer_models_dir_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject</span><span class="p">):</span>
@@ -461,6 +461,8 @@
             <span class="n">log</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
             <span class="k">raise</span>
         <span class="n">data_root</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s">&quot;data root&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isabs</span><span class="p">(</span><span class="n">data_root</span><span class="p">):</span>
+            <span class="n">data_root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span><span class="s">&quot;../applications&quot;</span><span class="p">,</span><span class="n">data_root</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">data_root</span>
 
     <span class="nd">@staticmethod</span>
@@ -474,6 +476,8 @@
             <span class="n">log</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
             <span class="k">raise</span>
         <span class="n">data_root</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s">&quot;dynamic data root&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isabs</span><span class="p">(</span><span class="n">data_root</span><span class="p">):</span>
+            <span class="n">data_root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span><span class="s">&quot;../applications&quot;</span><span class="p">,</span><span class="n">data_root</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">data_root</span>
 
     <span class="nd">@staticmethod</span>
@@ -484,13 +488,17 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">config</span> <span class="o">=</span> <span class="n">get_host_config</span><span class="p">(</span><span class="n">project_name</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
             <span class="n">log</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
             <span class="k">raise</span>
         <span class="n">static_data_root</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s">&quot;data root&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isabs</span><span class="p">(</span><span class="n">static_data_root</span><span class="p">):</span>
+            <span class="n">static_data_root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span><span class="s">&quot;../applications&quot;</span><span class="p">,</span><span class="n">static_data_root</span><span class="p">)</span>
         <span class="n">dyn_data_root</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s">&quot;dynamic data root&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isabs</span><span class="p">(</span><span class="n">dyn_data_root</span><span class="p">):</span>
+            <span class="n">dyn_data_root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span><span class="s">&quot;../applications&quot;</span><span class="p">,</span><span class="n">dyn_data_root</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">kw_args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;max_cache&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">max_cache</span> <span class="o">=</span> <span class="n">kw_args</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;max_cache&#39;</span><span class="p">)</span>
-
             <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Max cache set to </span><span class="si">%.2f</span><span class="s"> MB&quot;</span> <span class="o">%</span> <span class="n">max_cache</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">max_cache</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s">&quot;memory (mb)&quot;</span><span class="p">]</span>

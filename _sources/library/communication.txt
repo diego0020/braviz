@@ -23,6 +23,9 @@ and the client side is implement in :class:`~braviz.interaction.connection.Messa
 Both of these classes generate PyQt-Signals when they receive a message, and therefore are easy
 to connect to the rest of your application.
 
+The protocol of the messages themselves is described in :doc:`communication_protocol`.
+
+
 Message Broker
 -----------------
 

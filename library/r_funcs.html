@@ -102,7 +102,7 @@
 <h1>R functions<a class="headerlink" href="#r-functions" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="braviz.interaction.r_functions.calculate_ginni_index">
-<code class="descname">calculate_ginni_index</code><span class="sig-paren">(</span><em>outcome</em>, <em>data_frame</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/r_functions.html#calculate_ginni_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.r_functions.calculate_ginni_index" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calculate_ginni_index</code><span class="sig-paren">(</span><em>outcome</em>, <em>data_frame</em>, <em>sample=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/r_functions.html#calculate_ginni_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.r_functions.calculate_ginni_index" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates Ginni impurity indices respect to an outcome variable</p>
 <p><a class="reference external" href="http://en.wikipedia.org/wiki/Decision_tree_learning#Gini_impurity">http://en.wikipedia.org/wiki/Decision_tree_learning#Gini_impurity</a>
 Uses the RandomForest package</p>
@@ -112,12 +112,13 @@ Uses the RandomForest package</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>outcome</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name of the outcome variable</li>
-<li><strong>data_frame</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.16.0)"><em>pandas.DataFrame</em></a>) &#8211; Data Frame with variable indices as index, this object will be modified</li>
+<li><strong>data_frame</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/version/0.17.0/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.17.0)"><em>pandas.DataFrame</em></a>) &#8211; Data Frame with variable indices as index, this object will be modified</li>
+<li><strong>sample</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; Restrict the analysis to subjects in this sample</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The input <em>data_frame</em> with an additional column called <code class="docutils literal"><span class="pre">Ginni</span></code> that contains the requested indices.
-The value will be <code class="docutils literal"><span class="pre">numpy.inf</span></code> for the outcome variable, and 0 for variables where the index couln&#8217;t be
+The value will be <code class="docutils literal"><span class="pre">numpy.inf</span></code> for the outcome variable, and 0 for variables where the index couldn&#8217;t be
 calculated.</p>
 </td>
 </tr>
@@ -136,7 +137,7 @@ calculated.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>outcome</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name of outcome variable</li>
-<li><strong>regressors_data_frame</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.16.0)"><em>pandas.DataFrame</em></a>) &#8211; A DataFrame with three columns regressor name,
+<li><strong>regressors_data_frame</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/version/0.17.0/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.17.0)"><em>pandas.DataFrame</em></a>) &#8211; A DataFrame with three columns regressor name,
 degrees of freedom, and interaction. The last column should have
 zeros for single variable regressors and 1 for interaction terms.
 see <a class="reference internal" href="qt_models.html#braviz.interaction.qt_models.AnovaRegressorsModel.get_data_frame" title="braviz.interaction.qt_models.AnovaRegressorsModel.get_data_frame"><code class="xref py py-meth docutils literal"><span class="pre">braviz.interaction.qt_models.AnovaRegressorsModel.get_data_frame()</span></code></a></li>
@@ -168,7 +169,7 @@ See <a class="reference internal" href="qt_models.html#braviz.interaction.qt_mod
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>outcome</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name of outcome variable</li>
-<li><strong>regressors_data_frame</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.16.0)"><em>pandas.DataFrame</em></a>) &#8211; A DataFrame with three columns regressor name,
+<li><strong>regressors_data_frame</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/version/0.17.0/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.17.0)"><em>pandas.DataFrame</em></a>) &#8211; A DataFrame with three columns regressor name,
 degrees of freedom, and interaction. The last column should have
 zeros for single variable regressors and 1 for interaction terms.
 see <a class="reference internal" href="qt_models.html#braviz.interaction.qt_models.AnovaRegressorsModel.get_data_frame" title="braviz.interaction.qt_models.AnovaRegressorsModel.get_data_frame"><code class="xref py py-meth docutils literal"><span class="pre">braviz.interaction.qt_models.AnovaRegressorsModel.get_data_frame()</span></code></a></li>

@@ -109,7 +109,8 @@
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">izip</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">pandas.rpy.common</span> <span class="kn">as</span> <span class="nn">com</span>
+<span class="kn">from</span> <span class="nn">rpy2.robjects</span> <span class="kn">import</span> <span class="n">pandas2ri</span>
+<span class="n">pandas2ri</span><span class="o">.</span><span class="n">activate</span><span class="p">()</span>
 <span class="kn">import</span> <span class="nn">rpy2.rinterface</span>
 <span class="kn">from</span> <span class="nn">rpy2</span> <span class="kn">import</span> <span class="n">robjects</span>
 <span class="kn">from</span> <span class="nn">rpy2.robjects.packages</span> <span class="kn">import</span> <span class="n">importr</span>
@@ -140,7 +141,7 @@
     <span class="k">return</span> <span class="n">lib</span>
 
 </div>
-<div class="viewcode-block" id="calculate_ginni_index"><a class="viewcode-back" href="../../../library/r_funcs.html#braviz.interaction.r_functions.calculate_ginni_index">[docs]</a><span class="k">def</span> <span class="nf">calculate_ginni_index</span><span class="p">(</span><span class="n">outcome</span><span class="p">,</span> <span class="n">data_frame</span><span class="p">):</span>
+<div class="viewcode-block" id="calculate_ginni_index"><a class="viewcode-back" href="../../../library/r_funcs.html#braviz.interaction.r_functions.calculate_ginni_index">[docs]</a><span class="k">def</span> <span class="nf">calculate_ginni_index</span><span class="p">(</span><span class="n">outcome</span><span class="p">,</span> <span class="n">data_frame</span><span class="p">,</span> <span class="n">sample</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculates Ginni impurity indices respect to an outcome variable</span>
 
@@ -150,15 +151,16 @@
 <span class="sd">    Args:</span>
 <span class="sd">        outcome (str) : Name of the outcome variable</span>
 <span class="sd">        data_frame (pandas.DataFrame) : Data Frame with variable indices as index, this object will be modified</span>
+<span class="sd">        sample (list) : Restrict the analysis to subjects in this sample</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        The input *data_frame* with an additional column called ``Ginni`` that contains the requested indices.</span>
-<span class="sd">        The value will be ``numpy.inf`` for the outcome variable, and 0 for variables where the index couln&#39;t be</span>
+<span class="sd">        The value will be ``numpy.inf`` for the outcome variable, and 0 for variables where the index couldn&#39;t be</span>
 <span class="sd">        calculated.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c"># construct data frame</span>
     <span class="n">is_nominal</span> <span class="o">=</span> <span class="bp">False</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">braviz_tab_data</span><span class="o">.</span><span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">braviz_tab_data</span><span class="o">.</span><span class="n">get_connection</span><span class="p">()</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
         <span class="s">&quot;SELECT is_real FROM variables WHERE var_name = ?&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">outcome</span><span class="p">,))</span>
     <span class="n">outcome_idx</span> <span class="o">=</span> <span class="n">braviz_tab_data</span><span class="o">.</span><span class="n">get_var_idx</span><span class="p">(</span><span class="n">outcome</span><span class="p">)</span>
@@ -168,6 +170,8 @@
 
     <span class="n">values_data_frame</span> <span class="o">=</span> <span class="n">braviz_tab_data</span><span class="o">.</span><span class="n">get_data_frame_by_index</span><span class="p">(</span>
         <span class="n">data_frame</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">col_name_index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">sample</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">values_data_frame</span> <span class="o">=</span> <span class="n">values_data_frame</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sample</span><span class="p">]</span>
     <span class="c"># remove columns with many NaNs</span>
     <span class="c"># df2=values_data_frame.dropna(1,thresh=40)</span>
     <span class="n">values_data_frame</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
@@ -191,7 +195,7 @@
     <span class="n">values_data_frame</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s">&quot;c</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">values_data_frame</span><span class="o">.</span><span class="n">columns</span><span class="p">))]</span>
 
-    <span class="n">r_df</span> <span class="o">=</span> <span class="n">com</span><span class="o">.</span><span class="n">convert_to_r_dataframe</span><span class="p">(</span><span class="n">values_data_frame</span><span class="p">)</span>
+    <span class="n">r_df</span> <span class="o">=</span> <span class="n">values_data_frame</span>
     <span class="c"># if oucome is nominal transform into factor</span>
     <span class="n">outcome_variable_index</span> <span class="o">=</span> <span class="n">original_column_names</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">outcome_idx</span><span class="p">)</span>
     <span class="n">r_environment</span> <span class="o">=</span> <span class="n">robjects</span><span class="o">.</span><span class="n">globalenv</span>
@@ -235,7 +239,7 @@
     <span class="c"># print imp_data_frame</span>
     <span class="n">data_frame</span><span class="p">[</span><span class="s">&quot;Ginni&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">imp_data_frame</span>
     <span class="n">data_frame</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">data_frame</span><span class="p">[</span><span class="s">&quot;Ginni&quot;</span><span class="p">][</span><span class="n">outcome_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+    <span class="n">data_frame</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">outcome_idx</span><span class="p">,</span><span class="s">&quot;Ginni&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
     <span class="c"># print self.data_frame</span>
     <span class="k">return</span> <span class="n">data_frame</span>
 
@@ -300,7 +304,7 @@
     <span class="n">new_names</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;o&quot;</span>
 
     <span class="n">pandas_df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">new_names</span>
-    <span class="n">r_df</span> <span class="o">=</span> <span class="n">com</span><span class="o">.</span><span class="n">convert_to_r_dataframe</span><span class="p">(</span><span class="n">pandas_df</span><span class="p">)</span>
+    <span class="n">r_df</span> <span class="o">=</span> <span class="n">pandas_df</span>
     <span class="c"># print r_df</span>
 
     <span class="c"># reformat r_df</span>
@@ -472,11 +476,11 @@
     <span class="n">standard_var_names</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;var_</span><span class="si">%d</span><span class="s">_R&quot;</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">all_variables</span><span class="p">))]</span>
     <span class="c"># now create a data frame with the new names</span>
     <span class="n">data_frame_std</span> <span class="o">=</span> <span class="n">data_frame</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">data_frame_std</span><span class="o">.</span><span class="n">columns</span> <span class="o">==</span> <span class="n">all_variables</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">data_frame_std</span><span class="o">.</span><span class="n">columns</span> <span class="o">==</span> <span class="n">all_variables</span><span class="p">)</span>
     <span class="n">data_frame_std</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">standard_var_names</span>
 
     <span class="c"># now we are ready to go into the R world</span>
-    <span class="n">r_data_frame</span> <span class="o">=</span> <span class="n">com</span><span class="o">.</span><span class="n">convert_to_r_dataframe</span><span class="p">(</span><span class="n">data_frame_std</span><span class="p">)</span>
+    <span class="n">r_data_frame</span> <span class="o">=</span> <span class="n">data_frame_std</span>
     <span class="c"># create factor variables</span>
     <span class="n">r_environment</span> <span class="o">=</span> <span class="n">robjects</span><span class="o">.</span><span class="n">globalenv</span>
     <span class="n">r_environment</span><span class="p">[</span><span class="s">&quot;r_df&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">r_data_frame</span>
@@ -524,7 +528,7 @@
     <span class="n">t_stats_std</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">izip</span><span class="p">(</span><span class="n">cof_t_r</span><span class="o">.</span><span class="n">names</span><span class="p">,</span> <span class="n">cof_t_r</span><span class="p">))</span>
     <span class="n">coefs_p_std</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">izip</span><span class="p">(</span><span class="n">cof_p_r</span><span class="o">.</span><span class="n">names</span><span class="p">,</span> <span class="n">cof_p_r</span><span class="p">))</span>
     <span class="n">residuals</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">standardized_model</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s">&quot;residuals&quot;</span><span class="p">))</span>
-    <span class="n">std_model</span> <span class="o">=</span> <span class="n">com</span><span class="o">.</span><span class="n">convert_robj</span><span class="p">(</span><span class="n">standardized_model</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s">&quot;model&quot;</span><span class="p">))</span>
+    <span class="n">std_model</span> <span class="o">=</span> <span class="n">standardized_model</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s">&quot;model&quot;</span><span class="p">)</span>
 
     <span class="n">fitted</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">standardized_model</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s">&quot;fitted.values&quot;</span><span class="p">))</span>
     <span class="n">intercept</span> <span class="o">=</span> <span class="s">&quot;(Intercept)&quot;</span>
@@ -621,7 +625,9 @@
             <span class="k">pass</span>
             <span class="k">assert</span> <span class="bp">False</span>
 
+    <span class="n">std_model</span> <span class="o">=</span> <span class="n">pandas2ri</span><span class="o">.</span><span class="n">ri2py</span><span class="p">(</span><span class="n">std_model</span><span class="p">)</span>
     <span class="n">std_model</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">std_names2orig_names</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">std_model</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+    <span class="n">std_model</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">data_frame</span><span class="o">.</span><span class="n">index</span>
 
     <span class="n">adjusted_r_squared</span> <span class="o">=</span> <span class="n">fit_summary</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s">&quot;adj.r.squared&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">fit_p_val</span> <span class="o">=</span> <span class="n">r_environment</span><span class="p">[</span><span class="s">&quot;f_pval_r&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>

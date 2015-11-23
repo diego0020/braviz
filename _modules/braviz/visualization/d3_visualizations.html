@@ -104,19 +104,21 @@
 
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">logging</span>
-
+<span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">tornado.web</span>
 
-<span class="kn">from</span> <span class="nn">braviz.readAndFilter</span> <span class="kn">import</span> <span class="n">tabular_data</span> <span class="k">as</span> <span class="n">tab_data</span><span class="p">,</span> <span class="n">user_data</span>
-<span class="kn">from</span> <span class="nn">braviz.readAndFilter.cache</span> <span class="kn">import</span> <span class="n">memoize</span>
-<span class="kn">from</span> <span class="nn">braviz.readAndFilter.config_file</span> <span class="kn">import</span> <span class="n">get_apps_config</span>
 
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">braviz.readAndFilter</span> <span class="kn">import</span> <span class="n">tabular_data</span> <span class="k">as</span> <span class="n">tab_data</span><span class="p">,</span> <span class="n">user_data</span><span class="p">,</span> <span class="n">log_db</span>
+<span class="kn">from</span> <span class="nn">braviz.readAndFilter.cache</span> <span class="kn">import</span> <span class="n">memoize</span><span class="p">,</span> <span class="n">memo_ten</span>
+<span class="kn">from</span> <span class="nn">braviz.readAndFilter.config_file</span> <span class="kn">import</span> <span class="n">get_apps_config</span>
+<span class="kn">from</span> <span class="nn">braviz.interaction.connection</span> <span class="kn">import</span> <span class="n">NpJSONEncoder</span>
 
 <span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;diego&#39;</span>
 
 
 <div class="viewcode-block" id="ParallelCoordinatesHandler"><a class="viewcode-back" href="../../../library/d3_viz.html#braviz.visualization.d3_visualizations.ParallelCoordinatesHandler">[docs]</a><span class="k">class</span> <span class="nc">ParallelCoordinatesHandler</span><span class="p">(</span><span class="n">tornado</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">RequestHandler</span><span class="p">):</span>
-
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Implements a parallel coordinates view from variables in the database</span>
 
@@ -125,6 +127,7 @@
 
 <span class="sd">    The *GET* method receives as arguments:</span>
 
+<span class="sd">        - **category** : Id of a variable to use as categories, lines will be colored according to this variable</span>
 <span class="sd">        - **vars** : A list of variable ids to include in the parallel coordinates, in order</span>
 <span class="sd">                     If it is not given, the default from the configuration file are used</span>
 <span class="sd">        - **sample** : A sample ID for subjects to include in the visualizaiton, if None is given the whole dataset</span>
@@ -173,16 +176,22 @@
         <span class="k">if</span> <span class="n">vars_s</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">vars_s</span> <span class="o">=</span> <span class="n">ParallelCoordinatesHandler</span><span class="o">.</span><span class="n">get_default_vars</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">default_variables</span> <span class="o">=</span> <span class="n">vars_s</span>
-        <span class="n">sample</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_query_argument</span><span class="p">(</span><span class="s">&quot;sample&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">sample_idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_query_argument</span><span class="p">(</span><span class="s">&quot;sample&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
         <span class="n">variables</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">vars_s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">))</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">tab_data</span><span class="o">.</span><span class="n">get_data_frame_by_index</span><span class="p">(</span><span class="n">variables</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">sample</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">subjs</span> <span class="o">=</span> <span class="n">user_data</span><span class="o">.</span><span class="n">get_sample_data</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">subjs</span><span class="p">]</span>
+        <span class="n">traits_idx_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">variables</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+        <span class="n">cath_idx</span> <span class="o">=</span> <span class="n">variables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
+        <span class="n">data</span> <span class="o">=</span> <span class="n">tab_data</span><span class="o">.</span><span class="n">get_data_frame_by_index</span><span class="p">(</span><span class="n">variables</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sample_idx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">user_data</span><span class="o">.</span><span class="n">get_sample_data</span><span class="p">(</span><span class="n">sample_idx</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_values</span><span class="p">()</span>
+            <span class="n">sample_idx</span> <span class="o">=</span> <span class="s">&quot;null&quot;</span>
+
+        <span class="n">sample_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">cls</span><span class="o">=</span><span class="n">NpJSONEncoder</span><span class="p">)</span>
         <span class="n">data2</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
-        <span class="n">missing</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">data2</span><span class="p">)</span>
-        <span class="c"># print &quot;%d missing values&quot;%missing</span>
+        <span class="n">missing</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">data2</span><span class="o">.</span><span class="n">index</span><span class="p">))</span>
+        <span class="n">missing_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">missing</span><span class="p">,</span> <span class="n">cls</span><span class="o">=</span><span class="n">NpJSONEncoder</span><span class="p">)</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">data2</span>
 
         <span class="n">cols</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span>
@@ -192,8 +201,6 @@
         <span class="n">labels</span> <span class="o">=</span> <span class="n">tab_data</span><span class="o">.</span><span class="n">get_labels_dict</span><span class="p">(</span><span class="n">variables</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()):</span>
-            <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-                <span class="n">labels</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;label</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">k</span>
             <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">v</span> <span class="o">=</span> <span class="s">&quot;level_</span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">i</span>
             <span class="k">elif</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
@@ -207,14 +214,15 @@
 
         <span class="n">json_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s">&quot;records&quot;</span><span class="p">)</span>
 
-        <span class="n">caths</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">col0</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+        <span class="n">caths</span> <span class="o">=</span> <span class="n">labels</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
         <span class="n">caths_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">caths</span><span class="p">))</span>
 
-        <span class="c"># 1: cathegories, 2: code</span>
+        <span class="c"># 1: cathegories, -1: code</span>
         <span class="n">attrs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
         <span class="n">attrs_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">attrs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s">&quot;parallel_coordinates.html&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json_data</span><span class="p">,</span> <span class="n">caths</span><span class="o">=</span><span class="n">caths_json</span><span class="p">,</span> <span class="nb">vars</span><span class="o">=</span><span class="n">attrs_json</span><span class="p">,</span> <span class="n">cath_name</span><span class="o">=</span><span class="n">col0</span><span class="p">,</span>
-                    <span class="n">missing</span><span class="o">=</span><span class="n">missing</span><span class="p">,</span> <span class="n">background_opac</span><span class="o">=</span><span class="mf">50.0</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">data2</span><span class="p">))</span>
+                    <span class="n">missing</span><span class="o">=</span><span class="n">missing_json</span><span class="p">,</span> <span class="n">sample</span><span class="o">=</span><span class="n">sample_json</span><span class="p">,</span> <span class="n">cath_index</span><span class="o">=</span><span class="n">cath_idx</span><span class="p">,</span> <span class="n">var_indices</span><span class="o">=</span><span class="n">traits_idx_json</span><span class="p">,</span>
+                    <span class="n">sample_id</span><span class="o">=</span><span class="n">sample_idx</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_body_argument</span><span class="p">(</span><span class="s">&quot;sample_name&quot;</span><span class="p">)</span>
@@ -236,8 +244,69 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;ok&quot;</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="IndexHandler"><a class="viewcode-back" href="../../../library/d3_viz.html#braviz.visualization.d3_visualizations.IndexHandler">[docs]</a><span class="k">class</span> <span class="nc">IndexHandler</span><span class="p">(</span><span class="n">tornado</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">RequestHandler</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">ParallelCoordsDataHandler</span><span class="p">(</span><span class="n">tornado</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">RequestHandler</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns data for the given sample and variables as a json object</span>
 
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_type</span><span class="p">):</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">data_type</span> <span class="o">==</span> <span class="s">&quot;values&quot;</span><span class="p">:</span>
+            <span class="n">cats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_argument</span><span class="p">(</span><span class="s">&quot;category&quot;</span><span class="p">)</span>
+            <span class="n">variables</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_argument</span><span class="p">(</span><span class="s">&quot;variables&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">)</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_argument</span><span class="p">(</span><span class="s">&quot;sample&quot;</span><span class="p">,</span><span class="bp">None</span><span class="p">)</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_values</span><span class="p">(</span><span class="n">cats</span><span class="p">,</span> <span class="n">variables</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">send_error</span><span class="p">(</span><span class="s">&quot;404&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_header</span><span class="p">(</span><span class="s">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s">&quot;application/json&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cat</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">sample_idx</span><span class="p">):</span>
+        <span class="n">vars_list</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">cat</span><span class="p">)]</span> <span class="o">+</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vs</span><span class="p">]</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">tab_data</span><span class="o">.</span><span class="n">get_data_frame_by_index</span><span class="p">(</span><span class="n">vars_list</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sample_idx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">user_data</span><span class="o">.</span><span class="n">get_sample_data</span><span class="p">(</span><span class="n">sample_idx</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">tab_data</span><span class="o">.</span><span class="n">get_subjects</span><span class="p">()</span>
+        <span class="n">data2</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+        <span class="n">missing</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">data2</span><span class="o">.</span><span class="n">index</span><span class="p">))</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data2</span>
+        <span class="c"># cleaning</span>
+        <span class="n">cols</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span>
+        <span class="n">cols2</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span>
+        <span class="n">cols2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;category&quot;</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">cols2</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">tab_data</span><span class="o">.</span><span class="n">get_labels_dict</span><span class="p">(</span><span class="n">vars_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="c"># sanitize label name</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">labels</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;label</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">k</span>
+            <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="s">&quot;level_</span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">i</span>
+            <span class="k">elif</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="s">&quot;c_&quot;</span> <span class="o">+</span> <span class="n">v</span>
+            <span class="n">labels</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">,</span> <span class="s">&#39;_&#39;</span><span class="p">)</span>
+
+        <span class="n">col0</span> <span class="o">=</span> <span class="n">cols2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">data</span><span class="p">[</span><span class="n">col0</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">col0</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+        <span class="n">data</span><span class="p">[</span><span class="s">&quot;code&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">index</span>
+        <span class="n">data_dict</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s">&quot;records&quot;</span><span class="p">)</span>
+        <span class="n">cats</span> <span class="o">=</span> <span class="n">labels</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+        <span class="n">attrs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s">&quot;data&quot;</span><span class="p">:</span> <span class="n">data_dict</span><span class="p">,</span>
+                           <span class="s">&quot;categories&quot;</span><span class="p">:</span> <span class="n">cats</span><span class="p">,</span>
+                           <span class="s">&quot;vars&quot;</span><span class="p">:</span> <span class="n">attrs</span><span class="p">,</span>
+                           <span class="s">&quot;cat_name&quot;</span><span class="p">:</span> <span class="n">col0</span><span class="p">,</span>
+                           <span class="s">&quot;missing&quot;</span><span class="p">:</span> <span class="n">missing</span><span class="p">,</span>
+                           <span class="s">&quot;cat_idx&quot;</span><span class="p">:</span> <span class="n">vars_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                           <span class="s">&quot;var_indices&quot;</span><span class="p">:</span> <span class="n">vars_list</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span>
+                           <span class="s">&quot;sample&quot;</span> <span class="p">:</span> <span class="n">sample</span><span class="p">,</span>
+                           <span class="p">},</span> <span class="n">cls</span><span class="o">=</span><span class="n">NpJSONEncoder</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="IndexHandler"><a class="viewcode-back" href="../../../library/d3_viz.html#braviz.visualization.d3_visualizations.IndexHandler">[docs]</a><span class="k">class</span> <span class="nc">IndexHandler</span><span class="p">(</span><span class="n">tornado</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">RequestHandler</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Displays the braviz start page</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -246,7 +315,6 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">IndexHandler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">application</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
         <span class="n">index</span> <span class="o">=</span> <span class="n">IndexHandler</span><span class="o">.</span><span class="n">read_index</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
 
@@ -254,22 +322,24 @@
     <span class="nd">@memoize</span>
     <span class="k">def</span> <span class="nf">read_index</span><span class="p">():</span>
         <span class="kn">import</span> <span class="nn">os</span>
+
         <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
             <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&quot;web_static&quot;</span><span class="p">,</span> <span class="s">&quot;index.html&quot;</span><span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">data</span>
+
 </div>
 <span class="k">class</span> <span class="nc">SubjectSwitchHandler</span><span class="p">(</span><span class="n">tornado</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">RequestHandler</span><span class="p">):</span>
-
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Implements a simple web page for changing the current subject from a mobile.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">samples_df</span> <span class="o">=</span> <span class="n">user_data</span><span class="o">.</span><span class="n">get_samples_df</span><span class="p">()</span>
-        <span class="n">sample_names</span> <span class="o">=</span> <span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">samples_df</span><span class="o">.</span><span class="n">sample_name</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">samples_df</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
-        <span class="n">sample</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_argument</span><span class="p">(</span><span class="s">&quot;sample&quot;</span><span class="p">,</span><span class="bp">None</span><span class="p">)</span>
+        <span class="n">sample_names</span> <span class="o">=</span> <span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">samples_df</span><span class="o">.</span><span class="n">sample_name</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">samples_df</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+        <span class="n">sample</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_argument</span><span class="p">(</span><span class="s">&quot;sample&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">sample</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">subjs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">unicode</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">tab_data</span><span class="o">.</span><span class="n">get_subjects</span><span class="p">()]</span>
             <span class="n">sample_id</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
@@ -277,8 +347,521 @@
             <span class="n">subjs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">unicode</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">user_data</span><span class="o">.</span><span class="n">get_sample_data</span><span class="p">(</span><span class="n">sample</span><span class="p">))]</span>
             <span class="n">sample_id</span> <span class="o">=</span> <span class="n">sample</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s">&quot;subject_switch.html&quot;</span><span class="p">,</span> <span class="n">subjs</span><span class="o">=</span><span class="n">subjs</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="n">sample_names</span><span class="p">,</span> <span class="n">sample_id</span><span class="o">=</span><span class="n">sample_id</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s">&quot;subject_switch.html&quot;</span><span class="p">,</span><span class="n">subjs</span><span class="o">=</span><span class="n">subjs</span><span class="p">,</span><span class="n">samples</span><span class="o">=</span><span class="n">sample_names</span><span class="p">,</span><span class="n">sample_id</span><span class="o">=</span><span class="n">sample_id</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">HistogramHandler</span><span class="p">(</span><span class="n">tornado</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">RequestHandler</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implements a simple web page for changing the current subject from a mobile.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">var_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_argument</span><span class="p">(</span><span class="s">&quot;var&quot;</span><span class="p">,</span><span class="bp">None</span><span class="p">)</span>
+        <span class="n">color_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_argument</span><span class="p">(</span><span class="s">&quot;color&quot;</span><span class="p">,</span><span class="bp">None</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">var_name</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">color_name</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">default_variables</span> <span class="o">=</span> <span class="n">get_apps_config</span><span class="p">()</span><span class="o">.</span><span class="n">get_default_variables</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">var_name</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">var_name</span> <span class="o">=</span> <span class="n">default_variables</span><span class="p">[</span><span class="s">&quot;ratio1&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">color_name</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">color_name</span> <span class="o">=</span> <span class="n">default_variables</span><span class="p">[</span><span class="s">&quot;nom1&quot;</span><span class="p">]</span>
+
+        <span class="n">df</span> <span class="o">=</span> <span class="n">tab_data</span><span class="o">.</span><span class="n">get_data_frame_by_name</span><span class="p">([</span><span class="n">var_name</span><span class="p">,</span><span class="n">color_name</span><span class="p">])</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s">&quot;index&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">tab_data</span><span class="o">.</span><span class="n">get_labels_dict</span><span class="p">(</span><span class="n">var_name</span><span class="o">=</span><span class="n">color_name</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="s">&quot;level_</span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">i</span>
+            <span class="n">labels</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+        <span class="n">df</span><span class="p">[</span><span class="n">color_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">color_name</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+        <span class="n">levels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s">&quot;records&quot;</span><span class="p">)</span>
+
+        <span class="n">variable_id</span> <span class="o">=</span> <span class="n">tab_data</span><span class="o">.</span><span class="n">get_var_idx</span><span class="p">(</span><span class="n">var_name</span><span class="p">)</span>
+        <span class="n">categories_id</span> <span class="o">=</span> <span class="n">tab_data</span><span class="o">.</span><span class="n">get_var_idx</span><span class="p">(</span><span class="n">color_name</span><span class="p">)</span>
+        <span class="n">sample_id</span> <span class="o">=</span> <span class="s">&quot;null&quot;</span>
+
+        <span class="n">sample_param</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_argument</span><span class="p">(</span><span class="s">&quot;sample&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sample_param</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">sample_id</span> <span class="o">=</span> <span class="n">sample_param</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">user_data</span><span class="o">.</span><span class="n">get_sample_data</span><span class="p">(</span><span class="n">sample_param</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">tab_data</span><span class="o">.</span><span class="n">get_subjects</span><span class="p">())</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s">&quot;histogram.html&quot;</span><span class="p">,</span><span class="n">values</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">var_name</span><span class="o">=</span><span class="n">var_name</span><span class="p">,</span> <span class="n">color_name</span><span class="o">=</span><span class="n">color_name</span><span class="p">,</span> <span class="n">color_levels</span><span class="o">=</span><span class="n">levels</span><span class="p">,</span>
+                    <span class="n">variable_id</span><span class="o">=</span><span class="n">variable_id</span><span class="p">,</span> <span class="n">categories_id</span><span class="o">=</span><span class="n">categories_id</span><span class="p">,</span> <span class="n">sample_id</span><span class="o">=</span><span class="n">sample_id</span><span class="p">,</span> <span class="n">sample</span><span class="o">=</span><span class="n">sample</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">HistogramDataHandler</span><span class="p">(</span><span class="n">tornado</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">RequestHandler</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implements a simple web page for changing the current subject from a mobile.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">var_index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_argument</span><span class="p">(</span><span class="s">&quot;variable&quot;</span><span class="p">))</span>
+        <span class="n">color_index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_argument</span><span class="p">(</span><span class="s">&quot;color&quot;</span><span class="p">))</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sample_param</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_argument</span><span class="p">(</span><span class="s">&quot;sample&quot;</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="n">sample_param</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="n">df</span> <span class="o">=</span> <span class="n">tab_data</span><span class="o">.</span><span class="n">get_data_frame_by_index</span><span class="p">([</span><span class="n">var_index</span><span class="p">,</span><span class="n">color_index</span><span class="p">])</span>
+        <span class="n">variable_name</span><span class="p">,</span> <span class="n">categories_name</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s">&quot;index&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">tab_data</span><span class="o">.</span><span class="n">get_labels_dict</span><span class="p">(</span><span class="n">var_idx</span><span class="o">=</span><span class="n">color_index</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="s">&quot;level_</span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">i</span>
+            <span class="n">labels</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+        <span class="n">df</span><span class="p">[</span><span class="n">categories_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">categories_name</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+        <span class="n">levels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">data_json</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s">&quot;records&quot;</span><span class="p">)</span>
+        <span class="n">sample_id</span> <span class="o">=</span> <span class="s">&quot;null&quot;</span>
+
+        <span class="k">if</span> <span class="n">sample_param</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">sample_id</span> <span class="o">=</span> <span class="n">sample_param</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">user_data</span><span class="o">.</span><span class="n">get_sample_data</span><span class="p">(</span><span class="n">sample_param</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">tab_data</span><span class="o">.</span><span class="n">get_subjects</span><span class="p">())</span>
+
+
+        <span class="n">ans</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;{{ &quot;data&quot; : {data}, &quot;var_name&quot; : {var_name}, &quot;color_name&quot; : {color_name},</span>
+<span class="s">         &quot;color_levels&quot; : {levels_dict},</span>
+<span class="s">         &quot;variable_id&quot; : {var_id}, &quot;categories_id&quot; : {cat_id}, &quot;sample_id&quot; : {sample_id},</span>
+<span class="s">          &quot;sample&quot; : {sample} }}&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">data_json</span><span class="p">,</span>
+                                           <span class="n">var_name</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">variable_name</span><span class="p">,</span><span class="n">cls</span><span class="o">=</span><span class="n">NpJSONEncoder</span><span class="p">),</span>
+                                           <span class="n">color_name</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">categories_name</span><span class="p">,</span><span class="n">cls</span><span class="o">=</span><span class="n">NpJSONEncoder</span><span class="p">),</span>
+                                           <span class="n">levels_dict</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">levels</span><span class="p">,</span><span class="n">cls</span><span class="o">=</span><span class="n">NpJSONEncoder</span><span class="p">),</span>
+                                           <span class="n">var_id</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">var_index</span><span class="p">,</span><span class="n">cls</span><span class="o">=</span><span class="n">NpJSONEncoder</span><span class="p">),</span>
+                                           <span class="n">cat_id</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">color_index</span><span class="p">,</span><span class="n">cls</span><span class="o">=</span><span class="n">NpJSONEncoder</span><span class="p">),</span>
+                                           <span class="n">sample_id</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">sample_id</span><span class="p">,</span><span class="n">cls</span><span class="o">=</span><span class="n">NpJSONEncoder</span><span class="p">),</span>
+                                           <span class="n">sample</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span><span class="n">cls</span><span class="o">=</span><span class="n">NpJSONEncoder</span><span class="p">)</span>
+                                           <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">ans</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_header</span><span class="p">(</span><span class="s">&quot;Content-Type&quot;</span><span class="p">,</span> <span class="s">&quot;application/json&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">SessionIndexHandler</span><span class="p">(</span><span class="n">tornado</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">RequestHandler</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implements a web interface for reviewing analysis history</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">format_session</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">):</span>
+        <span class="n">abbreviated_time</span> <span class="o">=</span> <span class="s">&quot;%a </span><span class="si">%d</span><span class="s"> - %I %p&quot;</span>
+        <span class="n">full_time</span> <span class="o">=</span> <span class="s">&quot;%Y-%m-</span><span class="si">%d</span><span class="s"> %H:%M:%S&quot;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="n">session</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="s">&quot;abv_start&quot;</span><span class="p">:</span> <span class="n">session</span><span class="o">.</span><span class="n">start_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">abbreviated_time</span><span class="p">),</span>
+                <span class="s">&quot;full_start&quot;</span><span class="p">:</span> <span class="n">session</span><span class="o">.</span>  <span class="n">start_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">full_time</span><span class="p">),</span>
+                <span class="s">&quot;duration&quot;</span><span class="p">:</span> <span class="n">session</span><span class="o">.</span><span class="n">duration</span><span class="o">.</span><span class="n">seconds</span><span class="o">//</span><span class="mi">60</span><span class="p">,</span>  <span class="c"># in minutes</span>
+                <span class="s">&quot;description&quot;</span><span class="p">:</span> <span class="n">session</span><span class="o">.</span><span class="n">description</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">description</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span> <span class="k">else</span> <span class="s">&quot;(no description)&quot;</span><span class="p">,</span>
+                <span class="s">&quot;id&quot;</span><span class="p">:</span> <span class="n">session</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+                <span class="s">&quot;favorite&quot;</span> <span class="p">:</span> <span class="n">session</span><span class="o">.</span><span class="n">favorite</span><span class="p">,</span>
+                <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sessions</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">format_session</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">log_db</span><span class="o">.</span><span class="n">get_sessions</span><span class="p">()]</span>
+        <span class="n">sessions_json</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">sessions</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s">&quot;sessions.html&quot;</span><span class="p">,</span> <span class="n">sessions</span><span class="o">=</span><span class="n">sessions_json</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">SessionDataHandler</span><span class="p">(</span><span class="n">tornado</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">RequestHandler</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Data manipulations related to analysis history</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">full_time</span> <span class="o">=</span> <span class="s">&quot;%Y/%m/</span><span class="si">%d</span><span class="s"> %H:%M:%S&quot;</span>
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">application_icons</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&quot;anova&quot;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">static_url</span><span class="p">(</span><span class="s">&quot;icons/anova.png&quot;</span><span class="p">),</span>
+            <span class="s">&quot;braviz_menu2&quot;</span> <span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">static_url</span><span class="p">(</span><span class="s">&quot;icons/braviz.png&quot;</span><span class="p">),</span>
+            <span class="s">&quot;subject_overview&quot;</span> <span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">static_url</span><span class="p">(</span><span class="s">&quot;icons/subject_overview.png&quot;</span><span class="p">),</span>
+            <span class="s">&quot;linear_model&quot;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">static_url</span><span class="p">(</span><span class="s">&quot;icons/linear.png&quot;</span><span class="p">),</span>
+            <span class="s">&quot;correlations&quot;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">static_url</span><span class="p">(</span><span class="s">&quot;icons/correlations.png&quot;</span><span class="p">),</span>
+            <span class="s">&quot;sample_overview&quot;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">static_url</span><span class="p">(</span><span class="s">&quot;icons/sample_overview.png&quot;</span><span class="p">),</span>
+        <span class="p">}</span>
+    <span class="k">def</span> <span class="nf">format_events</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="n">abbreviated_time</span> <span class="o">=</span> <span class="s">&quot;%I:%M %p&quot;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="n">event</span><span class="o">.</span><span class="n">action</span><span class="p">,</span>
+                <span class="s">&quot;abv_date&quot;</span><span class="p">:</span> <span class="n">event</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">abbreviated_time</span><span class="p">),</span>
+                <span class="s">&quot;full_date&quot;</span><span class="p">:</span> <span class="n">event</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">full_time</span><span class="p">),</span>
+                <span class="s">&quot;id&quot;</span><span class="p">:</span> <span class="n">event</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+                <span class="s">&quot;favorite&quot;</span><span class="p">:</span> <span class="n">event</span><span class="o">.</span><span class="n">favorite</span><span class="p">,</span>
+                <span class="s">&quot;icon_url&quot;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">application_icons</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">application_name</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">),</span>
+                <span class="s">&quot;application&quot;</span> <span class="p">:</span> <span class="n">event</span><span class="o">.</span><span class="n">application_name</span><span class="p">,</span>
+                <span class="s">&quot;comments&quot;</span><span class="p">:</span> <span class="p">[],</span>
+                <span class="s">&quot;instance&quot;</span><span class="p">:</span> <span class="n">event</span><span class="o">.</span><span class="n">instance_id</span><span class="p">,</span>
+                <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ent</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">ent</span><span class="o">==</span><span class="s">&quot;events&quot;</span><span class="p">:</span>
+            <span class="n">session_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_argument</span><span class="p">(</span><span class="s">&quot;session&quot;</span><span class="p">)</span>
+            <span class="n">events</span> <span class="o">=</span> <span class="p">{</span><span class="n">e</span><span class="o">.</span><span class="n">index</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">format_events</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">log_db</span><span class="o">.</span><span class="n">get_events</span><span class="p">(</span><span class="n">session_id</span><span class="p">)}</span>
+            <span class="n">comments</span> <span class="o">=</span> <span class="n">log_db</span><span class="o">.</span><span class="n">get_event_annotations</span><span class="p">(</span><span class="n">session_id</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">comments</span><span class="p">:</span>
+                <span class="n">events</span><span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">event_id</span><span class="p">][</span><span class="s">&quot;comments&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s">&quot;id&quot;</span><span class="p">:</span><span class="n">c</span><span class="o">.</span><span class="n">annotation_id</span><span class="p">,</span>
+                                                       <span class="s">&quot;date&quot;</span><span class="p">:</span><span class="n">c</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">full_time</span><span class="p">),</span>
+                                                       <span class="s">&quot;text&quot;</span><span class="p">:</span><span class="n">c</span><span class="o">.</span><span class="n">annotation</span><span class="p">,</span>
+                                                       <span class="p">})</span>
+            <span class="n">sorted_events</span> <span class="o">=</span>  <span class="nb">sorted</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">itervalues</span><span class="p">(),</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="p">[</span><span class="s">&quot;full_date&quot;</span><span class="p">])</span>
+            <span class="n">app_ids</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">sorted_events</span><span class="p">:</span>
+                <span class="n">app</span> <span class="o">=</span> <span class="n">e</span><span class="p">[</span><span class="s">&quot;application&quot;</span><span class="p">]</span>
+                <span class="n">instance</span> <span class="o">=</span> <span class="n">e</span><span class="p">[</span><span class="s">&quot;instance&quot;</span><span class="p">]</span>
+                <span class="n">instances_indices</span> <span class="o">=</span> <span class="n">app_ids</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">app</span><span class="p">,</span><span class="nb">dict</span><span class="p">())</span>
+                <span class="n">instance_i</span> <span class="o">=</span> <span class="n">instances_indices</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">instance_i</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="n">instance_i</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">instances_indices</span><span class="p">)</span>
+                    <span class="n">instances_indices</span><span class="p">[</span><span class="n">instance</span><span class="p">]</span> <span class="o">=</span> <span class="n">instance_i</span>
+                <span class="n">e</span><span class="p">[</span><span class="s">&quot;instance_index&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">instance_i</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">({</span><span class="s">&quot;events&quot;</span><span class="p">:</span><span class="n">sorted_events</span><span class="p">})</span>
+        <span class="k">elif</span> <span class="n">ent</span><span class="o">==</span><span class="s">&quot;event_data&quot;</span><span class="p">:</span>
+            <span class="n">event_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_argument</span><span class="p">(</span><span class="s">&quot;event_id&quot;</span><span class="p">)</span>
+            <span class="n">state_string</span> <span class="o">=</span> <span class="n">log_db</span><span class="o">.</span><span class="n">get_event_state</span><span class="p">(</span><span class="n">event_id</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_header</span><span class="p">(</span><span class="s">&quot;Content-Type&quot;</span><span class="p">,</span> <span class="s">&quot;application/json&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">state_string</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">finish</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">send_error</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ent</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">ent</span> <span class="o">==</span> <span class="s">&quot;session&quot;</span><span class="p">:</span>
+            <span class="n">session_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_body_argument</span><span class="p">(</span><span class="s">&quot;session&quot;</span><span class="p">)</span>
+            <span class="n">new_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_body_argument</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="bp">None</span><span class="p">)</span>
+            <span class="n">new_description</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_body_argument</span><span class="p">(</span><span class="s">&quot;desc&quot;</span><span class="p">,</span><span class="bp">None</span><span class="p">)</span>
+            <span class="n">delete_session</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_body_argument</span><span class="p">(</span><span class="s">&quot;delete&quot;</span><span class="p">,</span><span class="bp">None</span><span class="p">)</span>
+            <span class="n">favorite</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_body_argument</span><span class="p">(</span><span class="s">&quot;favorite&quot;</span><span class="p">,</span><span class="bp">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">new_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">log_db</span><span class="o">.</span><span class="n">set_session_name</span><span class="p">(</span><span class="n">session_id</span><span class="p">,</span><span class="n">new_name</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">set_status</span><span class="p">(</span><span class="mi">202</span><span class="p">,</span><span class="s">&quot;Name changed&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">finish</span><span class="p">()</span>
+                <span class="k">return</span>
+            <span class="k">if</span> <span class="n">new_description</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">log_db</span><span class="o">.</span><span class="n">set_session_description</span><span class="p">(</span><span class="n">session_id</span><span class="p">,</span><span class="n">new_description</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">set_status</span><span class="p">(</span><span class="mi">202</span><span class="p">,</span><span class="s">&quot;description changed&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">finish</span><span class="p">()</span>
+                <span class="k">return</span>
+            <span class="k">if</span> <span class="n">favorite</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">fav</span> <span class="o">=</span> <span class="n">favorite</span> <span class="o">==</span> <span class="s">&quot;true&quot;</span>
+                <span class="n">log_db</span><span class="o">.</span><span class="n">set_session_favorite</span><span class="p">(</span><span class="n">session_id</span><span class="p">,</span><span class="n">fav</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">set_status</span><span class="p">(</span><span class="mi">202</span><span class="p">,</span><span class="s">&quot;Favorite toggled&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">finish</span><span class="p">()</span>
+                <span class="k">return</span>
+            <span class="k">if</span> <span class="n">delete_session</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">active_session</span> <span class="o">=</span> <span class="n">log_db</span><span class="o">.</span><span class="n">get_active_session</span><span class="p">()</span>
+                <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">session_id</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">(</span><span class="n">active_session</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">send_error</span><span class="p">(</span><span class="mi">403</span><span class="p">)</span>
+                    <span class="k">return</span>
+                <span class="n">log_db</span><span class="o">.</span><span class="n">delete_session</span><span class="p">(</span><span class="n">session_id</span><span class="p">);</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">set_status</span><span class="p">(</span><span class="mi">202</span><span class="p">,</span><span class="s">&quot;Name changed&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">finish</span><span class="p">()</span>
+                <span class="k">return</span>
+        <span class="k">elif</span> <span class="n">ent</span> <span class="o">==</span> <span class="s">&quot;event&quot;</span><span class="p">:</span>
+            <span class="n">event_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_body_argument</span><span class="p">(</span><span class="s">&quot;event&quot;</span><span class="p">)</span>
+            <span class="n">fav</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_body_argument</span><span class="p">(</span><span class="s">&quot;favorite&quot;</span><span class="p">,</span><span class="bp">None</span><span class="p">)</span>
+            <span class="n">ant</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_body_argument</span><span class="p">(</span><span class="s">&quot;annotation&quot;</span><span class="p">,</span><span class="bp">None</span><span class="p">)</span>
+            <span class="n">delete_annotation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_body_argument</span><span class="p">(</span><span class="s">&quot;delete_annotation&quot;</span><span class="p">,</span><span class="bp">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">fav</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">fav</span> <span class="o">=</span> <span class="n">fav</span> <span class="o">==</span> <span class="s">&quot;true&quot;</span>
+                <span class="n">log_db</span><span class="o">.</span><span class="n">set_event_favorite</span><span class="p">(</span><span class="n">event_id</span><span class="p">,</span><span class="n">fav</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">set_status</span><span class="p">(</span><span class="mi">202</span><span class="p">,</span><span class="s">&quot;Favorite toggled&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">finish</span><span class="p">()</span>
+                <span class="k">return</span>
+            <span class="k">if</span> <span class="n">ant</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">ant_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_body_argument</span><span class="p">(</span><span class="s">&quot;annotation_id&quot;</span><span class="p">,</span><span class="bp">None</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">ant_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="n">log_db</span><span class="o">.</span><span class="n">modify_event_annotaiton</span><span class="p">(</span><span class="n">ant_id</span><span class="p">,</span><span class="n">ant</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">set_status</span><span class="p">(</span><span class="mi">202</span><span class="p">,</span><span class="s">&quot;Annotation modified&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">finish</span><span class="p">()</span>
+                    <span class="k">return</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ant_id</span> <span class="o">=</span> <span class="n">log_db</span><span class="o">.</span><span class="n">add_event_annotation</span><span class="p">(</span><span class="n">event_id</span><span class="p">,</span><span class="n">ant</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">set_status</span><span class="p">(</span><span class="mi">202</span><span class="p">,</span><span class="s">&quot;Annotation added&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%d</span><span class="s">&quot;</span><span class="o">%</span><span class="n">ant_id</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">finish</span><span class="p">()</span>
+                    <span class="k">return</span>
+            <span class="k">if</span> <span class="n">delete_annotation</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">delete_annotation</span><span class="p">:</span>
+                <span class="n">ant_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_body_argument</span><span class="p">(</span><span class="s">&quot;annotation_id&quot;</span><span class="p">,</span><span class="bp">None</span><span class="p">)</span>
+                <span class="n">log_db</span><span class="o">.</span><span class="n">delete_annotation</span><span class="p">(</span><span class="n">ant_id</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">set_status</span><span class="p">(</span><span class="mi">202</span><span class="p">,</span><span class="s">&quot;Annotation modified&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">finish</span><span class="p">()</span>
+                <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_error</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">SliceViewerHandler</span><span class="p">(</span><span class="n">tornado</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">RequestHandler</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implements a web page for visualizing several image slices</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">get_fmri_contrasts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">paradigms</span><span class="p">,</span> <span class="n">reader</span><span class="p">):</span>
+        <span class="n">fmri_contrasts</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">all_subjs</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;ids&quot;</span><span class="p">)</span>
+        <span class="n">cfg</span> <span class="o">=</span> <span class="n">get_apps_config</span><span class="p">()</span>
+        <span class="n">favorite_subj</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get_default_subject</span><span class="p">()</span>
+        <span class="n">all_subjs</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">favorite_subj</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">pdgm</span> <span class="ow">in</span> <span class="n">paradigms</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">all_subjs</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">cnts</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;FMRI&quot;</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">pdgm</span><span class="p">,</span><span class="n">contrasts_dict</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="k">pass</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">fmri_contrasts</span><span class="p">[</span><span class="n">pdgm</span><span class="p">]</span><span class="o">=</span><span class="n">cnts</span>
+                    <span class="k">break</span>
+                <span class="n">fmri_contrasts</span><span class="p">[</span><span class="n">pdgm</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">return</span> <span class="n">fmri_contrasts</span>
+
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">braviz.readAndFilter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">images</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="n">braviz</span><span class="o">.</span><span class="n">readAndFilter</span><span class="o">.</span><span class="n">BravizAutoReader</span><span class="p">()</span>
+        <span class="n">imgs</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;IMAGE&quot;</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">fmri</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;FMRI&quot;</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">fmri_contrasts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_fmri_contrasts</span><span class="p">(</span><span class="n">fmri</span><span class="p">,</span> <span class="n">reader</span><span class="p">)</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;LABEL&quot;</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">images</span> <span class="o">+=</span> <span class="p">[(</span><span class="s">&quot;IMAGE/&quot;</span><span class="o">+</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">imgs</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">images</span> <span class="o">+=</span> <span class="p">[(</span><span class="s">&quot;DTI/DTI&quot;</span><span class="p">,</span><span class="s">&quot;DTI&quot;</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">images</span> <span class="o">+=</span> <span class="p">[(</span><span class="s">&quot;LABEL/&quot;</span><span class="o">+</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">labels</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">images</span> <span class="o">+=</span> <span class="p">[(</span><span class="s">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="s">&quot;FMRI&quot;</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">ci</span><span class="p">))),</span><span class="s">&quot;FMRI-&quot;</span><span class="o">+</span><span class="n">n</span><span class="o">.</span><span class="n">title</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;: &quot;</span><span class="o">+</span><span class="n">cn</span><span class="p">)</span>
+                        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">fmri</span><span class="p">)</span>
+                        <span class="k">for</span> <span class="n">ci</span><span class="p">,</span> <span class="n">cn</span> <span class="ow">in</span> <span class="n">fmri_contrasts</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()</span>
+                        <span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s">&quot;slices.html&quot;</span><span class="p">,</span><span class="n">images</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">images</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">SliceViewerDataHandler</span><span class="p">(</span><span class="n">tornado</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">RequestHandler</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implements a web page for visualizing several image slices</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">element</span> <span class="o">==</span> <span class="s">&quot;img&quot;</span><span class="p">:</span>
+            <span class="n">subj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_argument</span><span class="p">(</span><span class="s">&quot;subj&quot;</span><span class="p">)</span>
+            <span class="n">slice_number</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_argument</span><span class="p">(</span><span class="s">&quot;slice&quot;</span><span class="p">,</span><span class="bp">None</span><span class="p">)</span>
+            <span class="n">orientation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_argument</span><span class="p">(</span><span class="s">&quot;orientation&quot;</span><span class="p">,</span><span class="s">&quot;axial&quot;</span><span class="p">)</span>
+            <span class="n">coordinates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_argument</span><span class="p">(</span><span class="s">&quot;coordinates&quot;</span><span class="p">,</span><span class="s">&quot;talairach&quot;</span><span class="p">)</span>
+            <span class="n">img_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_argument</span><span class="p">(</span><span class="s">&quot;type&quot;</span><span class="p">,</span><span class="s">&quot;IMAGE&quot;</span><span class="p">)</span>
+            <span class="n">img_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_argument</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="s">&quot;MRI&quot;</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_slice_img</span><span class="p">(</span><span class="n">subj</span><span class="p">,</span><span class="n">slice_number</span><span class="p">,</span> <span class="n">orientation</span><span class="p">,</span> <span class="n">coordinates</span><span class="p">,</span> <span class="n">img_type</span><span class="p">,</span> <span class="n">img_name</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">send_error</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">set_header</span><span class="p">(</span><span class="s">&quot;Content-Type&quot;</span><span class="p">,</span> <span class="s">&quot;image/png&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">element</span> <span class="o">==</span> <span class="s">&quot;samples&quot;</span><span class="p">:</span>
+            <span class="n">samples</span> <span class="o">=</span> <span class="n">user_data</span><span class="o">.</span><span class="n">get_samples_df</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">to_json</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_header</span><span class="p">(</span><span class="s">&quot;Content-Type&quot;</span><span class="p">,</span> <span class="s">&quot;application/json&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">element</span> <span class="o">==</span> <span class="s">&quot;subjects&quot;</span><span class="p">:</span>
+            <span class="n">sample_idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_argument</span><span class="p">(</span><span class="s">&quot;sample&quot;</span><span class="p">,</span><span class="bp">None</span><span class="p">)</span>
+            <span class="n">variable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_argument</span><span class="p">(</span><span class="s">&quot;variable&quot;</span><span class="p">,</span><span class="bp">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">sample_idx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">sample</span> <span class="o">=</span> <span class="n">user_data</span><span class="o">.</span><span class="n">get_sample_data</span><span class="p">(</span><span class="n">sample_idx</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">variable</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">({</span><span class="s">&quot;sample&quot;</span><span class="p">:</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">sample</span><span class="p">]})</span>
+                    <span class="k">return</span>
+            <span class="k">if</span> <span class="n">variable</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">tab_data</span><span class="o">.</span><span class="n">get_data_frame_by_index</span><span class="p">(</span><span class="n">variable</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">sample_idx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sample</span><span class="p">]</span>
+                <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">({</span><span class="s">&quot;sample&quot;</span><span class="p">:[</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">],</span>
+                            <span class="s">&quot;values&quot;</span><span class="p">:[</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">math</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">else</span> <span class="s">&quot;&quot;</span>
+                                      <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]]})</span>
+                <span class="k">return</span>
+            <span class="k">if</span> <span class="n">sample_idx</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">variable</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">sample</span> <span class="o">=</span> <span class="n">tab_data</span><span class="o">.</span><span class="n">get_subjects</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">({</span><span class="s">&quot;sample&quot;</span><span class="p">:[</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">sample</span><span class="p">]})</span>
+                <span class="k">return</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write_error</span><span class="p">(</span><span class="mi">400</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">element</span> <span class="o">==</span> <span class="s">&quot;variables&quot;</span><span class="p">:</span>
+            <span class="n">vars_df</span> <span class="o">=</span> <span class="n">tab_data</span><span class="o">.</span><span class="n">get_variables_and_type</span><span class="p">()</span>
+            <span class="n">vars_df</span> <span class="o">=</span> <span class="n">vars_df</span><span class="p">[[</span><span class="s">&quot;var_name&quot;</span><span class="p">]]</span>
+            <span class="n">vars_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s">&quot;var_name&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+            <span class="n">descriptions</span> <span class="o">=</span> <span class="n">tab_data</span><span class="o">.</span><span class="n">get_descriptions_dict</span><span class="p">()</span>
+            <span class="n">vars_df</span><span class="p">[</span><span class="s">&quot;desc&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">descriptions</span><span class="p">)</span>
+            <span class="n">json_vars</span> <span class="o">=</span> <span class="n">vars_df</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s">&quot;split&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_header</span><span class="p">(</span><span class="s">&quot;Content-Type&quot;</span><span class="p">,</span> <span class="s">&quot;application/json&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json_vars</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write_error</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">braviz.readAndFilter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reader</span> <span class="o">=</span> <span class="n">braviz</span><span class="o">.</span><span class="n">readAndFilter</span><span class="o">.</span><span class="n">BravizAutoReader</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">orientation_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;axial&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">&quot;coronal&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&quot;sagital&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">get_slice_img</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">slice_number</span><span class="p">,</span> <span class="n">orientation</span><span class="p">,</span> <span class="n">coordinates</span><span class="p">,</span> <span class="n">img_type</span><span class="p">,</span> <span class="n">img_name</span><span class="p">):</span>
+            <span class="kn">import</span> <span class="nn">braviz.readAndFilter.images</span>
+            <span class="kn">import</span> <span class="nn">braviz.visualization.fmri_view</span>
+            <span class="kn">from</span> <span class="nn">cStringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+            <span class="kn">import</span> <span class="nn">PIL.Image</span>
+            <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+            <span class="kn">import</span> <span class="nn">vtk</span>
+
+            <span class="n">orientation_int</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">orientation_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">orientation</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">img_type</span> <span class="o">=</span> <span class="n">img_type</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">img_type</span> <span class="o">==</span> <span class="s">&quot;IMAGE&quot;</span><span class="p">:</span>
+                <span class="n">vtk_img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;IMAGE&quot;</span><span class="p">,</span><span class="n">subj</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">img_name</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="n">coordinates</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&quot;vtk&quot;</span><span class="p">)</span>
+                <span class="n">np_img</span> <span class="o">=</span> <span class="n">braviz</span><span class="o">.</span><span class="n">readAndFilter</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">vtk2numpy</span><span class="p">(</span><span class="n">vtk_img</span><span class="p">)</span>
+                <span class="n">min_value</span><span class="p">,</span> <span class="n">max_value</span> <span class="o">=</span> <span class="n">np_img</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">np_img</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+                <span class="n">np_img</span> <span class="o">=</span> <span class="p">(</span><span class="n">np_img</span><span class="o">-</span><span class="n">min_value</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">max_value</span><span class="o">-</span><span class="n">min_value</span><span class="p">)</span><span class="o">*</span><span class="mi">255</span>
+            <span class="k">elif</span> <span class="n">img_type</span> <span class="o">==</span> <span class="s">&quot;DTI&quot;</span><span class="p">:</span>
+                <span class="n">vtk_img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;DTI&quot;</span><span class="p">,</span><span class="n">subj</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="n">coordinates</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&quot;vtk&quot;</span><span class="p">)</span>
+                <span class="n">np_img</span> <span class="o">=</span> <span class="n">braviz</span><span class="o">.</span><span class="n">readAndFilter</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">vtk2numpy</span><span class="p">(</span><span class="n">vtk_img</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">img_type</span> <span class="o">==</span> <span class="s">&quot;FMRI&quot;</span><span class="p">:</span>
+                <span class="n">contrast</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_argument</span><span class="p">(</span><span class="s">&quot;contrast&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">fmri_img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;FMRI&quot;</span><span class="p">,</span><span class="n">subj</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">img_name</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="n">coordinates</span><span class="p">,</span>
+                                           <span class="n">format</span><span class="o">=</span><span class="s">&quot;vtk&quot;</span><span class="p">,</span> <span class="n">contrast</span><span class="o">=</span><span class="n">contrast</span><span class="p">)</span>
+                <span class="n">mri_img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;IMAGE&quot;</span><span class="p">,</span><span class="n">subj</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;MRI&quot;</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="n">coordinates</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&quot;vtk&quot;</span><span class="p">)</span>
+                <span class="n">blend</span> <span class="o">=</span> <span class="n">braviz</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">fmri_view</span><span class="o">.</span><span class="n">blend_fmri_and_mri</span><span class="p">(</span><span class="n">fmri_img</span><span class="p">,</span> <span class="n">mri_img</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">alfa</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+                <span class="n">blend</span><span class="o">.</span><span class="n">Update</span><span class="p">()</span>
+                <span class="n">vtk_img</span> <span class="o">=</span> <span class="n">blend</span><span class="o">.</span><span class="n">GetOutput</span><span class="p">()</span>
+                <span class="n">np_img</span> <span class="o">=</span> <span class="n">braviz</span><span class="o">.</span><span class="n">readAndFilter</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">vtk2numpy</span><span class="p">(</span><span class="n">vtk_img</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">img_type</span> <span class="o">==</span> <span class="s">&quot;LABEL&quot;</span><span class="p">:</span>
+                <span class="n">label_img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;LABEL&quot;</span><span class="p">,</span><span class="n">subj</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">img_name</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="n">coordinates</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&quot;vtk&quot;</span><span class="p">)</span>
+                <span class="n">lut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;LABEL&quot;</span><span class="p">,</span><span class="n">subj</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">img_name</span><span class="p">,</span> <span class="n">lut</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+                <span class="n">color_mapper</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkImageMapToColors</span><span class="p">()</span>
+                <span class="n">color_mapper</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="n">label_img</span><span class="p">)</span>
+                <span class="n">color_mapper</span><span class="o">.</span><span class="n">SetLookupTable</span><span class="p">(</span><span class="n">lut</span><span class="p">)</span>
+                <span class="n">color_mapper</span><span class="o">.</span><span class="n">Update</span><span class="p">()</span>
+                <span class="n">vtk_img</span><span class="o">=</span><span class="n">color_mapper</span><span class="o">.</span><span class="n">GetOutput</span><span class="p">()</span>
+                <span class="n">np_img</span> <span class="o">=</span> <span class="n">braviz</span><span class="o">.</span><span class="n">readAndFilter</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">vtk2numpy</span><span class="p">(</span><span class="n">vtk_img</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span><span class="s">&quot;Unknown image type&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">slice_number</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">slice_number</span> <span class="o">=</span> <span class="n">np_img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">orientation_int</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span>
+
+            <span class="k">if</span> <span class="n">orientation_int</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">slice_img</span> <span class="o">=</span> <span class="n">np_img</span><span class="p">[</span><span class="n">slice_number</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+                <span class="n">slice_img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">rot90</span><span class="p">(</span><span class="n">slice_img</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">orientation_int</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">slice_img</span> <span class="o">=</span> <span class="n">np_img</span><span class="p">[:,</span> <span class="n">slice_number</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+                <span class="n">slice_img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">rot90</span><span class="p">(</span><span class="n">slice_img</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">slice_img</span> <span class="o">=</span> <span class="n">np_img</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">slice_number</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+
+            <span class="n">pillow_img</span> <span class="o">=</span> <span class="n">PIL</span><span class="o">.</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">slice_img</span><span class="p">)</span>
+            <span class="n">out_buffer</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+            <span class="n">pillow_img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">out_buffer</span><span class="p">,</span><span class="s">&quot;png&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">out_buffer</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">BarsHandler</span><span class="p">(</span><span class="n">tornado</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">RequestHandler</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implements a simple web page for changing the current subject from a mobile.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">subj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_argument</span><span class="p">(</span><span class="s">&quot;subject&quot;</span><span class="p">,</span><span class="bp">None</span><span class="p">)</span>
+        <span class="nb">vars</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_argument</span><span class="p">(</span><span class="s">&quot;variables&quot;</span><span class="p">,</span><span class="bp">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">vars</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="nb">vars</span> <span class="o">=</span> <span class="n">ParallelCoordinatesHandler</span><span class="o">.</span><span class="n">get_default_vars</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">subj</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">subj</span> <span class="o">=</span> <span class="n">get_apps_config</span><span class="p">()</span><span class="o">.</span><span class="n">get_default_subject</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s">&quot;var_values.html&quot;</span><span class="p">,</span><span class="n">variables</span><span class="o">=</span><span class="nb">vars</span><span class="p">,</span><span class="n">subject</span><span class="o">=</span><span class="n">subj</span><span class="p">)</span>
+
+
+
+<span class="k">class</span> <span class="nc">BarsDataHandler</span><span class="p">(</span><span class="n">tornado</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">RequestHandler</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implements a simple web page for changing the current subject from a mobile.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">variables</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_argument</span><span class="p">(</span><span class="s">&quot;variables&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">))</span>
+        <span class="n">subject</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_argument</span><span class="p">(</span><span class="s">&quot;subj&quot;</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">tab_data</span><span class="o">.</span><span class="n">get_subject_variables</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">variables</span><span class="p">)</span>
+        <span class="n">meta_df</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_vars_meta</span><span class="p">(</span><span class="n">variables</span><span class="p">)</span>
+        <span class="n">real_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">meta_df</span><span class="p">)</span>
+
+        <span class="n">nom_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">real_df</span><span class="p">[</span><span class="s">&quot;index&quot;</span><span class="p">])</span><span class="o">==</span><span class="bp">False</span><span class="p">]</span>
+        <span class="n">nom_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s">&quot;index&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">nom_df</span><span class="o">.</span><span class="n">index</span>
+
+        <span class="n">real_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s">&quot;name&quot;</span><span class="p">)</span>
+        <span class="n">nom_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s">&quot;name&quot;</span><span class="p">)</span>
+
+        <span class="n">full_json</span><span class="o">=</span><span class="s">&#39;{{ &quot;real&quot; : {real_df} , &quot;nominal&quot; : {nom_df} }}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">real_df</span><span class="o">=</span><span class="n">real_df</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s">&quot;records&quot;</span><span class="p">),</span>
+            <span class="n">nom_df</span><span class="o">=</span><span class="n">nom_df</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s">&quot;records&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">full_json</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_header</span><span class="p">(</span><span class="s">&quot;Content-Type&quot;</span><span class="p">,</span> <span class="s">&quot;application/json&quot;</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="nd">@memo_ten</span>
+    <span class="k">def</span> <span class="nf">get_vars_meta</span><span class="p">(</span><span class="n">variables</span><span class="p">):</span>
+        <span class="n">real_meta</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">variables</span><span class="p">:</span>
+            <span class="n">var_real</span> <span class="o">=</span> <span class="n">tab_data</span><span class="o">.</span><span class="n">is_variable_real</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">var_real</span><span class="p">:</span>
+                <span class="n">vm</span><span class="o">=</span><span class="p">{</span>
+                    <span class="s">&quot;name&quot;</span> <span class="p">:</span> <span class="n">tab_data</span><span class="o">.</span><span class="n">get_var_name</span><span class="p">(</span><span class="n">v</span><span class="p">),</span>
+                <span class="p">}</span>
+                <span class="n">var_min</span><span class="p">,</span> <span class="n">var_max</span> <span class="o">=</span> <span class="n">tab_data</span><span class="o">.</span><span class="n">get_min_max_values</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+                <span class="n">vm</span><span class="p">[</span><span class="s">&quot;index&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">v</span>
+                <span class="n">vm</span><span class="p">[</span><span class="s">&quot;min&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">var_min</span>
+                <span class="n">vm</span><span class="p">[</span><span class="s">&quot;max&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">var_max</span>
+                <span class="n">real_meta</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vm</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_records</span><span class="p">(</span><span class="n">real_meta</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="s">&quot;index&quot;</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s">&quot;index&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span>
+        <span class="k">return</span> <span class="n">df</span>
+
+
+<span class="k">class</span> <span class="nc">DialogDataHandler</span><span class="p">(</span><span class="n">tornado</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">RequestHandler</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns data for the given sample and variables as a json object</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">samples_requested</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_argument</span><span class="p">(</span><span class="s">&quot;samples&quot;</span><span class="p">,</span><span class="s">&quot;false&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s">&quot;true&quot;</span>
+        <span class="n">variables_requested</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_argument</span><span class="p">(</span><span class="s">&quot;variables&quot;</span><span class="p">,</span><span class="s">&quot;false&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s">&quot;true&quot;</span>
+        <span class="n">subjects_requested</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_argument</span><span class="p">(</span><span class="s">&quot;subjects&quot;</span><span class="p">,</span><span class="s">&quot;false&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s">&quot;true&quot;</span>
+
+        <span class="n">samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_samples</span><span class="p">()</span> <span class="k">if</span> <span class="n">samples_requested</span> <span class="k">else</span> <span class="s">&quot;[]&quot;</span>
+        <span class="nb">vars</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_variables</span><span class="p">()</span> <span class="k">if</span> <span class="n">variables_requested</span> <span class="k">else</span> <span class="s">&quot;[]&quot;</span>
+        <span class="n">subjs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_subjects</span><span class="p">()</span> <span class="k">if</span> <span class="n">subjects_requested</span> <span class="k">else</span> <span class="s">&quot;[]&quot;</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="s">&#39;{{ &quot;variables&quot; : {vars}, &quot;samples&quot; : {samples}, &quot;subjects&quot; : {subjs} }}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="nb">vars</span><span class="o">=</span><span class="nb">vars</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="n">samples</span><span class="p">,</span> <span class="n">subjs</span><span class="o">=</span><span class="n">subjs</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_header</span><span class="p">(</span><span class="s">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s">&quot;application/json&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_variables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">vars_df</span> <span class="o">=</span> <span class="n">tab_data</span><span class="o">.</span><span class="n">get_variables_and_type</span><span class="p">()</span>
+        <span class="n">vars_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s">&quot;var_name&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">descriptions</span> <span class="o">=</span> <span class="n">tab_data</span><span class="o">.</span><span class="n">get_descriptions_dict</span><span class="p">()</span>
+        <span class="n">vars_df</span><span class="p">[</span><span class="s">&quot;desc&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">descriptions</span><span class="p">)</span>
+        <span class="n">vars_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">vars_df</span><span class="p">[</span><span class="s">&quot;desc&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">(),</span><span class="s">&quot;desc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+        <span class="n">vars_df</span><span class="p">[</span><span class="s">&quot;index&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">vars_df</span><span class="o">.</span><span class="n">index</span>
+        <span class="n">vars_json</span> <span class="o">=</span> <span class="n">vars_df</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s">&quot;records&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">vars_json</span>
+
+    <span class="k">def</span> <span class="nf">get_subjects</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">subjects</span> <span class="o">=</span> <span class="n">tab_data</span><span class="o">.</span><span class="n">get_subjects</span><span class="p">()</span>
+        <span class="n">subjs_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">subjects</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">subjs_json</span>
+
+    <span class="k">def</span> <span class="nf">get_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">samples_df</span> <span class="o">=</span> <span class="n">user_data</span><span class="o">.</span><span class="n">get_samples_df</span><span class="p">()</span>
+        <span class="n">samples_df</span><span class="p">[</span><span class="s">&quot;index&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">samples_df</span><span class="o">.</span><span class="n">index</span>
+        <span class="n">samples_json</span> <span class="o">=</span> <span class="n">samples_df</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s">&quot;records&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">samples_json</span>
 </pre></div>
 
           </div>

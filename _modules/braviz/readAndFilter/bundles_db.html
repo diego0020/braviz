@@ -105,8 +105,8 @@
 
 <span class="kn">import</span> <span class="nn">cPickle</span>
 
-<span class="kn">from</span> <span class="nn">braviz.readAndFilter.tabular_data</span> <span class="kn">import</span> <span class="n">_get_connection</span>
-
+<span class="kn">from</span> <span class="nn">braviz.readAndFilter.tabular_data</span> <span class="kn">import</span> <span class="n">get_connection</span>
+<span class="kn">from</span> <span class="nn">braviz.readAndFilter.tabular_data</span> <span class="kn">import</span> <span class="n">retry_write</span>
 
 <div class="viewcode-block" id="get_bundle_ids_and_names"><a class="viewcode-back" href="../../../library/bundles_db.html#braviz.readAndFilter.bundles_db.get_bundle_ids_and_names">[docs]</a><span class="k">def</span> <span class="nf">get_bundle_ids_and_names</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -115,7 +115,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        A list of tuples ``(id,name)`` where id is the bundle id and name is the bundle name</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT bundle_id, bundle_name FROM fiber_bundles&quot;</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
@@ -141,7 +141,7 @@
 <span class="sd">            10          Hierarchical                   pickled nodes dictionary</span>
 <span class="sd">            ========    ==========================     ==================================</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT bundle_name, bundle_type, bundle_data FROM fiber_bundles WHERE bundle_id = ?&quot;</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">bundle_id</span><span class="p">,))</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
@@ -158,7 +158,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        Bundle name</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT bundle_name FROM fiber_bundles WHERE bundle_id = ?&quot;</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">bundle_id</span><span class="p">,))</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
@@ -175,13 +175,14 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        ``True`` if a bundle with this name exists, ``False`` otherwise</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT * FROM fiber_bundles WHERE bundle_name = ?&quot;</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,))</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">res</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span>
 
 </div>
+<span class="nd">@retry_write</span>
 <div class="viewcode-block" id="save_checkpoints_bundle"><a class="viewcode-back" href="../../../library/bundles_db.html#braviz.readAndFilter.bundles_db.save_checkpoints_bundle">[docs]</a><span class="k">def</span> <span class="nf">save_checkpoints_bundle</span><span class="p">(</span><span class="n">bundle_name</span><span class="p">,</span> <span class="n">operation_is_and</span><span class="p">,</span> <span class="n">waypoints</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Saves a bundle defined using checkpoints</span>
@@ -201,7 +202,7 @@
 
     <span class="n">data</span> <span class="o">=</span> <span class="nb">buffer</span><span class="p">(</span><span class="n">cPickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">waypoints</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
     <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;INSERT OR FAIL INTO fiber_bundles (bundle_name, bundle_type, bundle_data) VALUES (?,?,?) &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">bundle_name</span><span class="p">,</span> <span class="n">btype</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
     <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
 
@@ -216,7 +217,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        A list containing the names of the available bundles</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">con</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">con</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">bundle_type</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT bundle_name FROM fiber_bundles&quot;</span>
         <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
@@ -229,6 +230,7 @@
         <span class="k">return</span> <span class="n">res</span>
 
 </div>
+<span class="nd">@retry_write</span>
 <div class="viewcode-block" id="save_logic_bundle"><a class="viewcode-back" href="../../../library/bundles_db.html#braviz.readAndFilter.bundles_db.save_logic_bundle">[docs]</a><span class="k">def</span> <span class="nf">save_logic_bundle</span><span class="p">(</span><span class="n">bundle_name</span><span class="p">,</span> <span class="n">logic_tree_dict</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Saves a logic bundle into the database</span>
@@ -240,7 +242,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">tree_blob</span> <span class="o">=</span> <span class="nb">buffer</span><span class="p">(</span><span class="n">cPickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">logic_tree_dict</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
     <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;INSERT OR FAIL INTO fiber_bundles (bundle_name, bundle_type, bundle_data) VALUES (?,10,?) &quot;&quot;&quot;</span>
-    <span class="n">con</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">con</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">bundle_name</span><span class="p">,</span> <span class="n">tree_blob</span><span class="p">))</span>
     <span class="n">con</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
 
@@ -271,7 +273,7 @@
 <span class="sd">        - ROI nodes: Leaf node, its extra_data contains the database id for a ROI</span>
 <span class="sd">          (see :mod:`~braviz.readAndFilter.geom_db`). It represents fibers that cross such ROI.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">con</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">con</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">bundle_id</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT bundle_data FROM fiber_bundles WHERE bundle_name = ?&quot;</span>
         <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">bundle_name</span><span class="p">,))</span>
@@ -283,7 +285,21 @@
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Fiber doesn&#39;t exist&quot;</span><span class="p">)</span>
     <span class="n">data_buf</span> <span class="o">=</span> <span class="n">r1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">data_dict</span> <span class="o">=</span> <span class="n">cPickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">data_buf</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">data_dict</span></div>
+    <span class="k">return</span> <span class="n">data_dict</span>
+
+</div>
+<span class="nd">@retry_write</span>
+<span class="k">def</span> <span class="nf">remove_bundle</span><span class="p">(</span><span class="n">bundle_id</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Deletes a fiber bundle from the database</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bundle_id (int) : Bundle id</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">con</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;DELETE FROM fiber_bundles WHERE bundle_id = ?&quot;</span>
+    <span class="k">with</span> <span class="n">con</span><span class="p">:</span>
+        <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,(</span><span class="n">bundle_id</span><span class="p">,</span> <span class="p">))</span>
 </pre></div>
 
           </div>

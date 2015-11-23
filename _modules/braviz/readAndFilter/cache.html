@@ -108,7 +108,8 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">psutil</span>
-
+<span class="kn">import</span> <span class="nn">vtk</span>
+<span class="kn">import</span> <span class="nn">nibabel.spatialimages</span>
 
 <span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;diego&#39;</span>
 
@@ -142,7 +143,7 @@
                 <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
                     <span class="c"># new method to test memory in cache</span>
                     <span class="n">process_id</span> <span class="o">=</span> <span class="n">psutil</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">())</span>
-                    <span class="n">mem</span> <span class="o">=</span> <span class="n">process_id</span><span class="o">.</span><span class="n">get_memory_info</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="mi">20</span><span class="p">)</span>
+                    <span class="n">mem</span> <span class="o">=</span> <span class="n">process_id</span><span class="o">.</span><span class="n">memory_info</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="mi">20</span><span class="p">)</span>
                     <span class="k">if</span> <span class="n">mem</span> <span class="o">&gt;=</span> <span class="n">f</span><span class="o">.</span><span class="n">cache_container</span><span class="o">.</span><span class="n">max_cache</span><span class="p">:</span>
                         <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
                         <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;freeing cache&quot;</span><span class="p">)</span>
@@ -152,7 +153,7 @@
                                     <span class="n">rem_key</span><span class="p">,</span> <span class="n">val</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">popitem</span><span class="p">(</span><span class="n">last</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
                                     <span class="c"># print &quot;removing %s with access time=</span>
                                     <span class="c"># %s&quot;%(rem_key,val[1])</span>
-                                <span class="n">mem</span> <span class="o">=</span> <span class="n">process_id</span><span class="o">.</span><span class="n">get_memory_info</span><span class="p">()[</span>
+                                <span class="n">mem</span> <span class="o">=</span> <span class="n">process_id</span><span class="o">.</span><span class="n">memory_info</span><span class="p">()[</span>
                                     <span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="mi">20</span><span class="p">)</span>
                         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
                             <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
@@ -164,11 +165,14 @@
                 <span class="c"># update access time</span>
                 <span class="n">f</span><span class="o">.</span><span class="n">cache</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
                 <span class="c"># return a copy to keep integrity of objects in cache</span>
-            <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">output</span><span class="p">,</span><span class="n">vtk</span><span class="o">.</span><span class="n">vtkObject</span><span class="p">):</span>
+                <span class="c"># VTK objects</span>
                 <span class="n">output_copy</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">NewInstance</span><span class="p">()</span>
                 <span class="n">output_copy</span><span class="o">.</span><span class="n">DeepCopy</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-                <span class="c"># not a vtk object</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">output</span><span class="p">,</span><span class="n">nibabel</span><span class="o">.</span><span class="n">spatialimages</span><span class="o">.</span><span class="n">SpatialImage</span><span class="p">):</span>
+                <span class="c"># nibabel image (includes a file descriptor, can&#39;t copy)</span>
+                <span class="n">output_copy</span> <span class="o">=</span> <span class="n">output</span>
+            <span class="k">else</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">output_copy</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
@@ -194,7 +198,7 @@
 <span class="sd">            max_cache (float) : Maximum amount of memory in Mb that should be used by the process</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__cache</span> <span class="o">=</span> <span class="n">LastUpdatedOrderedDict</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__max_cache</span> <span class="o">=</span> <span class="n">max_cache</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__max_cache</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">max_cache</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">max_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -205,7 +209,7 @@
 
     <span class="nd">@max_cache.setter</span>
     <span class="k">def</span> <span class="nf">max_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__max_cache</span> <span class="o">=</span> <span class="n">val</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__max_cache</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">cache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

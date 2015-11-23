@@ -109,11 +109,11 @@
 <span class="kn">from</span> <span class="nn">PyQt4.QtCore</span> <span class="kn">import</span> <span class="n">QAbstractItemModel</span>
 <span class="kn">from</span> <span class="nn">braviz.readAndFilter.link_with_rdf</span> <span class="kn">import</span> <span class="n">cached_get_free_surfer_dict</span>
 <span class="kn">from</span> <span class="nn">braviz.interaction.structural_hierarchy</span> <span class="kn">import</span> <span class="n">get_structural_hierarchy_with_names</span>
+<span class="kn">from</span> <span class="nn">braviz.readAndFilter</span> <span class="kn">import</span> <span class="n">config_file</span><span class="p">,</span> <span class="n">tabular_data</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 
 
 <div class="viewcode-block" id="StructureTreeNode"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.qt_structures_model.StructureTreeNode">[docs]</a><span class="k">class</span> <span class="nc">StructureTreeNode</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Node for the freesurfer structures tree</span>
 
@@ -170,7 +170,7 @@
             <span class="n">k</span><span class="o">.</span><span class="n">__check_and_propagate_down</span><span class="p">(</span><span class="n">check</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__update_from_children</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c">#self.name += &quot;*&quot;</span>
+        <span class="c"># self.name += &quot;*&quot;</span>
         <span class="n">previus_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">checked</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span>
@@ -214,7 +214,6 @@
 
 </div></div>
 <div class="viewcode-block" id="StructureTreeModel"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.qt_structures_model.StructureTreeModel">[docs]</a><span class="k">class</span> <span class="nc">StructureTreeModel</span><span class="p">(</span><span class="n">QAbstractItemModel</span><span class="p">):</span>
-
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A tree of freesurfer segmented structures</span>
 
@@ -236,6 +235,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__root</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">leaf_ids</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">leaf_inverse_ids</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dominant</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">optimistic_reload_hierarchy</span><span class="p">(</span><span class="n">dominant</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">subj</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">subj</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;ids&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
@@ -249,7 +249,6 @@
 <span class="sd">            dominant (bool) : If ``False`` the tree will have left and right hemispheres, otherwise it will</span>
 <span class="sd">                have dominant and non-dominant hemispheres</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">braviz.readAndFilter</span> <span class="kn">import</span> <span class="n">config_file</span>
         <span class="n">possibles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;ids&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
         <span class="n">favorite</span> <span class="o">=</span> <span class="n">config_file</span><span class="o">.</span><span class="n">get_apps_config</span><span class="p">()</span><span class="o">.</span><span class="n">get_default_subject</span><span class="p">()</span>
         <span class="n">possibles</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">favorite</span><span class="p">)</span>
@@ -273,25 +272,54 @@
 <span class="sd">            dominant (bool) : If ``False`` the tree will have left and right hemispheres, otherwise it will</span>
 <span class="sd">                have dominant and non-dominant hemispheres</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">dominant</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dominant</span><span class="p">:</span>
+            <span class="k">return</span>
         <span class="k">if</span> <span class="n">subj</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">subj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;ids&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">subj</span> <span class="o">=</span> <span class="n">config_file</span><span class="o">.</span><span class="n">get_apps_config</span><span class="p">()</span><span class="o">.</span><span class="n">get_default_subject</span><span class="p">()</span>
         <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
         <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;reloading hierarchy&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">leaf_ids</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__id_index</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__root</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__root</span><span class="o">.</span><span class="n">delete_children</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__root</span> <span class="o">=</span> <span class="n">StructureTreeNode</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="s">&quot;root&quot;</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">dominant</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">hierarchy</span> <span class="o">=</span> <span class="n">get_structural_hierarchy_with_names</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modelAboutToBeReset</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__root</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="c"># We are building the tree from scratch</span>
+            <span class="k">if</span> <span class="n">dominant</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">hierarchy</span> <span class="o">=</span> <span class="n">get_structural_hierarchy_with_names</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">hierarchy</span> <span class="o">=</span> <span class="n">get_structural_hierarchy_with_names</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__root</span> <span class="o">=</span> <span class="n">StructureTreeNode</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="s">&quot;root&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">leaf_ids</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__id_index</span> <span class="o">=</span> <span class="p">{</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__root</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="n">__root</span><span class="p">}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__load_sub_tree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__root</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hierarchy</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">hierarchy</span> <span class="o">=</span> <span class="n">get_structural_hierarchy_with_names</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__root</span> <span class="o">=</span> <span class="n">StructureTreeNode</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="s">&quot;root&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__id_index</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__root</span><span class="p">)]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__root</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__load_sub_tree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__root</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hierarchy</span><span class="p">)</span>
+            <span class="c"># We are transforming an existing tree</span>
+            <span class="n">laterality</span> <span class="o">=</span> <span class="n">tabular_data</span><span class="o">.</span><span class="n">get_laterality</span><span class="p">(</span><span class="n">subj</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">dominant</span><span class="p">:</span>
+                <span class="c"># changing from left, right to dominant, non-dominant</span>
+                <span class="k">if</span> <span class="n">laterality</span> <span class="o">==</span> <span class="s">&quot;l&quot;</span><span class="p">:</span>
+                    <span class="n">mapping</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;r&quot;</span><span class="p">:</span> <span class="s">&quot;d&quot;</span><span class="p">,</span>
+                               <span class="s">&quot;l&quot;</span><span class="p">:</span> <span class="s">&quot;n&quot;</span><span class="p">,</span>
+                               <span class="s">&quot;Right&quot;</span><span class="p">:</span> <span class="s">&quot;Dominant&quot;</span><span class="p">,</span>
+                               <span class="s">&quot;Left&quot;</span><span class="p">:</span> <span class="s">&quot;Nondominant&quot;</span><span class="p">,</span>
+                            <span class="p">}</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">mapping</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;l&quot;</span><span class="p">:</span> <span class="s">&quot;d&quot;</span><span class="p">,</span>
+                               <span class="s">&quot;r&quot;</span><span class="p">:</span> <span class="s">&quot;n&quot;</span><span class="p">,</span>
+                               <span class="s">&quot;Right&quot;</span><span class="p">:</span> <span class="s">&quot;Nondominant&quot;</span><span class="p">,</span>
+                               <span class="s">&quot;Left&quot;</span><span class="p">:</span> <span class="s">&quot;Dominant&quot;</span><span class="p">}</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c"># changing from dominant, non-dominant to left, right</span>
+                <span class="k">if</span> <span class="n">laterality</span> <span class="o">==</span> <span class="s">&quot;l&quot;</span><span class="p">:</span>
+                    <span class="n">mapping</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;d&quot;</span><span class="p">:</span> <span class="s">&quot;r&quot;</span><span class="p">,</span>
+                               <span class="s">&quot;n&quot;</span><span class="p">:</span> <span class="s">&quot;l&quot;</span><span class="p">,</span>
+                               <span class="s">&quot;Dominant&quot;</span><span class="p">:</span> <span class="s">&quot;Right&quot;</span><span class="p">,</span>
+                               <span class="s">&quot;Nondominant&quot;</span><span class="p">:</span> <span class="s">&quot;Left&quot;</span><span class="p">}</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">mapping</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;d&quot;</span><span class="p">:</span> <span class="s">&quot;l&quot;</span><span class="p">,</span>
+                               <span class="s">&quot;n&quot;</span><span class="p">:</span> <span class="s">&quot;r&quot;</span><span class="p">,</span>
+                               <span class="s">&quot;Dominant&quot;</span><span class="p">:</span> <span class="s">&quot;Left&quot;</span><span class="p">,</span>
+                               <span class="s">&quot;Nondominant&quot;</span><span class="p">:</span> <span class="s">&quot;Right&quot;</span><span class="p">}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__switch_sub_tree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__root</span><span class="p">,</span> <span class="n">mapping</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">modelReset</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
 </div>
     <span class="k">def</span> <span class="nf">__load_sub_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub_root</span><span class="p">,</span> <span class="n">hierarchy_dict</span><span class="p">):</span>
@@ -307,6 +335,56 @@
                 <span class="n">new_node</span><span class="o">.</span><span class="n">tooltip</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pretty_names</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">leaf_ids</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">new_node_id</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">leaf_inverse_ids</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">set</span><span class="p">())</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">new_node_id</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__switch_sub_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub_root</span><span class="p">,</span> <span class="n">mapping</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__transform_node</span><span class="p">(</span><span class="n">sub_root</span><span class="p">,</span> <span class="n">mapping</span><span class="p">):</span>
+            <span class="c"># Recursion can be stopped by returning False</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">sub_root</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__switch_sub_tree</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">mapping</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__transform_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">mapping</span><span class="p">):</span>
+        <span class="n">leaf_name</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">leaf_name</span>
+        <span class="k">if</span> <span class="n">leaf_name</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="c"># Not a leaf</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span>
+            <span class="n">new_name</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&quot;Hemisphere&quot;</span><span class="p">):</span>
+                <span class="n">words</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+                <span class="n">words</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapping</span><span class="p">[</span><span class="n">words</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+                <span class="n">new_name</span> <span class="o">=</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s">&quot;Base&quot;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">False</span>
+            <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s">&quot;Corpus Callosum&quot;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">False</span>
+            <span class="k">if</span> <span class="n">new_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">new_name</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">tooltip</span> <span class="o">=</span><span class="n">new_name</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c"># is a leaf</span>
+            <span class="k">if</span> <span class="n">leaf_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;ctx&quot;</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">leaf_inverse_ids</span><span class="p">[</span><span class="n">leaf_name</span><span class="p">]</span>
+                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                    <span class="k">pass</span>
+                <span class="n">hemi</span> <span class="o">=</span> <span class="n">leaf_name</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+                <span class="n">new_hemi</span> <span class="o">=</span> <span class="n">mapping</span><span class="p">[</span><span class="n">hemi</span><span class="p">]</span>
+                <span class="n">leaf_name</span> <span class="o">=</span> <span class="n">leaf_name</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="n">new_hemi</span> <span class="o">+</span> <span class="n">leaf_name</span><span class="p">[</span><span class="mi">5</span><span class="p">:]</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">leaf_name</span> <span class="o">=</span> <span class="n">leaf_name</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">tooltip</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pretty_names</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">leaf_name</span><span class="p">,</span><span class="n">leaf_name</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">leaf_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;wm&quot;</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">leaf_inverse_ids</span><span class="p">[</span><span class="n">leaf_name</span><span class="p">]</span>
+                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                    <span class="k">pass</span>
+                <span class="n">hemi</span> <span class="o">=</span> <span class="n">leaf_name</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+                <span class="n">new_hemi</span> <span class="o">=</span> <span class="n">mapping</span><span class="p">[</span><span class="n">hemi</span><span class="p">]</span>
+                <span class="n">leaf_name</span> <span class="o">=</span> <span class="n">leaf_name</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="n">new_hemi</span> <span class="o">+</span> <span class="n">leaf_name</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">leaf_name</span> <span class="o">=</span> <span class="n">leaf_name</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">tooltip</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pretty_names</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">leaf_name</span><span class="p">,</span><span class="n">leaf_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">leaf_inverse_ids</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">leaf_name</span><span class="p">,</span><span class="nb">set</span><span class="p">())</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">node</span><span class="p">))</span>
+            <span class="k">return</span> <span class="bp">False</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
 
     <span class="k">def</span> <span class="nf">parent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">QModelIndex</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">QModelIndex</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
@@ -388,7 +466,7 @@
                 <span class="n">node</span><span class="o">.</span><span class="n">check_and_update_tree</span><span class="p">(</span><span class="n">check</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">__notify_parents</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dataChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">QModelIndex</span><span class="p">,</span> <span class="n">QModelIndex</span><span class="p">)</span>
-            <span class="c">#self.dataChanged.emit(QtCore.QModelIndex(), QtCore.QModelIndex())</span>
+            <span class="c"># self.dataChanged.emit(QtCore.QModelIndex(), QtCore.QModelIndex())</span>
             <span class="c"># print &quot;signaling&quot;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span>
                 <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&quot;DataChanged(QModelIndex,QModelIndex)&quot;</span><span class="p">),</span> <span class="n">QModelIndex</span><span class="p">,</span> <span class="n">QModelIndex</span><span class="p">)</span>

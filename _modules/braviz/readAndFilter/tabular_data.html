@@ -107,6 +107,9 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">threading</span>
 <span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">time</span>
 
 <span class="kn">from</span> <span class="nn">pandas.io</span> <span class="kn">import</span> <span class="n">sql</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
@@ -123,28 +126,7 @@
 
 <span class="n">_connections</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
 
-
-<div class="viewcode-block" id="get_variables"><a class="viewcode-back" href="../../../library/tabular_data.html#braviz.readAndFilter.tabular_data.get_variables">[docs]</a><span class="k">def</span> <span class="nf">get_variables</span><span class="p">(</span><span class="n">mask</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Gets available variables</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        mask (str) : If not None, limit answer to results whose name match the given mask (sql ``like`` syntax)</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        :class:`pandas.DataFrame` with variable indexes as index, and a single column with variable names</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">mask</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span>
-            <span class="s">&quot;SELECT var_idx, var_name from variables;&quot;</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s">&quot;var_idx&quot;</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s">&quot;SELECT var_idx, var_name from variables WHERE var_name like ?;&quot;</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">(</span><span class="n">mask</span><span class="p">,),</span>
-                            <span class="n">index_col</span><span class="o">=</span><span class="s">&quot;var_idx&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">data</span>
-
-</div>
-<span class="k">def</span> <span class="nf">_get_connection</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">get_connection</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Gets the sqlite3 connection object for this thread.</span>
 
@@ -159,12 +141,14 @@
         <span class="k">return</span> <span class="n">connection_obj</span>
 
     <span class="n">data_root</span> <span class="o">=</span> <span class="n">braviz</span><span class="o">.</span><span class="n">readAndFilter</span><span class="o">.</span><span class="n">braviz_auto_dynamic_data_root</span><span class="p">()</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_root</span><span class="p">,</span> <span class="s">&quot;braviz_data&quot;</span><span class="p">,</span> <span class="s">&quot;tabular_data.sqlite&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_root</span><span class="p">,</span> <span class="s">&quot;braviz_data&quot;</span><span class="p">)</span>
+    <span class="n">db_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s">&quot;tabular_data.sqlite&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">data_root</span><span class="p">):</span>
         <span class="n">show_error</span><span class="p">(</span><span class="s">&quot;Couldn&#39;t open database file</span><span class="se">\n</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">path</span><span class="p">)</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Couldn&#39;t open database&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s">&quot;Couldn&#39;t open database location:</span><span class="se">\n</span><span class="si">%s</span><span class="s">&quot;</span><span class="o">%</span><span class="n">path</span><span class="p">)</span>
 
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">db_name</span><span class="p">,</span>  <span class="n">detect_types</span><span class="o">=</span><span class="n">sqlite3</span><span class="o">.</span><span class="n">PARSE_DECLTYPES</span><span class="p">)</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;pragma busy_timeout=10000&quot;</span><span class="p">)</span>
     <span class="n">_connections</span><span class="p">[</span><span class="n">thread_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">conn</span>
     <span class="k">if</span> <span class="n">LATERALITY</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
@@ -180,11 +164,77 @@
     <span class="k">return</span> <span class="n">conn</span>
 
 
+<span class="k">def</span> <span class="nf">retry_write</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="n">max_tries</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">wait</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapped</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">success</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">attempts</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">while</span> <span class="p">(</span><span class="ow">not</span> <span class="n">success</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">attempts</span> <span class="o">&lt;</span> <span class="n">max_tries</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">ans</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">OperationalError</span><span class="p">:</span>
+                <span class="n">attempts</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;Could not write to db, attempt </span><span class="si">%d</span><span class="s">&quot;</span><span class="p">,</span><span class="n">attempts</span><span class="p">)</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">wait</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">success</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Error writing to database, max tries reached&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">OperationalError</span>
+        <span class="k">return</span> <span class="n">ans</span>
+    <span class="k">return</span> <span class="n">wrapped</span>
+
+
+<div class="viewcode-block" id="get_variables"><a class="viewcode-back" href="../../../library/tabular_data.html#braviz.readAndFilter.tabular_data.get_variables">[docs]</a><span class="k">def</span> <span class="nf">get_variables</span><span class="p">(</span><span class="n">mask</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Gets available variables</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        mask (str) : If not None, limit answer to results whose name match the given mask (sql ``like`` syntax)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        :class:`pandas.DataFrame` with variable indexes as index, and a single column with variable names</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">mask</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span>
+            <span class="s">&quot;SELECT var_idx, var_name from variables;&quot;</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s">&quot;var_idx&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s">&quot;SELECT var_idx, var_name from variables WHERE var_name like ?;&quot;</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">(</span><span class="n">mask</span><span class="p">,),</span>
+                            <span class="n">index_col</span><span class="o">=</span><span class="s">&quot;var_idx&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span>
+</div>
+<span class="k">def</span> <span class="nf">get_variables_and_type</span><span class="p">(</span><span class="n">mask</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Gets available variables</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        mask (str) : If not None, limit answer to results whose name match the given mask (sql ``like`` syntax)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        :class:`pandas.DataFrame` with variable indexes as index, a column with variable names, and a with ``1`` for</span>
+<span class="sd">            numerical values and ``0`` for nominal variables</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">mask</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span>
+            <span class="s">&quot;SELECT var_idx, var_name, is_real  from variables;&quot;</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s">&quot;var_idx&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s">&quot;SELECT var_idx, var_name, is_real from variables WHERE var_name like ?;&quot;</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">(</span><span class="n">mask</span><span class="p">,),</span>
+                            <span class="n">index_col</span><span class="o">=</span><span class="s">&quot;var_idx&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span>
+
+
+
 <span class="k">def</span> <span class="nf">_reset_connection</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Resests existing connection for this thread</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">global</span> <span class="n">_connections</span>
+    <span class="k">global</span> <span class="n">_log_connections</span>
     <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
     <span class="n">thread_id</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">current_thread</span><span class="p">()</span>
     <span class="n">connection_obj</span> <span class="o">=</span> <span class="n">_connections</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">thread_id</span><span class="p">)</span>
@@ -208,7 +258,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        &quot;l&quot; for a left handed subject, &quot;r&quot; otherwise</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">subj_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">subj_id</span><span class="p">)</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
         <span class="s">&quot;SELECT value FROM var_values WHERE var_idx = ? and subject = ?&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">LATERALITY</span><span class="p">,</span> <span class="n">subj_id</span><span class="p">))</span>
@@ -234,7 +284,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">columns</span><span class="p">,</span> <span class="nb">basestring</span><span class="p">):</span>
         <span class="n">columns</span> <span class="o">=</span> <span class="p">(</span><span class="n">columns</span><span class="p">,)</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span>
         <span class="s">&quot;SELECT subject from SUBJECTS&quot;</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s">&quot;subject&quot;</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">columns</span><span class="p">:</span>
@@ -264,7 +314,7 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">columns</span><span class="p">,</span> <span class="s">&quot;__iter__&quot;</span><span class="p">):</span>
         <span class="n">columns</span> <span class="o">=</span> <span class="p">(</span><span class="n">columns</span><span class="p">,)</span>
 
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span>
         <span class="s">&quot;SELECT subject from SUBJECTS&quot;</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s">&quot;subject&quot;</span><span class="p">)</span>
     <span class="n">col_names</span> <span class="o">=</span> <span class="p">[]</span>
@@ -305,7 +355,7 @@
 <span class="sd">        ``True`` otherwise</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
         <span class="s">&quot;SELECT is_real FROM variables WHERE var_idx = ?&quot;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">var_idx</span><span class="p">),))</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
@@ -325,7 +375,7 @@
 <span class="sd">        ``True`` if a variable with the given name exists,</span>
 <span class="sd">        ``False`` otherwise</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
         <span class="s">&quot;SELECT count(*) FROM variables WHERE var_name = ?&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">var_name</span><span class="p">,))</span>
     <span class="k">return</span> <span class="bp">False</span> <span class="k">if</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="bp">True</span>
@@ -359,7 +409,7 @@
 <span class="sd">        ``True`` otherwise</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
         <span class="s">&quot;SELECT is_real FROM variables  WHERE var_name = ?&quot;</span><span class="p">,</span> <span class="p">(</span><span class="nb">unicode</span><span class="p">(</span><span class="n">var_name</span><span class="p">),))</span>
     <span class="k">return</span> <span class="bp">False</span> <span class="k">if</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="bp">True</span>
@@ -438,7 +488,7 @@
     <span class="k">return</span> <span class="nb">dict</span><span class="p">((</span><span class="n">name</span><span class="p">,</span> <span class="ow">not</span> <span class="n">is_variable_name_nominal</span><span class="p">(</span><span class="n">name</span><span class="p">))</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">var_names</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="get_labels_dict"><a class="viewcode-back" href="../../../library/tabular_data.html#braviz.readAndFilter.tabular_data.get_labels_dict">[docs]</a><span class="k">def</span> <span class="nf">get_labels_dict</span><span class="p">(</span><span class="n">var_idx</span><span class="p">):</span>
+<div class="viewcode-block" id="get_labels_dict"><a class="viewcode-back" href="../../../library/tabular_data.html#braviz.readAndFilter.tabular_data.get_labels_dict">[docs]</a><span class="k">def</span> <span class="nf">get_labels_dict</span><span class="p">(</span><span class="n">var_idx</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">var_name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Map numerical labels to strings in nominal variables</span>
 
@@ -449,7 +499,12 @@
 <span class="sd">        A dictionary with numerical labels as keys, and the text for each label as</span>
 <span class="sd">        values.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">var_idx</span> <span class="ow">is</span> <span class="bp">None</span> <span class="p">:</span>
+        <span class="k">if</span> <span class="n">var_name</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;var_idx or var_name is required&quot;</span><span class="p">)</span>
+        <span class="n">var_idx</span> <span class="o">=</span> <span class="n">get_var_idx</span><span class="p">(</span><span class="n">var_name</span><span class="p">)</span>
+
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
 <span class="s">    SELECT label2, name</span>
 <span class="s">    from</span>
@@ -482,7 +537,7 @@
 <span class="sd">        A dictionary with numerical labels as keys, and the text for each label as</span>
 <span class="sd">        values.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
 <span class="s">        SELECT label2, name</span>
 <span class="s">        from</span>
@@ -514,7 +569,7 @@
 <span class="sd">        Variable name if it exists, ``&quot;?&quot;`` otherwise</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
         <span class="s">&quot;SELECT var_name FROM variables WHERE var_idx = ?&quot;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">var_idx</span><span class="p">),))</span>
     <span class="n">ans</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
@@ -534,7 +589,7 @@
 <span class="sd">        Index of variable with the given name if it exists, ``None`` otherwise</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
         <span class="s">&quot;SELECT var_idx FROM variables WHERE var_name = ?&quot;</span><span class="p">,</span> <span class="p">(</span><span class="nb">unicode</span><span class="p">(</span><span class="n">var_name</span><span class="p">),))</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
@@ -557,7 +612,7 @@
 <span class="sd">         if there is no metadata, maximum from existing values.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
         <span class="s">&quot;SELECT max_val FROM ratio_meta WHERE var_idx = ?&quot;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">var_idx</span><span class="p">),))</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
@@ -583,7 +638,7 @@
 <span class="sd">         if there is no metadata, minimum from existing values.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
         <span class="s">&quot;SELECT min_val FROM ratio_meta WHERE var_idx = ?&quot;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">var_idx</span><span class="p">),))</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
@@ -609,7 +664,7 @@
 <span class="sd">         if there is no metadata, they are calculated from existing values</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
         <span class="s">&quot;SELECT min_val, max_val FROM ratio_meta WHERE var_idx = ?&quot;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">var_idx</span><span class="p">),))</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
@@ -635,7 +690,7 @@
 <span class="sd">         if there is no metadata, they are calculated from existing values</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;SELECT min_val, max_val FROM ratio_meta NATURAL JOIN variables WHERE var_name = ?&quot;</span><span class="p">,</span>
                        <span class="p">(</span><span class="nb">unicode</span><span class="p">(</span><span class="n">var_name</span><span class="p">),))</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
@@ -662,7 +717,7 @@
 <span class="sd">         be the mean of existing values.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;SELECT min_val, max_val, optimum_val FROM ratio_meta NATURAL JOIN variables WHERE var_name = ?&quot;</span><span class="p">,</span>
                        <span class="p">(</span><span class="nb">unicode</span><span class="p">(</span><span class="n">var_name</span><span class="p">),))</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
@@ -687,7 +742,7 @@
 <span class="sd">        which will be used as indexes in the DataFrame.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">names</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">var_codes</span><span class="p">:</span>
@@ -727,7 +782,7 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get a list subjects which exist in the database</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;SELECT subject FROM subjects ORDER BY subject&quot;</span><span class="p">)</span>
     <span class="n">subj_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()]</span>
     <span class="k">return</span> <span class="n">subj_list</span>
@@ -743,15 +798,27 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        A string containing the description of the variable.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT description FROM var_descriptions WHERE var_idx = ?&quot;</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">var_idx</span><span class="p">),))</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">res</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="s">&quot;&quot;</span>
     <span class="k">return</span> <span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-
 </div>
+<span class="k">def</span> <span class="nf">get_descriptions_dict</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get a dictionary with the descriptions of all variables</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A dictionary with variable indices as keys and description strings as values</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT var_idx, description FROM var_descriptions&quot;</span>
+    <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">res</span>
+
 <div class="viewcode-block" id="get_var_description_by_name"><a class="viewcode-back" href="../../../library/tabular_data.html#braviz.readAndFilter.tabular_data.get_var_description_by_name">[docs]</a><span class="k">def</span> <span class="nf">get_var_description_by_name</span><span class="p">(</span><span class="n">var_name</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get description for a variable</span>
@@ -762,7 +829,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        A string containing the description of the variable.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT description FROM var_descriptions NATURAL JOIN variables WHERE var_name = ?&quot;</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="nb">unicode</span><span class="p">(</span><span class="n">var_name</span><span class="p">),))</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
@@ -771,6 +838,7 @@
     <span class="k">return</span> <span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
 </div>
+<span class="nd">@retry_write</span>
 <div class="viewcode-block" id="save_is_real_by_name"><a class="viewcode-back" href="../../../library/tabular_data.html#braviz.readAndFilter.tabular_data.save_is_real_by_name">[docs]</a><span class="k">def</span> <span class="nf">save_is_real_by_name</span><span class="p">(</span><span class="n">var_name</span><span class="p">,</span> <span class="n">is_real</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Update variable type in the metadata</span>
@@ -779,12 +847,13 @@
 <span class="sd">        var_name (str) :  Variable name</span>
 <span class="sd">        is_real (bool) : If True the variable will be registered as real, otherwise it will be registered as nominal.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
-    <span class="n">query</span> <span class="o">=</span> <span class="s">&quot;UPDATE variables SET is_real = ? WHERE var_name = ?&quot;</span>
-    <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">(</span><span class="n">is_real</span><span class="p">,</span> <span class="nb">unicode</span><span class="p">(</span><span class="n">var_name</span><span class="p">)))</span>
-    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">conn</span><span class="p">:</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="s">&quot;UPDATE variables SET is_real = ? WHERE var_name = ?&quot;</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">(</span><span class="n">is_real</span><span class="p">,</span> <span class="nb">unicode</span><span class="p">(</span><span class="n">var_name</span><span class="p">)))</span>
 
 </div>
+<span class="nd">@retry_write</span>
 <div class="viewcode-block" id="save_is_real"><a class="viewcode-back" href="../../../library/tabular_data.html#braviz.readAndFilter.tabular_data.save_is_real">[docs]</a><span class="k">def</span> <span class="nf">save_is_real</span><span class="p">(</span><span class="n">var_idx</span><span class="p">,</span> <span class="n">is_real</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Update variable type in the metadata</span>
@@ -793,12 +862,14 @@
 <span class="sd">        var_idx (int) :  Variable index</span>
 <span class="sd">        is_real (bool) : If True the variable will be registered as real, otherwise it will be registered as nominal.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
-    <span class="n">query</span> <span class="o">=</span> <span class="s">&quot;UPDATE variables SET is_real = ? WHERE var_idx = ?&quot;</span>
-    <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">(</span><span class="n">is_real</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">var_idx</span><span class="p">)))</span>
-    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">conn</span><span class="p">:</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="s">&quot;UPDATE variables SET is_real = ? WHERE var_idx = ?&quot;</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">(</span><span class="n">is_real</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">var_idx</span><span class="p">)))</span>
+
 
 </div>
+<span class="nd">@retry_write</span>
 <div class="viewcode-block" id="save_real_meta_by_name"><a class="viewcode-back" href="../../../library/tabular_data.html#braviz.readAndFilter.tabular_data.save_real_meta_by_name">[docs]</a><span class="k">def</span> <span class="nf">save_real_meta_by_name</span><span class="p">(</span><span class="n">var_name</span><span class="p">,</span> <span class="n">min_value</span><span class="p">,</span> <span class="n">max_value</span><span class="p">,</span> <span class="n">opt_value</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Update real variables&#39; meta data</span>
@@ -809,7 +880,7 @@
 <span class="sd">        man_value (float) : Variables maximum value</span>
 <span class="sd">        opt_value (float) : Variables optimum value</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">query</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;INSERT OR REPLACE INTO ratio_meta</span>
 <span class="s">    VALUES(</span>
 <span class="s">    (SELECT var_idx FROM variables WHERE var_name = ?),</span>
@@ -826,6 +897,7 @@
         <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
 
 </div>
+<span class="nd">@retry_write</span>
 <div class="viewcode-block" id="save_real_meta"><a class="viewcode-back" href="../../../library/tabular_data.html#braviz.readAndFilter.tabular_data.save_real_meta">[docs]</a><span class="k">def</span> <span class="nf">save_real_meta</span><span class="p">(</span><span class="n">var_idx</span><span class="p">,</span> <span class="n">min_value</span><span class="p">,</span> <span class="n">max_value</span><span class="p">,</span> <span class="n">opt_value</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Update real variables&#39; meta data</span>
@@ -836,7 +908,7 @@
 <span class="sd">        man_value (float) : Variables maximum value</span>
 <span class="sd">        opt_value (float) : Variables optimum value</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">query</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;INSERT OR REPLACE INTO ratio_meta</span>
 <span class="s">    VALUES(?, ? , ? , ? );</span>
 <span class="s">    &quot;&quot;&quot;</span>
@@ -851,6 +923,7 @@
         <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
 
 </div>
+<span class="nd">@retry_write</span>
 <div class="viewcode-block" id="save_nominal_labels_by_name"><a class="viewcode-back" href="../../../library/tabular_data.html#braviz.readAndFilter.tabular_data.save_nominal_labels_by_name">[docs]</a><span class="k">def</span> <span class="nf">save_nominal_labels_by_name</span><span class="p">(</span><span class="n">var_name</span><span class="p">,</span> <span class="n">label_name_tuples</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Update nominal variable labels</span>
@@ -862,7 +935,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">mega_tuple</span> <span class="o">=</span> <span class="p">((</span><span class="n">var_name</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">label_name_tuples</span><span class="p">)</span>
-    <span class="n">con</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">con</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">query</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;INSERT OR REPLACE INTO nom_meta</span>
 <span class="s">    VALUES (</span>
 <span class="s">    (SELECT var_idx FROM variables WHERE var_name = ?),</span>
@@ -874,6 +947,7 @@
     <span class="n">con</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
 
 </div>
+<span class="nd">@retry_write</span>
 <div class="viewcode-block" id="save_nominal_labels"><a class="viewcode-back" href="../../../library/tabular_data.html#braviz.readAndFilter.tabular_data.save_nominal_labels">[docs]</a><span class="k">def</span> <span class="nf">save_nominal_labels</span><span class="p">(</span><span class="n">var_idx</span><span class="p">,</span> <span class="n">label_name_tuples</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Update nominal variable labels</span>
@@ -885,7 +959,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">mega_tuple</span> <span class="o">=</span> <span class="p">((</span><span class="n">var_idx</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">label_name_tuples</span><span class="p">)</span>
-    <span class="n">con</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">con</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">query</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;INSERT OR REPLACE INTO nom_meta</span>
 <span class="s">    VALUES (</span>
 <span class="s">    ?, --idx</span>
@@ -897,6 +971,7 @@
     <span class="n">con</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
 
 </div>
+<span class="nd">@retry_write</span>
 <div class="viewcode-block" id="save_var_description_by_name"><a class="viewcode-back" href="../../../library/tabular_data.html#braviz.readAndFilter.tabular_data.save_var_description_by_name">[docs]</a><span class="k">def</span> <span class="nf">save_var_description_by_name</span><span class="p">(</span><span class="n">var_name</span><span class="p">,</span> <span class="n">description</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Save or overwrite description for a variable</span>
@@ -905,7 +980,7 @@
 <span class="sd">        var_name (str) : Variable Name</span>
 <span class="sd">        description (str) : Variable description</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">query</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;INSERT OR REPLACE INTO var_descriptions</span>
 <span class="s">    VALUES</span>
 <span class="s">    ((SELECT var_idx FROM variables WHERE var_name = ?), -- var_idx</span>
@@ -914,6 +989,7 @@
     <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
 
 </div>
+<span class="nd">@retry_write</span>
 <div class="viewcode-block" id="save_var_description"><a class="viewcode-back" href="../../../library/tabular_data.html#braviz.readAndFilter.tabular_data.save_var_description">[docs]</a><span class="k">def</span> <span class="nf">save_var_description</span><span class="p">(</span><span class="n">var_idx</span><span class="p">,</span> <span class="n">description</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Save or overwrite description for a variable</span>
@@ -922,7 +998,7 @@
 <span class="sd">        var_idx (int) : Variable index</span>
 <span class="sd">        description (str) : Variable description</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">query</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;INSERT OR REPLACE INTO var_descriptions</span>
 <span class="s">    VALUES</span>
 <span class="s">    (?, -- var_idx</span>
@@ -931,6 +1007,7 @@
     <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
 
 </div>
+<span class="nd">@retry_write</span>
 <div class="viewcode-block" id="register_new_variable"><a class="viewcode-back" href="../../../library/tabular_data.html#braviz.readAndFilter.tabular_data.register_new_variable">[docs]</a><span class="k">def</span> <span class="nf">register_new_variable</span><span class="p">(</span><span class="n">var_name</span><span class="p">,</span> <span class="n">is_real</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Adds a new variable to the database</span>
@@ -943,7 +1020,7 @@
 <span class="sd">        Database index of the new variable</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">var_name</span> <span class="o">=</span> <span class="nb">unicode</span><span class="p">(</span><span class="n">var_name</span><span class="p">)</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">with</span> <span class="n">conn</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">is_real</span><span class="p">:</span>
@@ -961,6 +1038,7 @@
         <span class="k">return</span> <span class="bp">None</span>
 
 </div>
+<span class="nd">@retry_write</span>
 <div class="viewcode-block" id="update_variable_values"><a class="viewcode-back" href="../../../library/tabular_data.html#braviz.readAndFilter.tabular_data.update_variable_values">[docs]</a><span class="k">def</span> <span class="nf">update_variable_values</span><span class="p">(</span><span class="n">var_idx</span><span class="p">,</span> <span class="n">tuples</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Updates values for one variable and some subjects</span>
@@ -970,13 +1048,14 @@
 <span class="sd">        tuples (list) : Tuples of the form ``(subject,value)`` where subject is the subject id, and value</span>
 <span class="sd">            is the new value for the variable.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">super_tuples</span> <span class="o">=</span> <span class="p">((</span><span class="n">var_idx</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">tuples</span><span class="p">)</span>
     <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;INSERT OR REPLACE INTO var_values VALUES (? ,?, ?)&quot;&quot;&quot;</span>
     <span class="n">conn</span><span class="o">.</span><span class="n">executemany</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">super_tuples</span><span class="p">)</span>
     <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
 
 </div>
+<span class="nd">@retry_write</span>
 <div class="viewcode-block" id="update_multiple_variable_values"><a class="viewcode-back" href="../../../library/tabular_data.html#braviz.readAndFilter.tabular_data.update_multiple_variable_values">[docs]</a><span class="k">def</span> <span class="nf">update_multiple_variable_values</span><span class="p">(</span><span class="n">idx_subject_value_tuples</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Updates values for variables and subjects</span>
@@ -985,13 +1064,14 @@
 <span class="sd">        idx_subject_value_tuples (list) : Tuples of the form ``(var_idx, subject, value)`` where var_idx and subject</span>
 <span class="sd">            are the variable and subject for whom the new value will be set.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;INSERT OR REPLACE INTO var_values VALUES (? ,?, ?)&quot;&quot;&quot;</span>
     <span class="n">conn</span><span class="o">.</span><span class="n">executemany</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">idx_subject_value_tuples</span><span class="p">)</span>
     <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
 
 </div>
-<div class="viewcode-block" id="updata_variable_value"><a class="viewcode-back" href="../../../library/tabular_data.html#braviz.readAndFilter.tabular_data.updata_variable_value">[docs]</a><span class="k">def</span> <span class="nf">updata_variable_value</span><span class="p">(</span><span class="n">var_idx</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
+<span class="nd">@retry_write</span>
+<div class="viewcode-block" id="update_variable_value"><a class="viewcode-back" href="../../../library/tabular_data.html#braviz.readAndFilter.tabular_data.update_variable_value">[docs]</a><span class="k">def</span> <span class="nf">update_variable_value</span><span class="p">(</span><span class="n">var_idx</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Updates a single value for a variable and a subject</span>
 
@@ -1000,12 +1080,13 @@
 <span class="sd">        subject : Subject id</span>
 <span class="sd">        new_value : Value to be saved</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;INSERT OR REPLACE INTO var_values VALUES (? ,?, ?)&quot;&quot;&quot;</span>
     <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">var_idx</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">subject</span><span class="p">),</span> <span class="n">new_value</span><span class="p">))</span>
     <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
 
 </div>
+<span class="nd">@retry_write</span>
 <div class="viewcode-block" id="get_var_value"><a class="viewcode-back" href="../../../library/tabular_data.html#braviz.readAndFilter.tabular_data.get_var_value">[docs]</a><span class="k">def</span> <span class="nf">get_var_value</span><span class="p">(</span><span class="n">var_idx</span><span class="p">,</span> <span class="n">subject</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Gets a single variable value</span>
@@ -1017,7 +1098,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        The numerical value for the given variable and subject</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT value FROM var_values WHERE var_idx = ? and subject = ?&quot;</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">var_idx</span><span class="p">,</span> <span class="n">subject</span><span class="p">))</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
@@ -1039,7 +1120,7 @@
 <span class="sd">        ``(min_val, max_val)`` calculated over the values the variable takes in the reference population.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">global</span> <span class="n">UBICAC</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="c"># minimum,maximum</span>
     <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;SELECT min(var_values.value), max(cast( var_values.value as numeric)) from var_values JOIN var_values as var_values2</span>
 <span class="s">     WHERE var_values.subject == var_values2.subject and var_values2.var_idx == ? and var_values2.value == ?</span>
@@ -1072,6 +1153,7 @@
     <span class="k">return</span> <span class="n">v</span>
 
 
+<span class="nd">@retry_write</span>
 <div class="viewcode-block" id="add_data_frame"><a class="viewcode-back" href="../../../library/tabular_data.html#braviz.readAndFilter.tabular_data.add_data_frame">[docs]</a><span class="k">def</span> <span class="nf">add_data_frame</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Inserts a whole dataframe into the database</span>
@@ -1079,7 +1161,7 @@
 <span class="sd">    Args:</span>
 <span class="sd">        df ( pandas.DataFrame ) : DataFrame with subject ids as index, and one column for each new variable.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">columns</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span>
     <span class="n">columns</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">remove_non_ascii</span><span class="p">,</span> <span class="n">columns</span><span class="p">)</span>
     <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">columns</span>
@@ -1109,7 +1191,9 @@
             <span class="n">conn</span><span class="o">.</span><span class="n">executemany</span><span class="p">(</span><span class="n">q2</span><span class="p">,</span> <span class="n">izip</span><span class="p">(</span><span class="n">repeat</span><span class="p">(</span><span class="n">var_idx</span><span class="p">),</span> <span class="n">subjs</span><span class="p">,</span> <span class="n">vals</span><span class="p">))</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&quot;done&quot;</span><span class="p">)</span>
 
+
 </div>
+<span class="nd">@retry_write</span>
 <div class="viewcode-block" id="recursive_delete_variable"><a class="viewcode-back" href="../../../library/tabular_data.html#braviz.readAndFilter.tabular_data.recursive_delete_variable">[docs]</a><span class="k">def</span> <span class="nf">recursive_delete_variable</span><span class="p">(</span><span class="n">var_idx</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Deletes a variable from all tables</span>
@@ -1123,7 +1207,7 @@
 <span class="sd">    Args:</span>
 <span class="sd">        var_idx (int) : Variable index</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">with</span> <span class="n">conn</span><span class="p">:</span>
             <span class="c"># delete values</span>
@@ -1150,6 +1234,7 @@
         <span class="k">print</span><span class="p">(</span><span class="s">&quot;Done&quot;</span><span class="p">)</span>
 
 </div>
+<span class="nd">@retry_write</span>
 <div class="viewcode-block" id="recursive_delete_subject"><a class="viewcode-back" href="../../../library/tabular_data.html#braviz.readAndFilter.tabular_data.recursive_delete_subject">[docs]</a><span class="k">def</span> <span class="nf">recursive_delete_subject</span><span class="p">(</span><span class="n">subject</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Deletes a subject from the database</span>
@@ -1165,7 +1250,7 @@
 <span class="sd">    Args:</span>
 <span class="sd">        var_idx (int) : Variable index</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">with</span> <span class="n">conn</span><span class="p">:</span>
             <span class="c"># delete values</span>

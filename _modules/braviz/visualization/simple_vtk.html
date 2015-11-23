@@ -272,7 +272,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">pd_actors</span> <span class="o">=</span> <span class="p">[]</span>
 
 </div></div>
-<div class="viewcode-block" id="save_ren_win_picture"><a class="viewcode-back" href="../../../library/simple_vtk.html#braviz.visualization.simple_vtk.save_ren_win_picture">[docs]</a><span class="k">def</span> <span class="nf">save_ren_win_picture</span><span class="p">(</span><span class="n">ren_win</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+<div class="viewcode-block" id="save_ren_win_picture"><a class="viewcode-back" href="../../../library/simple_vtk.html#braviz.visualization.simple_vtk.save_ren_win_picture">[docs]</a><span class="k">def</span> <span class="nf">save_ren_win_picture</span><span class="p">(</span><span class="n">ren_win</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">magnification</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Saves an screenshot of a render window</span>
 
@@ -282,6 +282,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">ren2img</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkWindowToImageFilter</span><span class="p">()</span>
     <span class="n">ren2img</span><span class="o">.</span><span class="n">SetInput</span><span class="p">(</span><span class="n">ren_win</span><span class="p">)</span>
+    <span class="n">ren2img</span><span class="o">.</span><span class="n">SetMagnification</span><span class="p">(</span><span class="n">magnification</span><span class="p">)</span>
     <span class="n">ren2img</span><span class="o">.</span><span class="n">Update</span><span class="p">()</span>
     <span class="n">writer</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkPNGWriter</span><span class="p">()</span>
     <span class="n">writer</span><span class="o">.</span><span class="n">SetFileName</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
@@ -322,7 +323,7 @@
 
     <span class="sd">&quot;&quot;&quot;A vtkImagePlaneWidget which can keep its state between calls to SetInputData.</span>
 
-<span class="sd">    It adds a second text message showing the world coordinates of the cursors</span>
+<span class="sd">    It adds a second text message showing the mm coordinates of the cursors</span>
 <span class="sd">    This message can be further enhanced by using a label image and a label dictionary</span>
 <span class="sd">    Additionally the values displayed in the first message can be replaced by values taken from another image, this</span>
 <span class="sd">    is useful when the displayed image contains colors or other contexts that are not the main value (ex, fmri)</span>

@@ -204,7 +204,7 @@ func:<cite>create_roi</cite> for options</p>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.geom_db.create_roi">
-<code class="descname">create_roi</code><span class="sig-paren">(</span><em>name</em>, <em>roi_type</em>, <em>coords</em>, <em>desc=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/geom_db.html#create_roi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.geom_db.create_roi" title="Permalink to this definition">¶</a></dt>
+<code class="descname">create_roi</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/geom_db.html#create_roi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.geom_db.create_roi" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a new ROI</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -223,7 +223,7 @@ func:<cite>create_roi</cite> for options</p>
 </li>
 <li><strong>coords</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; <p>coordinate system, options are</p>
 <ul>
-<li>world</li>
+<li>subject</li>
 <li>talairach</li>
 <li>dartel</li>
 </ul>
@@ -241,7 +241,7 @@ func:<cite>create_roi</cite> for options</p>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.geom_db.recursive_delete_roi">
-<code class="descname">recursive_delete_roi</code><span class="sig-paren">(</span><em>roi_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/geom_db.html#recursive_delete_roi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.geom_db.recursive_delete_roi" title="Permalink to this definition">¶</a></dt>
+<code class="descname">recursive_delete_roi</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/geom_db.html#recursive_delete_roi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.geom_db.recursive_delete_roi" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes a ROI from the database, including all its values.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
@@ -335,7 +335,7 @@ by name</td>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.geom_db.save_sphere">
-<code class="descname">save_sphere</code><span class="sig-paren">(</span><em>sphere_id</em>, <em>subject</em>, <em>radius</em>, <em>center</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/geom_db.html#save_sphere"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.geom_db.save_sphere" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save_sphere</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/geom_db.html#save_sphere"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.geom_db.save_sphere" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save a sphere for a given subject into the database</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -355,7 +355,7 @@ by name</td>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.geom_db.copy_spheres">
-<code class="descname">copy_spheres</code><span class="sig-paren">(</span><em>orig_id</em>, <em>dest_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/geom_db.html#copy_spheres"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.geom_db.copy_spheres" title="Permalink to this definition">¶</a></dt>
+<code class="descname">copy_spheres</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/geom_db.html#copy_spheres"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.geom_db.copy_spheres" title="Permalink to this definition">¶</a></dt>
 <dd><p>Copies spheres from one ROI to another</p>
 <p>Copies the definitions of spheres for each subject from one ROI to another ROI</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -431,7 +431,7 @@ by name</td>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.geom_db.save_line">
-<code class="descname">save_line</code><span class="sig-paren">(</span><em>line_id</em>, <em>subject</em>, <em>point1</em>, <em>point2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/geom_db.html#save_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.geom_db.save_line" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save_line</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/geom_db.html#save_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.geom_db.save_line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save a line from a given subject into the database</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />

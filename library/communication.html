@@ -119,6 +119,7 @@ well known addresses in the network.</p>
 and the client side is implement in <a class="reference internal" href="#braviz.interaction.connection.MessageClient" title="braviz.interaction.connection.MessageClient"><code class="xref py py-class docutils literal"><span class="pre">MessageClient</span></code></a>.
 Both of these classes generate PyQt-Signals when they receive a message, and therefore are easy
 to connect to the rest of your application.</p>
+<p>The protocol of the messages themselves is described in <a class="reference internal" href="communication_protocol.html"><em>Braviz Messages</em></a>.</p>
 <div class="section" id="message-broker">
 <h2>Message Broker<a class="headerlink" href="#message-broker" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -162,7 +163,7 @@ properties to query them.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Message to broadcast</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; Message to broadcast, will be encoded as JSON</td>
 </tr>
 </tbody>
 </table>
@@ -216,7 +217,7 @@ properties to query them.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Message to send to the server</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; Message to send to the server, will be encoded as JSON</td>
 </tr>
 </tbody>
 </table>
@@ -288,7 +289,7 @@ method <a class="reference internal" href="#braviz.interaction.connection.Passiv
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Message to send to the server</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; Message to send to the server</td>
 </tr>
 </tbody>
 </table>
@@ -318,12 +319,15 @@ method <a class="reference internal" href="#braviz.interaction.connection.Passiv
 <dt id="braviz.interaction.connection.GenericMessageClient">
 <em class="property">class </em><code class="descname">GenericMessageClient</code><span class="sig-paren">(</span><em>handler</em>, <em>server_broadcast=None</em>, <em>server_receive=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/connection.html#GenericMessageClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.connection.GenericMessageClient" title="Permalink to this definition">¶</a></dt>
 <dd><p>A client that connects to <a class="reference internal" href="#braviz.interaction.connection.MessageServer" title="braviz.interaction.connection.MessageServer"><code class="xref py py-class docutils literal"><span class="pre">MessageServer</span></code></a></p>
-<p>When it receives a message it calls <code class="docutils literal"><span class="pre">handle_new_message</span></code> on the handler</p>
+<p>When it receives a message it calls <code class="docutils literal"><span class="pre">handle_new_message</span></code> on the handler,
+optionally, if the handler hast the <code class="docutils literal"><span class="pre">handle_json_message</span></code>, it will be called with the
+raw json message as argument.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>handler</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><em>object</em></a>) &#8211; Must implement the <code class="docutils literal"><span class="pre">handle_new_message</span></code> method.</li>
 <li><strong>server_broadcast</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Address of the server broadcast port</li>
 <li><strong>server_receive</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Address of the server receive port</li>
 </ul>
@@ -338,6 +342,24 @@ method <a class="reference internal" href="#braviz.interaction.connection.Passiv
 </dd></dl>
 
 <dl class="method">
+<dt id="braviz.interaction.connection.GenericMessageClient.send_json_message">
+<code class="descname">send_json_message</code><span class="sig-paren">(</span><em>net_msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/connection.html#GenericMessageClient.send_json_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.connection.GenericMessageClient.send_json_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a message already encoded as json</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This message will also bounce to the handler, be careful with loops</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>net_msg</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Message to send to the server</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="braviz.interaction.connection.GenericMessageClient.send_message">
 <code class="descname">send_message</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/connection.html#GenericMessageClient.send_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.connection.GenericMessageClient.send_message" title="Permalink to this definition">¶</a></dt>
 <dd><p>Send a message</p>
@@ -349,7 +371,7 @@ method <a class="reference internal" href="#braviz.interaction.connection.Passiv
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Message to send to the server</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; Message to send to the server</td>
 </tr>
 </tbody>
 </table>

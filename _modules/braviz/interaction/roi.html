@@ -214,7 +214,7 @@
     <span class="kn">import</span> <span class="nn">nibabel</span> <span class="kn">as</span> <span class="nn">nib</span>
 
     <span class="n">subj</span> <span class="o">=</span> <span class="n">config_file</span><span class="o">.</span><span class="n">get_apps_config</span><span class="p">()</span><span class="o">.</span><span class="n">get_default_subject</span><span class="p">()</span>
-    <span class="n">export_roi</span><span class="p">(</span><span class="n">subj</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&quot;world&quot;</span><span class="p">,</span> <span class="s">&quot;/home/diego/test.nii&quot;</span><span class="p">)</span>
+    <span class="n">export_roi</span><span class="p">(</span><span class="n">subj</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&quot;subject&quot;</span><span class="p">,</span> <span class="s">&quot;/home/diego/test.nii&quot;</span><span class="p">)</span>
 
     <span class="n">nimg</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&quot;/home/diego/test.nii&quot;</span><span class="p">)</span>
     <span class="n">vimg</span> <span class="o">=</span> <span class="n">images</span><span class="o">.</span><span class="n">nibNii2vtk</span><span class="p">(</span><span class="n">nimg</span><span class="p">)</span>

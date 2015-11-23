@@ -292,7 +292,7 @@ Access a spss ``*.sav`` file to read variables and metadata, specifically
     - numerical variable values
     - textual variable values
 
-To see help on this command, call it with the ``-h```flag.
+To see help on this command, call it with the ``-h`` flag.
 
 .. code-block:: console
 

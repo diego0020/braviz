@@ -973,7 +973,7 @@ exist for each of them. This wrappers can send PyQt signals on certain events, l
 <p>Managing the visualization state is simplified by the data managers, which focus on specific data types.</p>
 <dl class="class">
 <dt id="braviz.visualization.subject_viewer.ImageManager">
-<em class="property">class </em><code class="descname">ImageManager</code><span class="sig-paren">(</span><em>reader</em>, <em>ren</em>, <em>widget</em>, <em>interactor</em>, <em>initial_subj=None</em>, <em>initial_space='World'</em>, <em>picker=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/subject_viewer.html#ImageManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.subject_viewer.ImageManager" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">ImageManager</code><span class="sig-paren">(</span><em>reader</em>, <em>ren</em>, <em>widget</em>, <em>interactor</em>, <em>initial_subj=None</em>, <em>initial_space='subject'</em>, <em>picker=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/subject_viewer.html#ImageManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.subject_viewer.ImageManager" title="Permalink to this definition">¶</a></dt>
 <dd><p>Controls an ImagePlaneWidget</p>
 <dl class="method">
 <dt id="braviz.visualization.subject_viewer.ImageManager.change_image_modality">
@@ -1160,7 +1160,7 @@ See <a class="reference internal" href="reader.html#braviz.readAndFilter.base_re
 
 <dl class="class">
 <dt id="braviz.visualization.subject_viewer.ModelManager">
-<em class="property">class </em><code class="descname">ModelManager</code><span class="sig-paren">(</span><em>reader</em>, <em>ren</em>, <em>initial_subj=None</em>, <em>initial_space='World'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/subject_viewer.html#ModelManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.subject_viewer.ModelManager" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">ModelManager</code><span class="sig-paren">(</span><em>reader</em>, <em>ren</em>, <em>initial_subj=None</em>, <em>initial_space='subject'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/subject_viewer.html#ModelManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.subject_viewer.ModelManager" title="Permalink to this definition">¶</a></dt>
 <dd><p>A manager for segmented structure models</p>
 <dl class="method">
 <dt id="braviz.visualization.subject_viewer.ModelManager.get_opacity">
@@ -1266,7 +1266,7 @@ See <a class="reference internal" href="reader.html#braviz.readAndFilter.base_re
 
 <dl class="class">
 <dt id="braviz.visualization.subject_viewer.TractographyManager">
-<em class="property">class </em><code class="descname">TractographyManager</code><span class="sig-paren">(</span><em>reader</em>, <em>ren</em>, <em>initial_subj=None</em>, <em>initial_space='World'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/subject_viewer.html#TractographyManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.subject_viewer.TractographyManager" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">TractographyManager</code><span class="sig-paren">(</span><em>reader</em>, <em>ren</em>, <em>initial_subj=None</em>, <em>initial_space='subject'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/subject_viewer.html#TractographyManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.subject_viewer.TractographyManager" title="Permalink to this definition">¶</a></dt>
 <dd><p>A manager for tractography data</p>
 <dl class="method">
 <dt id="braviz.visualization.subject_viewer.TractographyManager.add_from_database">
@@ -1513,7 +1513,7 @@ otherwise it will contain lines that pass through any checkpoint</li>
 
 <dl class="class">
 <dt id="braviz.visualization.subject_viewer.TraculaManager">
-<em class="property">class </em><code class="descname">TraculaManager</code><span class="sig-paren">(</span><em>reader</em>, <em>ren</em>, <em>initial_subj=None</em>, <em>initial_space='World'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/subject_viewer.html#TraculaManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.subject_viewer.TraculaManager" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">TraculaManager</code><span class="sig-paren">(</span><em>reader</em>, <em>ren</em>, <em>initial_subj=None</em>, <em>initial_space='subject'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/subject_viewer.html#TraculaManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.subject_viewer.TraculaManager" title="Permalink to this definition">¶</a></dt>
 <dd><p>A data manager for Tracula bundles</p>
 <dl class="attribute">
 <dt id="braviz.visualization.subject_viewer.TraculaManager.active_bundles">
@@ -1579,7 +1579,7 @@ otherwise it will contain lines that pass through any checkpoint</li>
 
 <dl class="class">
 <dt id="braviz.visualization.subject_viewer.SurfaceManager">
-<em class="property">class </em><code class="descname">SurfaceManager</code><span class="sig-paren">(</span><em>reader</em>, <em>ren</em>, <em>iren</em>, <em>initial_subj=None</em>, <em>initial_space='World'</em>, <em>picker=None</em>, <em>persistent_cone=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/subject_viewer.html#SurfaceManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.subject_viewer.SurfaceManager" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">SurfaceManager</code><span class="sig-paren">(</span><em>reader</em>, <em>ren</em>, <em>iren</em>, <em>initial_subj=None</em>, <em>initial_space='subject'</em>, <em>picker=None</em>, <em>persistent_cone=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/subject_viewer.html#SurfaceManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.subject_viewer.SurfaceManager" title="Permalink to this definition">¶</a></dt>
 <dd><p>A data manager for freesurfer sufaces parcelations</p>
 <dl class="method">
 <dt id="braviz.visualization.subject_viewer.SurfaceManager.get_last_picked_pos">

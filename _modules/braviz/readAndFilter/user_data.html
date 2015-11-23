@@ -111,10 +111,14 @@
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">braviz.readAndFilter</span>
-<span class="kn">from</span> <span class="nn">braviz.readAndFilter.tabular_data</span> <span class="kn">import</span> <span class="n">_get_connection</span>
+<span class="kn">from</span> <span class="nn">braviz.readAndFilter.tabular_data</span> <span class="kn">import</span> <span class="n">get_connection</span>
 <span class="kn">import</span> <span class="nn">sqlite3</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">braviz.interaction.connection</span> <span class="kn">import</span> <span class="n">NpJSONEncoder</span>
+<span class="kn">from</span> <span class="nn">braviz.readAndFilter.tabular_data</span> <span class="kn">import</span> <span class="n">retry_write</span>
 
 
+<span class="nd">@retry_write</span>
 <div class="viewcode-block" id="save_scenario"><a class="viewcode-back" href="../../../library/user_data.html#braviz.readAndFilter.user_data.save_scenario">[docs]</a><span class="k">def</span> <span class="nf">save_scenario</span><span class="p">(</span><span class="n">application</span><span class="p">,</span> <span class="n">scenario_name</span><span class="p">,</span> <span class="n">scenario_description</span><span class="p">,</span> <span class="n">scenario_data</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Save application state</span>
@@ -129,10 +133,9 @@
 <span class="sd">        The database id of the saved scenario. Use this to save the corresponding screen-shot</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scenario_data</span><span class="p">,</span> <span class="nb">basestring</span><span class="p">):</span>
-        <span class="n">scenario_data</span> <span class="o">=</span> <span class="n">cPickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">scenario_data</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-    <span class="n">scenario_data</span> <span class="o">=</span> <span class="nb">buffer</span><span class="p">(</span><span class="n">scenario_data</span><span class="p">)</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scenario_data</span><span class="p">,</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">scenario_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">scenario_data</span><span class="p">,</span><span class="n">cls</span><span class="o">=</span><span class="n">NpJSONEncoder</span><span class="p">)</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;INSERT  OR ABORT INTO scenarios</span>
 <span class="s">    (app_idx,scn_name,scn_desc,scn_data)</span>
 <span class="s">    VALUES ( (SELECT app_idx FROM applications WHERE exec_name == ?),</span>
@@ -144,6 +147,7 @@
     <span class="k">return</span> <span class="n">res</span>
 
 </div>
+<span class="nd">@retry_write</span>
 <div class="viewcode-block" id="update_scenario"><a class="viewcode-back" href="../../../library/user_data.html#braviz.readAndFilter.user_data.update_scenario">[docs]</a><span class="k">def</span> <span class="nf">update_scenario</span><span class="p">(</span><span class="n">scenario_id</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">scenario_data</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">application</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Update scenario information in the database</span>
@@ -155,7 +159,7 @@
 <span class="sd">        scenario_data (dict) : Optional, new application state dictionary</span>
 <span class="sd">        application (str) : Optional, new application script name, without extension</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
             <span class="s">&quot;UPDATE scenarios SET scn_name = ? WHERE scn_id = ?&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">scenario_id</span><span class="p">))</span>
@@ -182,7 +186,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        :class:`~pandas.DataFrame` with columns for date, name and description. The index will be scenario indexes</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">app_name</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT scn_id,datetime(scn_date,&#39;localtime&#39;) as scn_date,scn_name,scn_desc FROM scenarios&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s">&quot;scn_id&quot;</span><span class="p">,</span> <span class="n">coerce_float</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
@@ -199,7 +203,7 @@
 
 </div>
 <span class="k">def</span> <span class="nf">_get_scenario_data</span><span class="p">(</span><span class="n">scn_id</span><span class="p">):</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT scn_data FROM scenarios WHERE scn_id = ?&quot;</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">scn_id</span><span class="p">,))</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
@@ -221,10 +225,17 @@
 <span class="sd">        Dictionary with application state</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">_get_scenario_data</span><span class="p">(</span><span class="n">scn_id</span><span class="p">)</span>
-    <span class="n">scn_dict</span> <span class="o">=</span> <span class="n">cPickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">res</span><span class="p">))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">scn_dict</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;scenario in old format&quot;</span><span class="p">)</span>
+        <span class="n">scn_dict</span> <span class="o">=</span> <span class="n">cPickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">res</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">scn_dict</span>
 
+
 </div>
+<span class="nd">@retry_write</span>
 <div class="viewcode-block" id="link_var_scenario"><a class="viewcode-back" href="../../../library/user_data.html#braviz.readAndFilter.user_data.link_var_scenario">[docs]</a><span class="k">def</span> <span class="nf">link_var_scenario</span><span class="p">(</span><span class="n">var_idx</span><span class="p">,</span> <span class="n">scn_idx</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Links a variable to a scenario</span>
@@ -233,7 +244,7 @@
 <span class="sd">        var_idx (int) : Variable index</span>
 <span class="sd">        scn_idx (int) : Scenario index</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;INSERT INTO vars_scenarios VALUES (?,?)&quot;</span>
     <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">var_idx</span><span class="p">,</span> <span class="n">scn_idx</span><span class="p">))</span>
     <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
@@ -250,7 +261,7 @@
 <span class="sd">        A dictionary whose keys are scenario ids and values are scenario_names for scenarios linked to the</span>
 <span class="sd">            given variable</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT scn_id,scn_name FROM scenarios NATURAL JOIN vars_scenarios WHERE var_idx = ?&quot;</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">var_idx</span><span class="p">,))</span>
     <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">())</span>
@@ -266,12 +277,14 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        The number of scenarios linked to the given variable</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT count(*) FROM vars_scenarios WHERE var_idx == ?;&quot;</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">var_idx</span><span class="p">,))</span>
     <span class="k">return</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
 
+
 </div>
+<span class="nd">@retry_write</span>
 <div class="viewcode-block" id="save_sub_sample"><a class="viewcode-back" href="../../../library/user_data.html#braviz.readAndFilter.user_data.save_sub_sample">[docs]</a><span class="k">def</span> <span class="nf">save_sub_sample</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">elements</span><span class="p">,</span> <span class="n">description</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Save a sub sample into the database</span>
@@ -286,7 +299,7 @@
     <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">elements</span><span class="p">)</span>
     <span class="n">str_data</span> <span class="o">=</span> <span class="n">cPickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">elements</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
     <span class="n">str_data</span> <span class="o">=</span> <span class="nb">buffer</span><span class="p">(</span><span class="n">str_data</span><span class="p">)</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;INSERT INTO subj_samples (sample_name, sample_desc, sample_data, sample_size) VALUES (?,?,?,?)&quot;</span>
     <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">str_data</span><span class="p">,</span> <span class="n">size</span><span class="p">))</span>
     <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
@@ -302,7 +315,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        A string with the comment about the subject</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT comment FROM subj_comments WHERE subject = ?&quot;</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">subj</span><span class="p">,))</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
@@ -311,6 +324,7 @@
     <span class="k">return</span> <span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
 </div>
+<span class="nd">@retry_write</span>
 <div class="viewcode-block" id="update_comment"><a class="viewcode-back" href="../../../library/user_data.html#braviz.readAndFilter.user_data.update_comment">[docs]</a><span class="k">def</span> <span class="nf">update_comment</span><span class="p">(</span><span class="n">subj</span><span class="p">,</span> <span class="n">comment</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Update the comment about a subject</span>
@@ -320,7 +334,7 @@
 <span class="sd">        comment (str) : subject comment</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;INSERT OR REPLACE into subj_comments (subject,comment) VALUES (?,?)&quot;</span>
     <span class="k">with</span> <span class="n">conn</span><span class="p">:</span>
         <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">subj</span><span class="p">,</span> <span class="n">comment</span><span class="p">))</span>
@@ -335,7 +349,7 @@
 <span class="sd">        indexed by the sample index</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT sample_idx, sample_name, sample_desc, sample_size FROM subj_samples&quot;</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s">&quot;sample_idx&quot;</span><span class="p">,</span> <span class="n">coerce_float</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">data</span>
@@ -351,7 +365,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        ``True`` if a sample with this name exists in the database, ``False`` otherwise.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT count(*) FROM subj_samples WHERE sample_name = ?&quot;</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">sample_name</span><span class="p">,))</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
@@ -368,7 +382,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        The set of subjects in the sample</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT sample_data FROM subj_samples WHERE sample_idx = ?&quot;</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">sample_idx</span><span class="p">,))</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
@@ -378,7 +392,9 @@
     <span class="n">data</span> <span class="o">=</span> <span class="n">cPickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">data_str</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">data</span>
 
+
 </div>
+<span class="nd">@retry_write</span>
 <div class="viewcode-block" id="delete_sample"><a class="viewcode-back" href="../../../library/user_data.html#braviz.readAndFilter.user_data.delete_sample">[docs]</a><span class="k">def</span> <span class="nf">delete_sample</span><span class="p">(</span><span class="n">sample_id</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Delete a sample from the database</span>
@@ -386,12 +402,13 @@
 <span class="sd">    Args:</span>
 <span class="sd">        sample_id (int) :  Sample id</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="k">with</span> <span class="n">conn</span><span class="p">:</span>
         <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;DELETE FROM subj_samples WHERE sample_idx = ?&quot;</span>
         <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">sample_id</span><span class="p">),))</span>
 
 </div>
+<span class="nd">@retry_write</span>
 <div class="viewcode-block" id="delete_scenario"><a class="viewcode-back" href="../../../library/user_data.html#braviz.readAndFilter.user_data.delete_scenario">[docs]</a><span class="k">def</span> <span class="nf">delete_scenario</span><span class="p">(</span><span class="n">scn_id</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Delete a scenario from the database</span>
@@ -402,7 +419,7 @@
 <span class="sd">        scn_id (int) :  Scenario id</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">conn</span> <span class="o">=</span> <span class="n">_get_connection</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">with</span> <span class="n">conn</span><span class="p">:</span>
             <span class="c"># delete vars_scenarios</span>

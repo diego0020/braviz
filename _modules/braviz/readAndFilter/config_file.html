@@ -275,7 +275,9 @@
 
     <span class="n">braviz_conf</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="s">&#39;Braviz&#39;</span><span class="p">)</span>
     <span class="n">braviz_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;Braviz&#39;</span><span class="p">,</span> <span class="s">&#39;project&#39;</span><span class="p">,</span> <span class="s">&#39;kmc400&#39;</span><span class="p">)</span>
+    <span class="n">braviz_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;Braviz&#39;</span><span class="p">,</span> <span class="s">&#39;server_port&#39;</span><span class="p">,</span> <span class="s">&#39;8100&#39;</span><span class="p">)</span>
     <span class="n">braviz_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;Braviz&#39;</span><span class="p">,</span> <span class="s">&#39;logger&#39;</span><span class="p">,</span> <span class="s">&#39;console&#39;</span><span class="p">)</span>
+    <span class="n">braviz_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;Braviz&#39;</span><span class="p">,</span> <span class="s">&#39;web_logger_server&#39;</span><span class="p">,</span> <span class="s">&#39;127.0.0.1:8050&#39;</span><span class="p">)</span>
 
     <span class="n">braviz_conf</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="s">&quot;Default_Variables&quot;</span><span class="p">)</span>
     <span class="n">braviz_conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;Default_Variables&#39;</span><span class="p">,</span> <span class="s">&#39;nominal1&#39;</span><span class="p">,</span> <span class="s">&#39;ubicac&#39;</span><span class="p">)</span>
@@ -322,6 +324,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        dict : A dictionary containing the requested configuration parameters.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">hostname</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="kn">import</span> <span class="nn">platform</span>
         <span class="n">hostname</span> <span class="o">=</span> <span class="n">platform</span><span class="o">.</span><span class="n">node</span><span class="p">()</span>
@@ -330,8 +333,11 @@
         <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&quot;..&quot;</span><span class="p">,</span> <span class="s">&quot;applications&quot;</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">_hosts.cfg&quot;</span> <span class="o">%</span> <span class="n">project</span><span class="p">)</span>
     <span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">config</span><span class="o">.</span><span class="n">has_section</span><span class="p">(</span><span class="n">hostname</span><span class="p">):</span>
-        <span class="n">apps_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">file_name</span><span class="p">))</span>
-        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s">&quot;Unknown host </span><span class="si">%s</span><span class="se">\n</span><span class="s">Please modify the </span><span class="si">%s</span><span class="s">_hosts.cfg file in </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;No exact match found, trying default&quot;</span><span class="p">)</span>
+        <span class="n">hostname</span> <span class="o">=</span> <span class="s">&quot;default&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">config</span><span class="o">.</span><span class="n">has_section</span><span class="p">(</span><span class="n">hostname</span><span class="p">):</span>
+            <span class="n">apps_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">file_name</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s">&quot;Unknown host </span><span class="si">%s</span><span class="se">\n</span><span class="s">Please modify the </span><span class="si">%s</span><span class="s">_hosts.cfg file in </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
             <span class="n">hostname</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="n">apps_dir</span><span class="p">))</span>
     <span class="n">items</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="n">hostname</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">items</span>
@@ -341,9 +347,9 @@
     <span class="n">config_file_name</span> <span class="o">=</span> <span class="s">&#39;braviz.cfg&#39;</span>
     <span class="n">default_config_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">config_dir</span><span class="p">,</span> <span class="n">config_file_name</span><span class="p">)</span>
     <span class="n">make_default_config</span><span class="p">(</span><span class="n">default_config_name</span><span class="p">)</span>
-    <span class="n">config_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">config_dir</span><span class="p">,</span> <span class="s">&quot;..&quot;</span><span class="p">,</span> <span class="s">&quot;applications&quot;</span><span class="p">)</span>
-    <span class="n">default_config_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">config_dir</span><span class="p">,</span> <span class="n">config_file_name</span><span class="p">)</span>
-    <span class="n">make_default_config</span><span class="p">(</span><span class="n">default_config_name</span><span class="p">)</span>
+    <span class="c"># config_dir = os.path.join(config_dir, &quot;..&quot;, &quot;applications&quot;)</span>
+    <span class="c"># default_config_name = os.path.join(config_dir, config_file_name)</span>
+    <span class="c"># make_default_config(default_config_name)</span>
 </pre></div>
 
           </div>

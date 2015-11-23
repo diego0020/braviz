@@ -183,7 +183,7 @@ For full interactive applications consider using <a class="reference internal" h
 <dt id="braviz.visualization.simple_vtk.persistentImagePlane">
 <em class="property">class </em><code class="descname">persistentImagePlane</code><span class="sig-paren">(</span><em>orientation=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#persistentImagePlane"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.persistentImagePlane" title="Permalink to this definition">¶</a></dt>
 <dd><p>A vtkImagePlaneWidget which can keep its state between calls to SetInputData.</p>
-<p>It adds a second text message showing the world coordinates of the cursors
+<p>It adds a second text message showing the mm coordinates of the cursors
 This message can be further enhanced by using a label image and a label dictionary
 Additionally the values displayed in the first message can be replaced by values taken from another image, this
 is useful when the displayed image contains colors or other contexts that are not the main value (ex, fmri)
@@ -473,7 +473,7 @@ image plane, the separation between them is controlled by the <a class="referenc
 <h2>Other Utilities<a class="headerlink" href="#other-utilities" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="braviz.visualization.simple_vtk.save_ren_win_picture">
-<code class="descname">save_ren_win_picture</code><span class="sig-paren">(</span><em>ren_win</em>, <em>file_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#save_ren_win_picture"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.save_ren_win_picture" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save_ren_win_picture</code><span class="sig-paren">(</span><em>ren_win</em>, <em>file_name</em>, <em>magnification=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/visualization/simple_vtk.html#save_ren_win_picture"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.visualization.simple_vtk.save_ren_win_picture" title="Permalink to this definition">¶</a></dt>
 <dd><p>Saves an screenshot of a render window</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />

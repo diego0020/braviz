@@ -140,7 +140,7 @@ can be accessed with the function <a class="reference internal" href="#braviz.re
 <span class="go">}</span>
 </pre></div>
 </div>
-<p>Several of the functions in this module return instances of <a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.16.0)"><code class="xref py py-class docutils literal"><span class="pre">pandas.DataFrame</span></code></a>.</p>
+<p>Several of the functions in this module return instances of <a class="reference external" href="http://pandas.pydata.org/pandas-docs/version/0.17.0/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.17.0)"><code class="xref py py-class docutils literal"><span class="pre">pandas.DataFrame</span></code></a>.</p>
 <div class="section" id="subjects">
 <h2>Subjects<a class="headerlink" href="#subjects" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="read">
@@ -156,7 +156,7 @@ can be accessed with the function <a class="reference internal" href="#braviz.re
 <h3>Modify<a class="headerlink" href="#modify" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.recursive_delete_subject">
-<code class="descname">recursive_delete_subject</code><span class="sig-paren">(</span><em>subject</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#recursive_delete_subject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.recursive_delete_subject" title="Permalink to this definition">¶</a></dt>
+<code class="descname">recursive_delete_subject</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#recursive_delete_subject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.recursive_delete_subject" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes a subject from the database</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
@@ -252,7 +252,7 @@ the subject, if that is the case the operation will be aborted without modifying
 <h3>Modify<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.register_new_variable">
-<code class="descname">register_new_variable</code><span class="sig-paren">(</span><em>var_name</em>, <em>is_real=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#register_new_variable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.register_new_variable" title="Permalink to this definition">¶</a></dt>
+<code class="descname">register_new_variable</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#register_new_variable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.register_new_variable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a new variable to the database</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -273,7 +273,7 @@ the subject, if that is the case the operation will be aborted without modifying
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.recursive_delete_variable">
-<code class="descname">recursive_delete_variable</code><span class="sig-paren">(</span><em>var_idx</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#recursive_delete_variable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.recursive_delete_variable" title="Permalink to this definition">¶</a></dt>
+<code class="descname">recursive_delete_variable</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#recursive_delete_variable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.recursive_delete_variable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes a variable from all tables</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
@@ -366,7 +366,7 @@ the subject, if that is the case the operation will be aborted without modifying
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.get_var_value">
-<code class="descname">get_var_value</code><span class="sig-paren">(</span><em>var_idx</em>, <em>subject</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#get_var_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_var_value" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_var_value</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#get_var_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_var_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a single variable value</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -412,8 +412,8 @@ which will be used as indexes in the DataFrame.</p>
 <div class="section" id="id4">
 <h3>Modify<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
-<dt id="braviz.readAndFilter.tabular_data.updata_variable_value">
-<code class="descname">updata_variable_value</code><span class="sig-paren">(</span><em>var_idx</em>, <em>subject</em>, <em>new_value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#updata_variable_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.updata_variable_value" title="Permalink to this definition">¶</a></dt>
+<dt id="braviz.readAndFilter.tabular_data.update_variable_value">
+<code class="descname">update_variable_value</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#update_variable_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.update_variable_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates a single value for a variable and a subject</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -432,7 +432,7 @@ which will be used as indexes in the DataFrame.</p>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.update_multiple_variable_values">
-<code class="descname">update_multiple_variable_values</code><span class="sig-paren">(</span><em>idx_subject_value_tuples</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#update_multiple_variable_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.update_multiple_variable_values" title="Permalink to this definition">¶</a></dt>
+<code class="descname">update_multiple_variable_values</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#update_multiple_variable_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.update_multiple_variable_values" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates values for variables and subjects</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -447,7 +447,7 @@ are the variable and subject for whom the new value will be set.</td>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.update_variable_values">
-<code class="descname">update_variable_values</code><span class="sig-paren">(</span><em>var_idx</em>, <em>tuples</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#update_variable_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.update_variable_values" title="Permalink to this definition">¶</a></dt>
+<code class="descname">update_variable_values</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#update_variable_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.update_variable_values" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates values for one variable and some subjects</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -466,13 +466,13 @@ is the new value for the variable.</li>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.add_data_frame">
-<code class="descname">add_data_frame</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#add_data_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.add_data_frame" title="Permalink to this definition">¶</a></dt>
+<code class="descname">add_data_frame</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#add_data_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.add_data_frame" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inserts a whole dataframe into the database</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>df</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.16.0)"><em>pandas.DataFrame</em></a>) &#8211; DataFrame with subject ids as index, and one column for each new variable.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>df</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/version/0.17.0/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.17.0)"><em>pandas.DataFrame</em></a>) &#8211; DataFrame with subject ids as index, and one column for each new variable.</td>
 </tr>
 </tbody>
 </table>
@@ -622,7 +622,7 @@ is the new value for the variable.</li>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.get_labels_dict">
-<code class="descname">get_labels_dict</code><span class="sig-paren">(</span><em>var_idx</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#get_labels_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_labels_dict" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_labels_dict</code><span class="sig-paren">(</span><em>var_idx=None</em>, <em>var_name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#get_labels_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.get_labels_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Map numerical labels to strings in nominal variables</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -798,7 +798,7 @@ be the mean of existing values.</td>
 <h3>Modify<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.save_is_real">
-<code class="descname">save_is_real</code><span class="sig-paren">(</span><em>var_idx</em>, <em>is_real</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#save_is_real"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_is_real" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save_is_real</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#save_is_real"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_is_real" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update variable type in the metadata</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -816,7 +816,7 @@ be the mean of existing values.</td>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.save_is_real_by_name">
-<code class="descname">save_is_real_by_name</code><span class="sig-paren">(</span><em>var_name</em>, <em>is_real</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#save_is_real_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_is_real_by_name" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save_is_real_by_name</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#save_is_real_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_is_real_by_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update variable type in the metadata</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -834,7 +834,7 @@ be the mean of existing values.</td>
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.save_nominal_labels">
-<code class="descname">save_nominal_labels</code><span class="sig-paren">(</span><em>var_idx</em>, <em>label_name_tuples</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#save_nominal_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_nominal_labels" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save_nominal_labels</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#save_nominal_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_nominal_labels" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update nominal variable labels</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -853,7 +853,7 @@ second component its meaning. For example <code class="docutils literal"><span c
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.save_nominal_labels_by_name">
-<code class="descname">save_nominal_labels_by_name</code><span class="sig-paren">(</span><em>var_name</em>, <em>label_name_tuples</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#save_nominal_labels_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_nominal_labels_by_name" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save_nominal_labels_by_name</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#save_nominal_labels_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_nominal_labels_by_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update nominal variable labels</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -872,7 +872,7 @@ second component its meaning. For example <code class="docutils literal"><span c
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.save_real_meta">
-<code class="descname">save_real_meta</code><span class="sig-paren">(</span><em>var_idx</em>, <em>min_value</em>, <em>max_value</em>, <em>opt_value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#save_real_meta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_real_meta" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save_real_meta</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#save_real_meta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_real_meta" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update real variables&#8217; meta data</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -892,7 +892,7 @@ second component its meaning. For example <code class="docutils literal"><span c
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.save_real_meta_by_name">
-<code class="descname">save_real_meta_by_name</code><span class="sig-paren">(</span><em>var_name</em>, <em>min_value</em>, <em>max_value</em>, <em>opt_value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#save_real_meta_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_real_meta_by_name" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save_real_meta_by_name</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#save_real_meta_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_real_meta_by_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update real variables&#8217; meta data</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -912,7 +912,7 @@ second component its meaning. For example <code class="docutils literal"><span c
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.save_var_description">
-<code class="descname">save_var_description</code><span class="sig-paren">(</span><em>var_idx</em>, <em>description</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#save_var_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_var_description" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save_var_description</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#save_var_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_var_description" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save or overwrite description for a variable</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -930,7 +930,7 @@ second component its meaning. For example <code class="docutils literal"><span c
 
 <dl class="function">
 <dt id="braviz.readAndFilter.tabular_data.save_var_description_by_name">
-<code class="descname">save_var_description_by_name</code><span class="sig-paren">(</span><em>var_name</em>, <em>description</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#save_var_description_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_var_description_by_name" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save_var_description_by_name</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/tabular_data.html#save_var_description_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.tabular_data.save_var_description_by_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save or overwrite description for a variable</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />

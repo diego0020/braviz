@@ -145,7 +145,7 @@
         <span class="k">return</span>
 </div>
     <span class="nd">@cache_function</span><span class="p">(</span><span class="n">_memory_cache_container</span><span class="p">)</span>
-<div class="viewcode-block" id="BaseReader.get"><a class="viewcode-back" href="../../../library/reader.html#braviz.readAndFilter.base_reader.BaseReader.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">subj_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="s">&#39;world&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseReader.get"><a class="viewcode-back" href="../../../library/reader.html#braviz.readAndFilter.base_reader.BaseReader.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">subj_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="s">&#39;subject&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Provides access to geometric data in an specified coordinate system.</span>
 
 <span class="sd">        Args:</span>
@@ -293,7 +293,7 @@
 <span class="sd">            space (str): The coordinate systems in which the result is requested. Available spaces are</span>
 
 <span class="sd">                ===============   ==================================</span>
-<span class="sd">                world             Defined by the MRI image</span>
+<span class="sd">                subject           Defined by the subject&#39;s MRI image</span>
 
 <span class="sd">                talairach         MRI image after applying an affine transformation to the Talairach coordinates</span>
 
@@ -319,9 +319,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">subj</span>
 
-<div class="viewcode-block" id="BaseReader.move_img_to_world"><a class="viewcode-back" href="../../../library/reader.html#braviz.readAndFilter.base_reader.BaseReader.move_img_to_world">[docs]</a>    <span class="k">def</span> <span class="nf">move_img_to_world</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">source_space</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">interpolate</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseReader.move_img_to_subject"><a class="viewcode-back" href="../../../library/reader.html#braviz.readAndFilter.base_reader.BaseReader.move_img_to_subject">[docs]</a>    <span class="k">def</span> <span class="nf">move_img_to_subject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">source_space</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">interpolate</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Resamples an image into the world coordinate system</span>
+<span class="sd">        Resamples an image into the subject coordinate system</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            img (vtkImageData): source image</span>
@@ -329,13 +329,13 @@
 <span class="sd">            subj: Subject to whom the image belongs</span>
 <span class="sd">            interpolate (bool): If False nearest neighbours interpolation is applied, useful for label maps</span>
 <span class="sd">        Returns:</span>
-<span class="sd">            Resliced image in world coordinate system</span>
+<span class="sd">            Resliced image in subject coordinate system</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 </div>
-<div class="viewcode-block" id="BaseReader.move_img_from_world"><a class="viewcode-back" href="../../../library/reader.html#braviz.readAndFilter.base_reader.BaseReader.move_img_from_world">[docs]</a>    <span class="k">def</span> <span class="nf">move_img_from_world</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">target_space</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">interpolate</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseReader.move_img_from_subject"><a class="viewcode-back" href="../../../library/reader.html#braviz.readAndFilter.base_reader.BaseReader.move_img_from_subject">[docs]</a>    <span class="k">def</span> <span class="nf">move_img_from_subject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">target_space</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">interpolate</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Resamples an image from the world coordinates into some other coordinate system</span>
+<span class="sd">        Resamples an image from the subject coordinates into some other coordinate system</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            img (vtkImageData): source image</span>
@@ -351,16 +351,16 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Transforms a set of points into another coordinate system</span>
 
-<span class="sd">        By defaults moves from world coordinates to another system, but these behaviour is reversed if the</span>
+<span class="sd">        By defaults moves from subject coordinates to another system, but these behaviour is reversed if the</span>
 <span class="sd">        *inverse* parameter is True. At the moment, to move from an arbitrary coordinate system to another it is</span>
-<span class="sd">        necessary to use the world coordinates as stopover</span>
+<span class="sd">        necessary to use the subject coordinates as stopover</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            point_set (vtkPolyData,vtkPoints,vtkDataSet): source points</span>
 <span class="sd">            space (str): origin or destination coordinate system, depending on *inverse*</span>
 <span class="sd">            subj: Subject to whom the points belong</span>
-<span class="sd">            inverse (bool): If false points are moved from world to *space*, else the points are moved from</span>
-<span class="sd">                *space* to world.</span>
+<span class="sd">            inverse (bool): If false points are moved from subject to *space*, else the points are moved from</span>
+<span class="sd">                *space* to subject.</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            Transformed points</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -517,8 +517,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s">&quot;Data not available in BaseReader&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">subj</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="s">&#39;world&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">subj</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="s">&#39;subject&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Internal: decode instruction and dispatch&quot;&quot;&quot;</span>
+        <span class="c">#Deprecated</span>
+        <span class="k">assert</span> <span class="n">space</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s">&quot;world&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">data</span> <span class="o">==</span> <span class="s">&#39;IMAGE&#39;</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">kw</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;index&quot;</span><span class="p">):</span>

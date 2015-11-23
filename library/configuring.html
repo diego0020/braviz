@@ -120,7 +120,9 @@ in the <a class="reference internal" href="applications.html#module-braviz.appli
 <p>The default config file is</p>
 <div class="highlight-cfg"><div class="highlight"><pre><span class="k">[Braviz]</span>
 <span class="na">project</span> <span class="o">=</span> <span class="s">kmc400</span>
+<span class="na">server_port</span> <span class="o">=</span> <span class="s">8100</span>
 <span class="na">logger</span> <span class="o">=</span> <span class="s">console</span>
+<span class="na">web_logger_server</span> <span class="o">=</span> <span class="s">127.0.0.1:8050</span>
 
 <span class="k">[Default_Variables]</span>
 <span class="na">nominal1</span> <span class="o">=</span> <span class="s">ubicac</span>
@@ -145,9 +147,11 @@ in the <a class="reference internal" href="applications.html#module-braviz.appli
 <p>The <code class="docutils literal"><span class="pre">project</span></code> field defines the project that will be used in the following session. This defines the
 <a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><code class="xref py py-class docutils literal"><span class="pre">BaseReader</span></code></a> subclass that will be used, and according to it the location for
 the database and cache files.</p>
-<p>The <code class="docutils literal"><span class="pre">logger</span></code> field can take the values <code class="docutils literal"><span class="pre">console</span></code> or <code class="docutils literal"><span class="pre">file</span></code>. In the first case all logging is done to the terminal,
+<p>The <code class="docutils literal"><span class="pre">server_port</span></code> field contains the port in which the Braviz Web server will listen for http connections.</p>
+<p>The <code class="docutils literal"><span class="pre">logger</span></code> field can take the values <code class="docutils literal"><span class="pre">console</span></code>, <code class="docutils literal"><span class="pre">file</span></code> or <code class="docutils literal"><span class="pre">web_logger</span></code>. In the first case all logging is done to the terminal,
 in the second case it is stored in the <code class="docutils literal"><span class="pre">logs</span></code> directory inside
-<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader.get_auto_dyn_data_root" title="braviz.readAndFilter.base_reader.BaseReader.get_auto_dyn_data_root"><code class="xref py py-meth docutils literal"><span class="pre">get_auto_dyn_data_root()</span></code></a></p>
+<a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader.get_auto_dyn_data_root" title="braviz.readAndFilter.base_reader.BaseReader.get_auto_dyn_data_root"><code class="xref py py-meth docutils literal"><span class="pre">get_auto_dyn_data_root()</span></code></a>
+Finally, logging messages are sent ass HTTP requests to the address specified in the <code class="docutils literal"><span class="pre">web_logger_server</span></code> field of this section.</p>
 </div>
 <div class="section" id="default-variables">
 <h3>Default_Variables<a class="headerlink" href="#default-variables" title="Permalink to this headline">¶</a></h3>

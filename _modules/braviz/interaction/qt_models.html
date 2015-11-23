@@ -116,7 +116,7 @@
 <span class="kn">from</span> <span class="nn">braviz.readAndFilter</span> <span class="kn">import</span> <span class="n">bundles_db</span>
 
 <span class="kn">from</span> <span class="nn">braviz.interaction.qt_structures_model</span> <span class="kn">import</span> <span class="n">StructureTreeModel</span>
-
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
 <div class="viewcode-block" id="VarListModel"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.qt_models.VarListModel">[docs]</a><span class="k">class</span> <span class="nc">VarListModel</span><span class="p">(</span><span class="n">QAbstractListModel</span><span class="p">):</span>
 
@@ -215,6 +215,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">checked_set</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">internal_data</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">checked_set</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">internal_data</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">QModelIndex</span><span class="p">,</span> <span class="n">QModelIndex</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">CheckedChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">checked_set</span><span class="p">))</span>
             <span class="k">return</span> <span class="bp">True</span>
 
@@ -276,9 +277,10 @@
 <span class="sd">        parent (QObject) : Qt parent for this object</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outcome_var</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outcome_var</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">sample</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="n">QAbstractTableModel</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_frame</span> <span class="o">=</span> <span class="n">braviz_tab_data</span><span class="o">.</span><span class="n">get_variables</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sample</span> <span class="o">=</span> <span class="n">sample</span>
         <span class="c"># self.data_frame[&quot;var_idx&quot;]=self.data_frame.index</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_frame</span><span class="p">[</span><span class="s">&quot;Ginni&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;?&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ginni_calculated</span> <span class="o">=</span> <span class="bp">False</span>
@@ -350,7 +352,7 @@
             <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
             <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;An outcome var is required for this&quot;</span><span class="p">)</span>
             <span class="k">return</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data_frame</span> <span class="o">=</span> <span class="n">calculate_ginni_index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outcome</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_frame</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_frame</span> <span class="o">=</span> <span class="n">calculate_ginni_index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outcome</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_frame</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="VarAndGiniModel.update_list"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.qt_models.VarAndGiniModel.update_list">[docs]</a>    <span class="k">def</span> <span class="nf">update_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mask</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -886,9 +888,9 @@
             <span class="k">return</span> <span class="s">&quot;</span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">data</span>
         <span class="k">elif</span> <span class="n">col</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
             <span class="c"># p</span>
-            <span class="k">return</span> <span class="s">&quot;{:.1e}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="k">return</span> <span class="s">&quot;{:.6g}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s">&quot;{:.3g}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="k">return</span> <span class="s">&quot;{:.6g}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">headerData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p_int</span><span class="p">,</span> <span class="n">Qt_Orientation</span><span class="p">,</span> <span class="n">int_role</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">Qt_Orientation</span> <span class="o">!=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Horizontal</span><span class="p">:</span>
@@ -1006,7 +1008,10 @@
             <span class="k">return</span> <span class="nb">unicode</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">ans</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%.4g</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">data</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,(</span><span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">)):</span>
+                    <span class="n">ans</span> <span class="o">=</span> <span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="s">&quot;d&quot;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ans</span> <span class="o">=</span> <span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="s">&quot;.6f&quot;</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                 <span class="n">ans</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">ans</span>
@@ -1309,6 +1314,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__labels</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__col_indexes</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__highlight_subject</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sort_column</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sort_reversed</span> <span class="o">=</span> <span class="bp">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sample</span> <span class="o">=</span> <span class="n">sample</span>
         <span class="k">if</span> <span class="n">sample</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sample</span> <span class="o">=</span> <span class="n">braviz_tab_data</span><span class="o">.</span><span class="n">get_subjects</span><span class="p">()</span>
@@ -1365,12 +1372,22 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">None</span>
 
-    <span class="k">def</span> <span class="nf">sort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p_int</span><span class="p">,</span> <span class="n">Qt_SortOrder_order</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">sort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p_int</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">Qt_SortOrder_order</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="n">reverse</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sort_reversed</span> <span class="o">=</span> <span class="n">reverse</span>
+        <span class="k">if</span> <span class="n">p_int</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">sort_column_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_sort_column</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sort_column_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">p_int</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sort_column</span> <span class="o">=</span> <span class="n">p_int</span>
+
         <span class="k">if</span> <span class="n">Qt_SortOrder_order</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DescendingOrder</span><span class="p">:</span>
             <span class="n">reverse</span> <span class="o">=</span> <span class="bp">True</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__df</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">p_int</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="n">reverse</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">modelAboutToBeReset</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+        <span class="c"># Merge sort is stable</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+            <span class="n">sort_column_name</span> <span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="n">reverse</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s">&quot;mergesort&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">modelReset</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
 
 <div class="viewcode-block" id="SubjectsTable.set_var_columns"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.qt_models.SubjectsTable.set_var_columns">[docs]</a>    <span class="k">def</span> <span class="nf">set_var_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">columns</span><span class="p">):</span>
@@ -1403,10 +1420,11 @@
 <span class="sd">        Set the subsample of subjects in the table</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            new_sample (list) : List of subject ids</span>
+<span class="sd">            new_sample (set) : List of subject ids</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sample</span> <span class="o">=</span> <span class="n">new_sample</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sample</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">new_sample</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_var_columns</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__col_indexes</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
 </div>
 <div class="viewcode-block" id="SubjectsTable.get_current_columns"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.qt_models.SubjectsTable.get_current_columns">[docs]</a>    <span class="k">def</span> <span class="nf">get_current_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1436,6 +1454,16 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__highlight_subject</span> <span class="o">=</span> <span class="n">subj</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">modelReset</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
 
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">sorted_sample</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
+    <span class="nd">@sorted_sample.setter</span>
+    <span class="k">def</span> <span class="nf">sorted_sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_order</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">new_order</span><span class="p">)</span> <span class="o">==</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modelAboutToBeReset</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">new_order</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modelReset</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
 </div>
 <div class="viewcode-block" id="ContextVariablesModel"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.qt_models.ContextVariablesModel">[docs]</a><span class="k">class</span> <span class="nc">ContextVariablesModel</span><span class="p">(</span><span class="n">QAbstractTableModel</span><span class="p">):</span>
 
@@ -1571,6 +1599,7 @@
             <span class="k">if</span> <span class="n">QModelIndex</span><span class="o">.</span><span class="n">column</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
                 <span class="k">return</span> <span class="bp">False</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">editables_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data_frame</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">row</span><span class="p">]]</span> <span class="o">=</span> <span class="n">QVariant</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Checked</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">QModelIndex</span><span class="p">,</span> <span class="n">QModelIndex</span><span class="p">)</span>
             <span class="k">return</span> <span class="bp">True</span>
 
     <span class="k">def</span> <span class="nf">flags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">QModelIndex</span><span class="p">):</span>
@@ -1927,16 +1956,20 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">BundlesSelectionList</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id_list</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">names_dict</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_selected</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_selected</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">refresh_model</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">showing_special</span> <span class="o">=</span> <span class="bp">False</span>
 
 <div class="viewcode-block" id="BundlesSelectionList.refresh_model"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.qt_models.BundlesSelectionList.refresh_model">[docs]</a>    <span class="k">def</span> <span class="nf">refresh_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reloads data from the database</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modelAboutToBeReset</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
         <span class="n">tuples</span> <span class="o">=</span> <span class="n">bundles_db</span><span class="o">.</span><span class="n">get_bundle_ids_and_names</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">names_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">tuples</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">names_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_selected</span><span class="o">.</span><span class="n">intersection_update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modelReset</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
 </div>
 <div class="viewcode-block" id="BundlesSelectionList.select_many_ids"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.qt_models.BundlesSelectionList.select_many_ids">[docs]</a>    <span class="k">def</span> <span class="nf">select_many_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ids_it</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1945,14 +1978,16 @@
 <span class="sd">        Args:</span>
 <span class="sd">            ids_it (list) : List of database ids to add</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ids_it</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_selected</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modelAboutToBeReset</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_selected</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id_list</span><span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">ids_it</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modelReset</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+
 </div>
 <div class="viewcode-block" id="BundlesSelectionList.get_selected"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.qt_models.BundlesSelectionList.get_selected">[docs]</a>    <span class="k">def</span> <span class="nf">get_selected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a list of selected bundle ids</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selected</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_selected</span><span class="p">)</span>
 </div>
     <span class="k">def</span> <span class="nf">rowCount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">QModelIndex_parent</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id_list</span><span class="p">)</span>
@@ -1960,16 +1995,24 @@
     <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">QModelIndex</span><span class="p">,</span> <span class="n">int_role</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">QModelIndex</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
             <span class="n">row</span> <span class="o">=</span> <span class="n">QModelIndex</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">showing_special</span><span class="p">:</span>
+                <span class="n">row</span> <span class="o">-=</span> <span class="mi">1</span>
             <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">row</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id_list</span><span class="p">):</span>
                 <span class="n">bid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_list</span><span class="p">[</span><span class="n">row</span><span class="p">]</span>
                 <span class="k">if</span> <span class="n">int_role</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">:</span>
                     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">names_dict</span><span class="p">[</span><span class="n">bid</span><span class="p">]</span>
-                <span class="k">if</span> <span class="n">int_role</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">CheckStateRole</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selected</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">bid</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+                <span class="k">elif</span> <span class="n">int_role</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">CheckStateRole</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">bid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selected</span><span class="p">:</span>
                         <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Checked</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Unchecked</span>
-
+                <span class="k">elif</span> <span class="n">int_role</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">bid</span>
+            <span class="k">elif</span> <span class="n">row</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">int_role</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="s">&quot;&lt;From Segmentation&gt;&quot;</span>
+                <span class="k">elif</span> <span class="n">int_role</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">CheckStateRole</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Checked</span>
         <span class="k">return</span> <span class="bp">None</span>
 
     <span class="k">def</span> <span class="nf">headerData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p_int</span><span class="p">,</span> <span class="n">Qt_Orientation</span><span class="p">,</span> <span class="n">int_role</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
@@ -1978,21 +2021,37 @@
     <span class="k">def</span> <span class="nf">flags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">QModelIndex</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">QModelIndex</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
             <span class="n">row</span> <span class="o">=</span> <span class="n">QModelIndex</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">showing_special</span><span class="p">:</span>
+                <span class="n">row</span> <span class="o">-=</span> <span class="mi">1</span>
             <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">row</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id_list</span><span class="p">):</span>
                 <span class="n">flag</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsEnabled</span> <span class="o">|</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsSelectable</span> <span class="o">|</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsUserCheckable</span>
+                <span class="k">return</span> <span class="n">flag</span>
+            <span class="k">elif</span> <span class="n">row</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">flag</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsEnabled</span> <span class="o">|</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsSelectable</span>
                 <span class="k">return</span> <span class="n">flag</span>
         <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">NoItemFlags</span>
 
     <span class="k">def</span> <span class="nf">setData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">QModelIndex</span><span class="p">,</span> <span class="n">QVariant</span><span class="p">,</span> <span class="n">int_role</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">QModelIndex</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
             <span class="n">row</span> <span class="o">=</span> <span class="n">QModelIndex</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">showing_special</span><span class="p">:</span>
+                <span class="n">row</span> <span class="o">-=</span> <span class="mi">1</span>
             <span class="k">if</span> <span class="n">int_role</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">CheckStateRole</span><span class="p">:</span>
                 <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">row</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id_list</span><span class="p">):</span>
                     <span class="n">value</span> <span class="o">=</span> <span class="n">QVariant</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Checked</span>
                     <span class="n">bid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_list</span><span class="p">[</span><span class="n">row</span><span class="p">]</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_selected</span><span class="p">[</span><span class="n">bid</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                    <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_selected</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">bid</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_selected</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">bid</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">dataChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">QModelIndex</span><span class="p">,</span><span class="n">QModelIndex</span><span class="p">)</span>
                     <span class="k">return</span> <span class="bp">True</span>
         <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="k">def</span> <span class="nf">set_show_special</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">show</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modelAboutToBeReset</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">showing_special</span> <span class="o">=</span> <span class="n">show</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modelReset</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
 
 </div>
 <div class="viewcode-block" id="ScenariosTableModel"><a class="viewcode-back" href="../../../library/qt_models.html#braviz.interaction.qt_models.ScenariosTableModel">[docs]</a><span class="k">class</span> <span class="nc">ScenariosTableModel</span><span class="p">(</span><span class="n">QAbstractTableModel</span><span class="p">):</span>
@@ -2258,8 +2317,11 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reload subsamples from the database</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data_frame</span> <span class="o">=</span> <span class="n">braviz_user_data</span><span class="o">.</span><span class="n">get_samples_df</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">modelReset</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">braviz_user_data</span><span class="o">.</span><span class="n">get_samples_df</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">df</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_frame</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">modelAboutToBeReset</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data_frame</span> <span class="o">=</span> <span class="n">df</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">modelReset</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
 </div>
     <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">QModelIndex</span><span class="p">,</span> <span class="n">int_role</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">QModelIndex</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
@@ -2354,7 +2416,7 @@
 
     <span class="nd">@checked.setter</span>
     <span class="k">def</span> <span class="nf">checked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_set</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__checked</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span><span class="n">new_set</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__checked</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">new_set</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">modelReset</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
 
     <span class="nd">@property</span>
@@ -2373,7 +2435,7 @@
 <span class="sd">        Args:</span>
 <span class="sd">            lst (list) : List of subject ids</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__list</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">modelReset</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
 </div>
     <span class="k">def</span> <span class="nf">rowCount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">QModelIndex_parent</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -2389,7 +2451,7 @@
             <span class="k">if</span> <span class="n">int_role</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DisplayRole</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">name</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">int_role</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">CheckStateRole</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__show_checks</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">checked</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__checked</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Checked</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Unchecked</span>
@@ -2527,6 +2589,7 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">checked</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">checked</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dataChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">QModelIndex</span><span class="p">,</span> <span class="n">QModelIndex</span><span class="p">)</span>
                 <span class="k">return</span> <span class="bp">True</span>
         <span class="k">return</span> <span class="bp">False</span>
 

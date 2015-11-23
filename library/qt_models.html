@@ -184,7 +184,7 @@ Only methods that are not part of the Qt interface are shown here.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>data_frame</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.16.0)"><em>pandas.DataFrame</em></a>) &#8211; Data Frame</li>
+<li><strong>data_frame</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/version/0.17.0/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.17.0)"><em>pandas.DataFrame</em></a>) &#8211; Data Frame</li>
 <li><strong>columns</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; Optional, names for columns of the data frame</li>
 <li><strong>string_columns</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of column names that should be displayed as strings</li>
 <li><strong>index_as_column</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; Display the data frame index as the first column</li>
@@ -603,7 +603,7 @@ Values for nominal variables are shown as textual labels</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_sample</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of subject ids</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_sample</strong> (<a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#set" title="(in Python v2.7)"><em>set</em></a>) &#8211; List of subject ids</td>
 </tr>
 </tbody>
 </table>
@@ -818,7 +818,7 @@ is itself an iterable of the same length and indices as the subjects list</td>
 <h3>Statistics<a class="headerlink" href="#statistics" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="braviz.interaction.qt_models.VarAndGiniModel">
-<em class="property">class </em><code class="descname">VarAndGiniModel</code><span class="sig-paren">(</span><em>outcome_var=None</em>, <em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_models.html#VarAndGiniModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_models.VarAndGiniModel" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">VarAndGiniModel</code><span class="sig-paren">(</span><em>outcome_var=None</em>, <em>parent=None</em>, <em>sample=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_models.html#VarAndGiniModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_models.VarAndGiniModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>A table of variables which can include the gini index.</p>
 <p>The
 <a class="reference external" href="http://en.wikipedia.org/wiki/Decision_tree_learning#Gini_impurity">gini index</a>
@@ -1018,7 +1018,7 @@ Internally it also holds residuals, fitted values and intercept.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>results_df</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.16.0)"><em>pandas.DataFrame</em></a>) &#8211; A Data Frame containing the columns indicated above</li>
+<li><strong>results_df</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/version/0.17.0/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.17.0)"><em>pandas.DataFrame</em></a>) &#8211; A Data Frame containing the columns indicated above</li>
 <li><strong>residuals</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; A vector of the regression residuals</li>
 <li><strong>intercept</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Value of the intercept term of the regression</li>
 <li><strong>fitted</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; Vector of fitted values</li>
@@ -1521,7 +1521,7 @@ node_type, value, extra_data, children (each of them as another dictionary with 
 
 <dl class="class">
 <dt id="braviz.interaction.logic_bundle_model.LogicBundleNodeWithVTK">
-<em class="property">class </em><code class="descname">LogicBundleNodeWithVTK</code><span class="sig-paren">(</span><em>parent</em>, <em>son_number</em>, <em>node_type</em>, <em>value</em>, <em>extra_data=None</em>, <em>reader=None</em>, <em>subj=None</em>, <em>space='World'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/logic_bundle_model.html#LogicBundleNodeWithVTK"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.logic_bundle_model.LogicBundleNodeWithVTK" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">LogicBundleNodeWithVTK</code><span class="sig-paren">(</span><em>parent</em>, <em>son_number</em>, <em>node_type</em>, <em>value</em>, <em>extra_data=None</em>, <em>reader=None</em>, <em>subj=None</em>, <em>space='subject'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/logic_bundle_model.html#LogicBundleNodeWithVTK"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.logic_bundle_model.LogicBundleNodeWithVTK" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds VTK drawing capabilities to the <a class="reference internal" href="#braviz.interaction.logic_bundle_model.LogicBundleNode" title="braviz.interaction.logic_bundle_model.LogicBundleNode"><code class="xref py py-class docutils literal"><span class="pre">LogicBundleNode</span></code></a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1597,7 +1597,7 @@ See <a class="reference internal" href="reader.html#braviz.readAndFilter.base_re
 
 <dl class="staticmethod">
 <dt id="braviz.interaction.logic_bundle_model.LogicBundleNodeWithVTK.vtk_from_dict">
-<em class="property">static </em><code class="descname">vtk_from_dict</code><span class="sig-paren">(</span><em>values</em>, <em>reader</em>, <em>subj=None</em>, <em>space='World'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/logic_bundle_model.html#LogicBundleNodeWithVTK.vtk_from_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.logic_bundle_model.LogicBundleNodeWithVTK.vtk_from_dict" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">vtk_from_dict</code><span class="sig-paren">(</span><em>values</em>, <em>reader</em>, <em>subj=None</em>, <em>space='subject'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/logic_bundle_model.html#LogicBundleNodeWithVTK.vtk_from_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.logic_bundle_model.LogicBundleNodeWithVTK.vtk_from_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a tree from a recursive dictionary</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
