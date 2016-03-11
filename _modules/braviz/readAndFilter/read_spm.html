@@ -82,23 +82,23 @@
           <div class="body" role="main">
             
   <h1>Source code for braviz.readAndFilter.read_spm</h1><div class="highlight"><pre>
-<span class="c">##############################################################################</span>
-<span class="c">#    Braviz, Brain Data interactive visualization                            #</span>
-<span class="c">#    Copyright (C) 2014  Diego Angulo                                        #</span>
-<span class="c">#                                                                            #</span>
-<span class="c">#    This program is free software: you can redistribute it and/or modify    #</span>
-<span class="c">#    it under the terms of the GNU Lesser General Public License as          #</span>
-<span class="c">#    published by  the Free Software Foundation, either version 3 of the     #</span>
-<span class="c">#    License, or (at your option) any later version.                         #</span>
-<span class="c">#                                                                            #</span>
-<span class="c">#    This program is distributed in the hope that it will be useful,         #</span>
-<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
-<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
-<span class="c">#    GNU Lesser General Public License for more details.                     #</span>
-<span class="c">#                                                                            #</span>
-<span class="c">#    You should have received a copy of the GNU Lesser General Public License#</span>
-<span class="c">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
-<span class="c">##############################################################################</span>
+<span></span><span class="c1">##############################################################################</span>
+<span class="c1">#    Braviz, Brain Data interactive visualization                            #</span>
+<span class="c1">#    Copyright (C) 2014  Diego Angulo                                        #</span>
+<span class="c1">#                                                                            #</span>
+<span class="c1">#    This program is free software: you can redistribute it and/or modify    #</span>
+<span class="c1">#    it under the terms of the GNU Lesser General Public License as          #</span>
+<span class="c1">#    published by  the Free Software Foundation, either version 3 of the     #</span>
+<span class="c1">#    License, or (at your option) any later version.                         #</span>
+<span class="c1">#                                                                            #</span>
+<span class="c1">#    This program is distributed in the hope that it will be useful,         #</span>
+<span class="c1">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
+<span class="c1">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
+<span class="c1">#    GNU Lesser General Public License for more details.                     #</span>
+<span class="c1">#                                                                            #</span>
+<span class="c1">#    You should have received a copy of the GNU Lesser General Public License#</span>
+<span class="c1">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
+<span class="c1">##############################################################################</span>
 
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
@@ -107,7 +107,7 @@
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
-<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Diego&#39;</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;Diego&#39;</span>
 
 
 <div class="viewcode-block" id="get_contrasts_dict"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.read_spm.get_contrasts_dict">[docs]</a><span class="k">def</span> <span class="nf">get_contrasts_dict</span><span class="p">(</span><span class="n">spm_file_path</span><span class="p">):</span>
@@ -121,16 +121,16 @@
 <span class="sd">        A dictionary with contrast indexes (starting at 1) for keys, and contrast names for values</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">spm_file</span> <span class="o">=</span> <span class="n">sio</span><span class="o">.</span><span class="n">loadmat</span><span class="p">(</span><span class="n">spm_file_path</span><span class="p">)</span>
-    <span class="n">spm_struct</span> <span class="o">=</span> <span class="n">spm_file</span><span class="p">[</span><span class="s">&quot;SPM&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-    <span class="n">contrasts_info</span> <span class="o">=</span> <span class="n">spm_struct</span><span class="p">[</span><span class="s">&quot;xCon&quot;</span><span class="p">]</span>
+    <span class="n">spm_struct</span> <span class="o">=</span> <span class="n">spm_file</span><span class="p">[</span><span class="s2">&quot;SPM&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">contrasts_info</span> <span class="o">=</span> <span class="n">spm_struct</span><span class="p">[</span><span class="s2">&quot;xCon&quot;</span><span class="p">]</span>
     <span class="n">n_contrasts</span> <span class="o">=</span> <span class="n">contrasts_info</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">contrast_names</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n_contrasts</span><span class="p">):</span>
-        <span class="n">contrast_names</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">contrasts_info</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">][</span><span class="s">&quot;name&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">contrast_names</span>
-</div>
-<span class="n">ContrastInfo</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s">&quot;ContrastInfo&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="s">&quot;design&quot;</span><span class="p">))</span>
-<span class="n">ConditionInfo</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s">&quot;ConditionInfo&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="s">&quot;onsets&quot;</span><span class="p">,</span> <span class="s">&quot;durations&quot;</span><span class="p">))</span>
+        <span class="n">contrast_names</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">contrasts_info</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">contrast_names</span></div>
+
+<span class="n">ContrastInfo</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;ContrastInfo&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;design&quot;</span><span class="p">))</span>
+<span class="n">ConditionInfo</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;ConditionInfo&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;onsets&quot;</span><span class="p">,</span> <span class="s2">&quot;durations&quot;</span><span class="p">))</span>
 
 
 <div class="viewcode-block" id="SpmFileReader"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.read_spm.SpmFileReader">[docs]</a><span class="k">class</span> <span class="nc">SpmFileReader</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -144,38 +144,38 @@
 <span class="sd">        Args:</span>
 <span class="sd">            spm_file_path (str) : Path to ``spm.mat`` file</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">spm</span> <span class="o">=</span> <span class="n">sio</span><span class="o">.</span><span class="n">loadmat</span><span class="p">(</span><span class="n">spm_file_path</span><span class="p">)[</span><span class="s">&quot;SPM&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__units</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spm</span><span class="p">[</span><span class="s">&quot;xBF&quot;</span><span class="p">][</span><span class="s">&quot;UNITS&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__time_bin</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spm</span><span class="p">[</span><span class="s">&quot;xBF&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">][</span><span class="s">&quot;dt&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__tr_divisions</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spm</span><span class="p">[</span><span class="s">&quot;xBF&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">][</span><span class="s">&quot;T&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__n_scans</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spm</span><span class="p">[</span><span class="s">&quot;nscan&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__tr</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spm</span><span class="p">[</span><span class="s">&quot;xY&quot;</span><span class="p">][</span><span class="s">&quot;RT&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spm</span> <span class="o">=</span> <span class="n">sio</span><span class="o">.</span><span class="n">loadmat</span><span class="p">(</span><span class="n">spm_file_path</span><span class="p">)[</span><span class="s2">&quot;SPM&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__units</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spm</span><span class="p">[</span><span class="s2">&quot;xBF&quot;</span><span class="p">][</span><span class="s2">&quot;UNITS&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__time_bin</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spm</span><span class="p">[</span><span class="s2">&quot;xBF&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">][</span><span class="s2">&quot;dt&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__tr_divisions</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spm</span><span class="p">[</span><span class="s2">&quot;xBF&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">][</span><span class="s2">&quot;T&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__n_scans</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spm</span><span class="p">[</span><span class="s2">&quot;nscan&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__tr</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spm</span><span class="p">[</span><span class="s2">&quot;xY&quot;</span><span class="p">][</span><span class="s2">&quot;RT&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__conditions</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__constrasts</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__experiment_samples</span> <span class="o">=</span> <span class="bp">None</span>
 
     <span class="k">def</span> <span class="nf">__parse_contrasts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">spm_struct</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spm</span>
-        <span class="n">contrasts_info</span> <span class="o">=</span> <span class="n">spm_struct</span><span class="p">[</span><span class="s">&quot;xCon&quot;</span><span class="p">]</span>
+        <span class="n">contrasts_info</span> <span class="o">=</span> <span class="n">spm_struct</span><span class="p">[</span><span class="s2">&quot;xCon&quot;</span><span class="p">]</span>
         <span class="n">n_contrasts</span> <span class="o">=</span> <span class="n">contrasts_info</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">contrasts</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n_contrasts</span><span class="p">):</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="n">contrasts_info</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">][</span><span class="s">&quot;name&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">design</span> <span class="o">=</span> <span class="n">contrasts_info</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">][</span><span class="s">&quot;c&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
-            <span class="n">stat</span> <span class="o">=</span> <span class="n">contrasts_info</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">][</span><span class="s">&quot;STAT&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-            <span class="k">assert</span> <span class="n">stat</span> <span class="o">==</span> <span class="s">&quot;T&quot;</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">contrasts_info</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">design</span> <span class="o">=</span> <span class="n">contrasts_info</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">][</span><span class="s2">&quot;c&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+            <span class="n">stat</span> <span class="o">=</span> <span class="n">contrasts_info</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">][</span><span class="s2">&quot;STAT&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">assert</span> <span class="n">stat</span> <span class="o">==</span> <span class="s2">&quot;T&quot;</span>
             <span class="n">contrasts</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">ContrastInfo</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">design</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__constrasts</span> <span class="o">=</span> <span class="n">contrasts</span>
 
     <span class="k">def</span> <span class="nf">__parse_conditions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">session</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spm</span><span class="p">[</span><span class="s">&quot;Sess&quot;</span><span class="p">]</span>
-        <span class="n">n_conds</span> <span class="o">=</span> <span class="n">session</span><span class="p">[</span><span class="s">&quot;U&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spm</span><span class="p">[</span><span class="s2">&quot;Sess&quot;</span><span class="p">]</span>
+        <span class="n">n_conds</span> <span class="o">=</span> <span class="n">session</span><span class="p">[</span><span class="s2">&quot;U&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">conditions</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n_conds</span><span class="p">):</span>
-            <span class="n">session_info</span> <span class="o">=</span> <span class="n">session</span><span class="p">[</span><span class="s">&quot;U&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>
-            <span class="n">cond_name</span> <span class="o">=</span> <span class="n">session_info</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">cond_onsets</span> <span class="o">=</span> <span class="n">session_info</span><span class="p">[</span><span class="s">&quot;ons&quot;</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
-            <span class="n">cond_durations</span> <span class="o">=</span> <span class="n">session_info</span><span class="p">[</span><span class="s">&quot;dur&quot;</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="n">session_info</span> <span class="o">=</span> <span class="n">session</span><span class="p">[</span><span class="s2">&quot;U&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>
+            <span class="n">cond_name</span> <span class="o">=</span> <span class="n">session_info</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">cond_onsets</span> <span class="o">=</span> <span class="n">session_info</span><span class="p">[</span><span class="s2">&quot;ons&quot;</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+            <span class="n">cond_durations</span> <span class="o">=</span> <span class="n">session_info</span><span class="p">[</span><span class="s2">&quot;dur&quot;</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">]</span>
             <span class="n">cond</span> <span class="o">=</span> <span class="n">ConditionInfo</span><span class="p">(</span><span class="n">cond_name</span><span class="p">,</span> <span class="n">cond_onsets</span><span class="p">,</span> <span class="n">cond_durations</span><span class="p">)</span>
             <span class="n">conditions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cond</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__conditions</span> <span class="o">=</span> <span class="n">conditions</span>
@@ -227,15 +227,15 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            :class:`numpy.ndarray` with time values across the duration of the experiment</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c"># TODO: Decrease resolution</span>
+        <span class="c1"># TODO: Decrease resolution</span>
         <span class="n">tr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span>
         <span class="n">n_scans</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_scans</span>
         <span class="n">time_bin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__time_bin</span>
         <span class="n">time_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tr</span> <span class="o">*</span> <span class="n">n_scans</span><span class="p">,</span> <span class="n">time_bin</span><span class="p">)</span>
-        <span class="c">#time_vec = np.arange(0,tr*n_scans,TR)</span>
+        <span class="c1">#time_vec = np.arange(0,tr*n_scans,TR)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__experiment_samples</span> <span class="o">=</span> <span class="n">time_vec</span><span class="o">.</span><span class="n">shape</span>
-        <span class="k">return</span> <span class="n">time_vec</span>
-</div>
+        <span class="k">return</span> <span class="n">time_vec</span></div>
+
 <div class="viewcode-block" id="SpmFileReader.get_condition_block"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.read_spm.SpmFileReader.get_condition_block">[docs]</a>    <span class="k">def</span> <span class="nf">get_condition_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets a block signal representing a condition</span>
@@ -248,7 +248,7 @@
         <span class="n">cond_onsets</span> <span class="o">=</span> <span class="n">cond</span><span class="o">.</span><span class="n">onsets</span>
         <span class="n">cond_durations</span> <span class="o">=</span> <span class="n">cond</span><span class="o">.</span><span class="n">durations</span>
         <span class="n">tr_divisions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tr_divisions</span>
-        <span class="c">#tr = self.tr</span>
+        <span class="c1">#tr = self.tr</span>
         <span class="n">units</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__units</span>
         <span class="n">time_bin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__time_bin</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__experiment_samples</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -256,14 +256,14 @@
         <span class="n">condition</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__experiment_samples</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">onset</span><span class="p">,</span> <span class="n">duration</span> <span class="ow">in</span> <span class="n">izip</span><span class="p">(</span><span class="n">cond_onsets</span><span class="p">,</span> <span class="n">cond_durations</span><span class="p">):</span>
             <span class="n">onset_d</span> <span class="o">=</span> <span class="n">onset</span> <span class="o">*</span> \
-                <span class="n">tr_divisions</span> <span class="k">if</span> <span class="n">units</span> <span class="o">==</span> <span class="s">&quot;scans&quot;</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">onset</span> <span class="o">/</span> <span class="n">time_bin</span><span class="p">)</span>
-            <span class="c">#onset_d = onset if units == &quot;scans&quot; else int(round(onset/tr))</span>
+                <span class="n">tr_divisions</span> <span class="k">if</span> <span class="n">units</span> <span class="o">==</span> <span class="s2">&quot;scans&quot;</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">onset</span> <span class="o">/</span> <span class="n">time_bin</span><span class="p">)</span>
+            <span class="c1">#onset_d = onset if units == &quot;scans&quot; else int(round(onset/tr))</span>
             <span class="n">dur_d</span> <span class="o">=</span> <span class="n">duration</span> <span class="o">*</span> \
-                <span class="n">tr_divisions</span> <span class="k">if</span> <span class="n">units</span> <span class="o">==</span> <span class="s">&quot;scans&quot;</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">duration</span> <span class="o">/</span> <span class="n">time_bin</span><span class="p">)</span>
-            <span class="c">#dur_d = duration if units == &quot;scans&quot; else int(round(duration/tr))</span>
+                <span class="n">tr_divisions</span> <span class="k">if</span> <span class="n">units</span> <span class="o">==</span> <span class="s2">&quot;scans&quot;</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">duration</span> <span class="o">/</span> <span class="n">time_bin</span><span class="p">)</span>
+            <span class="c1">#dur_d = duration if units == &quot;scans&quot; else int(round(duration/tr))</span>
             <span class="n">condition</span><span class="p">[</span><span class="n">onset_d</span><span class="p">:</span><span class="n">onset_d</span> <span class="o">+</span> <span class="n">dur_d</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="n">condition</span>
-</div>
+        <span class="k">return</span> <span class="n">condition</span></div>
+
 <div class="viewcode-block" id="SpmFileReader.get_contrast_names"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.read_spm.SpmFileReader.get_contrast_names">[docs]</a>    <span class="k">def</span> <span class="nf">get_contrast_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A dictionary with contrast names</span>
@@ -302,7 +302,7 @@
           
     <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Diego Angulo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
     </div>
         </div>
         <div class="clearer"></div>

@@ -82,23 +82,23 @@
           <div class="body" role="main">
             
   <h1>Source code for braviz.visualization.simple_vtk</h1><div class="highlight"><pre>
-<span class="c">##############################################################################</span>
-<span class="c">#    Braviz, Brain Data interactive visualization                            #</span>
-<span class="c">#    Copyright (C) 2014  Diego Angulo                                        #</span>
-<span class="c">#                                                                            #</span>
-<span class="c">#    This program is free software: you can redistribute it and/or modify    #</span>
-<span class="c">#    it under the terms of the GNU Lesser General Public License as          #</span>
-<span class="c">#    published by  the Free Software Foundation, either version 3 of the     #</span>
-<span class="c">#    License, or (at your option) any later version.                         #</span>
-<span class="c">#                                                                            #</span>
-<span class="c">#    This program is distributed in the hope that it will be useful,         #</span>
-<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
-<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
-<span class="c">#    GNU Lesser General Public License for more details.                     #</span>
-<span class="c">#                                                                            #</span>
-<span class="c">#    You should have received a copy of the GNU Lesser General Public License#</span>
-<span class="c">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
-<span class="c">##############################################################################</span>
+<span></span><span class="c1">##############################################################################</span>
+<span class="c1">#    Braviz, Brain Data interactive visualization                            #</span>
+<span class="c1">#    Copyright (C) 2014  Diego Angulo                                        #</span>
+<span class="c1">#                                                                            #</span>
+<span class="c1">#    This program is free software: you can redistribute it and/or modify    #</span>
+<span class="c1">#    it under the terms of the GNU Lesser General Public License as          #</span>
+<span class="c1">#    published by  the Free Software Foundation, either version 3 of the     #</span>
+<span class="c1">#    License, or (at your option) any later version.                         #</span>
+<span class="c1">#                                                                            #</span>
+<span class="c1">#    This program is distributed in the hope that it will be useful,         #</span>
+<span class="c1">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
+<span class="c1">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
+<span class="c1">#    GNU Lesser General Public License for more details.                     #</span>
+<span class="c1">#                                                                            #</span>
+<span class="c1">#    You should have received a copy of the GNU Lesser General Public License#</span>
+<span class="c1">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
+<span class="c1">##############################################################################</span>
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
@@ -107,7 +107,7 @@
 <span class="kn">from</span> <span class="nn">braviz.interaction</span> <span class="kn">import</span> <span class="n">get_fiber_bundle_descriptors</span><span class="p">,</span> <span class="n">compute_volume_and_area</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 
-<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;diego&#39;</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;diego&#39;</span>
 
 
 <span class="k">def</span> <span class="nf">_test_arrow</span><span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="n">tail</span><span class="p">):</span>
@@ -177,7 +177,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">iren</span><span class="o">.</span><span class="n">SetRenderWindow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">renWin</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">renWin</span><span class="o">.</span><span class="n">AddRenderer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ren</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">renWin</span><span class="o">.</span><span class="n">SetSize</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
-        <span class="c"># self.renWin.Initialize()</span>
+        <span class="c1"># self.renWin.Initialize()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">iren</span><span class="o">.</span><span class="n">Initialize</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ren</span><span class="o">.</span><span class="n">Render</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">picker</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkCellPicker</span><span class="p">()</span>
@@ -187,7 +187,7 @@
         <span class="n">cam1</span><span class="o">.</span><span class="n">Azimuth</span><span class="p">(</span><span class="mi">80</span><span class="p">)</span>
         <span class="n">cam1</span><span class="o">.</span><span class="n">SetViewUp</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pd_actors</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&quot;call addPolyData or addImg to add data to the viewer</span><span class="se">\n</span><span class="s"> call start to interact&quot;</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;call addPolyData or addImg to add data to the viewer</span><span class="se">\n</span><span class="s2"> call start to interact&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SimpleVtkViewer.addPolyData"><a class="viewcode-back" href="../../../library/simple_vtk.html#braviz.visualization.simple_vtk.SimpleVtkViewer.addPolyData">[docs]</a>    <span class="k">def</span> <span class="nf">addPolyData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">polyData</span><span class="p">,</span> <span class="n">LUT</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -210,12 +210,12 @@
         <span class="n">actor</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkActor</span><span class="p">()</span>
         <span class="n">actor</span><span class="o">.</span><span class="n">SetMapper</span><span class="p">(</span><span class="n">mapper</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ren</span><span class="o">.</span><span class="n">AddActor</span><span class="p">(</span><span class="n">actor</span><span class="p">)</span>
-        <span class="c"># self.ren.ResetCameraClippingRange()</span>
-        <span class="c"># self.ren.ResetCamera()</span>
+        <span class="c1"># self.ren.ResetCameraClippingRange()</span>
+        <span class="c1"># self.ren.ResetCamera()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pd_actors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">actor</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ren</span><span class="o">.</span><span class="n">Render</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">actor</span>
-</div>
+        <span class="k">return</span> <span class="n">actor</span></div>
+
 <div class="viewcode-block" id="SimpleVtkViewer.start"><a class="viewcode-back" href="../../../library/simple_vtk.html#braviz.visualization.simple_vtk.SimpleVtkViewer.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reset</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Call this method to start the interaction, interaction can be stopped by pressing &#39;q&#39; on the main window</span>
@@ -223,15 +223,15 @@
 <span class="sd">        Args:</span>
 <span class="sd">            reset (bool) : If True the camera will be reset</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&quot;press &#39;Q&#39; on viewer window to stop&quot;</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;press &#39;Q&#39; on viewer window to stop&quot;</span><span class="p">)</span>
         <span class="kn">import</span> <span class="nn">sys</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">reset</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ren</span><span class="o">.</span><span class="n">ResetCameraClippingRange</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ren</span><span class="o">.</span><span class="n">ResetCamera</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">renWin</span><span class="o">.</span><span class="n">Render</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">iren</span><span class="o">.</span><span class="n">Start</span><span class="p">()</span>
-</div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iren</span><span class="o">.</span><span class="n">Start</span><span class="p">()</span></div>
+
 <div class="viewcode-block" id="SimpleVtkViewer.addImg"><a class="viewcode-back" href="../../../library/simple_vtk.html#braviz.visualization.simple_vtk.SimpleVtkViewer.addImg">[docs]</a>    <span class="k">def</span> <span class="nf">addImg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Use this method to show an image inside an image plane widget.</span>
@@ -248,7 +248,7 @@
         <span class="n">planeWidget</span><span class="o">.</span><span class="n">SetSlicePosition</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
         <span class="n">planeWidget</span><span class="o">.</span><span class="n">UpdatePlacement</span><span class="p">()</span>
         <span class="n">planeWidget</span><span class="o">.</span><span class="n">DisplayTextOn</span><span class="p">()</span>
-        <span class="c"># An outline is shown for context.</span>
+        <span class="c1"># An outline is shown for context.</span>
         <span class="n">outline</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkOutlineFilter</span><span class="p">()</span>
         <span class="n">outline</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
         <span class="n">outlineMapper</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkPolyDataMapper</span><span class="p">()</span>
@@ -260,18 +260,18 @@
         <span class="n">planeWidget</span><span class="o">.</span><span class="n">SetInteractor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">renWin</span><span class="o">.</span><span class="n">GetInteractor</span><span class="p">())</span>
         <span class="n">planeWidget</span><span class="o">.</span><span class="n">PickingManagedOn</span><span class="p">()</span>
         <span class="n">planeWidget</span><span class="o">.</span><span class="n">On</span><span class="p">()</span>
-        <span class="c"># self.ren.ResetCameraClippingRange()</span>
-        <span class="c"># self.ren.ResetCamera()</span>
+        <span class="c1"># self.ren.ResetCameraClippingRange()</span>
+        <span class="c1"># self.ren.ResetCamera()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ren</span><span class="o">.</span><span class="n">Render</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">planeWidget</span>
-</div>
+        <span class="k">return</span> <span class="n">planeWidget</span></div>
+
 <div class="viewcode-block" id="SimpleVtkViewer.clear_poly_data"><a class="viewcode-back" href="../../../library/simple_vtk.html#braviz.visualization.simple_vtk.SimpleVtkViewer.clear_poly_data">[docs]</a>    <span class="k">def</span> <span class="nf">clear_poly_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Removes all polydata from the viewer&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">actor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pd_actors</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ren</span><span class="o">.</span><span class="n">RemoveViewProp</span><span class="p">(</span><span class="n">actor</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pd_actors</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pd_actors</span> <span class="o">=</span> <span class="p">[]</span></div></div>
 
-</div></div>
+
 <div class="viewcode-block" id="save_ren_win_picture"><a class="viewcode-back" href="../../../library/simple_vtk.html#braviz.visualization.simple_vtk.save_ren_win_picture">[docs]</a><span class="k">def</span> <span class="nf">save_ren_win_picture</span><span class="p">(</span><span class="n">ren_win</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">magnification</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Saves an screenshot of a render window</span>
@@ -287,9 +287,9 @@
     <span class="n">writer</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkPNGWriter</span><span class="p">()</span>
     <span class="n">writer</span><span class="o">.</span><span class="n">SetFileName</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
     <span class="n">writer</span><span class="o">.</span><span class="n">SetInputConnection</span><span class="p">(</span><span class="n">ren2img</span><span class="o">.</span><span class="n">GetOutputPort</span><span class="p">())</span>
-    <span class="n">writer</span><span class="o">.</span><span class="n">Write</span><span class="p">()</span>
+    <span class="n">writer</span><span class="o">.</span><span class="n">Write</span><span class="p">()</span></div>
 
-</div>
+
 <div class="viewcode-block" id="remove_nan_from_grid"><a class="viewcode-back" href="../../../library/simple_vtk.html#braviz.visualization.simple_vtk.remove_nan_from_grid">[docs]</a><span class="k">def</span> <span class="nf">remove_nan_from_grid</span><span class="p">(</span><span class="n">grid</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Remove missing values from a grid, it is necessary in some version of vtk to avoid crash</span>
@@ -316,9 +316,9 @@
             <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
                 <span class="n">lines</span><span class="o">.</span><span class="n">InsertCellPoint</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
     <span class="n">out</span><span class="o">.</span><span class="n">SetLines</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">out</span>
+    <span class="k">return</span> <span class="n">out</span></div>
 
-</div>
+
 <div class="viewcode-block" id="persistentImagePlane"><a class="viewcode-back" href="../../../library/simple_vtk.html#braviz.visualization.simple_vtk.persistentImagePlane">[docs]</a><span class="k">class</span> <span class="nc">persistentImagePlane</span><span class="p">(</span><span class="n">vtkImagePlaneWidget</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;A vtkImagePlaneWidget which can keep its state between calls to SetInputData.</span>
@@ -371,8 +371,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">SetPlaneOrientation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Orientation</span><span class="p">)</span>
             <span class="n">mid_slice</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">GetDimensions</span><span class="p">()[</span><span class="bp">self</span><span class="o">.</span><span class="n">Orientation</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">SetSliceIndex</span><span class="p">(</span><span class="n">mid_slice</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">InvokeEvent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slice_change_event</span><span class="p">)</span>
-</div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">InvokeEvent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slice_change_event</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="persistentImagePlane.SetInteractor"><a class="viewcode-back" href="../../../library/simple_vtk.html#braviz.visualization.simple_vtk.persistentImagePlane.SetInteractor">[docs]</a>    <span class="k">def</span> <span class="nf">SetInteractor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iact</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Links the widget to an interactor</span>
@@ -380,15 +380,15 @@
 <span class="sd">        Args:</span>
 <span class="sd">            iact (vtkRenderWindowInteractor) : Render window interactor</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c"># Initializes the second text message, and performs normal</span>
-        <span class="c"># vtkImagePlaneWidget initialization</span>
+        <span class="c1"># Initializes the second text message, and performs normal</span>
+        <span class="c1"># vtkImagePlaneWidget initialization</span>
 
         <span class="n">vtkImagePlaneWidget</span><span class="o">.</span><span class="n">SetInteractor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iact</span><span class="p">)</span>
         <span class="n">text2</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkTextActor</span><span class="p">()</span>
         <span class="n">cor</span> <span class="o">=</span> <span class="n">text2</span><span class="o">.</span><span class="n">GetPositionCoordinate</span><span class="p">()</span>
         <span class="n">cor</span><span class="o">.</span><span class="n">SetCoordinateSystemToNormalizedViewport</span><span class="p">()</span>
         <span class="n">text2</span><span class="o">.</span><span class="n">SetPosition</span><span class="p">([</span><span class="mf">0.99</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">])</span>
-        <span class="n">text2</span><span class="o">.</span><span class="n">SetInput</span><span class="p">(</span><span class="s">&#39;probando&#39;</span><span class="p">)</span>
+        <span class="n">text2</span><span class="o">.</span><span class="n">SetInput</span><span class="p">(</span><span class="s1">&#39;probando&#39;</span><span class="p">)</span>
         <span class="n">tprop</span> <span class="o">=</span> <span class="n">text2</span><span class="o">.</span><span class="n">GetTextProperty</span><span class="p">()</span>
         <span class="n">tprop</span><span class="o">.</span><span class="n">SetJustificationToRight</span><span class="p">()</span>
         <span class="n">tprop</span><span class="o">.</span><span class="n">SetFontSize</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span>
@@ -422,20 +422,20 @@
             <span class="n">z1</span> <span class="o">=</span> <span class="n">z0</span> <span class="o">+</span> <span class="n">dz</span> <span class="o">*</span> <span class="n">z</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">last_cursor_position</span> <span class="o">=</span> <span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">z1</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">MiddleButton</span><span class="p">:</span>
-                <span class="n">message</span> <span class="o">=</span> <span class="s">&#39;Slice: </span><span class="si">%d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetSliceIndex</span><span class="p">()</span>
-                <span class="c"># create event, an observer can listen to this</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;Slice: </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetSliceIndex</span><span class="p">()</span>
+                <span class="c1"># create event, an observer can listen to this</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">InvokeEvent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slice_change_event</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">message</span> <span class="o">=</span> <span class="s">&#39;(</span><span class="si">%d</span><span class="s">, </span><span class="si">%d</span><span class="s">, </span><span class="si">%d</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">z1</span><span class="p">)</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;(</span><span class="si">%d</span><span class="s1">, </span><span class="si">%d</span><span class="s1">, </span><span class="si">%d</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">z1</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">InvokeEvent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cursor_change_event</span><span class="p">)</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels_set</span><span class="p">:</span>
                     <span class="n">label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_label</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">z1</span><span class="p">)</span>
-                    <span class="n">message</span> <span class="o">+=</span> <span class="s">&#39;: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">label</span>
+                    <span class="n">message</span> <span class="o">+=</span> <span class="s1">&#39;: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">label</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">alternative_text1</span><span class="p">:</span>
                     <span class="n">ix</span><span class="p">,</span> <span class="n">iy</span><span class="p">,</span> <span class="n">iz</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">))</span>
                     <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alternative_img</span><span class="o">.</span><span class="n">GetScalarComponentAsDouble</span><span class="p">(</span>
                         <span class="n">ix</span><span class="p">,</span> <span class="n">iy</span><span class="p">,</span> <span class="n">iz</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-                    <span class="n">message2</span> <span class="o">=</span> <span class="s">&#39;( </span><span class="si">%d</span><span class="s">, </span><span class="si">%d</span><span class="s">, </span><span class="si">%d</span><span class="s"> ) : </span><span class="si">%f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+                    <span class="n">message2</span> <span class="o">=</span> <span class="s1">&#39;( </span><span class="si">%d</span><span class="s1">, </span><span class="si">%d</span><span class="s1">, </span><span class="si">%d</span><span class="s1"> ) : </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">text1</span><span class="o">.</span><span class="n">SetInput</span><span class="p">(</span><span class="n">message2</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">text1</span><span class="o">.</span><span class="n">SetVisibility</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
@@ -450,34 +450,34 @@
 
         <span class="k">def</span> <span class="nf">detect_middle_button</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
             <span class="sd">&quot;&quot;&quot;Helps in detecting when the middle button is pressed&quot;&quot;&quot;</span>
-            <span class="k">if</span> <span class="n">event</span> <span class="o">==</span> <span class="s">&#39;MiddleButtonPressEvent&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">event</span> <span class="o">==</span> <span class="s1">&#39;MiddleButtonPressEvent&#39;</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">MiddleButton</span> <span class="o">=</span> <span class="bp">True</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">MiddleButton</span> <span class="o">=</span> <span class="bp">False</span>
 
-        <span class="c"># def detect_window_level_event(obj, event):</span>
-        <span class="c">#    print self.GetWindow(), self.GetLevel()</span>
+        <span class="c1"># def detect_window_level_event(obj, event):</span>
+        <span class="c1">#    print self.GetWindow(), self.GetLevel()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">GetInteractor</span><span class="p">()</span><span class="o">.</span><span class="n">AddObserver</span><span class="p">(</span>
-            <span class="s">&#39;MiddleButtonPressEvent&#39;</span><span class="p">,</span> <span class="n">detect_middle_button</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+            <span class="s1">&#39;MiddleButtonPressEvent&#39;</span><span class="p">,</span> <span class="n">detect_middle_button</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">GetInteractor</span><span class="p">()</span><span class="o">.</span><span class="n">AddObserver</span><span class="p">(</span>
-            <span class="s">&#39;MiddleButtonReleaseEvent&#39;</span><span class="p">,</span> <span class="n">detect_middle_button</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">AddObserver</span><span class="p">(</span><span class="s">&#39;InteractionEvent&#39;</span><span class="p">,</span> <span class="n">mouse_interaction</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">AddObserver</span><span class="p">(</span><span class="s">&#39;StartInteractionEvent&#39;</span><span class="p">,</span> <span class="n">mouse_interaction</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">AddObserver</span><span class="p">(</span><span class="s">&#39;EndInteractionEvent&#39;</span><span class="p">,</span> <span class="n">end_interact</span><span class="p">)</span>
-        <span class="c"># self.AddObserver(&#39;WindowLevelEvent&#39;,detect_window_level_event)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">text2</span> <span class="o">=</span> <span class="n">text2</span>
-</div>
+            <span class="s1">&#39;MiddleButtonReleaseEvent&#39;</span><span class="p">,</span> <span class="n">detect_middle_button</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AddObserver</span><span class="p">(</span><span class="s1">&#39;InteractionEvent&#39;</span><span class="p">,</span> <span class="n">mouse_interaction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AddObserver</span><span class="p">(</span><span class="s1">&#39;StartInteractionEvent&#39;</span><span class="p">,</span> <span class="n">mouse_interaction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AddObserver</span><span class="p">(</span><span class="s1">&#39;EndInteractionEvent&#39;</span><span class="p">,</span> <span class="n">end_interact</span><span class="p">)</span>
+        <span class="c1"># self.AddObserver(&#39;WindowLevelEvent&#39;,detect_window_level_event)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text2</span> <span class="o">=</span> <span class="n">text2</span></div>
+
 <div class="viewcode-block" id="persistentImagePlane.On"><a class="viewcode-back" href="../../../library/simple_vtk.html#braviz.visualization.simple_vtk.persistentImagePlane.On">[docs]</a>    <span class="k">def</span> <span class="nf">On</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Turn the widget on</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c"># Adds the second text actor to the current renderer</span>
+        <span class="c1"># Adds the second text actor to the current renderer</span>
         <span class="n">vtkImagePlaneWidget</span><span class="o">.</span><span class="n">On</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">ren</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetCurrentRenderer</span><span class="p">()</span>
         <span class="n">ren</span><span class="o">.</span><span class="n">AddActor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text2</span><span class="p">)</span>
-        <span class="n">ren</span><span class="o">.</span><span class="n">Render</span><span class="p">()</span>
-</div>
+        <span class="n">ren</span><span class="o">.</span><span class="n">Render</span><span class="p">()</span></div>
+
 <div class="viewcode-block" id="persistentImagePlane.setLabelsLut"><a class="viewcode-back" href="../../../library/simple_vtk.html#braviz.visualization.simple_vtk.persistentImagePlane.setLabelsLut">[docs]</a>    <span class="k">def</span> <span class="nf">setLabelsLut</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lut</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A lookup table can be used to translate numeric labels into text labels</span>
@@ -486,8 +486,8 @@
 <span class="sd">            lut (vtkLookupTable) : Lookup table</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">labels_dict</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">aparc_lut</span> <span class="o">=</span> <span class="n">lut</span>
-</div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aparc_lut</span> <span class="o">=</span> <span class="n">lut</span></div>
+
 <div class="viewcode-block" id="persistentImagePlane.addLabels"><a class="viewcode-back" href="../../../library/simple_vtk.html#braviz.visualization.simple_vtk.persistentImagePlane.addLabels">[docs]</a>    <span class="k">def</span> <span class="nf">addLabels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label_img</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A second image can be used to get labels for image coordinates (ex. aparc)</span>
@@ -500,8 +500,8 @@
         <span class="k">if</span> <span class="n">label_img</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">labels_set</span> <span class="o">=</span> <span class="bp">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">labels_set</span> <span class="o">=</span> <span class="bp">False</span>
-</div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">labels_set</span> <span class="o">=</span> <span class="bp">False</span></div>
+
 <div class="viewcode-block" id="persistentImagePlane.get_label"><a class="viewcode-back" href="../../../library/simple_vtk.html#braviz.visualization.simple_vtk.persistentImagePlane.get_label">[docs]</a>    <span class="k">def</span> <span class="nf">get_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Auxiliary function to get the label in a given coordinate (in mm)</span>
@@ -533,8 +533,8 @@
             <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">aparc_lut</span><span class="o">.</span><span class="n">GetAnnotatedValueIndex</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
             <span class="n">label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">aparc_lut</span><span class="o">.</span><span class="n">GetAnnotation</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">labels_dict</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">label</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels_dict</span><span class="p">[</span><span class="n">l</span><span class="p">]</span>
-</div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels_dict</span><span class="p">[</span><span class="n">l</span><span class="p">]</span></div>
+
 <div class="viewcode-block" id="persistentImagePlane.text1_value_from_img"><a class="viewcode-back" href="../../../library/simple_vtk.html#braviz.visualization.simple_vtk.persistentImagePlane.text1_value_from_img">[docs]</a>    <span class="k">def</span> <span class="nf">text1_value_from_img</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img2</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Text 1 value can be read from a different image than the one been shown, useful for composed images</span>
@@ -547,7 +547,7 @@
         <span class="n">cor</span> <span class="o">=</span> <span class="n">text1</span><span class="o">.</span><span class="n">GetPositionCoordinate</span><span class="p">()</span>
         <span class="n">cor</span><span class="o">.</span><span class="n">SetCoordinateSystemToNormalizedViewport</span><span class="p">()</span>
         <span class="n">text1</span><span class="o">.</span><span class="n">SetPosition</span><span class="p">([</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">])</span>
-        <span class="n">text1</span><span class="o">.</span><span class="n">SetInput</span><span class="p">(</span><span class="s">&#39;probando&#39;</span><span class="p">)</span>
+        <span class="n">text1</span><span class="o">.</span><span class="n">SetInput</span><span class="p">(</span><span class="s1">&#39;probando&#39;</span><span class="p">)</span>
         <span class="n">tprop</span> <span class="o">=</span> <span class="n">text1</span><span class="o">.</span><span class="n">GetTextProperty</span><span class="p">()</span>
         <span class="n">tprop</span><span class="o">.</span><span class="n">SetJustificationToLeft</span><span class="p">()</span>
         <span class="n">tprop</span><span class="o">.</span><span class="n">SetFontSize</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span>
@@ -557,8 +557,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">text1</span> <span class="o">=</span> <span class="n">text1</span>
         <span class="n">ren</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetCurrentRenderer</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">ren</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">ren</span><span class="o">.</span><span class="n">AddActor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text1</span><span class="p">)</span>
-</div>
+            <span class="n">ren</span><span class="o">.</span><span class="n">AddActor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text1</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="persistentImagePlane.text1_to_std"><a class="viewcode-back" href="../../../library/simple_vtk.html#braviz.visualization.simple_vtk.persistentImagePlane.text1_to_std">[docs]</a>    <span class="k">def</span> <span class="nf">text1_to_std</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Turn text1 behaviour back to standard, reverts the effects of text1_value_from_img</span>
@@ -571,8 +571,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">SetDisplayText</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">alternative_text1</span> <span class="o">=</span> <span class="bp">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">alternative_img</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">text1</span> <span class="o">=</span> <span class="bp">None</span>
-</div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text1</span> <span class="o">=</span> <span class="bp">None</span></div>
+
 <div class="viewcode-block" id="persistentImagePlane.set_orientation"><a class="viewcode-back" href="../../../library/simple_vtk.html#braviz.visualization.simple_vtk.persistentImagePlane.set_orientation">[docs]</a>    <span class="k">def</span> <span class="nf">set_orientation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orientation</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets image plane orientation</span>
@@ -587,9 +587,9 @@
             <span class="k">return</span>
         <span class="n">mid_slice</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">GetDimensions</span><span class="p">()[</span><span class="bp">self</span><span class="o">.</span><span class="n">Orientation</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">SetSliceIndex</span><span class="p">(</span><span class="n">mid_slice</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">InvokeEvent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slice_change_event</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">InvokeEvent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slice_change_event</span><span class="p">)</span></div></div>
 
-</div></div>
+
 <div class="viewcode-block" id="OutlineActor"><a class="viewcode-back" href="../../../library/simple_vtk.html#braviz.visualization.simple_vtk.OutlineActor">[docs]</a><span class="k">class</span> <span class="nc">OutlineActor</span><span class="p">(</span><span class="n">vtk</span><span class="o">.</span><span class="n">vtkActor</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;A simple shortcut for displaying the outline of an object</span>
@@ -616,8 +616,8 @@
 <span class="sd">            input_data (vtkDataObject) : Object whose outline we want</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">outline</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
-</div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outline</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="OutlineActor.SetInputData"><a class="viewcode-back" href="../../../library/simple_vtk.html#braviz.visualization.simple_vtk.OutlineActor.SetInputData">[docs]</a>    <span class="k">def</span> <span class="nf">SetInputData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        For better compatibility with vtk methods style</span>
@@ -625,9 +625,9 @@
 <span class="sd">        Args:</span>
 <span class="sd">            input_data (vtkDataObject) : Object whose outline we want</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">outline</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outline</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span></div></div>
 
-</div></div>
+
 <div class="viewcode-block" id="OrientationAxes"><a class="viewcode-back" href="../../../library/simple_vtk.html#braviz.visualization.simple_vtk.OrientationAxes">[docs]</a><span class="k">class</span> <span class="nc">OrientationAxes</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
@@ -636,12 +636,12 @@
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">axes_actor</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkAnnotatedCubeActor</span><span class="p">()</span>
-        <span class="n">axes_actor</span><span class="o">.</span><span class="n">SetXPlusFaceText</span><span class="p">(</span><span class="s">&quot;R&quot;</span><span class="p">)</span>
-        <span class="n">axes_actor</span><span class="o">.</span><span class="n">SetXMinusFaceText</span><span class="p">(</span><span class="s">&quot;L&quot;</span><span class="p">)</span>
-        <span class="n">axes_actor</span><span class="o">.</span><span class="n">SetYPlusFaceText</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">)</span>
-        <span class="n">axes_actor</span><span class="o">.</span><span class="n">SetYMinusFaceText</span><span class="p">(</span><span class="s">&quot;P&quot;</span><span class="p">)</span>
-        <span class="n">axes_actor</span><span class="o">.</span><span class="n">SetZPlusFaceText</span><span class="p">(</span><span class="s">&quot;S&quot;</span><span class="p">)</span>
-        <span class="n">axes_actor</span><span class="o">.</span><span class="n">SetZMinusFaceText</span><span class="p">(</span><span class="s">&quot;I&quot;</span><span class="p">)</span>
+        <span class="n">axes_actor</span><span class="o">.</span><span class="n">SetXPlusFaceText</span><span class="p">(</span><span class="s2">&quot;R&quot;</span><span class="p">)</span>
+        <span class="n">axes_actor</span><span class="o">.</span><span class="n">SetXMinusFaceText</span><span class="p">(</span><span class="s2">&quot;L&quot;</span><span class="p">)</span>
+        <span class="n">axes_actor</span><span class="o">.</span><span class="n">SetYPlusFaceText</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)</span>
+        <span class="n">axes_actor</span><span class="o">.</span><span class="n">SetYMinusFaceText</span><span class="p">(</span><span class="s2">&quot;P&quot;</span><span class="p">)</span>
+        <span class="n">axes_actor</span><span class="o">.</span><span class="n">SetZPlusFaceText</span><span class="p">(</span><span class="s2">&quot;S&quot;</span><span class="p">)</span>
+        <span class="n">axes_actor</span><span class="o">.</span><span class="n">SetZMinusFaceText</span><span class="p">(</span><span class="s2">&quot;I&quot;</span><span class="p">)</span>
 
         <span class="n">axes_actor</span><span class="o">.</span><span class="n">GetTextEdgesProperty</span><span class="p">()</span><span class="o">.</span><span class="n">SetColor</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">axes_actor</span><span class="o">.</span><span class="n">GetTextEdgesProperty</span><span class="p">()</span><span class="o">.</span><span class="n">SetLineWidth</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -661,9 +661,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">SetInteractor</span><span class="p">(</span><span class="n">render_window_interactor</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">EnabledOn</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">InteractiveOn</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">InteractiveOn</span><span class="p">()</span></div></div>
 
-</div></div>
+
 <div class="viewcode-block" id="get_arrow"><a class="viewcode-back" href="../../../library/simple_vtk.html#braviz.visualization.simple_vtk.get_arrow">[docs]</a><span class="k">def</span> <span class="nf">get_arrow</span><span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="n">tail</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    create a polydata arrow, consider using vtkArrowSource</span>
@@ -692,7 +692,7 @@
     <span class="n">arrow_pd</span><span class="o">.</span><span class="n">SetLines</span><span class="p">(</span><span class="n">line_array</span><span class="p">)</span>
     <span class="n">arrow_pd</span><span class="o">.</span><span class="n">SetPolys</span><span class="p">(</span><span class="n">triangle_array</span><span class="p">)</span>
 
-    <span class="c">#---adjust to tail and head</span>
+    <span class="c1">#---adjust to tail and head</span>
 
     <span class="n">t</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkTransform</span><span class="p">()</span>
     <span class="n">t</span><span class="o">.</span><span class="n">Identity</span><span class="p">()</span>
@@ -704,9 +704,9 @@
         <span class="n">t</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">length</span> <span class="o">/</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">rot_axis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">head</span> <span class="o">-</span> <span class="n">tail</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
         <span class="n">rot_angle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">rot_axis</span><span class="p">)</span> <span class="o">/</span> <span class="n">length</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">rot_angle</span><span class="p">):</span>  <span class="c"># handles legendary rounding errors</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">rot_angle</span><span class="p">):</span>  <span class="c1"># handles legendary rounding errors</span>
             <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;please check output closely&quot;</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;please check output closely&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">((</span><span class="n">head</span> <span class="o">-</span> <span class="n">tail</span><span class="p">)</span> <span class="o">/</span> <span class="n">length</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">&lt;</span> <span class="n">length</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">:</span>
                 <span class="n">rot_angle</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="k">else</span><span class="p">:</span>
@@ -721,9 +721,9 @@
     <span class="n">transfor_filter</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="n">arrow_pd</span><span class="p">)</span>
     <span class="n">transfor_filter</span><span class="o">.</span><span class="n">SetTransform</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
     <span class="n">transfor_filter</span><span class="o">.</span><span class="n">Update</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">transfor_filter</span><span class="o">.</span><span class="n">GetOutput</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">transfor_filter</span><span class="o">.</span><span class="n">GetOutput</span><span class="p">()</span></div>
 
-</div>
+
 <span class="k">def</span> <span class="nf">fibers_balloon_message</span><span class="p">(</span><span class="n">fib_actor</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Gets a standard message for fiber bundle balloons</span>
 <span class="sd">    This message contains the number of fibers in the bundle,</span>
@@ -733,18 +733,18 @@
         <span class="n">fib</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="n">GetInput</span><span class="p">()</span>
     <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
         <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;No fibers available&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="s">&quot;No fibers available&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;No fibers available&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;No fibers available&quot;</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">get_fiber_bundle_descriptors</span><span class="p">(</span><span class="n">fib</span><span class="p">)</span>
-    <span class="n">message</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;Number of fibers: </span><span class="si">%d</span><span class="s"></span>
-<span class="s">Mean Length (mm) : </span><span class="si">%.2f</span><span class="s"></span>
-<span class="s">    Max: </span><span class="si">%.2f</span><span class="s"></span>
-<span class="s">    Min: </span><span class="si">%.2f</span><span class="s"></span>
-<span class="s">    Std: </span><span class="si">%.2f</span><span class="s">&quot;&quot;&quot;</span> <span class="o">%</span> <span class="n">d</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Number of fibers: </span><span class="si">%d</span><span class="s2"></span>
+<span class="s2">Mean Length (mm) : </span><span class="si">%.2f</span><span class="s2"></span>
+<span class="s2">    Max: </span><span class="si">%.2f</span><span class="s2"></span>
+<span class="s2">    Min: </span><span class="si">%.2f</span><span class="s2"></span>
+<span class="s2">    Std: </span><span class="si">%.2f</span><span class="s2">&quot;&quot;&quot;</span> <span class="o">%</span> <span class="n">d</span>
     <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">+</span> <span class="n">message</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">message</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="s">&#39;Fiber Bundle</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">+</span> <span class="n">message</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;Fiber Bundle</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">message</span>
     <span class="k">return</span> <span class="n">message</span>
 
 
@@ -762,7 +762,7 @@
 
 <span class="sd">        Notice that for the cursor to work properly the spacing, dimensions and origin</span>
 <span class="sd">        of the underlying image must be set&quot;&quot;&quot;</span>
-        <span class="n">actor_delta</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c"># Space within the cursor and the image, notice there are cursors on both sides</span>
+        <span class="n">actor_delta</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c1"># Space within the cursor and the image, notice there are cursors on both sides</span>
         <span class="n">cursor_x</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkLineSource</span><span class="p">()</span>
         <span class="n">cursor_x_mapper</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkPolyDataMapper</span><span class="p">()</span>
         <span class="n">cursor_x_mapper</span><span class="o">.</span><span class="n">SetInputConnection</span><span class="p">(</span><span class="n">cursor_x</span><span class="o">.</span><span class="n">GetOutputPort</span><span class="p">())</span>
@@ -815,8 +815,8 @@
 <span class="sd">            dy (float) : y spacing</span>
 <span class="sd">            dz (float) : z spacing</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">spacing</span> <span class="o">=</span> <span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">dz</span><span class="p">)</span>
-</div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spacing</span> <span class="o">=</span> <span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">dz</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="cursors.set_dimensions"><a class="viewcode-back" href="../../../library/simple_vtk.html#braviz.visualization.simple_vtk.cursors.set_dimensions">[docs]</a>    <span class="k">def</span> <span class="nf">set_dimensions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nz</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the dimensions of the underlying image</span>
@@ -826,8 +826,8 @@
 <span class="sd">            ny (float) : y dimension</span>
 <span class="sd">            nz (float) : z dimension</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span> <span class="o">=</span> <span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nz</span><span class="p">)</span>
-</div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span> <span class="o">=</span> <span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nz</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="cursors.set_origin"><a class="viewcode-back" href="../../../library/simple_vtk.html#braviz.visualization.simple_vtk.cursors.set_origin">[docs]</a>    <span class="k">def</span> <span class="nf">set_origin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the origin of the underlying image</span>
@@ -837,8 +837,8 @@
 <span class="sd">            y (float) : y origin</span>
 <span class="sd">            z (float) : z origin</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
-</div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="cursors.set_cursor"><a class="viewcode-back" href="../../../library/simple_vtk.html#braviz.visualization.simple_vtk.cursors.set_cursor">[docs]</a>    <span class="k">def</span> <span class="nf">set_cursor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the position of the cursor</span>
@@ -850,8 +850,8 @@
 
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c"># current_slice=slice_mapper.GetSliceNumber()</span>
-        <span class="c"># Attention to change in variables, now XY define the plane</span>
+        <span class="c1"># current_slice=slice_mapper.GetSliceNumber()</span>
+        <span class="c1"># Attention to change in variables, now XY define the plane</span>
         <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">dz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spacing</span>
         <span class="n">ox</span><span class="p">,</span> <span class="n">oy</span><span class="p">,</span> <span class="n">oz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span>
         <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span>
@@ -869,8 +869,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">cursor_x</span><span class="o">.</span><span class="n">SetPoint1</span><span class="p">((</span><span class="n">ox</span> <span class="o">+</span> <span class="n">dx</span> <span class="o">*</span> <span class="mi">0</span><span class="p">,</span> <span class="n">oy</span> <span class="o">+</span> <span class="n">dy</span> <span class="o">*</span> <span class="n">y</span><span class="p">,</span> <span class="n">oz</span> <span class="o">+</span> <span class="n">dz</span> <span class="o">*</span> <span class="n">z</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">cursor_x</span><span class="o">.</span><span class="n">SetPoint2</span><span class="p">((</span><span class="n">ox</span> <span class="o">+</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">nx</span><span class="p">,</span> <span class="n">oy</span> <span class="o">+</span> <span class="n">dy</span> <span class="o">*</span> <span class="n">y</span><span class="p">,</span> <span class="n">oz</span> <span class="o">+</span> <span class="n">dz</span> <span class="o">*</span> <span class="n">z</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">cursor_y</span><span class="o">.</span><span class="n">SetPoint1</span><span class="p">((</span><span class="n">ox</span> <span class="o">+</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span> <span class="n">oy</span> <span class="o">+</span> <span class="n">dy</span> <span class="o">*</span> <span class="mi">0</span><span class="p">,</span> <span class="n">oz</span> <span class="o">+</span> <span class="n">dz</span> <span class="o">*</span> <span class="n">z</span><span class="p">))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">cursor_y</span><span class="o">.</span><span class="n">SetPoint2</span><span class="p">((</span><span class="n">ox</span> <span class="o">+</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span> <span class="n">oy</span> <span class="o">+</span> <span class="n">dy</span> <span class="o">*</span> <span class="n">ny</span><span class="p">,</span> <span class="n">oz</span> <span class="o">+</span> <span class="n">dz</span> <span class="o">*</span> <span class="n">z</span><span class="p">))</span>
-</div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cursor_y</span><span class="o">.</span><span class="n">SetPoint2</span><span class="p">((</span><span class="n">ox</span> <span class="o">+</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span> <span class="n">oy</span> <span class="o">+</span> <span class="n">dy</span> <span class="o">*</span> <span class="n">ny</span><span class="p">,</span> <span class="n">oz</span> <span class="o">+</span> <span class="n">dz</span> <span class="o">*</span> <span class="n">z</span><span class="p">))</span></div>
+
 <div class="viewcode-block" id="cursors.change_axis"><a class="viewcode-back" href="../../../library/simple_vtk.html#braviz.visualization.simple_vtk.cursors.change_axis">[docs]</a>    <span class="k">def</span> <span class="nf">change_axis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Change the axis perpendicular to the image plane</span>
@@ -886,8 +886,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">actor_x1</span><span class="o">.</span><span class="n">SetPosition</span><span class="p">(</span><span class="n">actors_spacing1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actor_y1</span><span class="o">.</span><span class="n">SetPosition</span><span class="p">(</span><span class="n">actors_spacing1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actor_x2</span><span class="o">.</span><span class="n">SetPosition</span><span class="p">(</span><span class="n">actors_spacing2</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actor_y2</span><span class="o">.</span><span class="n">SetPosition</span><span class="p">(</span><span class="n">actors_spacing2</span><span class="p">)</span>
-</div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actor_y2</span><span class="o">.</span><span class="n">SetPosition</span><span class="p">(</span><span class="n">actors_spacing2</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="cursors.set_delta"><a class="viewcode-back" href="../../../library/simple_vtk.html#braviz.visualization.simple_vtk.cursors.set_delta">[docs]</a>    <span class="k">def</span> <span class="nf">set_delta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets separation between front and back cursors.</span>
@@ -895,9 +895,9 @@
 <span class="sd">        Args:</span>
 <span class="sd">            delta (float) :  Separation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="n">delta</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="n">delta</span></div></div>
 
-</div></div>
+
 <div class="viewcode-block" id="build_grid"><a class="viewcode-back" href="../../../library/simple_vtk.html#braviz.visualization.simple_vtk.build_grid">[docs]</a><span class="k">def</span> <span class="nf">build_grid</span><span class="p">(</span><span class="n">orig_img</span><span class="p">,</span> <span class="n">img_slice</span><span class="p">,</span> <span class="n">sampling_rate</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Creates an homogenous grid, useful for showing the effects of transformations</span>
 
@@ -930,13 +930,13 @@
     <span class="n">grid</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkPolyData</span><span class="p">()</span>
     <span class="n">grid</span><span class="o">.</span><span class="n">SetPoints</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
     <span class="n">lines</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkCellArray</span><span class="p">()</span>
-    <span class="c"># vertical:</span>
+    <span class="c1"># vertical:</span>
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">dimensions</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
         <span class="k">if</span> <span class="n">j</span> <span class="o">%</span> <span class="n">sampling_rate</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">lines</span><span class="o">.</span><span class="n">InsertNextCell</span><span class="p">(</span><span class="n">dimensions</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
             <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">dimensions</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
                 <span class="n">lines</span><span class="o">.</span><span class="n">InsertCellPoint</span><span class="p">(</span><span class="n">flat_index</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">))</span>
-    <span class="c"># horizontal</span>
+    <span class="c1"># horizontal</span>
     <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">dimensions</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
         <span class="k">if</span> <span class="n">k</span> <span class="o">%</span> <span class="n">sampling_rate</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">lines</span><span class="o">.</span><span class="n">InsertNextCell</span><span class="p">(</span><span class="n">dimensions</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
@@ -948,9 +948,9 @@
     <span class="n">cleaner</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
     <span class="n">cleaner</span><span class="o">.</span><span class="n">Update</span><span class="p">()</span>
     <span class="n">clean_grid</span> <span class="o">=</span> <span class="n">cleaner</span><span class="o">.</span><span class="n">GetOutput</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">clean_grid</span>
+    <span class="k">return</span> <span class="n">clean_grid</span></div>
 
-</div>
+
 <span class="k">def</span> <span class="nf">add_solid_balloon</span><span class="p">(</span><span class="n">balloon_widget</span><span class="p">,</span> <span class="n">solid_actor</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">my_volume</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Adds a standard balloon for models</span>
 
@@ -960,13 +960,13 @@
     <span class="n">mapper</span> <span class="o">=</span> <span class="n">solid_actor</span><span class="o">.</span><span class="n">GetMapper</span><span class="p">()</span>
     <span class="n">poly_data</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="n">GetInput</span><span class="p">()</span>
     <span class="p">(</span><span class="n">volume</span><span class="p">,</span> <span class="n">area</span><span class="p">)</span> <span class="o">=</span> <span class="n">compute_volume_and_area</span><span class="p">(</span><span class="n">poly_data</span><span class="p">)</span>
-    <span class="c">#message = &quot;Volume = %.2f mm3 \nSurface Area = %.2f mm2 &quot; % (volume, area)</span>
+    <span class="c1">#message = &quot;Volume = %.2f mm3 \nSurface Area = %.2f mm2 &quot; % (volume, area)</span>
     <span class="k">if</span> <span class="n">my_volume</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">volume</span> <span class="o">=</span> <span class="n">my_volume</span>
-    <span class="n">message</span> <span class="o">=</span> <span class="s">&quot;Volume* = </span><span class="si">%.2f</span><span class="s"> mm3 </span><span class="se">\n</span><span class="s">Surface Area = </span><span class="si">%.2f</span><span class="s"> mm2 &quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">volume</span><span class="p">,</span> <span class="n">area</span><span class="p">)</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Volume* = </span><span class="si">%.2f</span><span class="s2"> mm3 </span><span class="se">\n</span><span class="s2">Surface Area = </span><span class="si">%.2f</span><span class="s2"> mm2 &quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">volume</span><span class="p">,</span> <span class="n">area</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> </span><span class="se">\n</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="se">\n</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
     <span class="n">balloon_widget</span><span class="o">.</span><span class="n">AddBalloon</span><span class="p">(</span><span class="n">solid_actor</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
     <span class="k">return</span>
 
@@ -1027,7 +1027,7 @@
           
     <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Diego Angulo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
     </div>
         </div>
         <div class="clearer"></div>

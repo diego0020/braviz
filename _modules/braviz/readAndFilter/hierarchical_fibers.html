@@ -82,23 +82,23 @@
           <div class="body" role="main">
             
   <h1>Source code for braviz.readAndFilter.hierarchical_fibers</h1><div class="highlight"><pre>
-<span class="c">##############################################################################</span>
-<span class="c">#    Braviz, Brain Data interactive visualization                            #</span>
-<span class="c">#    Copyright (C) 2014  Diego Angulo                                        #</span>
-<span class="c">#                                                                            #</span>
-<span class="c">#    This program is free software: you can redistribute it and/or modify    #</span>
-<span class="c">#    it under the terms of the GNU Lesser General Public License as          #</span>
-<span class="c">#    published by  the Free Software Foundation, either version 3 of the     #</span>
-<span class="c">#    License, or (at your option) any later version.                         #</span>
-<span class="c">#                                                                            #</span>
-<span class="c">#    This program is distributed in the hope that it will be useful,         #</span>
-<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
-<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
-<span class="c">#    GNU Lesser General Public License for more details.                     #</span>
-<span class="c">#                                                                            #</span>
-<span class="c">#    You should have received a copy of the GNU Lesser General Public License#</span>
-<span class="c">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
-<span class="c">##############################################################################</span>
+<span></span><span class="c1">##############################################################################</span>
+<span class="c1">#    Braviz, Brain Data interactive visualization                            #</span>
+<span class="c1">#    Copyright (C) 2014  Diego Angulo                                        #</span>
+<span class="c1">#                                                                            #</span>
+<span class="c1">#    This program is free software: you can redistribute it and/or modify    #</span>
+<span class="c1">#    it under the terms of the GNU Lesser General Public License as          #</span>
+<span class="c1">#    published by  the Free Software Foundation, either version 3 of the     #</span>
+<span class="c1">#    License, or (at your option) any later version.                         #</span>
+<span class="c1">#                                                                            #</span>
+<span class="c1">#    This program is distributed in the hope that it will be useful,         #</span>
+<span class="c1">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
+<span class="c1">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
+<span class="c1">#    GNU Lesser General Public License for more details.                     #</span>
+<span class="c1">#                                                                            #</span>
+<span class="c1">#    You should have received a copy of the GNU Lesser General Public License#</span>
+<span class="c1">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
+<span class="c1">##############################################################################</span>
 
 
 <span class="kn">from</span> <span class="nn">braviz.readAndFilter</span> <span class="kn">import</span> <span class="n">geom_db</span><span class="p">,</span> <span class="n">tabular_data</span>
@@ -108,7 +108,7 @@
 <span class="kn">from</span> <span class="nn">braviz.readAndFilter</span> <span class="kn">import</span> <span class="n">extract_poly_data_subset</span>
 <span class="kn">from</span> <span class="nn">braviz.readAndFilter.filter_fibers</span> <span class="kn">import</span> <span class="n">FilterBundleWithSphere</span>
 
-<span class="c"># from logic_bundle_model</span>
+<span class="c1"># from logic_bundle_model</span>
 <span class="n">LOGIC</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">STRUCT</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">ROI</span> <span class="o">=</span> <span class="mi">2</span>
@@ -128,14 +128,14 @@
 
     <span class="k">try</span><span class="p">:</span>
         <span class="n">valid_lines</span> <span class="o">=</span> <span class="n">get_valid_lines_from_node</span><span class="p">(</span><span class="n">subj</span><span class="p">,</span> <span class="n">tree_dict</span><span class="p">,</span> <span class="n">reader</span><span class="p">)</span>
-        <span class="n">fibers</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;FIBERS&quot;</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="n">space</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">fibers</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;FIBERS&quot;</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="n">space</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="n">log</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
         <span class="k">raise</span>
     <span class="n">fibers2</span> <span class="o">=</span> <span class="n">extract_poly_data_subset</span><span class="p">(</span><span class="n">fibers</span><span class="p">,</span> <span class="n">valid_lines</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">fibers2</span>
+    <span class="k">return</span> <span class="n">fibers2</span></div>
 
-</div>
+
 <div class="viewcode-block" id="get_valid_lines_from_node"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.hierarchical_fibers.get_valid_lines_from_node">[docs]</a><span class="k">def</span> <span class="nf">get_valid_lines_from_node</span><span class="p">(</span><span class="n">subj</span><span class="p">,</span> <span class="n">tree_node</span><span class="p">,</span> <span class="n">reader</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get ids of polylines that match the condition described in a tree node</span>
@@ -145,18 +145,18 @@
 <span class="sd">        tree_node (braviz.interaction.logic_bundle_model.LogicBundleNode) : Tree node</span>
 <span class="sd">        reader (braviz.readAndFilter.base_reader.BaseReader) : Reader object to get data from</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">node_type</span> <span class="o">=</span> <span class="n">tree_node</span><span class="p">[</span><span class="s">&quot;node_type&quot;</span><span class="p">]</span>
+    <span class="n">node_type</span> <span class="o">=</span> <span class="n">tree_node</span><span class="p">[</span><span class="s2">&quot;node_type&quot;</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">node_type</span> <span class="o">==</span> <span class="n">LOGIC</span><span class="p">:</span>
         <span class="n">lines</span> <span class="o">=</span> <span class="n">get_valid_lines_from_logical</span><span class="p">(</span><span class="n">subj</span><span class="p">,</span> <span class="n">tree_node</span><span class="p">,</span> <span class="n">reader</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">node_type</span> <span class="o">==</span> <span class="n">STRUCT</span><span class="p">:</span>
-        <span class="n">lines</span> <span class="o">=</span> <span class="n">get_valid_lines_from_struct</span><span class="p">(</span><span class="n">subj</span><span class="p">,</span> <span class="n">tree_node</span><span class="p">[</span><span class="s">&quot;value&quot;</span><span class="p">],</span> <span class="n">reader</span><span class="p">)</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">get_valid_lines_from_struct</span><span class="p">(</span><span class="n">subj</span><span class="p">,</span> <span class="n">tree_node</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">],</span> <span class="n">reader</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">node_type</span> <span class="o">==</span> <span class="n">ROI</span><span class="p">:</span>
-        <span class="n">lines</span> <span class="o">=</span> <span class="n">get_valid_lines_from_roi</span><span class="p">(</span><span class="n">subj</span><span class="p">,</span> <span class="n">tree_node</span><span class="p">[</span><span class="s">&quot;extra_data&quot;</span><span class="p">],</span> <span class="n">reader</span><span class="p">)</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">get_valid_lines_from_roi</span><span class="p">(</span><span class="n">subj</span><span class="p">,</span> <span class="n">tree_node</span><span class="p">[</span><span class="s2">&quot;extra_data&quot;</span><span class="p">],</span> <span class="n">reader</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Unknown data type&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">lines</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unknown data type&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">lines</span></div>
 
-</div>
+
 <div class="viewcode-block" id="get_valid_lines_from_logical"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.hierarchical_fibers.get_valid_lines_from_logical">[docs]</a><span class="k">def</span> <span class="nf">get_valid_lines_from_logical</span><span class="p">(</span><span class="n">subj</span><span class="p">,</span> <span class="n">tree_node</span><span class="p">,</span> <span class="n">reader</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get polyline ids that match the condition in a logical node</span>
@@ -167,29 +167,29 @@
 <span class="sd">        reader (braviz.readAndFilter.base_reader.BaseReader) : Reader object to get data from</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">subsets</span> <span class="o">=</span> <span class="p">[(</span><span class="n">get_valid_lines_from_node</span><span class="p">(</span><span class="n">subj</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">reader</span><span class="p">))</span>
-               <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">tree_node</span><span class="p">[</span><span class="s">&quot;children&quot;</span><span class="p">]]</span>
-    <span class="n">value</span> <span class="o">=</span> <span class="n">tree_node</span><span class="p">[</span><span class="s">&quot;value&quot;</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="s">&quot;OR&quot;</span><span class="p">:</span>
+               <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">tree_node</span><span class="p">[</span><span class="s2">&quot;children&quot;</span><span class="p">]]</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">tree_node</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;OR&quot;</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">subsets</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">ans</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">ans</span> <span class="o">=</span> <span class="nb">set</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="o">*</span><span class="n">subsets</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="s">&quot;AND&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;AND&quot;</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">subsets</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">ans</span> <span class="o">=</span> <span class="n">get_all_lines</span><span class="p">(</span><span class="n">subj</span><span class="p">,</span> <span class="n">reader</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">ans</span> <span class="o">=</span> <span class="nb">set</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="o">*</span><span class="n">subsets</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="s">&quot;NOT&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;NOT&quot;</span><span class="p">:</span>
         <span class="n">all_lines</span> <span class="o">=</span> <span class="n">get_all_lines</span><span class="p">(</span><span class="n">subj</span><span class="p">,</span> <span class="n">reader</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">subsets</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">ans</span> <span class="o">=</span> <span class="n">all_lines</span> <span class="o">-</span> <span class="nb">set</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="o">*</span><span class="n">subsets</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">ans</span> <span class="o">=</span> <span class="n">all_lines</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Invalid logical value&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">ans</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Invalid logical value&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ans</span></div>
 
-</div>
+
 <div class="viewcode-block" id="get_all_lines"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.hierarchical_fibers.get_all_lines">[docs]</a><span class="k">def</span> <span class="nf">get_all_lines</span><span class="p">(</span><span class="n">subj</span><span class="p">,</span> <span class="n">reader</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Gets a list of the polyline ids of the whole tractography</span>
@@ -198,12 +198,12 @@
 <span class="sd">        subj : Subject id</span>
 <span class="sd">        reader (braviz.readAndFilter.base_reader.BaseReader) : Reader object to get data from</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">pd</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;FIBERS&quot;</span><span class="p">,</span> <span class="n">subj</span><span class="p">)</span>
+    <span class="n">pd</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;FIBERS&quot;</span><span class="p">,</span> <span class="n">subj</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">pd</span><span class="o">.</span><span class="n">GetNumberOfCells</span><span class="p">()</span> <span class="o">==</span> <span class="n">pd</span><span class="o">.</span><span class="n">GetNumberOfLines</span><span class="p">()</span>
     <span class="n">all_lines</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">GetNumberOfCells</span><span class="p">()))</span>
-    <span class="k">return</span> <span class="n">all_lines</span>
+    <span class="k">return</span> <span class="n">all_lines</span></div>
 
-</div>
+
 <div class="viewcode-block" id="get_valid_lines_from_struct"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.hierarchical_fibers.get_valid_lines_from_struct">[docs]</a><span class="k">def</span> <span class="nf">get_valid_lines_from_struct</span><span class="p">(</span><span class="n">subj</span><span class="p">,</span> <span class="n">struct</span><span class="p">,</span> <span class="n">reader</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get polyline ids that match the condition in a structure node</span>
@@ -214,10 +214,10 @@
 <span class="sd">        reader (braviz.readAndFilter.base_reader.BaseReader) : Reader object to get data from</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">img_subj</span> <span class="o">=</span> <span class="n">subj</span>
-    <span class="n">valid_ids</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fibers&#39;</span><span class="p">,</span> <span class="n">img_subj</span><span class="p">,</span> <span class="n">waypoint</span><span class="o">=</span><span class="n">struct</span><span class="p">,</span> <span class="n">ids</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">valid_ids</span><span class="p">)</span>
+    <span class="n">valid_ids</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fibers&#39;</span><span class="p">,</span> <span class="n">img_subj</span><span class="p">,</span> <span class="n">waypoint</span><span class="o">=</span><span class="n">struct</span><span class="p">,</span> <span class="n">ids</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">valid_ids</span><span class="p">)</span></div>
 
-</div>
+
 <div class="viewcode-block" id="get_valid_lines_from_roi"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.hierarchical_fibers.get_valid_lines_from_roi">[docs]</a><span class="k">def</span> <span class="nf">get_valid_lines_from_roi</span><span class="p">(</span><span class="n">subj</span><span class="p">,</span> <span class="n">roi_id</span><span class="p">,</span> <span class="n">reader</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get polyline ids that match the condition in a roi node</span>
@@ -230,27 +230,27 @@
     <span class="n">space</span> <span class="o">=</span> <span class="n">geom_db</span><span class="o">.</span><span class="n">get_roi_space</span><span class="p">(</span><span class="n">roi_id</span><span class="o">=</span><span class="n">roi_id</span><span class="p">)</span>
     <span class="n">sphere_data</span> <span class="o">=</span> <span class="n">geom_db</span><span class="o">.</span><span class="n">load_sphere</span><span class="p">(</span><span class="n">roi_id</span><span class="p">,</span> <span class="n">subj</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">sphere_data</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Sphere not found&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Sphere not found&quot;</span><span class="p">)</span>
     <span class="n">r</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">sphere_data</span>
-    <span class="n">key</span> <span class="o">=</span> <span class="s">&quot;roi_fibers_</span><span class="si">%s</span><span class="s">_</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">subj</span><span class="p">,</span> <span class="n">roi_id</span><span class="p">)</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;roi_fibers_</span><span class="si">%s</span><span class="s2">_</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">subj</span><span class="p">,</span> <span class="n">roi_id</span><span class="p">)</span>
     <span class="n">cached</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">load_from_cache</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">cached</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">valid_ids</span><span class="p">,</span> <span class="n">sphere_data_c</span> <span class="o">=</span> <span class="n">cached</span>
         <span class="k">if</span> <span class="n">sphere_data_c</span> <span class="o">==</span> <span class="n">sphere_data</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">valid_ids</span>
 
-    <span class="n">fibers</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;Fibers&quot;</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="n">space</span><span class="p">)</span>
+    <span class="n">fibers</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Fibers&quot;</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="n">space</span><span class="p">)</span>
     <span class="n">filterer</span> <span class="o">=</span> <span class="n">FilterBundleWithSphere</span><span class="p">()</span>
-    <span class="c"># Maybe overkill for only one sphere, but still fater than brute force</span>
+    <span class="c1"># Maybe overkill for only one sphere, but still fater than brute force</span>
     <span class="n">filterer</span><span class="o">.</span><span class="n">set_bundle</span><span class="p">(</span><span class="n">fibers</span><span class="p">)</span>
 
     <span class="n">valid_ids</span> <span class="o">=</span> <span class="n">filterer</span><span class="o">.</span><span class="n">filter_bundle_with_sphere</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">),</span> <span class="n">r</span><span class="p">,</span> <span class="n">get_ids</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
     <span class="n">reader</span><span class="o">.</span><span class="n">save_into_cache</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="p">(</span><span class="n">valid_ids</span><span class="p">,</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)))</span>
-    <span class="k">return</span> <span class="n">valid_ids</span>
+    <span class="k">return</span> <span class="n">valid_ids</span></div>
 
-</div>
+
 <span class="k">def</span> <span class="nf">_brute_force_lines_in_sphere</span><span class="p">(</span><span class="n">fibers</span><span class="p">,</span> <span class="n">ctr</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
-    <span class="c"># TODO try by loading first all points into a numpy array</span>
+    <span class="c1"># TODO try by loading first all points into a numpy array</span>
     <span class="n">ans</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
     <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ctr</span><span class="p">)</span>
     <span class="n">n_lines</span> <span class="o">=</span> <span class="n">fibers</span><span class="o">.</span><span class="n">GetNumberOfLines</span><span class="p">()</span>
@@ -296,7 +296,7 @@
           
     <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Diego Angulo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
     </div>
         </div>
         <div class="clearer"></div>

@@ -82,23 +82,23 @@
           <div class="body" role="main">
             
   <h1>Source code for braviz.readAndFilter.transforms</h1><div class="highlight"><pre>
-<span class="c">##############################################################################</span>
-<span class="c"># Braviz, Brain Data interactive visualization                            #</span>
-<span class="c"># Copyright (C) 2014  Diego Angulo                                        #</span>
-<span class="c">#                                                                            #</span>
-<span class="c">#    This program is free software: you can redistribute it and/or modify    #</span>
-<span class="c">#    it under the terms of the GNU Lesser General Public License as          #</span>
-<span class="c">#    published by  the Free Software Foundation, either version 3 of the     #</span>
-<span class="c">#    License, or (at your option) any later version.                         #</span>
-<span class="c">#                                                                            #</span>
-<span class="c">#    This program is distributed in the hope that it will be useful,         #</span>
-<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
-<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
-<span class="c">#    GNU Lesser General Public License for more details.                     #</span>
-<span class="c">#                                                                            #</span>
-<span class="c">#    You should have received a copy of the GNU Lesser General Public License#</span>
-<span class="c">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
-<span class="c">##############################################################################</span>
+<span></span><span class="c1">##############################################################################</span>
+<span class="c1"># Braviz, Brain Data interactive visualization                            #</span>
+<span class="c1"># Copyright (C) 2014  Diego Angulo                                        #</span>
+<span class="c1">#                                                                            #</span>
+<span class="c1">#    This program is free software: you can redistribute it and/or modify    #</span>
+<span class="c1">#    it under the terms of the GNU Lesser General Public License as          #</span>
+<span class="c1">#    published by  the Free Software Foundation, either version 3 of the     #</span>
+<span class="c1">#    License, or (at your option) any later version.                         #</span>
+<span class="c1">#                                                                            #</span>
+<span class="c1">#    This program is distributed in the hope that it will be useful,         #</span>
+<span class="c1">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
+<span class="c1">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
+<span class="c1">#    GNU Lesser General Public License for more details.                     #</span>
+<span class="c1">#                                                                            #</span>
+<span class="c1">#    You should have received a copy of the GNU Lesser General Public License#</span>
+<span class="c1">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
+<span class="c1">##############################################################################</span>
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
 <span class="kn">import</span> <span class="nn">logging</span>
@@ -108,7 +108,7 @@
 <span class="kn">import</span> <span class="nn">vtk</span>
 <span class="kn">from</span> <span class="nn">braviz.readAndFilter.cache</span> <span class="kn">import</span> <span class="n">memo_ten</span>
 
-<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;diego&#39;</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;diego&#39;</span>
 
 
 <div class="viewcode-block" id="applyTransform"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.transforms.applyTransform">[docs]</a><span class="k">def</span> <span class="nf">applyTransform</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="n">origin2</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">dimension2</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">spacing2</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">interpolate</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
@@ -143,12 +143,12 @@
                 <span class="n">next_pt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">transform_i</span><span class="o">.</span><span class="n">MultiplyDoublePoint</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span>
                 <span class="n">delta</span> <span class="o">=</span> <span class="p">(</span><span class="n">org</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">/</span><span class="n">org</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">-</span> <span class="p">(</span><span class="n">next_pt</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">/</span><span class="n">next_pt</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
                 <span class="n">spacing2</span> <span class="o">=</span> <span class="n">delta</span>
-                <span class="c">#spacing2 = [transform_i.GetElement(0, 0), transform_i.GetElement(1, 1), transform_i.GetElement(2, 2)]</span>
+                <span class="c1">#spacing2 = [transform_i.GetElement(0, 0), transform_i.GetElement(1, 1), transform_i.GetElement(2, 2)]</span>
             <span class="k">if</span> <span class="n">origin2</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">spacing2</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
 
                 <span class="k">if</span> <span class="n">origin2</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-                    <span class="c"># TODO: Use a better strategy to find the new origin; this doesn&#39;t</span>
-                    <span class="c"># work with large rotations or reflections</span>
+                    <span class="c1"># TODO: Use a better strategy to find the new origin; this doesn&#39;t</span>
+                    <span class="c1"># work with large rotations or reflections</span>
                     <span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span><span class="p">,</span> <span class="n">z_min</span><span class="p">,</span> <span class="n">z_max</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">GetBounds</span><span class="p">()</span>
                     <span class="n">corners</span> <span class="o">=</span> <span class="p">[(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">y_min</span><span class="p">,</span> <span class="n">z_min</span><span class="p">),</span> <span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">y_min</span><span class="p">,</span> <span class="n">z_max</span><span class="p">),</span> <span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">y_max</span><span class="p">,</span> <span class="n">z_min</span><span class="p">),</span>
                                <span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">y_max</span><span class="p">,</span> <span class="n">z_max</span><span class="p">),</span>
@@ -178,17 +178,17 @@
         <span class="k">if</span> <span class="bp">None</span> <span class="o">==</span> <span class="n">spacing2</span> <span class="ow">or</span> <span class="bp">None</span> <span class="o">==</span> <span class="n">origin2</span><span class="p">:</span>
             <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
             <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-                <span class="s">&quot;spacing2 and origin2 are required when using a general transform&quot;</span><span class="p">)</span>
+                <span class="s2">&quot;spacing2 and origin2 are required when using a general transform&quot;</span><span class="p">)</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="s">&quot;spacing2 and origin2 are required when using a general transform&quot;</span><span class="p">)</span>
+                <span class="s2">&quot;spacing2 and origin2 are required when using a general transform&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Method not implemented for </span><span class="si">%s</span><span class="s"> transform&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">transform</span><span class="p">))</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Method not implemented for </span><span class="si">%s</span><span class="s2"> transform&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">transform</span><span class="p">))</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-            <span class="s">&quot;Method not implemented for </span><span class="si">%s</span><span class="s"> transform&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">transform</span><span class="p">))</span>
+            <span class="s2">&quot;Method not implemented for </span><span class="si">%s</span><span class="s2"> transform&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">transform</span><span class="p">))</span>
     <span class="k">if</span> <span class="bp">None</span> <span class="o">==</span> <span class="n">dimension2</span><span class="p">:</span>
         <span class="n">dimension2</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">GetDimensions</span><span class="p">()</span>
-        <span class="c">#=============================Finished parsing arguments===============</span>
+        <span class="c1">#=============================Finished parsing arguments===============</span>
     <span class="n">reslicer</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkImageReslice</span><span class="p">()</span>
 
     <span class="n">reslicer</span><span class="o">.</span><span class="n">SetResliceTransform</span><span class="p">(</span><span class="n">vtkTrans</span><span class="p">)</span>
@@ -204,10 +204,10 @@
         <span class="n">reslicer</span><span class="o">.</span><span class="n">SetInterpolationModeToCubic</span><span class="p">()</span>
     <span class="n">reslicer</span><span class="o">.</span><span class="n">Update</span><span class="p">()</span>
     <span class="n">outImg</span> <span class="o">=</span> <span class="n">reslicer</span><span class="o">.</span><span class="n">GetOutput</span><span class="p">()</span>
-    <span class="c"># print dimension2</span>
-    <span class="k">return</span> <span class="n">outImg</span>
+    <span class="c1"># print dimension2</span>
+    <span class="k">return</span> <span class="n">outImg</span></div>
 
-</div>
+
 <div class="viewcode-block" id="numpy2vtkMatrix"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.transforms.numpy2vtkMatrix">[docs]</a><span class="k">def</span> <span class="nf">numpy2vtkMatrix</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Transform a 4x4 numpy array into vtk4x4 matrix</span>
@@ -222,9 +222,9 @@
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
             <span class="n">vtk_matrix</span><span class="o">.</span><span class="n">SetElement</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">vtk_matrix</span>
+    <span class="k">return</span> <span class="n">vtk_matrix</span></div>
 
-</div>
+
 <div class="viewcode-block" id="transformGeneralData"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.transforms.transformGeneralData">[docs]</a><span class="k">def</span> <span class="nf">transformGeneralData</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">transform</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Use a transform or a 4x4Matrix to transform vtkPointData or poly data</span>
@@ -247,9 +247,9 @@
             <span class="n">vtkTrans</span><span class="o">.</span><span class="n">SetInterpolationModeToCubic</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Method not implemented for </span><span class="si">%s</span><span class="s"> transform&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">transform</span><span class="p">))</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Method not implemented for </span><span class="si">%s</span><span class="s2"> transform&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">transform</span><span class="p">))</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-            <span class="s">&quot;Method not implemented for </span><span class="si">%s</span><span class="s"> transform&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">transform</span><span class="p">))</span>
+            <span class="s2">&quot;Method not implemented for </span><span class="si">%s</span><span class="s2"> transform&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">transform</span><span class="p">))</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkPolyData</span><span class="p">):</span>
         <span class="n">transFilter</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkTransformPolyDataFilter</span><span class="p">()</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkDataSet</span><span class="p">):</span>
@@ -260,9 +260,9 @@
     <span class="n">transFilter</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
     <span class="n">transFilter</span><span class="o">.</span><span class="n">Update</span><span class="p">()</span>
     <span class="n">output</span> <span class="o">=</span> <span class="n">transFilter</span><span class="o">.</span><span class="n">GetOutput</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">output</span>
+    <span class="k">return</span> <span class="n">output</span></div>
 
-</div>
+
 <div class="viewcode-block" id="transformPolyData"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.transforms.transformPolyData">[docs]</a><span class="k">def</span> <span class="nf">transformPolyData</span><span class="p">(</span><span class="n">poly_data</span><span class="p">,</span> <span class="n">transform</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Kept for compatibility, it is an alias to :func:`transformGeneralData`</span>
@@ -271,9 +271,9 @@
 <span class="sd">        Use :func:`transformGeneralData`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">output</span> <span class="o">=</span> <span class="n">transformGeneralData</span><span class="p">(</span><span class="n">poly_data</span><span class="p">,</span> <span class="n">transform</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">output</span>
+    <span class="k">return</span> <span class="n">output</span></div>
 
-</div>
+
 <div class="viewcode-block" id="readFreeSurferTransform"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.transforms.readFreeSurferTransform">[docs]</a><span class="k">def</span> <span class="nf">readFreeSurferTransform</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Reads a freeSurfer transform file and returns a numpy array</span>
@@ -290,22 +290,22 @@
             <span class="n">trans</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">:]</span>
             <span class="n">trans</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">trans</span><span class="p">]</span>
             <span class="n">trans</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">trans</span><span class="p">]</span>
-            <span class="c"># possible semicolomg in the last term</span>
-            <span class="n">trans</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">trans</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s">&quot;;&quot;</span><span class="p">)</span>
+            <span class="c1"># possible semicolomg in the last term</span>
+            <span class="n">trans</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">trans</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;;&quot;</span><span class="p">)</span>
             <span class="n">trans_f</span> <span class="o">=</span> <span class="p">[</span><span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">trans</span><span class="p">]</span>
             <span class="n">trans_f</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">])</span>
             <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">trans_f</span><span class="p">)</span>
             <span class="n">nar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">trans_f</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
         <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;couldn&#39;t open </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">filename</span><span class="p">)</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;couldn&#39;t open </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;couldn&#39;t open </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;couldn&#39;t open </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">filename</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">nar</span>
+    <span class="k">return</span> <span class="n">nar</span></div>
 
-</div>
+
 <span class="nd">@memo_ten</span>
-<div class="viewcode-block" id="readFlirtMatrix"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.transforms.readFlirtMatrix">[docs]</a><span class="k">def</span> <span class="nf">readFlirtMatrix</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">src_img_file</span><span class="p">,</span> <span class="n">ref_img_file</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="readFlirtMatrix"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.transforms.readFlirtMatrix">[docs]</a><span class="k">def</span> <span class="nf">readFlirtMatrix</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">src_img_file</span><span class="p">,</span> <span class="n">ref_img_file</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    read a matrix in fsl flirt format</span>
 
@@ -368,7 +368,7 @@
           
     <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Diego Angulo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
     </div>
         </div>
         <div class="clearer"></div>

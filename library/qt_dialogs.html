@@ -133,7 +133,7 @@ and then call <code class="docutils literal"><span class="pre">finish_ui_setup</
 
 <dl class="class">
 <dt id="braviz.interaction.qt_dialogs.GenericVariableSelectDialog">
-<em class="property">class </em><code class="descname">GenericVariableSelectDialog</code><span class="sig-paren">(</span><em>params</em>, <em>multiple=False</em>, <em>initial_selection_names=None</em>, <em>initial_selection_idx=None</em>, <em>sample=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_dialogs.html#GenericVariableSelectDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_dialogs.GenericVariableSelectDialog" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">GenericVariableSelectDialog</code><span class="sig-paren">(</span><em>params</em>, <em>multiple=False</em>, <em>initial_selection_names=None</em>, <em>initial_selection_idx=None</em>, <em>sample=None</em>, <em>highlight=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_dialogs.html#GenericVariableSelectDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_dialogs.GenericVariableSelectDialog" title="Permalink to this definition">¶</a></dt>
 <dd><p>A dialog for selecting one or multiple variables with initial selection.</p>
 <p>This dialog is optimized for multiple selections, and it improves <a class="reference internal" href="#braviz.interaction.qt_dialogs.OutcomeSelectDialog" title="braviz.interaction.qt_dialogs.OutcomeSelectDialog"><code class="xref py py-class docutils literal"><span class="pre">OutcomeSelectDialog</span></code></a> in that</p>
 <blockquote>
@@ -162,7 +162,7 @@ and then call <code class="docutils literal"><span class="pre">finish_ui_setup</
 
 <dl class="class">
 <dt id="braviz.interaction.qt_dialogs.OutcomeSelectDialog">
-<em class="property">class </em><code class="descname">OutcomeSelectDialog</code><span class="sig-paren">(</span><em>params_dict</em>, <em>multiple=False</em>, <em>sample=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_dialogs.html#OutcomeSelectDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_dialogs.OutcomeSelectDialog" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">OutcomeSelectDialog</code><span class="sig-paren">(</span><em>params_dict</em>, <em>multiple=False</em>, <em>sample=None</em>, <em>highlight=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_dialogs.html#OutcomeSelectDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_dialogs.OutcomeSelectDialog" title="Permalink to this definition">¶</a></dt>
 <dd><p>A dialog for selecting a single or multiple variable</p>
 <p>The constructor takes a dictionary which will be used to save the selection in the dialog.
 When the user clicks the <em>save and select</em> button, the dialog will close, and the current selection
@@ -469,7 +469,7 @@ change the variable name</p>
           
     <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Diego Angulo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
     </div>
         </div>
         <div class="clearer"></div>

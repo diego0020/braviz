@@ -82,23 +82,23 @@
           <div class="body" role="main">
             
   <h1>Source code for braviz.interaction.connection</h1><div class="highlight"><pre>
-<span class="c">##############################################################################</span>
-<span class="c">#    Braviz, Brain Data interactive visualization                            #</span>
-<span class="c">#    Copyright (C) 2014  Diego Angulo                                        #</span>
-<span class="c">#                                                                            #</span>
-<span class="c">#    This program is free software: you can redistribute it and/or modify    #</span>
-<span class="c">#    it under the terms of the GNU Lesser General Public License as          #</span>
-<span class="c">#    published by  the Free Software Foundation, either version 3 of the     #</span>
-<span class="c">#    License, or (at your option) any later version.                         #</span>
-<span class="c">#                                                                            #</span>
-<span class="c">#    This program is distributed in the hope that it will be useful,         #</span>
-<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
-<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
-<span class="c">#    GNU Lesser General Public License for more details.                     #</span>
-<span class="c">#                                                                            #</span>
-<span class="c">#    You should have received a copy of the GNU Lesser General Public License#</span>
-<span class="c">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
-<span class="c">##############################################################################</span>
+<span></span><span class="c1">##############################################################################</span>
+<span class="c1">#    Braviz, Brain Data interactive visualization                            #</span>
+<span class="c1">#    Copyright (C) 2014  Diego Angulo                                        #</span>
+<span class="c1">#                                                                            #</span>
+<span class="c1">#    This program is free software: you can redistribute it and/or modify    #</span>
+<span class="c1">#    it under the terms of the GNU Lesser General Public License as          #</span>
+<span class="c1">#    published by  the Free Software Foundation, either version 3 of the     #</span>
+<span class="c1">#    License, or (at your option) any later version.                         #</span>
+<span class="c1">#                                                                            #</span>
+<span class="c1">#    This program is distributed in the hope that it will be useful,         #</span>
+<span class="c1">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
+<span class="c1">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
+<span class="c1">#    GNU Lesser General Public License for more details.                     #</span>
+<span class="c1">#                                                                            #</span>
+<span class="c1">#    You should have received a copy of the GNU Lesser General Public License#</span>
+<span class="c1">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
+<span class="c1">##############################################################################</span>
 
 
 <span class="kn">import</span> <span class="nn">zmq</span>
@@ -113,7 +113,7 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
 
-<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Diego&#39;</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;Diego&#39;</span>
 
 
 <span class="k">class</span> <span class="nc">NpJSONEncoder</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">JSONEncoder</span><span class="p">):</span>
@@ -173,12 +173,12 @@
         <span class="n">context</span> <span class="o">=</span> <span class="n">zmq</span><span class="o">.</span><span class="n">Context</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">zmq</span><span class="o">.</span><span class="n">zmq_version_info</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">:</span>
             <span class="n">context</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">IMMEDIATE</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">base_address</span> <span class="o">=</span> <span class="s">&quot;tcp://127.0.0.1&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_local_only</span> <span class="k">else</span> <span class="s">&quot;tcp://*&quot;</span>
+        <span class="n">base_address</span> <span class="o">=</span> <span class="s2">&quot;tcp://127.0.0.1&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_local_only</span> <span class="k">else</span> <span class="s2">&quot;tcp://*&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_listen_socket</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">PULL</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_listen_socket</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">:*&quot;</span> <span class="o">%</span> <span class="n">base_address</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_listen_socket</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:*&quot;</span> <span class="o">%</span> <span class="n">base_address</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pull_address</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_listen_socket</span><span class="o">.</span><span class="n">get_string</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">LAST_ENDPOINT</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_forward_socket</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">PUB</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_forward_socket</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">:*&quot;</span> <span class="o">%</span> <span class="n">base_address</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_forward_socket</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:*&quot;</span> <span class="o">%</span> <span class="n">base_address</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pub_address</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_forward_socket</span><span class="o">.</span><span class="n">get_string</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">LAST_ENDPOINT</span><span class="p">)</span>
 
         <span class="k">def</span> <span class="nf">server_loop</span><span class="p">():</span>
@@ -191,8 +191,8 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_server_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">server_loop</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_server_thread</span><span class="o">.</span><span class="n">setDaemon</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_server_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-</div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_server_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
+
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">broadcast_address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -216,15 +216,15 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
         <span class="n">net_msg</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">cls</span><span class="o">=</span><span class="n">NpJSONEncoder</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_forward_socket</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">net_msg</span><span class="p">,</span> <span class="n">zmq</span><span class="o">.</span><span class="n">DONTWAIT</span><span class="p">)</span>
-</div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_forward_socket</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">net_msg</span><span class="p">,</span> <span class="n">zmq</span><span class="o">.</span><span class="n">DONTWAIT</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="MessageServer.stop_server"><a class="viewcode-back" href="../../../library/communication.html#braviz.interaction.connection.MessageServer.stop_server">[docs]</a>    <span class="k">def</span> <span class="nf">stop_server</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Stops the server thread</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c"># atomic operation</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_stop</span> <span class="o">=</span> <span class="bp">True</span>
-</div>
+        <span class="c1"># atomic operation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stop</span> <span class="o">=</span> <span class="bp">True</span></div>
+
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">pause</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -234,9 +234,9 @@
 
     <span class="nd">@pause.setter</span>
     <span class="k">def</span> <span class="nf">pause</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__paused</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__paused</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">val</span><span class="p">)</span></div>
 
-</div>
+
 <div class="viewcode-block" id="MessageClient"><a class="viewcode-back" href="../../../library/communication.html#braviz.interaction.connection.MessageClient">[docs]</a><span class="k">class</span> <span class="nc">MessageClient</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A client that connects to :class:`~braviz.interaction.connection.MessageServer`</span>
@@ -275,12 +275,12 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_server_pub</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_receive_socket</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">SUB</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_receive_socket</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_server_pub</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_receive_socket</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">SUBSCRIBE</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_receive_socket</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">SUBSCRIBE</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
 
             <span class="k">def</span> <span class="nf">receive_loop</span><span class="p">():</span>
                 <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stop</span><span class="p">:</span>
                     <span class="n">net_msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_receive_socket</span><span class="o">.</span><span class="n">recv</span><span class="p">()</span>
-                    <span class="c"># Ignore bouncing messages</span>
+                    <span class="c1"># Ignore bouncing messages</span>
                     <span class="k">if</span> <span class="n">net_msg</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_message</span> <span class="ow">or</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_send_time</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">):</span>
                         <span class="n">msg</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">net_msg</span><span class="p">)</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">message_received</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
@@ -288,8 +288,8 @@
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_receive_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">receive_loop</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_receive_thread</span><span class="o">.</span><span class="n">setDaemon</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_receive_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-</div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_receive_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
+
 <div class="viewcode-block" id="MessageClient.send_message"><a class="viewcode-back" href="../../../library/communication.html#braviz.interaction.connection.MessageClient.send_message">[docs]</a>    <span class="k">def</span> <span class="nf">send_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Send a message</span>
@@ -298,29 +298,29 @@
 <span class="sd">            msg (dict) : Message to send to the server, will be encoded as JSON</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="s">&quot;type&quot;</span> <span class="ow">in</span> <span class="n">msg</span>
+        <span class="k">assert</span> <span class="s2">&quot;type&quot;</span> <span class="ow">in</span> <span class="n">msg</span>
 
         <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_send_socket</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Trying to send message without connection to server&quot;</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Trying to send message without connection to server&quot;</span><span class="p">)</span>
             <span class="k">return</span>
 
         <span class="k">try</span><span class="p">:</span>
-            <span class="c"># self._send_socket.send(msg,zmq.DONTWAIT)</span>
+            <span class="c1"># self._send_socket.send(msg,zmq.DONTWAIT)</span>
             <span class="n">net_msg</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">cls</span><span class="o">=</span><span class="n">NpJSONEncoder</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_last_message</span> <span class="o">=</span> <span class="n">net_msg</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_last_send_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_send_socket</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">net_msg</span><span class="p">,</span> <span class="n">zmq</span><span class="o">.</span><span class="n">DONTWAIT</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">zmq</span><span class="o">.</span><span class="n">Again</span><span class="p">:</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Couldn&#39;t send message </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
-</div>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t send message </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="MessageClient.stop"><a class="viewcode-back" href="../../../library/communication.html#braviz.interaction.connection.MessageClient.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        stop the client</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_stop</span> <span class="o">=</span> <span class="bp">True</span>
-</div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stop</span> <span class="o">=</span> <span class="bp">True</span></div>
+
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">server_broadcast</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -333,9 +333,9 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The server receive address</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_server_pull</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_server_pull</span></div>
 
-</div>
+
 <div class="viewcode-block" id="PassiveMessageClient"><a class="viewcode-back" href="../../../library/communication.html#braviz.interaction.connection.PassiveMessageClient">[docs]</a><span class="k">class</span> <span class="nc">PassiveMessageClient</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A client that connects to :class:`~braviz.interaction.connection.MessageServer`</span>
@@ -355,7 +355,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_receive_socket</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_receive_thread</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_stop</span> <span class="o">=</span> <span class="bp">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_last_seen_message</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_seen_message</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connect_to_server</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_message_counter</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_last_send_time</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span>
@@ -374,20 +374,20 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_server_pub</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_receive_socket</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">SUB</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_receive_socket</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_server_pub</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_receive_socket</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">SUBSCRIBE</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_receive_socket</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">SUBSCRIBE</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
 
             <span class="k">def</span> <span class="nf">receive_loop</span><span class="p">():</span>
                 <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stop</span><span class="p">:</span>
                     <span class="n">net_msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_receive_socket</span><span class="o">.</span><span class="n">recv</span><span class="p">()</span>
-                    <span class="c"># Filter some messages to avoid loops</span>
+                    <span class="c1"># Filter some messages to avoid loops</span>
                     <span class="k">if</span> <span class="n">net_msg</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_seen_message</span> <span class="ow">or</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_send_time</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">):</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">_last_seen_message</span> <span class="o">=</span> <span class="n">net_msg</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">_message_counter</span> <span class="o">+=</span> <span class="mi">1</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_receive_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">receive_loop</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_receive_thread</span><span class="o">.</span><span class="n">setDaemon</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_receive_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-</div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_receive_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
+
 <div class="viewcode-block" id="PassiveMessageClient.send_message"><a class="viewcode-back" href="../../../library/communication.html#braviz.interaction.connection.PassiveMessageClient.send_message">[docs]</a>    <span class="k">def</span> <span class="nf">send_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Send a message</span>
@@ -399,7 +399,7 @@
         <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_send_socket</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Trying to send message without connection to server&quot;</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Trying to send message without connection to server&quot;</span><span class="p">)</span>
             <span class="k">return</span>
 
         <span class="k">try</span><span class="p">:</span>
@@ -409,14 +409,14 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_last_send_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_send_socket</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">net_msg</span><span class="p">,</span> <span class="n">zmq</span><span class="o">.</span><span class="n">DONTWAIT</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">zmq</span><span class="o">.</span><span class="n">Again</span><span class="p">:</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Couldn&#39;t send message </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
-</div>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t send message </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="PassiveMessageClient.stop"><a class="viewcode-back" href="../../../library/communication.html#braviz.interaction.connection.PassiveMessageClient.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        stop the client</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_stop</span> <span class="o">=</span> <span class="bp">True</span>
-</div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stop</span> <span class="o">=</span> <span class="bp">True</span></div>
+
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">server_broadcast</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -438,9 +438,9 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            ``number, message_text``; where the number will increase each time a new message arrives</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_message_counter</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_last_seen_message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_message_counter</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_last_seen_message</span><span class="p">)</span></div></div>
 
-</div></div>
+
 <div class="viewcode-block" id="GenericMessageClient"><a class="viewcode-back" href="../../../library/communication.html#braviz.interaction.connection.GenericMessageClient">[docs]</a><span class="k">class</span> <span class="nc">GenericMessageClient</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A client that connects to :class:`~braviz.interaction.connection.MessageServer`</span>
@@ -482,10 +482,10 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_server_pub</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_receive_socket</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">SUB</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_receive_socket</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_server_pub</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_receive_socket</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">SUBSCRIBE</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_receive_socket</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">SUBSCRIBE</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
 
             <span class="k">def</span> <span class="nf">receive_loop</span><span class="p">():</span>
-                <span class="n">handles_json</span> <span class="o">=</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="p">,</span> <span class="s">&quot;handle_json_message&quot;</span><span class="p">)</span>
+                <span class="n">handles_json</span> <span class="o">=</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="p">,</span> <span class="s2">&quot;handle_json_message&quot;</span><span class="p">)</span>
                 <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stop</span><span class="p">:</span>
                     <span class="n">net_msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_receive_socket</span><span class="o">.</span><span class="n">recv</span><span class="p">()</span>
                     <span class="k">if</span> <span class="n">handles_json</span><span class="p">:</span>
@@ -496,8 +496,8 @@
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_receive_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">receive_loop</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_receive_thread</span><span class="o">.</span><span class="n">setDaemon</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_receive_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-</div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_receive_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
+
 <div class="viewcode-block" id="GenericMessageClient.send_message"><a class="viewcode-back" href="../../../library/communication.html#braviz.interaction.connection.GenericMessageClient.send_message">[docs]</a>    <span class="k">def</span> <span class="nf">send_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Send a message</span>
@@ -511,18 +511,18 @@
         <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_send_socket</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Trying to send message without connection to server&quot;</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Trying to send message without connection to server&quot;</span><span class="p">)</span>
             <span class="k">return</span>
 
         <span class="k">try</span><span class="p">:</span>
-            <span class="c"># self._send_socket.send(msg,zmq.DONTWAIT)</span>
+            <span class="c1"># self._send_socket.send(msg,zmq.DONTWAIT)</span>
             <span class="n">net_msg</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">cls</span><span class="o">=</span><span class="n">NpJSONEncoder</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_last_message</span> <span class="o">=</span> <span class="n">net_msg</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_last_send_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_send_socket</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">net_msg</span><span class="p">,</span> <span class="n">zmq</span><span class="o">.</span><span class="n">DONTWAIT</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">zmq</span><span class="o">.</span><span class="n">Again</span><span class="p">:</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Couldn&#39;t send message </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
-</div>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t send message </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="GenericMessageClient.send_json_message"><a class="viewcode-back" href="../../../library/communication.html#braviz.interaction.connection.GenericMessageClient.send_json_message">[docs]</a>    <span class="k">def</span> <span class="nf">send_json_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">net_msg</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Send a message already encoded as json</span>
@@ -535,23 +535,23 @@
         <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_send_socket</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Trying to send message without connection to server&quot;</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Trying to send message without connection to server&quot;</span><span class="p">)</span>
             <span class="k">return</span>
 
         <span class="k">try</span><span class="p">:</span>
-            <span class="c"># self._send_socket.send(msg,zmq.DONTWAIT)</span>
+            <span class="c1"># self._send_socket.send(msg,zmq.DONTWAIT)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_last_message</span> <span class="o">=</span> <span class="n">net_msg</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_last_send_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_send_socket</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">net_msg</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">zmq</span><span class="o">.</span><span class="n">Again</span><span class="p">:</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Couldn&#39;t send message </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">net_msg</span><span class="p">)</span>
-</div>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t send message </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">net_msg</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="GenericMessageClient.stop"><a class="viewcode-back" href="../../../library/communication.html#braviz.interaction.connection.GenericMessageClient.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        stop the client</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_stop</span> <span class="o">=</span> <span class="bp">True</span>
-</div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stop</span> <span class="o">=</span> <span class="bp">True</span></div>
+
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">server_broadcast</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -564,9 +564,9 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The server receive address</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_server_pull</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_server_pull</span></div>
 
-</div>
+
 <span class="k">class</span> <span class="nc">BlockingMessageClient</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A listening client that connects to :class:`~braviz.interaction.connection.MessageServer`</span>
@@ -594,7 +594,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_receive_socket</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">SUB</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_receive_socket</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_server_pub</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_receive_socket</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">SUBSCRIBE</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_receive_socket</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">SUBSCRIBE</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">get_message</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">net_msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_receive_socket</span><span class="o">.</span><span class="n">recv</span><span class="p">()</span>
@@ -615,20 +615,20 @@
     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">next_state</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
     <span class="n">timestamp</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
     <span class="n">msg</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s">&quot;type&quot;</span><span class="p">:</span> <span class="s">&quot;log&quot;</span><span class="p">,</span>
-        <span class="s">&quot;action&quot;</span><span class="p">:</span> <span class="n">action</span><span class="p">,</span>
-        <span class="s">&quot;state&quot;</span><span class="p">:</span> <span class="n">next_state</span><span class="p">,</span>
-        <span class="s">&quot;pid&quot;</span><span class="p">:</span> <span class="n">uid</span><span class="p">,</span>
-        <span class="s">&quot;application&quot;</span><span class="p">:</span> <span class="n">application</span><span class="p">,</span>
-        <span class="s">&quot;time&quot;</span><span class="p">:</span> <span class="n">timestamp</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;log&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">action</span><span class="p">,</span>
+        <span class="s2">&quot;state&quot;</span><span class="p">:</span> <span class="n">next_state</span><span class="p">,</span>
+        <span class="s2">&quot;pid&quot;</span><span class="p">:</span> <span class="n">uid</span><span class="p">,</span>
+        <span class="s2">&quot;application&quot;</span><span class="p">:</span> <span class="n">application</span><span class="p">,</span>
+        <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="n">timestamp</span>
     <span class="p">}</span>
     <span class="k">return</span> <span class="n">msg</span>
 
 <span class="k">def</span> <span class="nf">create_ready_message</span><span class="p">(</span><span class="n">instance_id</span><span class="p">):</span>
     <span class="n">msg</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s">&quot;type&quot;</span> <span class="p">:</span> <span class="s">&quot;ready&quot;</span><span class="p">,</span>
-        <span class="s">&quot;source_pid&quot;</span> <span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">(),</span>
-        <span class="s">&quot;source_id&quot;</span> <span class="p">:</span> <span class="n">instance_id</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span> <span class="p">:</span> <span class="s2">&quot;ready&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;source_pid&quot;</span> <span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">(),</span>
+        <span class="s2">&quot;source_id&quot;</span> <span class="p">:</span> <span class="n">instance_id</span><span class="p">,</span>
     <span class="p">}</span>
     <span class="k">return</span> <span class="n">msg</span>
 </pre></div>
@@ -659,7 +659,7 @@
           
     <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Diego Angulo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
     </div>
         </div>
         <div class="clearer"></div>

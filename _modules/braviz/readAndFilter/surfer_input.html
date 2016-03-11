@@ -82,27 +82,27 @@
           <div class="body" role="main">
             
   <h1>Source code for braviz.readAndFilter.surfer_input</h1><div class="highlight"><pre>
-<span class="c">##############################################################################</span>
-<span class="c">#    Braviz, Brain Data interactive visualization                            #</span>
-<span class="c">#    Copyright (C) 2014  Diego Angulo                                        #</span>
-<span class="c">#                                                                            #</span>
-<span class="c">#    This program is free software: you can redistribute it and/or modify    #</span>
-<span class="c">#    it under the terms of the GNU Lesser General Public License as          #</span>
-<span class="c">#    published by  the Free Software Foundation, either version 3 of the     #</span>
-<span class="c">#    License, or (at your option) any later version.                         #</span>
-<span class="c">#                                                                            #</span>
-<span class="c">#    This program is distributed in the hope that it will be useful,         #</span>
-<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
-<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
-<span class="c">#    GNU Lesser General Public License for more details.                     #</span>
-<span class="c">#                                                                            #</span>
-<span class="c">#    You should have received a copy of the GNU Lesser General Public License#</span>
-<span class="c">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
-<span class="c">##############################################################################</span>
+<span></span><span class="c1">##############################################################################</span>
+<span class="c1">#    Braviz, Brain Data interactive visualization                            #</span>
+<span class="c1">#    Copyright (C) 2014  Diego Angulo                                        #</span>
+<span class="c1">#                                                                            #</span>
+<span class="c1">#    This program is free software: you can redistribute it and/or modify    #</span>
+<span class="c1">#    it under the terms of the GNU Lesser General Public License as          #</span>
+<span class="c1">#    published by  the Free Software Foundation, either version 3 of the     #</span>
+<span class="c1">#    License, or (at your option) any later version.                         #</span>
+<span class="c1">#                                                                            #</span>
+<span class="c1">#    This program is distributed in the hope that it will be useful,         #</span>
+<span class="c1">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
+<span class="c1">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
+<span class="c1">#    GNU Lesser General Public License for more details.                     #</span>
+<span class="c1">#                                                                            #</span>
+<span class="c1">#    You should have received a copy of the GNU Lesser General Public License#</span>
+<span class="c1">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
+<span class="c1">##############################################################################</span>
 
 
-<span class="c"># Based on the io.py file from the pySurfer library</span>
-<span class="c"># http://pysurfer.github.io</span>
+<span class="c1"># Based on the io.py file from the pySurfer library</span>
+<span class="c1"># http://pysurfer.github.io</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">logging</span>
@@ -115,17 +115,17 @@
 
 <span class="k">def</span> <span class="nf">_fread3</span><span class="p">(</span><span class="n">fobj</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Read a 3-byte int from an open binary file object.&quot;&quot;&quot;</span>
-    <span class="n">b1</span><span class="p">,</span> <span class="n">b2</span><span class="p">,</span> <span class="n">b3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="s">&quot;&gt;u1&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">b1</span><span class="p">,</span> <span class="n">b2</span><span class="p">,</span> <span class="n">b3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="s2">&quot;&gt;u1&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">b1</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">b2</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="n">b3</span>
 
 
 <span class="k">def</span> <span class="nf">_fread3_many</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Read 3-byte ints from an open binary file object.&quot;&quot;&quot;</span>
-    <span class="n">b1</span><span class="p">,</span> <span class="n">b2</span><span class="p">,</span> <span class="n">b3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="s">&quot;&gt;u1&quot;</span><span class="p">,</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">b1</span><span class="p">,</span> <span class="n">b2</span><span class="p">,</span> <span class="n">b3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="s2">&quot;&gt;u1&quot;</span><span class="p">,</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span>
                                                          <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">b1</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">b2</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="n">b3</span>
 
-<span class="c">#==================================================================</span>
+<span class="c1">#==================================================================</span>
 
 
 <div class="viewcode-block" id="read_surface"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.surfer_input.read_surface">[docs]</a><span class="k">def</span> <span class="nf">read_surface</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
@@ -140,25 +140,25 @@
 <span class="sd">        face, and geom is a dictionary containing ``[&#39;cras&#39;, &#39;volume&#39;,  &#39;voxelsize&#39;,  &#39;xras&#39;,  &#39;yras&#39;,  &#39;zras&#39;]`` which</span>
 <span class="sd">        can be used to determine the affine transform required to move the surface to the MRI space</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<span class="c"># based on pysurfer.io.read_geometry  &#39;</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fobj</span><span class="p">:</span>
+<span class="c1"># based on pysurfer.io.read_geometry  &#39;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fobj</span><span class="p">:</span>
         <span class="n">magic</span> <span class="o">=</span> <span class="n">_fread3</span><span class="p">(</span><span class="n">fobj</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">magic</span> <span class="o">!=</span> <span class="mi">16777214</span><span class="p">:</span>
             <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Invalid file </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">filepath</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Invalid file </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">filepath</span><span class="p">)</span>
             <span class="n">fobj</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-            <span class="k">raise</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;Invalid file&#39;</span><span class="p">))</span>
+            <span class="k">raise</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Invalid file&#39;</span><span class="p">))</span>
         <span class="n">create_stamp</span> <span class="o">=</span> <span class="n">fobj</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
-        <span class="n">basura</span> <span class="o">=</span> <span class="n">fobj</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>  <span class="c"># reemplazar por _</span>
-        <span class="n">vnum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="s">&quot;&gt;i4&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">fnum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="s">&quot;&gt;i4&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="s">&quot;&gt;f4&quot;</span><span class="p">,</span> <span class="n">vnum</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">vnum</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-        <span class="n">faces</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="s">&quot;&gt;i4&quot;</span><span class="p">,</span> <span class="n">fnum</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">fnum</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">basura</span> <span class="o">=</span> <span class="n">fobj</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>  <span class="c1"># reemplazar por _</span>
+        <span class="n">vnum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="s2">&quot;&gt;i4&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">fnum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="s2">&quot;&gt;i4&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="s2">&quot;&gt;f4&quot;</span><span class="p">,</span> <span class="n">vnum</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">vnum</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">faces</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="s2">&quot;&gt;i4&quot;</span><span class="p">,</span> <span class="n">fnum</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">fnum</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 
-        <span class="c"># Read geometry information at the end of the file</span>
-        <span class="c"># 12 unknown bytes</span>
-        <span class="n">u1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="s">&quot;&gt;i4&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-        <span class="c"># Always [ 2, 0 ,20 ] ?</span>
+        <span class="c1"># Read geometry information at the end of the file</span>
+        <span class="c1"># 12 unknown bytes</span>
+        <span class="n">u1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="s2">&quot;&gt;i4&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="c1"># Always [ 2, 0 ,20 ] ?</span>
         <span class="n">info_valid_file</span> <span class="o">=</span> <span class="n">fobj</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
         <span class="n">info_filename</span> <span class="o">=</span> <span class="n">fobj</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
         <span class="n">geom</span> <span class="o">=</span> <span class="p">{}</span>
@@ -166,11 +166,11 @@
             <span class="n">line</span> <span class="o">=</span> <span class="n">fobj</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
             <span class="n">geom</span><span class="p">[</span><span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>
         <span class="n">info_log</span> <span class="o">=</span> <span class="n">fobj</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">coords</span><span class="p">,</span> <span class="n">faces</span><span class="p">,</span> <span class="n">geom</span>
+        <span class="k">return</span> <span class="n">coords</span><span class="p">,</span> <span class="n">faces</span><span class="p">,</span> <span class="n">geom</span></div>
 
-</div>
+
 <div class="viewcode-block" id="read_morph_data"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.surfer_input.read_morph_data">[docs]</a><span class="k">def</span> <span class="nf">read_morph_data</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
-    <span class="c"># copied directly from pysurfer.io</span>
+    <span class="c1"># copied directly from pysurfer.io</span>
     <span class="sd">&quot;&quot;&quot;Read a Freesurfer morphometry data file.</span>
 
 <span class="sd">    *copied directly from pysurfer.io*</span>
@@ -191,20 +191,20 @@
 <span class="sd">        Vector representation of surface morpometry values</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fobj</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fobj</span><span class="p">:</span>
         <span class="n">magic</span> <span class="o">=</span> <span class="n">_fread3</span><span class="p">(</span><span class="n">fobj</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">magic</span> <span class="o">==</span> <span class="mi">16777215</span><span class="p">:</span>
-            <span class="n">vnum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="s">&quot;&gt;i4&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">curv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="s">&quot;&gt;f4&quot;</span><span class="p">,</span> <span class="n">vnum</span><span class="p">)</span>
+            <span class="n">vnum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="s2">&quot;&gt;i4&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">curv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="s2">&quot;&gt;f4&quot;</span><span class="p">,</span> <span class="n">vnum</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">vnum</span> <span class="o">=</span> <span class="n">magic</span>
             <span class="n">_</span> <span class="o">=</span> <span class="n">_fread3</span><span class="p">(</span><span class="n">fobj</span><span class="p">)</span>
-            <span class="n">curv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="s">&quot;&gt;i2&quot;</span><span class="p">,</span> <span class="n">vnum</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span>
-    <span class="k">return</span> <span class="n">curv</span>
+            <span class="n">curv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="s2">&quot;&gt;i2&quot;</span><span class="p">,</span> <span class="n">vnum</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span>
+    <span class="k">return</span> <span class="n">curv</span></div>
 
-</div>
+
 <div class="viewcode-block" id="read_annot"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.surfer_input.read_annot">[docs]</a><span class="k">def</span> <span class="nf">read_annot</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">orig_ids</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
-    <span class="c"># copied directly from pysurfer.io</span>
+    <span class="c1"># copied directly from pysurfer.io</span>
     <span class="sd">&quot;&quot;&quot;Read in a Freesurfer annotation from a .annot file.</span>
 
 <span class="sd">    *copied directly from pysurfer.io*</span>
@@ -227,25 +227,25 @@
 <span class="sd">        Array of region names as stored in the annot file</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fobj</span><span class="p">:</span>
-        <span class="n">dt</span> <span class="o">=</span> <span class="s">&quot;&gt;i4&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fobj</span><span class="p">:</span>
+        <span class="n">dt</span> <span class="o">=</span> <span class="s2">&quot;&gt;i4&quot;</span>
         <span class="n">vnum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">vnum</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">vnum</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
         <span class="n">labels</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
         <span class="n">ctab_exists</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ctab_exists</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;Color table not found in annotation file&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Color table not found in annotation file&#39;</span><span class="p">)</span>
         <span class="n">n_entries</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">n_entries</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">length</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">orig_tab</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="s">&#39;&gt;c&#39;</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
+            <span class="n">orig_tab</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="s1">&#39;&gt;c&#39;</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
             <span class="n">orig_tab</span> <span class="o">=</span> <span class="n">orig_tab</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
             <span class="n">names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
             <span class="n">ctab</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_entries</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n_entries</span><span class="p">):</span>
                 <span class="n">name_length</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-                <span class="n">name</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="s">&quot;|S</span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">name_length</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="s2">&quot;|S</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">name_length</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
                 <span class="n">ctab</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
                 <span class="n">ctab</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">ctab</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">ctab</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span>
@@ -254,17 +254,17 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">ctab_version</span> <span class="o">=</span> <span class="o">-</span><span class="n">n_entries</span>
             <span class="k">if</span> <span class="n">ctab_version</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;Color table version not supported&#39;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Color table version not supported&#39;</span><span class="p">)</span>
             <span class="n">n_entries</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">ctab</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_entries</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
             <span class="n">length</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="s">&quot;|S</span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">length</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c"># Orig table path</span>
+            <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="s2">&quot;|S</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">length</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># Orig table path</span>
             <span class="n">entries_to_read</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">entries_to_read</span><span class="p">):</span>
-                <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c"># Structure</span>
+                <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># Structure</span>
                 <span class="n">name_length</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-                <span class="n">name</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="s">&quot;|S</span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">name_length</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="s2">&quot;|S</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">name_length</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
                 <span class="n">ctab</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
                 <span class="n">ctab</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">ctab</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">ctab</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span>
@@ -273,9 +273,9 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="n">orig_ids</span><span class="p">:</span>
         <span class="n">order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">ctab</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
         <span class="n">labels</span> <span class="o">=</span> <span class="n">order</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">searchsorted</span><span class="p">(</span><span class="n">ctab</span><span class="p">[</span><span class="n">order</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">labels</span><span class="p">)]</span>
-    <span class="k">return</span> <span class="n">labels</span><span class="p">,</span> <span class="n">ctab</span><span class="p">,</span> <span class="n">names</span>
+    <span class="k">return</span> <span class="n">labels</span><span class="p">,</span> <span class="n">ctab</span><span class="p">,</span> <span class="n">names</span></div>
 
-</div>
+
 <div class="viewcode-block" id="create_polydata"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.surfer_input.create_polydata">[docs]</a><span class="k">def</span> <span class="nf">create_polydata</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">faces</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates a polydata using the coords and faces array (must contain only triangles)</span>
@@ -302,9 +302,9 @@
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">idList</span><span class="o">.</span><span class="n">InsertNextId</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
         <span class="n">poly</span><span class="o">.</span><span class="n">InsertNextCell</span><span class="p">(</span><span class="n">vtk</span><span class="o">.</span><span class="n">VTK_TRIANGLE</span><span class="p">,</span> <span class="n">idList</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">poly</span>
+    <span class="k">return</span> <span class="n">poly</span></div>
 
-</div>
+
 <div class="viewcode-block" id="apply_offset"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.surfer_input.apply_offset">[docs]</a><span class="k">def</span> <span class="nf">apply_offset</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">offset</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    applies an offset to all the coordinates in coords</span>
@@ -319,9 +319,9 @@
     <span class="k">def</span> <span class="nf">add_offset</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">f_offset</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span>
     <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">apply_along_axis</span><span class="p">(</span><span class="n">add_offset</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">coords</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">b</span>
+    <span class="k">return</span> <span class="n">b</span></div>
 
-</div>
+
 <span class="k">def</span> <span class="nf">_cached_surface_read</span><span class="p">(</span><span class="n">surf_file</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    cached function to read a freesurfer structure file</span>
@@ -331,30 +331,30 @@
 
 <span class="sd">    see :func:`surface2vtkPoly`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c"># check cache</span>
-    <span class="n">vtkFile</span> <span class="o">=</span> <span class="n">surf_file</span> <span class="o">+</span> <span class="s">&#39;.vtk&#39;</span>
+    <span class="c1"># check cache</span>
+    <span class="n">vtkFile</span> <span class="o">=</span> <span class="n">surf_file</span> <span class="o">+</span> <span class="s1">&#39;.vtk&#39;</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">vtkFile</span><span class="p">):</span>
-        <span class="c"># print &#39;reading from vtk-file&#39;</span>
+        <span class="c1"># print &#39;reading from vtk-file&#39;</span>
         <span class="n">vtkreader</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkPolyDataReader</span><span class="p">()</span>
-        <span class="n">vtkreader</span><span class="o">.</span><span class="n">SetFileName</span><span class="p">(</span><span class="n">surf_file</span> <span class="o">+</span> <span class="s">&#39;.vtk&#39;</span><span class="p">)</span>
+        <span class="n">vtkreader</span><span class="o">.</span><span class="n">SetFileName</span><span class="p">(</span><span class="n">surf_file</span> <span class="o">+</span> <span class="s1">&#39;.vtk&#39;</span><span class="p">)</span>
         <span class="n">vtkreader</span><span class="o">.</span><span class="n">Update</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">vtkreader</span><span class="o">.</span><span class="n">GetOutput</span><span class="p">()</span>
 
-    <span class="c"># print &#39;reading from surfer file&#39;</span>
+    <span class="c1"># print &#39;reading from surfer file&#39;</span>
     <span class="n">poly</span> <span class="o">=</span> <span class="n">surface2vtkPolyData</span><span class="p">(</span><span class="n">surf_file</span><span class="p">)</span>
-    <span class="c"># try to write to cache</span>
+    <span class="c1"># try to write to cache</span>
     <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">vtkWriter</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkPolyDataWriter</span><span class="p">()</span>
         <span class="n">vtkWriter</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="n">poly</span><span class="p">)</span>
-        <span class="n">vtkWriter</span><span class="o">.</span><span class="n">SetFileName</span><span class="p">(</span><span class="n">surf_file</span> <span class="o">+</span> <span class="s">&#39;.vtk&#39;</span><span class="p">)</span>
+        <span class="n">vtkWriter</span><span class="o">.</span><span class="n">SetFileName</span><span class="p">(</span><span class="n">surf_file</span> <span class="o">+</span> <span class="s1">&#39;.vtk&#39;</span><span class="p">)</span>
         <span class="n">vtkWriter</span><span class="o">.</span><span class="n">SetFileTypeToBinary</span><span class="p">()</span>
         <span class="n">vtkWriter</span><span class="o">.</span><span class="n">Update</span><span class="p">()</span>
     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&#39;cache write failed&#39;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;cache write failed&#39;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">vtkWriter</span><span class="o">.</span><span class="n">GetErrorCode</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&#39;cache write failed&#39;</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;cache write failed&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">poly</span>
 
 
@@ -370,11 +370,11 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">coords</span><span class="p">,</span> <span class="n">faces</span><span class="p">,</span> <span class="n">geom</span> <span class="o">=</span> <span class="n">read_surface</span><span class="p">(</span><span class="n">surf_file</span><span class="p">)</span>
-    <span class="n">coords2</span> <span class="o">=</span> <span class="n">apply_offset</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">geom</span><span class="p">[</span><span class="s">&#39;cras&#39;</span><span class="p">])</span>
+    <span class="n">coords2</span> <span class="o">=</span> <span class="n">apply_offset</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">geom</span><span class="p">[</span><span class="s1">&#39;cras&#39;</span><span class="p">])</span>
     <span class="n">poly</span> <span class="o">=</span> <span class="n">create_polydata</span><span class="p">(</span><span class="n">coords2</span><span class="p">,</span> <span class="n">faces</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">poly</span>
+    <span class="k">return</span> <span class="n">poly</span></div>
 
-</div>
+
 <div class="viewcode-block" id="addScalars"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.surfer_input.addScalars">[docs]</a><span class="k">def</span> <span class="nf">addScalars</span><span class="p">(</span><span class="n">surf_polydata</span><span class="p">,</span> <span class="n">scalars</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Add scalars to a vtkPolyData representation of a freesurfer surface</span>
@@ -390,9 +390,9 @@
     <span class="n">surf</span> <span class="o">=</span> <span class="n">surf_polydata</span>
     <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">scalars</span><span class="p">)</span> <span class="o">==</span> <span class="n">surf</span><span class="o">.</span><span class="n">GetNumberOfPoints</span><span class="p">():</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;scalars don&#39;t match with input polydata&quot;</span><span class="p">)</span>
-        <span class="k">raise</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;scalars don&#39;t match with input polydata&quot;</span><span class="p">))</span>
-    <span class="k">if</span> <span class="n">scalars</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="s">&#39;f&#39;</span><span class="p">:</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;scalars don&#39;t match with input polydata&quot;</span><span class="p">)</span>
+        <span class="k">raise</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;scalars don&#39;t match with input polydata&quot;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">scalars</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="s1">&#39;f&#39;</span><span class="p">:</span>
         <span class="n">vtk_scalars</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkFloatArray</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">vtk_scalars</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkIntArray</span><span class="p">()</span>
@@ -402,9 +402,9 @@
         <span class="n">vtk_scalars</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
     <span class="n">surf_polydata</span><span class="o">.</span><span class="n">GetPointData</span><span class="p">()</span><span class="o">.</span><span class="n">RemoveArray</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">surf_polydata</span><span class="o">.</span><span class="n">GetPointData</span><span class="p">()</span><span class="o">.</span><span class="n">SetScalars</span><span class="p">(</span><span class="n">vtk_scalars</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">surf_polydata</span>
+    <span class="k">return</span> <span class="n">surf_polydata</span></div>
 
-</div>
+
 <div class="viewcode-block" id="surfLUT2VTK"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.surfer_input.surfLUT2VTK">[docs]</a><span class="k">def</span> <span class="nf">surfLUT2VTK</span><span class="p">(</span><span class="n">ctab</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Transform freesurfer lookuptable into a vtkLookupTable</span>
@@ -428,12 +428,12 @@
             <span class="n">out_lut</span><span class="o">.</span><span class="n">SetAnnotation</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">ctab</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-            <span class="n">out_lut</span><span class="o">.</span><span class="n">SetAnnotation</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s">&#39;-&#39;</span><span class="p">)</span>
+            <span class="n">out_lut</span><span class="o">.</span><span class="n">SetAnnotation</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">ctab</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
         <span class="n">out_lut</span><span class="o">.</span><span class="n">SetTableValue</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">ctab</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="o">/</span> <span class="mi">255</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">out_lut</span>
+    <span class="k">return</span> <span class="n">out_lut</span></div>
 
-</div>
+
 <div class="viewcode-block" id="getColorTransferLUT"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.surfer_input.getColorTransferLUT">[docs]</a><span class="k">def</span> <span class="nf">getColorTransferLUT</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">midpoint</span><span class="p">,</span> <span class="n">sharpness</span><span class="p">,</span> <span class="n">color0</span><span class="p">,</span> <span class="n">color1</span><span class="p">,</span> <span class="n">color2</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates a vtkLookUpTable from color0 to color1 or from color0 to color2 passing by color1</span>
@@ -468,12 +468,12 @@
     <span class="n">lut</span><span class="o">.</span><span class="n">AddRGBPoint</span><span class="p">(</span>
         <span class="n">mid</span><span class="p">,</span>   <span class="n">color1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color1</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">midpoint</span><span class="p">,</span> <span class="n">sharpness</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">color2</span><span class="p">:</span>
-        <span class="c"># midpoint and sharpness ignored for last point</span>
+        <span class="c1"># midpoint and sharpness ignored for last point</span>
         <span class="n">lut</span><span class="o">.</span><span class="n">AddRGBPoint</span><span class="p">(</span>
             <span class="n">end</span><span class="p">,</span>   <span class="n">color2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color2</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>      <span class="n">midpoint</span><span class="p">,</span> <span class="n">sharpness</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">lut</span>
+    <span class="k">return</span> <span class="n">lut</span></div>
 
-</div>
+
 <div class="viewcode-block" id="get_free_surfer_lut"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.surfer_input.get_free_surfer_lut">[docs]</a><span class="k">def</span> <span class="nf">get_free_surfer_lut</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get standard freesurfer lookup tables</span>
@@ -489,20 +489,20 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        vtkColorTransferFunction</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">parameters_d</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;curv&#39;</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s">&quot;RdYlGn&quot;</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="bp">True</span><span class="p">),</span>
-                    <span class="s">&#39;avg_curv&#39;</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s">&quot;RdYlGn&quot;</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="bp">True</span><span class="p">),</span>
-                    <span class="s">&#39;area&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s">&quot;PuBuGn&quot;</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span>
-                    <span class="s">&#39;thickness&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s">&quot;RdYlGn&quot;</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>
-                    <span class="s">&#39;volume&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span>    <span class="s">&quot;PuBuGn&quot;</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span>
-                    <span class="s">&#39;sulc&#39;</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s">&quot;RdYlGn&quot;</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="bp">True</span><span class="p">),</span>
+    <span class="n">parameters_d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;curv&#39;</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;RdYlGn&quot;</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="bp">True</span><span class="p">),</span>
+                    <span class="s1">&#39;avg_curv&#39;</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;RdYlGn&quot;</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="bp">True</span><span class="p">),</span>
+                    <span class="s1">&#39;area&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;PuBuGn&quot;</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span>
+                    <span class="s1">&#39;thickness&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;RdYlGn&quot;</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>
+                    <span class="s1">&#39;volume&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span>    <span class="s2">&quot;PuBuGn&quot;</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span>
+                    <span class="s1">&#39;sulc&#39;</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;RdYlGn&quot;</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="bp">True</span><span class="p">),</span>
                     <span class="p">}</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">params</span> <span class="o">=</span> <span class="n">parameters_d</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
         <span class="n">out_lut</span> <span class="o">=</span> <span class="n">get_colorbrewer_lut</span><span class="p">(</span><span class="o">*</span><span class="n">params</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
         <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&#39;Unkown scalar type&#39;</span><span class="p">)</span>
-        <span class="k">raise</span> <span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;unknown scalar type&#39;</span><span class="p">))</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Unkown scalar type&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;unknown scalar type&#39;</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">out_lut</span></div>
 </pre></div>
 
@@ -532,7 +532,7 @@
           
     <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Diego Angulo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
     </div>
         </div>
         <div class="clearer"></div>

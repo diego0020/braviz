@@ -818,7 +818,7 @@ is itself an iterable of the same length and indices as the subjects list</td>
 <h3>Statistics<a class="headerlink" href="#statistics" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="braviz.interaction.qt_models.VarAndGiniModel">
-<em class="property">class </em><code class="descname">VarAndGiniModel</code><span class="sig-paren">(</span><em>outcome_var=None</em>, <em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_models.html#VarAndGiniModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_models.VarAndGiniModel" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">VarAndGiniModel</code><span class="sig-paren">(</span><em>outcome_var=None</em>, <em>parent=None</em>, <em>sample=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/interaction/qt_models.html#VarAndGiniModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.interaction.qt_models.VarAndGiniModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>A table of variables which can include the gini index.</p>
 <p>The
 <a class="reference external" href="http://en.wikipedia.org/wiki/Decision_tree_learning#Gini_impurity">gini index</a>
@@ -928,8 +928,8 @@ interaction terms (or the row number when interaction terms are hidden)</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><em>:class</em> &#8211;
-<cite>pandas.DataFrame</cite> with three columns: regressor name, degrees of freedom, and interaction.
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/version/0.17.0/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.17.0)"><code class="xref py py-class docutils literal"><span class="pre">pandas.DataFrame</span></code></a> with three columns &#8211;
+regressor name, degrees of freedom, and interaction.
 The last column has zeros for single variable regressors and 1 for interaction terms.</td>
 </tr>
 </tbody>
@@ -1658,7 +1658,7 @@ See <a class="reference internal" href="reader.html#braviz.readAndFilter.base_re
           
     <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Diego Angulo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
     </div>
         </div>
         <div class="clearer"></div>

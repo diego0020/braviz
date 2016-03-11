@@ -33,7 +33,7 @@ Create a data reader
 All access to spatial data goes through Braviz, data readers, in this way the
 system can be isolated from the underlying file structure. By building an appropriate
 reader it is even possible to have data on a remote system. All readers should
-inherit from :class:`BaseReader`, and implement the abstract methods.
+inherit from :class:`~braviz.readAndFilter.base_reader.BaseReader`, and implement the abstract methods.
 
 These readers should be located on the :mod:`braviz.readAndFilter` module, in a module named
 as the project, in lowercase. For example the reader for a project called *foobar* the module should be called
@@ -50,7 +50,7 @@ data is shared through *samba* as read only, and dynamic data and cache are kept
 data is tored first by data type, and then by subject, so that the Freesurfer's *SUBJECTS_DIR* can be used directly.
 
 Both of these readers operate in a similar way, the main difference is in the routes required to load files from disk.
-The common operations are coded in the :mod:`kmc_abstract` module. Feel free to use any of these modules as a basis
+The common operations are coded in the :mod:`braviz.readAndFilter.kmc400.kmc_abstract` module. Feel free to use any of these modules as a basis
 for your new reader.
 
 The important areas that must be modified are:
@@ -64,7 +64,7 @@ Remember that the end objective is having a reader that conforms to the :class:`
 interface. Also
 notice that there are several static methods that need to be implemented. Inside these methods it may be
 useful to use the hosts configuration file, which can be accessed using the function
-:func:`~braviz.readAndFilter.config_file.get_hosts_config`.
+:func:`~braviz.readAndFilter.config_file.get_host_config`.
 
 Create directory for dynamic data
 ---------------------------------
@@ -97,7 +97,7 @@ Import tabular data
 -------------------
 
 The final step is importing some tabular data into the system. This can be done via the
-import variables dialog (see :doc:`from_excel`), or by using the :mod:`~braviz.applications.parse_spss_file`
+import variables dialog (see :doc:`../graphical/from_excel`), or by using the :mod:`~braviz.applications.parse_spss_file`
 command line applicetion.
 
 Notice that only subjects with tabular data will appear in braviz.

@@ -125,7 +125,7 @@ projects it is worth using a pipeline framework as Loni or NiPype.</p>
 <p>All access to spatial data goes through Braviz, data readers, in this way the
 system can be isolated from the underlying file structure. By building an appropriate
 reader it is even possible to have data on a remote system. All readers should
-inherit from <code class="xref py py-class docutils literal"><span class="pre">BaseReader</span></code>, and implement the abstract methods.</p>
+inherit from <a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader" title="braviz.readAndFilter.base_reader.BaseReader"><code class="xref py py-class docutils literal"><span class="pre">BaseReader</span></code></a>, and implement the abstract methods.</p>
 <p>These readers should be located on the <a class="reference internal" href="read_and_filter.html#module-braviz.readAndFilter" title="braviz.readAndFilter"><code class="xref py py-mod docutils literal"><span class="pre">braviz.readAndFilter</span></code></a> module, in a module named
 as the project, in lowercase. For example the reader for a project called <em>foobar</em> the module should be called
 <em>braviz.readAndFilter.foobar</em>, and inside the module there should be a class named <em>FooBarReader</em>.</p>
@@ -138,7 +138,7 @@ about 250 subjects, and therefore it was not practical to copy spatial data to a
 data is shared through <em>samba</em> as read only, and dynamic data and cache are kept locally on each machine. In this case,
 data is tored first by data type, and then by subject, so that the Freesurfer&#8217;s <em>SUBJECTS_DIR</em> can be used directly.</p>
 <p>Both of these readers operate in a similar way, the main difference is in the routes required to load files from disk.
-The common operations are coded in the <code class="xref py py-mod docutils literal"><span class="pre">kmc_abstract</span></code> module. Feel free to use any of these modules as a basis
+The common operations are coded in the <code class="xref py py-mod docutils literal"><span class="pre">braviz.readAndFilter.kmc400.kmc_abstract</span></code> module. Feel free to use any of these modules as a basis
 for your new reader.</p>
 <p>The important areas that must be modified are:</p>
 <ul class="simple">
@@ -151,7 +151,7 @@ for your new reader.</p>
 interface. Also
 notice that there are several static methods that need to be implemented. Inside these methods it may be
 useful to use the hosts configuration file, which can be accessed using the function
-<code class="xref py py-func docutils literal"><span class="pre">get_hosts_config()</span></code>.</p>
+<a class="reference internal" href="configuring.html#braviz.readAndFilter.config_file.get_host_config" title="braviz.readAndFilter.config_file.get_host_config"><code class="xref py py-func docutils literal"><span class="pre">get_host_config()</span></code></a>.</p>
 </div>
 <div class="section" id="create-directory-for-dynamic-data">
 <h2>Create directory for dynamic data<a class="headerlink" href="#create-directory-for-dynamic-data" title="Permalink to this headline">¶</a></h2>
@@ -164,7 +164,7 @@ these two directories.</p>
 <p>To run braviz with using the new project you need to specify it in the <em>braviz.cfg</em> configuration file, which
 is located in the <em>braviz.applications</em> folder. For example, to run Braviz using the <em>FooBar</em> data set, the configuration
 file should look like this</p>
-<div class="highlight-cfg"><div class="highlight"><pre><span class="k">[Braviz]</span>
+<div class="highlight-cfg"><div class="highlight"><pre><span></span><span class="k">[Braviz]</span>
 <span class="na">project</span> <span class="o">=</span> <span class="s">foobar</span>
 </pre></div>
 </div>
@@ -177,7 +177,7 @@ and located in the <em>braviz.applications</em> folder (see <a class="reference 
 <div class="section" id="import-tabular-data">
 <h2>Import tabular data<a class="headerlink" href="#import-tabular-data" title="Permalink to this headline">¶</a></h2>
 <p>The final step is importing some tabular data into the system. This can be done via the
-import variables dialog (see <code class="xref doc docutils literal"><span class="pre">from_excel</span></code>), or by using the <a class="reference internal" href="applications.html#module-braviz.applications.parse_spss_file" title="braviz.applications.parse_spss_file"><code class="xref py py-mod docutils literal"><span class="pre">parse_spss_file</span></code></a>
+import variables dialog (see <a class="reference internal" href="../graphical/from_excel.html"><em>Import variables</em></a>), or by using the <a class="reference internal" href="applications.html#module-braviz.applications.parse_spss_file" title="braviz.applications.parse_spss_file"><code class="xref py py-mod docutils literal"><span class="pre">parse_spss_file</span></code></a>
 command line applicetion.</p>
 <p>Notice that only subjects with tabular data will appear in braviz.</p>
 </div>
@@ -211,7 +211,7 @@ command line applicetion.</p>
           
     <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Diego Angulo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
     </div>
         </div>
         <div class="clearer"></div>

@@ -185,13 +185,13 @@ patterns and relationships involving function and structure of the brain can be 
 </div>
 <div class="section" id="code-samples">
 <h2>Code Samples<a class="headerlink" href="#code-samples" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">braviz</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">braviz</span>
 <span class="kn">from</span> <span class="nn">braviz.visualization.simple_vtk</span> <span class="kn">import</span> <span class="n">SimpleVtkViewer</span>
 
 <span class="n">reader</span> <span class="o">=</span> <span class="n">braviz</span><span class="o">.</span><span class="n">readAndFilter</span><span class="o">.</span><span class="n">BravizAutoReader</span><span class="p">()</span>
-<span class="n">fibers</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;fibers&quot;</span><span class="p">,</span><span class="mi">119</span><span class="p">,</span><span class="n">space</span><span class="o">=</span><span class="s">&quot;Talairach&quot;</span><span class="p">,</span>
-                    <span class="n">waypoint</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;CC_Anterior&quot;</span><span class="p">,</span><span class="s">&quot;CC_Mid_Anterior&quot;</span><span class="p">],</span><span class="n">operation</span><span class="o">=</span><span class="s">&quot;or&quot;</span><span class="p">)</span>
-<span class="n">mri</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;IMAGE&quot;</span><span class="p">,</span><span class="mi">119</span><span class="p">,</span><span class="n">space</span><span class="o">=</span><span class="s">&quot;Talairach&quot;</span><span class="p">,</span><span class="n">format</span><span class="o">=</span><span class="s">&quot;vtk&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;MRI&quot;</span><span class="p">)</span>
+<span class="n">fibers</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fibers&quot;</span><span class="p">,</span><span class="mi">119</span><span class="p">,</span><span class="n">space</span><span class="o">=</span><span class="s2">&quot;Talairach&quot;</span><span class="p">,</span>
+                    <span class="n">waypoint</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;CC_Anterior&quot;</span><span class="p">,</span><span class="s2">&quot;CC_Mid_Anterior&quot;</span><span class="p">],</span><span class="n">operation</span><span class="o">=</span><span class="s2">&quot;or&quot;</span><span class="p">)</span>
+<span class="n">mri</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;IMAGE&quot;</span><span class="p">,</span><span class="mi">119</span><span class="p">,</span><span class="n">space</span><span class="o">=</span><span class="s2">&quot;Talairach&quot;</span><span class="p">,</span><span class="n">format</span><span class="o">=</span><span class="s2">&quot;vtk&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;MRI&quot;</span><span class="p">)</span>
 <span class="n">viewer</span> <span class="o">=</span> <span class="n">SimpleVtkViewer</span><span class="p">()</span>
 <span class="n">viewer</span><span class="o">.</span><span class="n">addImg</span><span class="p">(</span><span class="n">mri</span><span class="p">)</span>
 <span class="n">viewer</span><span class="o">.</span><span class="n">addPolyData</span><span class="p">(</span><span class="n">fibers</span><span class="p">)</span>
@@ -201,17 +201,18 @@ patterns and relationships involving function and structure of the brain can be 
 <p>The code above displays the fibers that cross the anterior part of the  corpus-callosum of subject <cite>119</cite> together with its structural
 MRI Image, in the Talairach coordinate systems. It produces the following output in a vtkWindow</p>
 <a class="reference internal image-reference" href="../_images/vtk_minimal.png"><img alt="example output" class="align-center" src="../_images/vtk_minimal.png" style="width: 80%;" /></a>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">braviz.readAndFilter</span> <span class="kn">import</span> <span class="n">tabular_data</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">braviz.readAndFilter</span> <span class="kn">import</span> <span class="n">tabular_data</span>
 <span class="kn">from</span> <span class="nn">braviz.visualization.matplotlib_qt_widget</span> <span class="kn">import</span> <span class="n">MatplotWidget</span>
 <span class="kn">from</span> <span class="nn">PyQt4</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
 
 <span class="n">app</span><span class="o">=</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="p">([])</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">tabular_data</span><span class="o">.</span><span class="n">get_data_frame_by_name</span><span class="p">([</span><span class="s">&quot;BIRTH_peso5&quot;</span><span class="p">,</span><span class="s">&quot;BIRTH_ballar5&quot;</span><span class="p">])</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">tabular_data</span><span class="o">.</span><span class="n">get_data_frame_by_name</span><span class="p">([</span><span class="s2">&quot;BIRTH_peso5&quot;</span><span class="p">,</span><span class="s2">&quot;BIRTH_ballar5&quot;</span><span class="p">])</span>
 <span class="n">mp</span> <span class="o">=</span> <span class="n">MatplotWidget</span><span class="p">()</span>
-<span class="n">mp</span><span class="o">.</span><span class="n">draw_scatter</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="s">&quot;BIRTH_peso5&quot;</span><span class="p">,</span><span class="s">&quot;BIRTH_ballar5&quot;</span><span class="p">)</span>
+<span class="n">mp</span><span class="o">.</span><span class="n">draw_scatter</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="s2">&quot;BIRTH_peso5&quot;</span><span class="p">,</span><span class="s2">&quot;BIRTH_ballar5&quot;</span><span class="p">)</span>
 <span class="n">mp</span><span class="o">.</span><span class="n">highlight_id</span><span class="p">(</span><span class="mi">119</span><span class="p">)</span>
 <span class="n">mp</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 <span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
 </pre></div>
 </div>
 <p>The code above reads two variables from the database, creates a scatter plot and highlights the position of subject <cite>119</cite>.</p>
@@ -319,7 +320,7 @@ it relies in the following projects</p>
           
     <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Diego Angulo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
     </div>
         </div>
         <div class="clearer"></div>

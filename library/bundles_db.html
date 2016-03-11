@@ -105,7 +105,7 @@
 <p>Fiber bundles definitions can be stored in the database. Bundles can be defined as a flat list of checkpoints, or more
 general logical structures.</p>
 <p>Notice these fibers can be accessed using the <a class="reference internal" href="reader.html#braviz.readAndFilter.base_reader.BaseReader.get" title="braviz.readAndFilter.base_reader.BaseReader.get"><code class="xref py py-meth docutils literal"><span class="pre">get()</span></code></a> method, like</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;fibers&quot;</span><span class="p">,</span><span class="mi">119</span><span class="p">,</span><span class="n">db</span><span class="o">-</span><span class="nb">id</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fibers&quot;</span><span class="p">,</span><span class="mi">119</span><span class="p">,</span><span class="n">db</span><span class="o">-</span><span class="nb">id</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="section" id="load">
@@ -181,17 +181,21 @@ general logical structures.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>bundle_id</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Bundle id</li>
 <li><strong>bundle_name</strong> (<a class="reference external" href="http://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Bundle name</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><p>A nested dictionary with the specification of the logic bundle. The hierarchy is represented as a tree, where
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Returns</dt>
+<dd><p class="first">A nested dictionary with the specification of the logic bundle. The hierarchy is represented as a tree, where
 each node is a dictionary. The returned dictionary represents the top node of this tree. There are three types
 of nodes: logical, structures and rois. All nodes are dictionaries with three keys : <code class="docutils literal"><span class="pre">&quot;node_type&quot;</span></code>,
 <code class="docutils literal"><span class="pre">&quot;value&quot;</span></code> and <code class="docutils literal"><span class="pre">&quot;extra_data&quot;</span></code></p>
-<ul class="simple">
+<ul class="last simple">
 <li>Logic nodes: Value is a string which can take the values <code class="docutils literal"><span class="pre">&quot;OR&quot;</span></code> , <code class="docutils literal"><span class="pre">&quot;AND&quot;</span></code> or <code class="docutils literal"><span class="pre">&quot;NOT&quot;</span></code>. Extra_data holds
 a list of children nodes. OR nodes represent the union from the sets returned by each child, AND
 represent an intersection, and NOT subtracts the union from the reference set (the whole tractography).</li>
@@ -200,11 +204,8 @@ cross such structure.</li>
 <li>ROI nodes: Leaf node, its extra_data contains the database id for a ROI
 (see <a class="reference internal" href="geom_db.html#module-braviz.readAndFilter.geom_db" title="braviz.readAndFilter.geom_db"><code class="xref py py-mod docutils literal"><span class="pre">geom_db</span></code></a>). It represents fibers that cross such ROI.</li>
 </ul>
-</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -262,7 +263,7 @@ bundle. The current types are<blockquote>
 <h2>Save<a class="headerlink" href="#save" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="braviz.readAndFilter.bundles_db.save_checkpoints_bundle">
-<code class="descname">save_checkpoints_bundle</code><span class="sig-paren">(</span><em>bundle_name</em>, <em>operation_is_and</em>, <em>waypoints</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/bundles_db.html#save_checkpoints_bundle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.bundles_db.save_checkpoints_bundle" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save_checkpoints_bundle</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/bundles_db.html#save_checkpoints_bundle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.bundles_db.save_checkpoints_bundle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Saves a bundle defined using checkpoints</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -282,7 +283,7 @@ pass through all waypoint, <code class="docutils literal"><span class="pre">Fals
 
 <dl class="function">
 <dt id="braviz.readAndFilter.bundles_db.save_logic_bundle">
-<code class="descname">save_logic_bundle</code><span class="sig-paren">(</span><em>bundle_name</em>, <em>logic_tree_dict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/bundles_db.html#save_logic_bundle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.bundles_db.save_logic_bundle" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save_logic_bundle</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/braviz/readAndFilter/bundles_db.html#save_logic_bundle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#braviz.readAndFilter.bundles_db.save_logic_bundle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Saves a logic bundle into the database</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -333,7 +334,7 @@ pass through all waypoint, <code class="docutils literal"><span class="pre">Fals
           
     <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Diego Angulo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
     </div>
         </div>
         <div class="clearer"></div>

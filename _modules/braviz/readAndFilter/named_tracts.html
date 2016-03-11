@@ -82,30 +82,30 @@
           <div class="body" role="main">
             
   <h1>Source code for braviz.readAndFilter.named_tracts</h1><div class="highlight"><pre>
-<span class="c">##############################################################################</span>
-<span class="c">#    Braviz, Brain Data interactive visualization                            #</span>
-<span class="c">#    Copyright (C) 2014  Diego Angulo                                        #</span>
-<span class="c">#                                                                            #</span>
-<span class="c">#    This program is free software: you can redistribute it and/or modify    #</span>
-<span class="c">#    it under the terms of the GNU Lesser General Public License as          #</span>
-<span class="c">#    published by  the Free Software Foundation, either version 3 of the     #</span>
-<span class="c">#    License, or (at your option) any later version.                         #</span>
-<span class="c">#                                                                            #</span>
-<span class="c">#    This program is distributed in the hope that it will be useful,         #</span>
-<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
-<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
-<span class="c">#    GNU Lesser General Public License for more details.                     #</span>
-<span class="c">#                                                                            #</span>
-<span class="c">#    You should have received a copy of the GNU Lesser General Public License#</span>
-<span class="c">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
-<span class="c">##############################################################################</span>
+<span></span><span class="c1">##############################################################################</span>
+<span class="c1">#    Braviz, Brain Data interactive visualization                            #</span>
+<span class="c1">#    Copyright (C) 2014  Diego Angulo                                        #</span>
+<span class="c1">#                                                                            #</span>
+<span class="c1">#    This program is free software: you can redistribute it and/or modify    #</span>
+<span class="c1">#    it under the terms of the GNU Lesser General Public License as          #</span>
+<span class="c1">#    published by  the Free Software Foundation, either version 3 of the     #</span>
+<span class="c1">#    License, or (at your option) any later version.                         #</span>
+<span class="c1">#                                                                            #</span>
+<span class="c1">#    This program is distributed in the hope that it will be useful,         #</span>
+<span class="c1">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
+<span class="c1">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
+<span class="c1">#    GNU Lesser General Public License for more details.                     #</span>
+<span class="c1">#                                                                            #</span>
+<span class="c1">#    You should have received a copy of the GNU Lesser General Public License#</span>
+<span class="c1">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
+<span class="c1">##############################################################################</span>
 
 
-<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Diego&#39;</span>
-<span class="c"># Functions to get special named tracts, All shoud have the signature tract_name(reader,subject,color)</span>
-<span class="c"># they return fibers,space tuples, where space is the space of the resulting fibers.. this is used to avoid unnecessary</span>
-<span class="c"># transformation of solution</span>
-<span class="c"># Functions that don&#39;t start with _ will be added to the named tracts index</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;Diego&#39;</span>
+<span class="c1"># Functions to get special named tracts, All shoud have the signature tract_name(reader,subject,color)</span>
+<span class="c1"># they return fibers,space tuples, where space is the space of the resulting fibers.. this is used to avoid unnecessary</span>
+<span class="c1"># transformation of solution</span>
+<span class="c1"># Functions that don&#39;t start with _ will be added to the named tracts index</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">functools</span>
@@ -129,10 +129,10 @@
     <span class="k">def</span> <span class="nf">cached_func</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">scalars</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">scalars</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">cache_key</span> <span class="o">=</span> <span class="s">&#39;named_fibs_</span><span class="si">%s</span><span class="s">_</span><span class="si">%s</span><span class="s">_</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="n">cache_key</span> <span class="o">=</span> <span class="s1">&#39;named_fibs_</span><span class="si">%s</span><span class="s1">_</span><span class="si">%s</span><span class="s1">_</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
                 <span class="n">name_tract_func</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">color</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">cache_key</span> <span class="o">=</span> <span class="s">&#39;named_fibs_</span><span class="si">%s</span><span class="s">_</span><span class="si">%s</span><span class="s">_</span><span class="si">%s</span><span class="s">_</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="n">cache_key</span> <span class="o">=</span> <span class="s1">&#39;named_fibs_</span><span class="si">%s</span><span class="s1">_</span><span class="si">%s</span><span class="s1">_</span><span class="si">%s</span><span class="s1">_</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
                 <span class="n">name_tract_func</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">scalars</span><span class="p">)</span>
         <span class="n">out_fib</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">load_from_cache</span><span class="p">(</span><span class="n">cache_key</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">out_fib</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
@@ -161,15 +161,15 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">get_out_space</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s">&#39;dartel&#39;</span>
+        <span class="k">return</span> <span class="s1">&#39;dartel&#39;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">tracts</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fibers&#39;</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="s">&#39;dartel&#39;</span><span class="p">,</span> <span class="n">waypoint</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;ctx-lh-precentral&#39;</span><span class="p">,</span> <span class="s">&#39;Brain-Stem&#39;</span><span class="p">],</span>
+        <span class="n">tracts</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fibers&#39;</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="s1">&#39;dartel&#39;</span><span class="p">,</span> <span class="n">waypoint</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ctx-lh-precentral&#39;</span><span class="p">,</span> <span class="s1">&#39;Brain-Stem&#39;</span><span class="p">],</span>
                             <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">scalars</span><span class="o">=</span><span class="n">scalars</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;Tracts not found for subject </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">subject</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Tracts not found for subject </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">subject</span><span class="p">)</span>
         <span class="k">raise</span>
 
-    <span class="c"># first cut</span>
+    <span class="c1"># first cut</span>
     <span class="n">implicit_plane</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkPlane</span><span class="p">()</span>
     <span class="n">implicit_plane</span><span class="o">.</span><span class="n">SetOrigin</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="o">-</span><span class="mi">61</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
     <span class="n">implicit_plane</span><span class="o">.</span><span class="n">SetNormal</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
@@ -177,7 +177,7 @@
     <span class="n">extractor</span><span class="o">.</span><span class="n">SetImplicitFunction</span><span class="p">(</span><span class="n">implicit_plane</span><span class="p">)</span>
     <span class="n">extractor</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="n">tracts</span><span class="p">)</span>
 
-    <span class="c"># second cut</span>
+    <span class="c1"># second cut</span>
     <span class="n">implicit_plane2</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkPlane</span><span class="p">()</span>
     <span class="n">implicit_plane2</span><span class="o">.</span><span class="n">SetOrigin</span><span class="p">(</span>
         <span class="mf">36.31049165648922</span><span class="p">,</span> <span class="o">-</span><span class="mf">77.57854727291647</span><span class="p">,</span> <span class="mf">28.38018295355981</span><span class="p">)</span>
@@ -190,9 +190,9 @@
     <span class="n">extractor2</span><span class="o">.</span><span class="n">Update</span><span class="p">()</span>
     <span class="n">tracts3</span> <span class="o">=</span> <span class="n">extractor2</span><span class="o">.</span><span class="n">GetOutput</span><span class="p">()</span>
 
-    <span class="k">return</span> <span class="n">tracts3</span><span class="p">,</span> <span class="s">&#39;dartel&#39;</span>
+    <span class="k">return</span> <span class="n">tracts3</span><span class="p">,</span> <span class="s1">&#39;dartel&#39;</span></div>
 
-</div>
+
 <span class="nd">@_cached_named_tract</span>
 <div class="viewcode-block" id="cortico_spinal_r"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.named_tracts.cortico_spinal_r">[docs]</a><span class="k">def</span> <span class="nf">cortico_spinal_r</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">scalars</span><span class="p">,</span> <span class="n">get_out_space</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -209,15 +209,15 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">get_out_space</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s">&#39;dartel&#39;</span>
+        <span class="k">return</span> <span class="s1">&#39;dartel&#39;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">tracts</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fibers&#39;</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="s">&#39;dartel&#39;</span><span class="p">,</span> <span class="n">waypoint</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;ctx-rh-precentral&#39;</span><span class="p">,</span> <span class="s">&#39;Brain-Stem&#39;</span><span class="p">],</span>
+        <span class="n">tracts</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fibers&#39;</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="s1">&#39;dartel&#39;</span><span class="p">,</span> <span class="n">waypoint</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ctx-rh-precentral&#39;</span><span class="p">,</span> <span class="s1">&#39;Brain-Stem&#39;</span><span class="p">],</span>
                             <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">scalars</span><span class="o">=</span><span class="n">scalars</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;Tracts not found for subject </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">subject</span><span class="p">)</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Tracts not found for subject </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">subject</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Tracts not found for subject </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">subject</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Tracts not found for subject </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">subject</span><span class="p">)</span>
 
-    <span class="c"># first cut</span>
+    <span class="c1"># first cut</span>
     <span class="n">implicit_plane</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkPlane</span><span class="p">()</span>
     <span class="n">implicit_plane</span><span class="o">.</span><span class="n">SetOrigin</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="o">-</span><span class="mi">61</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
     <span class="n">implicit_plane</span><span class="o">.</span><span class="n">SetNormal</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
@@ -226,7 +226,7 @@
     <span class="n">extractor</span><span class="o">.</span><span class="n">SetInputData</span><span class="p">(</span><span class="n">tracts</span><span class="p">)</span>
     <span class="n">extractor</span><span class="o">.</span><span class="n">SetExtractInside</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
-    <span class="c"># second cut</span>
+    <span class="c1"># second cut</span>
     <span class="n">implicit_plane2</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkPlane</span><span class="p">()</span>
     <span class="n">implicit_plane2</span><span class="o">.</span><span class="n">SetOrigin</span><span class="p">(</span><span class="o">-</span><span class="mf">16.328958156651115</span><span class="p">,</span> <span class="o">-</span>
                               <span class="mf">49.25892912169191</span><span class="p">,</span> <span class="o">-</span><span class="mf">107.77320322976459</span><span class="p">)</span>
@@ -239,11 +239,11 @@
     <span class="n">extractor2</span><span class="o">.</span><span class="n">Update</span><span class="p">()</span>
     <span class="n">tracts3</span> <span class="o">=</span> <span class="n">extractor2</span><span class="o">.</span><span class="n">GetOutput</span><span class="p">()</span>
 
-    <span class="c"># move back to world coordinates</span>
-    <span class="c">#tracts3 = reader.transformPointsToSpace(tracts3, &#39;dartel&#39;, subject, inverse=True)</span>
-    <span class="k">return</span> <span class="n">tracts3</span><span class="p">,</span> <span class="s">&#39;dartel&#39;</span>
+    <span class="c1"># move back to world coordinates</span>
+    <span class="c1">#tracts3 = reader.transformPointsToSpace(tracts3, &#39;dartel&#39;, subject, inverse=True)</span>
+    <span class="k">return</span> <span class="n">tracts3</span><span class="p">,</span> <span class="s1">&#39;dartel&#39;</span></div>
 
-</div>
+
 <div class="viewcode-block" id="cortico_spinal_d"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.named_tracts.cortico_spinal_d">[docs]</a><span class="k">def</span> <span class="nf">cortico_spinal_d</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">scalars</span><span class="p">,</span> <span class="n">get_out_space</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Gets the dominant hemisphere corticospinal tract</span>
@@ -258,21 +258,21 @@
 <span class="sd">        vtkPolyData of dominant cortico-spinal tract</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">get_out_space</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s">&#39;dartel&#39;</span>
+        <span class="k">return</span> <span class="s1">&#39;dartel&#39;</span>
     <span class="n">laterality</span> <span class="o">=</span> <span class="n">__get_var_value</span><span class="p">(</span><span class="n">LATERALITY</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">subject</span><span class="p">))</span>
     <span class="k">if</span> <span class="n">laterality</span> <span class="o">!=</span> <span class="n">LEFT_HANDED</span><span class="p">:</span>
-        <span class="n">lat</span> <span class="o">=</span> <span class="s">&#39;r&#39;</span>
+        <span class="n">lat</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">lat</span> <span class="o">=</span> <span class="s">&#39;l&#39;</span>
-    <span class="n">hemi</span> <span class="o">=</span> <span class="n">__get_right_or_left_hemisphere</span><span class="p">(</span><span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="n">lat</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">hemi</span> <span class="o">==</span> <span class="s">&#39;r&#39;</span><span class="p">:</span>
+        <span class="n">lat</span> <span class="o">=</span> <span class="s1">&#39;l&#39;</span>
+    <span class="n">hemi</span> <span class="o">=</span> <span class="n">__get_right_or_left_hemisphere</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">lat</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">hemi</span> <span class="o">==</span> <span class="s1">&#39;r&#39;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">cortico_spinal_r</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">scalars</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">hemi</span> <span class="o">==</span> <span class="s">&#39;l&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">hemi</span> <span class="o">==</span> <span class="s1">&#39;l&#39;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">cortico_spinal_l</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">scalars</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Unknown laterality&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unknown laterality&quot;</span><span class="p">)</span></div>
 
-</div>
+
 <div class="viewcode-block" id="cortico_spinal_n"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.named_tracts.cortico_spinal_n">[docs]</a><span class="k">def</span> <span class="nf">cortico_spinal_n</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">scalars</span><span class="p">,</span> <span class="n">get_out_space</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Gets the non-dominant hemisphere corticospinal tract</span>
@@ -287,21 +287,21 @@
 <span class="sd">        vtkPolyData of non-dominant cortico-spinal tract</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">get_out_space</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s">&#39;dartel&#39;</span>
+        <span class="k">return</span> <span class="s1">&#39;dartel&#39;</span>
     <span class="n">laterality</span> <span class="o">=</span> <span class="n">__get_var_value</span><span class="p">(</span><span class="n">LATERALITY</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">subject</span><span class="p">))</span>
     <span class="k">if</span> <span class="n">laterality</span> <span class="o">!=</span> <span class="n">LEFT_HANDED</span><span class="p">:</span>
-        <span class="n">lat</span> <span class="o">=</span> <span class="s">&#39;r&#39;</span>
+        <span class="n">lat</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">lat</span> <span class="o">=</span> <span class="s">&#39;l&#39;</span>
-    <span class="n">hemi</span> <span class="o">=</span> <span class="n">__get_right_or_left_hemisphere</span><span class="p">(</span><span class="s">&#39;n&#39;</span><span class="p">,</span> <span class="n">lat</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">hemi</span> <span class="o">==</span> <span class="s">&#39;r&#39;</span><span class="p">:</span>
+        <span class="n">lat</span> <span class="o">=</span> <span class="s1">&#39;l&#39;</span>
+    <span class="n">hemi</span> <span class="o">=</span> <span class="n">__get_right_or_left_hemisphere</span><span class="p">(</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="n">lat</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">hemi</span> <span class="o">==</span> <span class="s1">&#39;r&#39;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">cortico_spinal_r</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">scalars</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">hemi</span> <span class="o">==</span> <span class="s">&#39;l&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">hemi</span> <span class="o">==</span> <span class="s1">&#39;l&#39;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">cortico_spinal_l</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">scalars</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Unknown laterality&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unknown laterality&quot;</span><span class="p">)</span></div>
 
-</div>
+
 <div class="viewcode-block" id="corpus_callosum"><a class="viewcode-back" href="../../../library/read_low_level.html#braviz.readAndFilter.named_tracts.corpus_callosum">[docs]</a><span class="k">def</span> <span class="nf">corpus_callosum</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">scalars</span><span class="p">,</span> <span class="n">get_out_space</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Gets the corpus callosum bundle</span>
@@ -317,11 +317,11 @@
 <span class="sd">        vtkPolyData of the corpus callosum bundle</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">get_out_space</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s">&#39;subject&#39;</span>
-    <span class="k">return</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fibers&#39;</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="s">&#39;or&#39;</span><span class="p">,</span>
+        <span class="k">return</span> <span class="s1">&#39;subject&#39;</span>
+    <span class="k">return</span> <span class="n">reader</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fibers&#39;</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="s1">&#39;or&#39;</span><span class="p">,</span>
                       <span class="n">waypoint</span><span class="o">=</span><span class="p">[</span>
-                          <span class="s">&#39;CC_Anterior&#39;</span><span class="p">,</span> <span class="s">&#39;CC_Central&#39;</span><span class="p">,</span> <span class="s">&#39;CC_Mid_Anterior&#39;</span><span class="p">,</span> <span class="s">&#39;CC_Mid_Posterior&#39;</span><span class="p">,</span> <span class="s">&#39;CC_Posterior&#39;</span><span class="p">],</span>
-                      <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">scalars</span><span class="o">=</span><span class="n">scalars</span><span class="p">),</span> <span class="s">&#39;subject&#39;</span></div>
+                          <span class="s1">&#39;CC_Anterior&#39;</span><span class="p">,</span> <span class="s1">&#39;CC_Central&#39;</span><span class="p">,</span> <span class="s1">&#39;CC_Mid_Anterior&#39;</span><span class="p">,</span> <span class="s1">&#39;CC_Mid_Posterior&#39;</span><span class="p">,</span> <span class="s1">&#39;CC_Posterior&#39;</span><span class="p">],</span>
+                      <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">scalars</span><span class="o">=</span><span class="n">scalars</span><span class="p">),</span> <span class="s1">&#39;subject&#39;</span></div>
 </pre></div>
 
           </div>
@@ -350,7 +350,7 @@
           
     <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Diego Angulo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
     </div>
         </div>
         <div class="clearer"></div>
