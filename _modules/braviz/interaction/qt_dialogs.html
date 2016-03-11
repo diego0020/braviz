@@ -82,23 +82,23 @@
           <div class="body" role="main">
             
   <h1>Source code for braviz.interaction.qt_dialogs</h1><div class="highlight"><pre>
-<span class="c">##############################################################################</span>
-<span class="c">#    Braviz, Brain Data interactive visualization                            #</span>
-<span class="c">#    Copyright (C) 2014  Diego Angulo                                        #</span>
-<span class="c">#                                                                            #</span>
-<span class="c">#    This program is free software: you can redistribute it and/or modify    #</span>
-<span class="c">#    it under the terms of the GNU Lesser General Public License as          #</span>
-<span class="c">#    published by  the Free Software Foundation, either version 3 of the     #</span>
-<span class="c">#    License, or (at your option) any later version.                         #</span>
-<span class="c">#                                                                            #</span>
-<span class="c">#    This program is distributed in the hope that it will be useful,         #</span>
-<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
-<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
-<span class="c">#    GNU Lesser General Public License for more details.                     #</span>
-<span class="c">#                                                                            #</span>
-<span class="c">#    You should have received a copy of the GNU Lesser General Public License#</span>
-<span class="c">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
-<span class="c">##############################################################################</span>
+<span></span><span class="c1">##############################################################################</span>
+<span class="c1">#    Braviz, Brain Data interactive visualization                            #</span>
+<span class="c1">#    Copyright (C) 2014  Diego Angulo                                        #</span>
+<span class="c1">#                                                                            #</span>
+<span class="c1">#    This program is free software: you can redistribute it and/or modify    #</span>
+<span class="c1">#    it under the terms of the GNU Lesser General Public License as          #</span>
+<span class="c1">#    published by  the Free Software Foundation, either version 3 of the     #</span>
+<span class="c1">#    License, or (at your option) any later version.                         #</span>
+<span class="c1">#                                                                            #</span>
+<span class="c1">#    This program is distributed in the hope that it will be useful,         #</span>
+<span class="c1">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
+<span class="c1">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
+<span class="c1">#    GNU Lesser General Public License for more details.                     #</span>
+<span class="c1">#                                                                            #</span>
+<span class="c1">#    You should have received a copy of the GNU Lesser General Public License#</span>
+<span class="c1">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
+<span class="c1">##############################################################################</span>
 
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span>
@@ -144,7 +144,7 @@
 
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="kn">as</span> <span class="nn">sns</span>
 
-<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Diego&#39;</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;Diego&#39;</span>
 
 
 <div class="viewcode-block" id="VariableSelectDialog"><a class="viewcode-back" href="../../../library/qt_dialogs.html#braviz.interaction.qt_dialogs.VariableSelectDialog">[docs]</a><span class="k">class</span> <span class="nc">VariableSelectDialog</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
@@ -175,7 +175,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sample</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">sample</span><span class="p">))</span>
             <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;got custom sample&quot;</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;got custom sample&quot;</span><span class="p">)</span>
             <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sample</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">update_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
@@ -185,7 +185,7 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">var_name</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">var_name</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-            <span class="c"># if nothing is selected</span>
+            <span class="c1"># if nothing is selected</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">save_button</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">var_type_combo</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
@@ -197,13 +197,13 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sample</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[[]]</span>
-        <span class="c"># update scatter</span>
+        <span class="c1"># update scatter</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
         <span class="n">var_description</span> <span class="o">=</span> <span class="n">get_var_description_by_name</span><span class="p">(</span><span class="n">var_name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">var_description</span><span class="o">.</span><span class="n">setPlainText</span><span class="p">(</span><span class="n">var_description</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">var_description</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
 
-        <span class="c"># update gui</span>
+        <span class="c1"># update gui</span>
         <span class="k">if</span> <span class="n">is_real</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">var_type_combo</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">update_details</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -212,9 +212,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">update_details</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">update_details</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-        <span class="c"># is_real=self.ui.var_type_combo.currentIndex()</span>
-        <span class="c"># print index</span>
-        <span class="c"># print &quot;====&quot;</span>
+        <span class="c1"># is_real=self.ui.var_type_combo.currentIndex()</span>
+        <span class="c1"># print index</span>
+        <span class="c1"># print &quot;====&quot;</span>
         <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">details_frame</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">update_real_details</span><span class="p">()</span>
@@ -228,14 +228,14 @@
         <span class="n">mini</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">min</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">maxi</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="bp">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">medi</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">median</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s">&quot;max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">maxi</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s">&quot;min&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mini</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s">&quot;opt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">medi</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s2">&quot;max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">maxi</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s2">&quot;min&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mini</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s2">&quot;opt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">medi</span>
 
     <span class="k">def</span> <span class="nf">set_real_controls</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">maxi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s">&quot;max&quot;</span><span class="p">]</span>
-        <span class="n">mini</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s">&quot;min&quot;</span><span class="p">]</span>
-        <span class="n">medi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s">&quot;opt&quot;</span><span class="p">]</span>
+        <span class="n">maxi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s2">&quot;max&quot;</span><span class="p">]</span>
+        <span class="n">mini</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s2">&quot;min&quot;</span><span class="p">]</span>
+        <span class="n">medi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s2">&quot;opt&quot;</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">maxi</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">maxi</span> <span class="o">=</span> <span class="mi">10</span>
         <span class="k">if</span> <span class="n">mini</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -265,24 +265,24 @@
             <span class="n">perc_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">optimum_val</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">real_value</span> <span class="o">=</span> <span class="n">perc_value</span> <span class="o">/</span> <span class="mi">100</span> <span class="o">*</span> \
-                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s">&quot;max&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s">&quot;min&quot;</span><span class="p">])</span> <span class="o">+</span> \
-                <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s">&quot;min&quot;</span><span class="p">]</span>
+                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s2">&quot;max&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s2">&quot;min&quot;</span><span class="p">])</span> <span class="o">+</span> \
+                <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s2">&quot;min&quot;</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
             <span class="n">real_value</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">optimum_real_value</span><span class="o">.</span><span class="n">setNum</span><span class="p">(</span><span class="n">real_value</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">update_real_details</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;creating real details&quot;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;creating real details&quot;</span><span class="p">)</span>
 
-        <span class="c"># try to read values from DB</span>
+        <span class="c1"># try to read values from DB</span>
         <span class="n">db_values</span> <span class="o">=</span> <span class="n">get_min_max_opt_values_by_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">var_name</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">db_values</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">guess_max_min</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s">&quot;min&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">db_values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s">&quot;max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">db_values</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s">&quot;opt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">db_values</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s2">&quot;min&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">db_values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s2">&quot;max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">db_values</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s2">&quot;opt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">db_values</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_real_controls</span><span class="p">()</span>
         <span class="n">QtCore</span><span class="o">.</span><span class="n">QTimer</span><span class="o">.</span><span class="n">singleShot</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_limits_in_plot</span><span class="p">)</span>
 
@@ -296,7 +296,7 @@
     <span class="k">def</span> <span class="nf">update_nominal_details</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">var_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_name</span>
         <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;creating nominal details&quot;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;creating nominal details&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nominal_model</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">nominal_model</span> <span class="o">=</span> <span class="n">braviz_models</span><span class="o">.</span><span class="n">NominalVariablesMeta</span><span class="p">(</span><span class="n">var_name</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -311,7 +311,7 @@
         <span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">plot_frame</span>
         <span class="n">layout</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">matplot_widget</span> <span class="o">=</span> <span class="n">braviz</span><span class="o">.</span><span class="n">interaction</span><span class="o">.</span><span class="n">qt_widgets</span><span class="o">.</span><span class="n">MatplotWidget</span><span class="p">(</span>
-            <span class="n">initial_message</span><span class="o">=</span><span class="s">&quot;Double click on variables</span><span class="se">\n</span><span class="s">to see plots&quot;</span><span class="p">)</span>
+            <span class="n">initial_message</span><span class="o">=</span><span class="s2">&quot;Double click on variables</span><span class="se">\n</span><span class="s2">to see plots&quot;</span><span class="p">)</span>
         <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matplot_widget</span><span class="p">)</span>
         <span class="n">target</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">save_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_meta_data</span><span class="p">)</span>
@@ -322,7 +322,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">details_frame</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-        <span class="c">#Real details</span>
+        <span class="c1">#Real details</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">optimum_val</span><span class="o">.</span><span class="n">valueChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">update_limits_in_plot</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">minimum_val</span><span class="o">.</span><span class="n">valueChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
@@ -344,39 +344,39 @@
         <span class="n">maxi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">maximum_val</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
         <span class="n">opti</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">optimum_val</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
         <span class="n">opti</span> <span class="o">=</span> <span class="n">mini</span> <span class="o">+</span> <span class="n">opti</span> <span class="o">*</span> <span class="p">(</span><span class="n">maxi</span> <span class="o">-</span> <span class="n">mini</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s">&quot;max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">maxi</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s">&quot;min&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mini</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s">&quot;opt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opti</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s2">&quot;max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">maxi</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s2">&quot;min&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mini</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s2">&quot;opt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opti</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">matplot_widget</span><span class="o">.</span><span class="n">add_max_min_opt_lines</span><span class="p">(</span><span class="n">mini</span><span class="p">,</span> <span class="n">opti</span><span class="p">,</span> <span class="n">maxi</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">save_meta_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">var_type</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c"># nominal should be 1</span>
+        <span class="n">var_type</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># nominal should be 1</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">var_type_combo</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">var_type</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c"># real should be 1</span>
+            <span class="n">var_type</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># real should be 1</span>
 
-        <span class="c"># save variable type</span>
+        <span class="c1"># save variable type</span>
         <span class="n">save_is_real_by_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">var_name</span><span class="p">,</span> <span class="n">var_type</span><span class="p">)</span>
 
-        <span class="c"># save description</span>
+        <span class="c1"># save description</span>
         <span class="n">desc_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">var_description</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">()</span>
         <span class="n">save_var_description_by_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">var_name</span><span class="p">,</span> <span class="nb">unicode</span><span class="p">(</span><span class="n">desc_text</span><span class="p">))</span>
 
-        <span class="c"># save other values</span>
+        <span class="c1"># save other values</span>
         <span class="k">if</span> <span class="n">var_type</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="c"># real</span>
-            <span class="n">save_real_meta_by_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">var_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s">&quot;min&quot;</span><span class="p">],</span>
-                                   <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s">&quot;max&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s">&quot;opt&quot;</span><span class="p">])</span>
+            <span class="c1"># real</span>
+            <span class="n">save_real_meta_by_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">var_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s2">&quot;min&quot;</span><span class="p">],</span>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s2">&quot;max&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">rational</span><span class="p">[</span><span class="s2">&quot;opt&quot;</span><span class="p">])</span>
         <span class="k">elif</span> <span class="n">var_type</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">nominal_model</span><span class="o">.</span><span class="n">save_into_db</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">show_plot_tooltip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="s">&quot;Subject: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">subj</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Subject: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">subj</span>
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QToolTip</span><span class="o">.</span><span class="n">showText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matplot_widget</span><span class="o">.</span><span class="n">mapToGlobal</span><span class="p">(</span>
             <span class="n">QtCore</span><span class="o">.</span><span class="n">QPoint</span><span class="p">(</span><span class="o">*</span><span class="n">position</span><span class="p">)),</span> <span class="n">message</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">matplot_widget</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">show_delete_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
         <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;showing menu&quot;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;showing menu&quot;</span><span class="p">)</span>
         <span class="n">menu</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QMenu</span><span class="p">()</span>
         <span class="n">mod</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tableView</span><span class="o">.</span><span class="n">model</span><span class="p">()</span>
         <span class="n">cur_idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tableView</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span>
@@ -385,26 +385,26 @@
 
         <span class="k">def</span> <span class="nf">delete_var</span><span class="p">():</span>
             <span class="n">confirm</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">question</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                                                 <span class="s">&quot;Confirm delete variable&quot;</span><span class="p">,</span>
-                                                 <span class="s">&quot;Are you sure you want to delete </span><span class="se">\n</span><span class="si">%s</span><span class="s"> ?</span><span class="se">\n</span><span class="s">This is not reversible&quot;</span> <span class="o">%</span> <span class="n">var_name</span><span class="p">,</span>
+                                                 <span class="s2">&quot;Confirm delete variable&quot;</span><span class="p">,</span>
+                                                 <span class="s2">&quot;Are you sure you want to delete </span><span class="se">\n</span><span class="si">%s</span><span class="s2"> ?</span><span class="se">\n</span><span class="s2">This is not reversible&quot;</span> <span class="o">%</span> <span class="n">var_name</span><span class="p">,</span>
                                                  <span class="n">QtGui</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Yes</span> <span class="o">|</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Cancel</span><span class="p">,</span>
                                                  <span class="n">QtGui</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Cancel</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">confirm</span> <span class="o">==</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Yes</span><span class="p">:</span>
-                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;deleting&quot;</span><span class="p">)</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;deleting&quot;</span><span class="p">)</span>
                 <span class="n">var_idx</span> <span class="o">=</span> <span class="n">braviz_tab_data</span><span class="o">.</span><span class="n">get_var_idx</span><span class="p">(</span><span class="n">var_name</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">var_idx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
                     <span class="n">braviz_tab_data</span><span class="o">.</span><span class="n">recursive_delete_variable</span><span class="p">(</span><span class="n">var_idx</span><span class="p">)</span>
                 <span class="n">mod</span><span class="o">.</span><span class="n">update_list</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;cancelled&quot;</span><span class="p">)</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;cancelled&quot;</span><span class="p">)</span>
 
-        <span class="n">action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s">&quot;Delete </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">var_name</span><span class="p">,</span> <span class="n">menu</span><span class="p">)</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Delete </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">var_name</span><span class="p">,</span> <span class="n">menu</span><span class="p">)</span>
         <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
         <span class="n">action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">delete_var</span><span class="p">)</span>
         <span class="n">global_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tableView</span><span class="o">.</span><span class="n">mapToGlobal</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
-        <span class="n">menu</span><span class="o">.</span><span class="n">exec_</span><span class="p">(</span><span class="n">global_pos</span><span class="p">)</span>
+        <span class="n">menu</span><span class="o">.</span><span class="n">exec_</span><span class="p">(</span><span class="n">global_pos</span><span class="p">)</span></div>
 
-</div>
+
 <div class="viewcode-block" id="OutcomeSelectDialog"><a class="viewcode-back" href="../../../library/qt_dialogs.html#braviz.interaction.qt_dialogs.OutcomeSelectDialog">[docs]</a><span class="k">class</span> <span class="nc">OutcomeSelectDialog</span><span class="p">(</span><span class="n">VariableSelectDialog</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
@@ -459,7 +459,7 @@
         <span class="n">data_values</span> <span class="o">=</span> <span class="n">data2</span><span class="o">.</span><span class="n">get_values</span><span class="p">()</span>
         <span class="n">jitter</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data_values</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">matplot_widget</span><span class="o">.</span><span class="n">compute_scatter</span><span class="p">(</span><span class="n">data_values</span><span class="p">,</span> <span class="n">jitter</span><span class="p">,</span>
-                                            <span class="n">x_lab</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">var_name</span><span class="p">,</span> <span class="n">y_lab</span><span class="o">=</span><span class="s">&quot;jitter&quot;</span><span class="p">,</span> <span class="n">urls</span><span class="o">=</span><span class="n">data2</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_values</span><span class="p">())</span>
+                                            <span class="n">x_lab</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">var_name</span><span class="p">,</span> <span class="n">y_lab</span><span class="o">=</span><span class="s2">&quot;jitter&quot;</span><span class="p">,</span> <span class="n">urls</span><span class="o">=</span><span class="n">data2</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_values</span><span class="p">())</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">highlight_subj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">subj_index</span> <span class="o">=</span> <span class="n">data2</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">highlight_subj</span><span class="p">))</span>
@@ -473,14 +473,14 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">save_meta_data</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params_dict</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">params_dict</span><span class="p">[</span><span class="s">&quot;selected_outcome&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_name</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params_dict</span><span class="p">[</span><span class="s2">&quot;selected_outcome&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">filter_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">mask</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%%%s%%</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">search_box</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">vars_list_model</span><span class="o">.</span><span class="n">update_list</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%%%s%%</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">search_box</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vars_list_model</span><span class="o">.</span><span class="n">update_list</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span></div>
 
-</div>
+
 <div class="viewcode-block" id="GenericVariableSelectDialog"><a class="viewcode-back" href="../../../library/qt_dialogs.html#braviz.interaction.qt_dialogs.GenericVariableSelectDialog">[docs]</a><span class="k">class</span> <span class="nc">GenericVariableSelectDialog</span><span class="p">(</span><span class="n">OutcomeSelectDialog</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
@@ -505,8 +505,8 @@
         <span class="n">OutcomeSelectDialog</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">multiple</span><span class="o">=</span><span class="n">multiple</span><span class="p">,</span> <span class="n">sample</span><span class="o">=</span><span class="n">sample</span><span class="p">,</span> <span class="n">highlight</span><span class="o">=</span><span class="n">highlight</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">multiple</span> <span class="o">=</span> <span class="n">multiple</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s">&quot;Select Variables&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">select_button</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&quot;Accept Selection&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;Select Variables&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">select_button</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Accept Selection&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">select_button</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">multiple</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">initial_selection_idx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
@@ -518,11 +518,11 @@
     <span class="k">def</span> <span class="nf">select_and_return</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiple</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
             <span class="n">selected_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vars_list_model</span><span class="o">.</span><span class="n">checked_set</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">params_dict</span><span class="p">[</span><span class="s">&quot;checked&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params_dict</span><span class="p">[</span><span class="s2">&quot;checked&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
                 <span class="n">get_var_idx</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">selected_names</span><span class="p">]</span>
-        <span class="n">OutcomeSelectDialog</span><span class="o">.</span><span class="n">select_and_return</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="n">OutcomeSelectDialog</span><span class="o">.</span><span class="n">select_and_return</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span></div>
 
-</div>
+
 <div class="viewcode-block" id="MultiPlotOutcomeSelectDialog"><a class="viewcode-back" href="../../../library/qt_dialogs.html#braviz.interaction.qt_dialogs.MultiPlotOutcomeSelectDialog">[docs]</a><span class="k">class</span> <span class="nc">MultiPlotOutcomeSelectDialog</span><span class="p">(</span><span class="n">OutcomeSelectDialog</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
@@ -574,7 +574,7 @@
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
 
-        <span class="n">default_plot</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;scatter&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">default_plot</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;scatter&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_plots</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">plot_type</span> <span class="o">=</span> <span class="n">default_plot</span>
         <span class="k">else</span><span class="p">:</span>
@@ -582,11 +582,11 @@
             <span class="n">plot_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_plots</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">plot_str</span><span class="p">,</span> <span class="n">default_plot</span><span class="p">)</span>
         <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
         <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">plot_type</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">plot_type</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;scatter&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">plot_type</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;scatter&quot;</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">plot_type</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
                 <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">matplot_widget</span><span class="o">.</span><span class="n">compute_scatter</span><span class="p">(</span>
-                    <span class="n">data</span><span class="p">,</span> <span class="n">x_lab</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">var_name</span><span class="p">,</span> <span class="n">y_lab</span><span class="o">=</span><span class="s">&quot;jitter&quot;</span><span class="p">,</span> <span class="n">urls</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+                    <span class="n">data</span><span class="p">,</span> <span class="n">x_lab</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">var_name</span><span class="p">,</span> <span class="n">y_lab</span><span class="o">=</span><span class="s2">&quot;jitter&quot;</span><span class="p">,</span> <span class="n">urls</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">matplot_widget</span><span class="o">.</span><span class="n">limits_vertical</span> <span class="o">=</span> <span class="bp">True</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">x</span> <span class="o">=</span> <span class="n">plot_type</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -597,7 +597,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">matplot_widget</span><span class="o">.</span><span class="n">compute_scatter</span><span class="p">(</span>
                     <span class="n">data</span><span class="p">[</span><span class="n">x</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="n">y</span><span class="p">],</span> <span class="n">x_lab</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y_lab</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">urls</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">matplot_widget</span><span class="o">.</span><span class="n">limits_vertical</span> <span class="o">=</span> <span class="bp">False</span>
-        <span class="k">elif</span> <span class="n">plot_type</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;box&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">plot_type</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;box&quot;</span><span class="p">:</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">plot_type</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
             <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_name</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">braviz_tab_data</span><span class="o">.</span><span class="n">get_data_frame_by_name</span><span class="p">([</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">])</span>
@@ -607,17 +607,17 @@
             <span class="n">labels_dict</span> <span class="o">=</span> <span class="n">braviz_tab_data</span><span class="o">.</span><span class="n">get_labels_dict_by_name</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">matplot_widget</span><span class="o">.</span><span class="n">make_box_plot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">labels_dict</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">matplot_widget</span><span class="o">.</span><span class="n">limits_vertical</span> <span class="o">=</span> <span class="bp">False</span>
-        <span class="k">elif</span> <span class="n">plot_type</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;interaction&quot;</span><span class="p">:</span>
-            <span class="n">factors</span> <span class="o">=</span> <span class="n">plot_type</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;*&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">plot_type</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;interaction&quot;</span><span class="p">:</span>
+            <span class="n">factors</span> <span class="o">=</span> <span class="n">plot_type</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">matplot_widget</span><span class="o">.</span><span class="n">limits_vertical</span> <span class="o">=</span> <span class="bp">False</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">two_factors_plot</span><span class="p">(</span><span class="n">factors</span><span class="p">)</span>
         <span class="n">QtCore</span><span class="o">.</span><span class="n">QTimer</span><span class="o">.</span><span class="n">singleShot</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_limits_in_plot</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">two_factors_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">factors_list</span><span class="p">):</span>
-        <span class="c"># copied from anova application... not a good practice</span>
+        <span class="c1"># copied from anova application... not a good practice</span>
         <span class="n">nominal_factors</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">real_factors</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="c"># classify factors</span>
+        <span class="c1"># classify factors</span>
         <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">factors_list</span><span class="p">:</span>
             <span class="n">is_real</span> <span class="o">=</span> <span class="n">braviz_tab_data</span><span class="o">.</span><span class="n">is_variable_name_real</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">is_real</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -628,11 +628,11 @@
 
             <span class="n">top_labels_dict</span> <span class="o">=</span> <span class="n">braviz_tab_data</span><span class="o">.</span><span class="n">get_labels_dict_by_name</span><span class="p">(</span>
                 <span class="n">nominal_factors</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-            <span class="n">colors</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s">&quot;Dark2&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">top_labels_dict</span><span class="p">))</span>
-            <span class="c"># print top_labels_strings</span>
+            <span class="n">colors</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s2">&quot;Dark2&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">top_labels_dict</span><span class="p">))</span>
+            <span class="c1"># print top_labels_strings</span>
             <span class="n">colors_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">izip</span><span class="p">(</span><span class="n">top_labels_dict</span><span class="o">.</span><span class="n">iterkeys</span><span class="p">(),</span> <span class="n">colors</span><span class="p">))</span>
             <span class="n">plot_color</span> <span class="o">=</span> <span class="n">colors_dict</span>
-            <span class="c"># Get Data</span>
+            <span class="c1"># Get Data</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">get_data_frame_by_name</span><span class="p">(</span>
                 <span class="p">[</span><span class="n">real_factors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">nominal_factors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_name</span><span class="p">])</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sample</span><span class="p">]</span>
@@ -648,7 +648,7 @@
                 <span class="k">if</span> <span class="n">k</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
                     <span class="k">continue</span>
                 <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-                    <span class="n">v</span> <span class="o">=</span> <span class="s">&quot;?&quot;</span>
+                    <span class="n">v</span> <span class="o">=</span> <span class="s2">&quot;?&quot;</span>
                 <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
                 <span class="n">colors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">colors_dict</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
                 <span class="n">datay</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
@@ -657,26 +657,26 @@
                     <span class="n">data</span><span class="p">[</span><span class="n">real_factors</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">data</span><span class="p">[</span><span class="n">nominal_factors</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">==</span> <span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">get_values</span><span class="p">())</span>
                 <span class="n">urls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                     <span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">var_name</span><span class="p">][</span><span class="n">data</span><span class="p">[</span><span class="n">nominal_factors</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">==</span> <span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_values</span><span class="p">())</span>
-                <span class="c"># print datax</span>
+                <span class="c1"># print datax</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">matplot_widget</span><span class="o">.</span><span class="n">compute_scatter</span><span class="p">(</span>
                 <span class="n">datax</span><span class="p">,</span> <span class="n">datay</span><span class="p">,</span> <span class="n">real_factors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_name</span><span class="p">,</span> <span class="n">colors</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">urls</span><span class="o">=</span><span class="n">urls</span><span class="p">)</span>
 
         <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">real_factors</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
             <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;Not yet implemented&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">matplot_widget</span><span class="o">.</span><span class="n">initial_text</span><span class="p">(</span><span class="s">&quot;Not yet implemented&quot;</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Not yet implemented&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">matplot_widget</span><span class="o">.</span><span class="n">initial_text</span><span class="p">(</span><span class="s2">&quot;Not yet implemented&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="c"># get data</span>
+            <span class="c1"># get data</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">get_data_frame_by_name</span><span class="p">(</span><span class="n">nominal_factors</span> <span class="o">+</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">var_name</span><span class="p">])</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sample</span><span class="p">]</span>
             <span class="n">data</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-            <span class="c"># find number of levels for nominal</span>
+            <span class="c1"># find number of levels for nominal</span>
             <span class="n">nlevels</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">nominal_factors</span><span class="p">:</span>
                 <span class="n">nlevels</span><span class="p">[</span><span class="n">f</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
-                <span class="c"># print nlevels</span>
+                <span class="c1"># print nlevels</span>
             <span class="n">nominal_factors</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">nlevels</span><span class="o">.</span><span class="n">get</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-            <span class="c"># print nominal_factors</span>
+            <span class="c1"># print nominal_factors</span>
 
             <span class="n">levels_second_factor</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">nominal_factors</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">get_values</span><span class="p">())</span>
             <span class="n">levels_first_factor</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">nominal_factors</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">get_values</span><span class="p">())</span>
@@ -690,9 +690,9 @@
                 <span class="n">data_lists_top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data_list</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">matplot_widget</span><span class="o">.</span><span class="n">make_linked_box_plot</span><span class="p">(</span>
-                <span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_name</span><span class="p">,</span> <span class="n">nominal_factors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">nominal_factors</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_name</span><span class="p">,</span> <span class="n">nominal_factors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">nominal_factors</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div>
 
-</div>
+
 <div class="viewcode-block" id="SelectOneVariableWithFilter"><a class="viewcode-back" href="../../../library/qt_dialogs.html#braviz.interaction.qt_dialogs.SelectOneVariableWithFilter">[docs]</a><span class="k">class</span> <span class="nc">SelectOneVariableWithFilter</span><span class="p">(</span><span class="n">OutcomeSelectDialog</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
@@ -711,7 +711,7 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">accept_nominal</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">accept_real</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">sample</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="n">OutcomeSelectDialog</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">multiple</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">sample</span><span class="o">=</span><span class="n">sample</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s">&quot;Select Variable&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;Select Variable&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">accept_real</span> <span class="o">=</span> <span class="n">accept_real</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">accept_nominal</span> <span class="o">=</span> <span class="n">accept_nominal</span>
 
@@ -724,9 +724,9 @@
 
     <span class="k">def</span> <span class="nf">update_details</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">SelectOneVariableWithFilter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">update_details</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">check_selecion</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_selecion</span><span class="p">()</span></div>
 
-</div>
+
 <div class="viewcode-block" id="RegressorSelectDialog"><a class="viewcode-back" href="../../../library/qt_dialogs.html#braviz.interaction.qt_dialogs.RegressorSelectDialog">[docs]</a><span class="k">class</span> <span class="nc">RegressorSelectDialog</span><span class="p">(</span><span class="n">VariableSelectDialog</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
@@ -782,7 +782,7 @@
     <span class="k">def</span> <span class="nf">show_context_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
         <span class="n">global_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">current_regressors_table</span><span class="o">.</span><span class="n">mapToGlobal</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
         <span class="n">selection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">current_regressors_table</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span>
-        <span class="n">remove_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s">&quot;Remove&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">remove_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Remove&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
         <span class="n">menu</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QMenu</span><span class="p">()</span>
         <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">remove_action</span><span class="p">)</span>
 
@@ -792,7 +792,7 @@
         <span class="n">remove_action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">remove_item</span><span class="p">)</span>
         <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">remove_action</span><span class="p">)</span>
         <span class="n">selected_item</span> <span class="o">=</span> <span class="n">menu</span><span class="o">.</span><span class="n">exec_</span><span class="p">(</span><span class="n">global_pos</span><span class="p">)</span>
-        <span class="c"># print selected_item</span>
+        <span class="c1"># print selected_item</span>
 
     <span class="k">def</span> <span class="nf">update_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="n">regressor_data</span> <span class="o">=</span> <span class="n">data</span>
@@ -817,10 +817,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">done</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Accepted</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">filter_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">mask</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%%%s%%</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">search_box</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">vars_model</span><span class="o">.</span><span class="n">update_list</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%%%s%%</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">search_box</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vars_model</span><span class="o">.</span><span class="n">update_list</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span></div>
 
-</div>
+
 <div class="viewcode-block" id="InteractionSelectDialog"><a class="viewcode-back" href="../../../library/qt_dialogs.html#braviz.interaction.qt_dialogs.InteractionSelectDialog">[docs]</a><span class="k">class</span> <span class="nc">InteractionSelectDialog</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
@@ -862,9 +862,9 @@
         <span class="n">rows</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">only_regs_model</span><span class="o">.</span><span class="n">rowCount</span><span class="p">())</span>
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">full_model</span><span class="o">.</span><span class="n">add_interactor</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">full_model</span><span class="o">.</span><span class="n">add_interactor</span><span class="p">(</span><span class="n">i</span><span class="p">)</span></div>
 
-</div>
+
 <div class="viewcode-block" id="NewVariableDialog"><a class="viewcode-back" href="../../../library/qt_dialogs.html#braviz.interaction.qt_dialogs.NewVariableDialog">[docs]</a><span class="k">class</span> <span class="nc">NewVariableDialog</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
@@ -885,26 +885,26 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">var_type_combo</span><span class="o">.</span><span class="n">currentIndexChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">create_meta_data_frame</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nominal_model</span> <span class="o">=</span> <span class="n">braviz_models</span><span class="o">.</span><span class="n">NominalVariablesMeta</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
-        <span class="c"># self.clear_details_frame():</span>
+        <span class="c1"># self.clear_details_frame():</span>
         <span class="n">initial_nominal</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">var_type_combo</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">initial_nominal</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">initial_nominal</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">details_frame</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">details_frame</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-        <span class="c"># self.create_meta_data_frame(initial_nominal)</span>
+        <span class="c1"># self.create_meta_data_frame(initial_nominal)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">values_model</span> <span class="o">=</span> <span class="n">braviz_models</span><span class="o">.</span><span class="n">NewVariableValues</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">values_table</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values_model</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">var_name_input</span><span class="o">.</span><span class="n">editingFinished</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">activate_save_button</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">save_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_new_variable</span><span class="p">)</span>
 
-        <span class="c">#real details</span>
+        <span class="c1">#real details</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">optimum_val</span><span class="o">.</span><span class="n">valueChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_optimum_real_value</span><span class="p">)</span>
 
-        <span class="c">#Nominal details</span>
+        <span class="c1">#Nominal details</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">labels_names_table</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nominal_model</span><span class="p">)</span>
-        <span class="n">add_label_button</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s">&quot;Add Label&quot;</span><span class="p">)</span>
+        <span class="n">add_label_button</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Add Label&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">verticalLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">add_label_button</span><span class="p">)</span>
         <span class="n">add_label_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nominal_model</span><span class="o">.</span><span class="n">add_label</span><span class="p">)</span>
 
@@ -918,14 +918,14 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">setup_nominal_details</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">setup_real_details</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c"># try to read values from DB</span>
+        <span class="c1"># try to read values from DB</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">maximum_val</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">minimum_val</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">optimum_val</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_optimum_real_value</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">setup_nominal_details</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c"># print &quot;creating details&quot;</span>
+        <span class="c1"># print &quot;creating details&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nominal_model</span><span class="o">.</span><span class="n">update_model</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">override_nominal_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels_dict</span><span class="p">):</span>
@@ -946,16 +946,16 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">save_button</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">save_new_variable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c"># create new variable</span>
+        <span class="c1"># create new variable</span>
         <span class="n">var_name</span> <span class="o">=</span> <span class="nb">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">var_name_input</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
         <span class="n">is_real</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">var_type_combo</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span>
         <span class="n">var_idx</span> <span class="o">=</span> <span class="n">register_new_variable</span><span class="p">(</span><span class="n">var_name</span><span class="p">,</span> <span class="n">is_real</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">var_idx</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">m</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;A variable with the same name already exists,</span><span class="se">\n</span><span class="s">please choose a different name&quot;&quot;&quot;</span>
-            <span class="n">QtGui</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="s">&quot;Couldn&#39;t create variable&quot;</span><span class="p">,</span> <span class="n">m</span><span class="p">,)</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;A variable with the same name already exists,</span><span class="se">\n</span><span class="s2">please choose a different name&quot;&quot;&quot;</span>
+            <span class="n">QtGui</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="s2">&quot;Couldn&#39;t create variable&quot;</span><span class="p">,</span> <span class="n">m</span><span class="p">,)</span>
             <span class="k">return</span>
 
-        <span class="c"># add meta data</span>
+        <span class="c1"># add meta data</span>
         <span class="k">if</span> <span class="n">is_real</span><span class="p">:</span>
             <span class="n">mini</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">minimum_val</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
             <span class="n">maxi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">maximum_val</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
@@ -964,14 +964,14 @@
             <span class="n">save_real_meta</span><span class="p">(</span><span class="n">var_idx</span><span class="p">,</span> <span class="n">mini</span><span class="p">,</span> <span class="n">maxi</span><span class="p">,</span> <span class="n">opti</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">nominal_model</span><span class="o">.</span><span class="n">save_into_db</span><span class="p">(</span><span class="n">var_idx</span><span class="p">)</span>
-            <span class="c"># description</span>
+            <span class="c1"># description</span>
         <span class="n">desc</span> <span class="o">=</span> <span class="nb">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">var_description</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">())</span>
         <span class="n">save_var_description</span><span class="p">(</span><span class="n">var_idx</span><span class="p">,</span> <span class="n">desc</span><span class="p">)</span>
-        <span class="c"># values</span>
+        <span class="c1"># values</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">values_model</span><span class="o">.</span><span class="n">save_into_db</span><span class="p">(</span><span class="n">var_idx</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span></div>
 
-</div>
+
 <div class="viewcode-block" id="ContextVariablesSelectDialog"><a class="viewcode-back" href="../../../library/qt_dialogs.html#braviz.interaction.qt_dialogs.ContextVariablesSelectDialog">[docs]</a><span class="k">class</span> <span class="nc">ContextVariablesSelectDialog</span><span class="p">(</span><span class="n">VariableSelectDialog</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
@@ -1004,7 +1004,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">current_variables</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_variables_model</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">current_variables</span><span class="o">.</span><span class="n">customContextMenuRequested</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">show_context_menu</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">done_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">finish_close</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">done_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">done</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">finished</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">finish_close</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">current_variables</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_right_side2</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">create_varible_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
@@ -1032,7 +1033,7 @@
     <span class="k">def</span> <span class="nf">show_context_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
         <span class="n">global_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">current_variables</span><span class="o">.</span><span class="n">mapToGlobal</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
         <span class="n">selection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">current_variables</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span>
-        <span class="n">remove_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s">&quot;Remove&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">remove_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Remove&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
         <span class="n">menu</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QMenu</span><span class="p">()</span>
         <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">remove_action</span><span class="p">)</span>
 
@@ -1058,13 +1059,13 @@
             <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
                 <span class="k">pass</span>
 
-    <span class="k">def</span> <span class="nf">finish_close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">finish_close</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>
         <span class="n">new_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_variables_model</span><span class="o">.</span><span class="n">get_variables</span><span class="p">()</span>
         <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">variable_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">variable_list</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">variable_list</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">new_list</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">variable_list</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">__variable_lists_id</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">done</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Accepted</span><span class="p">)</span>
+
 
     <span class="k">def</span> <span class="nf">launch_new_variable_dialog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">new_variable_dialog</span> <span class="o">=</span> <span class="n">NewVariableDialog</span><span class="p">()</span>
@@ -1073,10 +1074,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">vars_model</span><span class="o">.</span><span class="n">update_list</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">filter_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">mask</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%%%s%%</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">search_box</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">vars_model</span><span class="o">.</span><span class="n">update_list</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%%%s%%</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">search_box</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vars_model</span><span class="o">.</span><span class="n">update_list</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span></div>
 
-</div>
+
 <div class="viewcode-block" id="BundleSelectionDialog"><a class="viewcode-back" href="../../../library/qt_dialogs.html#braviz.interaction.qt_dialogs.BundleSelectionDialog">[docs]</a><span class="k">class</span> <span class="nc">BundleSelectionDialog</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
@@ -1106,9 +1107,9 @@
         <span class="n">new_select</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bundles_list_model</span><span class="o">.</span><span class="n">get_selected</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">selection</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">selection</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_select</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">names_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bundles_list_model</span><span class="o">.</span><span class="n">names_dict</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">names_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bundles_list_model</span><span class="o">.</span><span class="n">names_dict</span><span class="p">)</span></div>
 
-</div>
+
 <div class="viewcode-block" id="SaveFibersBundleDialog"><a class="viewcode-back" href="../../../library/qt_dialogs.html#braviz.interaction.qt_dialogs.SaveFibersBundleDialog">[docs]</a><span class="k">class</span> <span class="nc">SaveFibersBundleDialog</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
@@ -1129,12 +1130,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Save</span><span class="p">)</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">)</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">lineEdit</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">check_name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">error_message</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">save_succesful</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
-        <span class="n">operation</span> <span class="o">=</span> <span class="s">&quot;And&quot;</span> <span class="k">if</span> <span class="n">operation_is_and</span> <span class="k">else</span> <span class="s">&quot;Or&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">error_message</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">save_succesful</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">operation</span> <span class="o">=</span> <span class="s2">&quot;And&quot;</span> <span class="k">if</span> <span class="n">operation_is_and</span> <span class="k">else</span> <span class="s2">&quot;Or&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">operation_label</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">operation</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_checkpoints</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">checkpoints_list</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">structures_list</span><span class="o">.</span><span class="n">setPlainText</span><span class="p">(</span><span class="s">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_checkpoints</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">structures_list</span><span class="o">.</span><span class="n">setPlainText</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_checkpoints</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">button</span><span class="p">(</span>
             <span class="n">QtGui</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Save</span><span class="p">)</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accept_save</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">button</span><span class="p">(</span>
@@ -1149,36 +1150,36 @@
             <span class="k">return</span>
         <span class="k">if</span> <span class="n">bundles_db</span><span class="o">.</span><span class="n">check_if_name_exists</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">error_message</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span>
-                <span class="s">&quot;A bundle with this name already exists&quot;</span><span class="p">)</span>
+                <span class="s2">&quot;A bundle with this name already exists&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">button</span><span class="p">(</span>
                 <span class="n">QtGui</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Save</span><span class="p">)</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">button</span><span class="p">(</span>
                 <span class="n">QtGui</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Save</span><span class="p">)</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">error_message</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">error_message</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">accept_save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;saving&quot;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;saving&quot;</span><span class="p">)</span>
         <span class="n">name</span> <span class="o">=</span> <span class="nb">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">lineEdit</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
         <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-        <span class="n">op</span> <span class="o">=</span> <span class="s">&quot;and&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_and</span> <span class="k">else</span> <span class="s">&quot;or&quot;</span>
+        <span class="n">op</span> <span class="o">=</span> <span class="s2">&quot;and&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_and</span> <span class="k">else</span> <span class="s2">&quot;or&quot;</span>
         <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">op</span><span class="p">)</span>
         <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_checkpoints</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">bundles_db</span><span class="o">.</span><span class="n">save_checkpoints_bundle</span><span class="p">(</span>
                 <span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_and</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_checkpoints</span><span class="p">)</span>
         <span class="k">except</span><span class="p">:</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;problem saving into database&quot;</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;problem saving into database&quot;</span><span class="p">)</span>
             <span class="k">raise</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">save_succesful</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&quot;Save succesful&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">save_succesful</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Save succesful&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">)</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Save</span><span class="p">)</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">button</span><span class="p">(</span>
             <span class="n">QtGui</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Cancel</span><span class="p">)</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">lineEdit</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">lineEdit</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span></div>
 
-</div>
+
 <div class="viewcode-block" id="SaveLogicFibersBundleDialog"><a class="viewcode-back" href="../../../library/qt_dialogs.html#braviz.interaction.qt_dialogs.SaveLogicFibersBundleDialog">[docs]</a><span class="k">class</span> <span class="nc">SaveLogicFibersBundleDialog</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
@@ -1200,8 +1201,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Save</span><span class="p">)</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">)</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">lineEdit</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">check_name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">error_message</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">save_succesful</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">error_message</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">save_succesful</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">treeView</span><span class="o">.</span><span class="n">setModel</span><span class="p">(</span><span class="n">tree_model</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">treeView</span><span class="o">.</span><span class="n">expandAll</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">button</span><span class="p">(</span>
@@ -1217,17 +1218,17 @@
             <span class="k">return</span>
         <span class="k">if</span> <span class="n">bundles_db</span><span class="o">.</span><span class="n">check_if_name_exists</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">error_message</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span>
-                <span class="s">&quot;A bundle with this name already exists&quot;</span><span class="p">)</span>
+                <span class="s2">&quot;A bundle with this name already exists&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">button</span><span class="p">(</span>
                 <span class="n">QtGui</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Save</span><span class="p">)</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">button</span><span class="p">(</span>
                 <span class="n">QtGui</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Save</span><span class="p">)</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">error_message</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">error_message</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">accept_save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;saving&quot;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;saving&quot;</span><span class="p">)</span>
         <span class="n">name</span> <span class="o">=</span> <span class="nb">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">lineEdit</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
         <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="n">tree_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tree_model</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
@@ -1235,16 +1236,16 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">bundles_db</span><span class="o">.</span><span class="n">save_logic_bundle</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">tree_dict</span><span class="p">)</span>
         <span class="k">except</span><span class="p">:</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;problem saving into database&quot;</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;problem saving into database&quot;</span><span class="p">)</span>
             <span class="k">raise</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">save_succesful</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&quot;Save succesful&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">save_succesful</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Save succesful&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">)</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Save</span><span class="p">)</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">button</span><span class="p">(</span>
             <span class="n">QtGui</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Cancel</span><span class="p">)</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">lineEdit</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">lineEdit</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span></div>
 
-</div>
+
 <div class="viewcode-block" id="SaveScenarioDialog"><a class="viewcode-back" href="../../../library/qt_dialogs.html#braviz.interaction.qt_dialogs.SaveScenarioDialog">[docs]</a><span class="k">class</span> <span class="nc">SaveScenarioDialog</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
@@ -1272,27 +1273,27 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span> <span class="o">=</span> <span class="n">Ui_SaveScenarioDialog</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">app_name</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">app_name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">save_button</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s">&quot;Save&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">save_button</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Save&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">save_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_into_db</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">addButton</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">save_button</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">ActionRole</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">addButton</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Cancel</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">succesful_message</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">succesful_message</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">save_into_db</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">scenario_name</span> <span class="o">=</span> <span class="nb">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">scenario_name</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">scenario_name</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">scenario_name</span> <span class="o">=</span> <span class="s">&quot;&lt;Unnamed&gt;&quot;</span>
+            <span class="n">scenario_name</span> <span class="o">=</span> <span class="s2">&quot;&lt;Unnamed&gt;&quot;</span>
         <span class="n">description</span> <span class="o">=</span> <span class="nb">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">scn_description</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">())</span>
         <span class="n">scn_id</span> <span class="o">=</span> <span class="n">braviz_user_data</span><span class="o">.</span><span class="n">save_scenario</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">app_name</span><span class="p">,</span> <span class="n">scenario_name</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s">&quot;scn_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">scn_id</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s">&quot;scn_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">scenario_name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">succesful_message</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&quot;Save completed succesfully&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;scn_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">scn_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;scn_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">scenario_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">succesful_message</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Save completed succesfully&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">addButton</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">addButton</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">)</span></div>
 
-</div>
+
 <div class="viewcode-block" id="LoadScenarioDialog"><a class="viewcode-back" href="../../../library/qt_dialogs.html#braviz.interaction.qt_dialogs.LoadScenarioDialog">[docs]</a><span class="k">class</span> <span class="nc">LoadScenarioDialog</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
@@ -1329,15 +1330,15 @@
         <span class="n">row</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_row</span> <span class="o">=</span> <span class="n">row</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttonBox</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">)</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-        <span class="c"># load picture</span>
+        <span class="c1"># load picture</span>
         <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">screen_shot_label</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&quot;&lt;No screenshot available&gt;&quot;</span> <span class="o">%</span> <span class="n">index</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">screen_shot_label</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&lt;No screenshot available&gt;&quot;</span> <span class="o">%</span> <span class="n">index</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">screen_shot_label</span><span class="o">.</span><span class="n">setScaledContents</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
 
         <span class="n">data_root</span> <span class="o">=</span> <span class="n">braviz</span><span class="o">.</span><span class="n">readAndFilter</span><span class="o">.</span><span class="n">braviz_auto_dynamic_data_root</span><span class="p">()</span>
 
         <span class="n">image_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-            <span class="n">data_root</span><span class="p">,</span> <span class="s">&quot;braviz_data&quot;</span><span class="p">,</span> <span class="s">&quot;scenarios&quot;</span><span class="p">,</span> <span class="s">&quot;scenario_</span><span class="si">%d</span><span class="s">.png&quot;</span> <span class="o">%</span> <span class="n">index</span><span class="p">)</span>
+            <span class="n">data_root</span><span class="p">,</span> <span class="s2">&quot;braviz_data&quot;</span><span class="p">,</span> <span class="s2">&quot;scenarios&quot;</span><span class="p">,</span> <span class="s2">&quot;scenario_</span><span class="si">%d</span><span class="s2">.png&quot;</span> <span class="o">%</span> <span class="n">index</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">image_file</span><span class="p">):</span>
             <span class="n">image</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QImage</span><span class="p">(</span><span class="n">image_file</span><span class="p">)</span>
             <span class="n">scaled_image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">scaledToWidth</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="p">)</span>
@@ -1347,7 +1348,7 @@
     <span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">scn_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_row</span><span class="p">))</span>
         <span class="n">parameters_dict</span> <span class="o">=</span> <span class="n">braviz_user_data</span><span class="o">.</span><span class="n">get_scenario_data_dict</span><span class="p">(</span><span class="n">scn_id</span><span class="p">)</span>
-        <span class="n">parameters_dict</span><span class="p">[</span><span class="s">&quot;meta&quot;</span><span class="p">][</span><span class="s">&quot;scn_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">scn_id</span>
+        <span class="n">parameters_dict</span><span class="p">[</span><span class="s2">&quot;meta&quot;</span><span class="p">][</span><span class="s2">&quot;scn_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">scn_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">out_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">parameters_dict</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
 
@@ -1359,7 +1360,7 @@
         <span class="n">selection_row</span> <span class="o">=</span> <span class="n">selection</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
         <span class="n">scn_idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_index</span><span class="p">(</span><span class="n">selection_row</span><span class="p">)</span>
         <span class="n">scn_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_name</span><span class="p">(</span><span class="n">selection_row</span><span class="p">)</span>
-        <span class="n">remove_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s">&quot;Remove </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">scn_name</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">remove_action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="s2">&quot;Remove </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">scn_name</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
         <span class="n">menu</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QMenu</span><span class="p">()</span>
         <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">remove_action</span><span class="p">)</span>
 
@@ -1369,10 +1370,10 @@
 
         <span class="n">remove_action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">remove_item</span><span class="p">)</span>
         <span class="n">menu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">remove_action</span><span class="p">)</span>
-        <span class="n">selected_item</span> <span class="o">=</span> <span class="n">menu</span><span class="o">.</span><span class="n">exec_</span><span class="p">(</span><span class="n">global_pos</span><span class="p">)</span>
-        <span class="c"># print selected_item</span>
+        <span class="n">selected_item</span> <span class="o">=</span> <span class="n">menu</span><span class="o">.</span><span class="n">exec_</span><span class="p">(</span><span class="n">global_pos</span><span class="p">)</span></div>
+        <span class="c1"># print selected_item</span>
 
-</div>
+
 <div class="viewcode-block" id="LoadLogicBundle"><a class="viewcode-back" href="../../../library/qt_dialogs.html#braviz.interaction.qt_dialogs.LoadLogicBundle">[docs]</a><span class="k">class</span> <span class="nc">LoadLogicBundle</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
@@ -1385,7 +1386,7 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">LoadLogicBundle</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__tree_root</span> <span class="o">=</span> <span class="n">LogicBundleNode</span><span class="p">(</span>
-            <span class="bp">None</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">LogicBundleNode</span><span class="o">.</span><span class="n">LOGIC</span><span class="p">,</span> <span class="s">&quot;AND&quot;</span><span class="p">)</span>
+            <span class="bp">None</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">LogicBundleNode</span><span class="o">.</span><span class="n">LOGIC</span><span class="p">,</span> <span class="s2">&quot;AND&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__tree_model</span> <span class="o">=</span> <span class="n">LogicBundleQtTree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__tree_root</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__bundles</span> <span class="o">=</span> <span class="n">bundles_db</span><span class="o">.</span><span class="n">get_bundles_list</span><span class="p">(</span><span class="n">bundle_type</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__bundles_model</span> <span class="o">=</span> <span class="n">braviz_models</span><span class="o">.</span><span class="n">SimpleSetModel</span><span class="p">()</span>
@@ -1409,19 +1410,20 @@
 
     <span class="k">def</span> <span class="nf">before_accepting</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">listView</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">update_tree</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_tree</span><span class="p">(</span><span class="n">index</span><span class="p">)</span></div>
 
-</div>
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">sys</span>
 
     <span class="n">app</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
     <span class="n">out</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="c">#vsd = GenericVariableSelectDialog(out, multiple=False,initial_selection_names=[&#39;ABCL_DSM_antisocial_T_padres&#39;])</span>
-    <span class="c"># vsd = MultiPlotOutcomeSelectDialog(out))</span>
+    <span class="c1">#vsd = GenericVariableSelectDialog(out, multiple=False,initial_selection_names=[&#39;ABCL_DSM_antisocial_T_padres&#39;])</span>
+    <span class="c1"># vsd = MultiPlotOutcomeSelectDialog(out))</span>
     <span class="n">vsd</span> <span class="o">=</span> <span class="n">LoadLogicBundle</span><span class="p">()</span>
 
     <span class="n">vsd</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
 </pre></div>
 
           </div>
@@ -1450,7 +1452,7 @@
           
     <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Diego Angulo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
     </div>
         </div>
         <div class="clearer"></div>

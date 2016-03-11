@@ -82,23 +82,23 @@
           <div class="body" role="main">
             
   <h1>Source code for braviz.readAndFilter.geom_db</h1><div class="highlight"><pre>
-<span class="c">##############################################################################</span>
-<span class="c">#    Braviz, Brain Data interactive visualization                            #</span>
-<span class="c">#    Copyright (C) 2014  Diego Angulo                                        #</span>
-<span class="c">#                                                                            #</span>
-<span class="c">#    This program is free software: you can redistribute it and/or modify    #</span>
-<span class="c">#    it under the terms of the GNU Lesser General Public License as          #</span>
-<span class="c">#    published by  the Free Software Foundation, either version 3 of the     #</span>
-<span class="c">#    License, or (at your option) any later version.                         #</span>
-<span class="c">#                                                                            #</span>
-<span class="c">#    This program is distributed in the hope that it will be useful,         #</span>
-<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
-<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
-<span class="c">#    GNU Lesser General Public License for more details.                     #</span>
-<span class="c">#                                                                            #</span>
-<span class="c">#    You should have received a copy of the GNU Lesser General Public License#</span>
-<span class="c">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
-<span class="c">##############################################################################</span>
+<span></span><span class="c1">##############################################################################</span>
+<span class="c1">#    Braviz, Brain Data interactive visualization                            #</span>
+<span class="c1">#    Copyright (C) 2014  Diego Angulo                                        #</span>
+<span class="c1">#                                                                            #</span>
+<span class="c1">#    This program is free software: you can redistribute it and/or modify    #</span>
+<span class="c1">#    it under the terms of the GNU Lesser General Public License as          #</span>
+<span class="c1">#    published by  the Free Software Foundation, either version 3 of the     #</span>
+<span class="c1">#    License, or (at your option) any later version.                         #</span>
+<span class="c1">#                                                                            #</span>
+<span class="c1">#    This program is distributed in the hope that it will be useful,         #</span>
+<span class="c1">#    but WITHOUT ANY WARRANTY; without even the implied warranty of          #</span>
+<span class="c1">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #</span>
+<span class="c1">#    GNU Lesser General Public License for more details.                     #</span>
+<span class="c1">#                                                                            #</span>
+<span class="c1">#    You should have received a copy of the GNU Lesser General Public License#</span>
+<span class="c1">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.   #</span>
+<span class="c1">##############################################################################</span>
 
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
@@ -107,35 +107,35 @@
 <span class="kn">from</span> <span class="nn">pandas.io</span> <span class="kn">import</span> <span class="n">sql</span>
 <span class="kn">from</span> <span class="nn">braviz.readAndFilter.tabular_data</span> <span class="kn">import</span> <span class="n">retry_write</span>
 
-<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Diego&#39;</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;Diego&#39;</span>
 
 <span class="n">_ROI_TYPES_I</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s">&quot;sphere&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="s">&quot;line_sagital&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
-    <span class="s">&quot;line_coronal&quot;</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
-    <span class="s">&quot;line_axial&quot;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
-    <span class="s">&quot;line_free&quot;</span><span class="p">:</span> <span class="mi">13</span><span class="p">,</span>
+    <span class="s2">&quot;sphere&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;line_sagital&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="s2">&quot;line_coronal&quot;</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+    <span class="s2">&quot;line_axial&quot;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
+    <span class="s2">&quot;line_free&quot;</span><span class="p">:</span> <span class="mi">13</span><span class="p">,</span>
 <span class="p">}</span>
 
 <span class="n">_ROI_TYPES</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="mi">0</span><span class="p">:</span> <span class="s">&quot;sphere&quot;</span><span class="p">,</span>
-    <span class="mi">10</span><span class="p">:</span> <span class="s">&quot;line_sagital&quot;</span><span class="p">,</span>
-    <span class="mi">11</span><span class="p">:</span> <span class="s">&quot;line_coronal&quot;</span><span class="p">,</span>
-    <span class="mi">12</span><span class="p">:</span> <span class="s">&quot;line_axial&quot;</span><span class="p">,</span>
-    <span class="mi">13</span><span class="p">:</span> <span class="s">&quot;line_free&quot;</span><span class="p">,</span>
+    <span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;sphere&quot;</span><span class="p">,</span>
+    <span class="mi">10</span><span class="p">:</span> <span class="s2">&quot;line_sagital&quot;</span><span class="p">,</span>
+    <span class="mi">11</span><span class="p">:</span> <span class="s2">&quot;line_coronal&quot;</span><span class="p">,</span>
+    <span class="mi">12</span><span class="p">:</span> <span class="s2">&quot;line_axial&quot;</span><span class="p">,</span>
+    <span class="mi">13</span><span class="p">:</span> <span class="s2">&quot;line_free&quot;</span><span class="p">,</span>
 <span class="p">}</span>
 
 
 <span class="n">_COORDINATES_I</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s">&quot;subject&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="s">&quot;talairach&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="s">&quot;dartel&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;subject&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;talairach&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;dartel&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
 <span class="p">}</span>
 
 <span class="n">_COORDINATES</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="mi">0</span><span class="p">:</span> <span class="s">&quot;subject&quot;</span><span class="p">,</span>
-    <span class="mi">1</span><span class="p">:</span> <span class="s">&quot;talairach&quot;</span><span class="p">,</span>
-    <span class="mi">2</span><span class="p">:</span> <span class="s">&quot;dartel&quot;</span><span class="p">,</span>
+    <span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;subject&quot;</span><span class="p">,</span>
+    <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;talairach&quot;</span><span class="p">,</span>
+    <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;dartel&quot;</span><span class="p">,</span>
 <span class="p">}</span>
 
 
@@ -151,14 +151,14 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">con</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
-        <span class="s">&quot;SELECT count(*) FROM geom_rois WHERE roi_name = ?&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,))</span>
+        <span class="s2">&quot;SELECT count(*) FROM geom_rois WHERE roi_name = ?&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,))</span>
     <span class="n">n</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span></div>
 
 
-</div>
+
 <span class="nd">@retry_write</span>
-<div class="viewcode-block" id="create_roi"><a class="viewcode-back" href="../../../library/geom_db.html#braviz.readAndFilter.geom_db.create_roi">[docs]</a><span class="k">def</span> <span class="nf">create_roi</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">roi_type</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="create_roi"><a class="viewcode-back" href="../../../library/geom_db.html#braviz.readAndFilter.geom_db.create_roi">[docs]</a><span class="k">def</span> <span class="nf">create_roi</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">roi_type</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates a new ROI</span>
 
@@ -188,12 +188,12 @@
     <span class="n">coords</span> <span class="o">=</span> <span class="n">coords</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
     <span class="n">coords_key</span> <span class="o">=</span> <span class="n">_COORDINATES_I</span><span class="p">[</span><span class="n">coords</span><span class="p">]</span>
     <span class="n">roi_type_key</span> <span class="o">=</span> <span class="n">_ROI_TYPES_I</span><span class="p">[</span><span class="n">roi_type</span><span class="p">]</span>
-    <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;INSERT INTO geom_rois (roi_name,roi_type,roi_desc,roi_coords) VALUES(?,?,?,?)&quot;</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;INSERT INTO geom_rois (roi_name,roi_type,roi_desc,roi_coords) VALUES(?,?,?,?)&quot;</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">roi_type_key</span><span class="p">,</span> <span class="n">desc</span><span class="p">,</span> <span class="n">coords_key</span><span class="p">))</span>
     <span class="n">con</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">cur</span><span class="o">.</span><span class="n">lastrowid</span>
+    <span class="k">return</span> <span class="n">cur</span><span class="o">.</span><span class="n">lastrowid</span></div>
 
-</div>
+
 <div class="viewcode-block" id="get_available_spheres_df"><a class="viewcode-back" href="../../../library/geom_db.html#braviz.readAndFilter.geom_db.get_available_spheres_df">[docs]</a><span class="k">def</span> <span class="nf">get_available_spheres_df</span><span class="p">(</span><span class="n">space</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get available spheres</span>
@@ -207,33 +207,33 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">con</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">space</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
-<span class="s">            SELECT roi_name as name, roi_desc as description, num as quantity</span>
-<span class="s">            FROM geom_rois JOIN</span>
-<span class="s">            (SELECT sphere_id, count(*) as num FROM geom_spheres group by sphere_id</span>
-<span class="s">            UNION</span>
-<span class="s">            SELECT roi_id as sphere_id, 0 as num FROM geom_rois WHERE sphere_id not in (select sphere_id FROM geom_spheres)</span>
-<span class="s">            )</span>
-<span class="s">            ON roi_id = sphere_id</span>
-<span class="s">            WHERE roi_type = 0</span>
-<span class="s">            &quot;&quot;&quot;</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">con</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s">&quot;name&quot;</span><span class="p">)</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            SELECT roi_name as name, roi_desc as description, num as quantity</span>
+<span class="s2">            FROM geom_rois JOIN</span>
+<span class="s2">            (SELECT sphere_id, count(*) as num FROM geom_spheres group by sphere_id</span>
+<span class="s2">            UNION</span>
+<span class="s2">            SELECT roi_id as sphere_id, 0 as num FROM geom_rois WHERE sphere_id not in (select sphere_id FROM geom_spheres)</span>
+<span class="s2">            )</span>
+<span class="s2">            ON roi_id = sphere_id</span>
+<span class="s2">            WHERE roi_type = 0</span>
+<span class="s2">            &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">con</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">space_i</span> <span class="o">=</span> <span class="n">_COORDINATES_I</span><span class="p">[</span><span class="n">space</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
-        <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
-<span class="s">            SELECT roi_name as name, roi_desc as description, num as quantity</span>
-<span class="s">            FROM geom_rois JOIN</span>
-<span class="s">            (SELECT sphere_id, count(*) as num FROM geom_spheres group by sphere_id</span>
-<span class="s">            UNION</span>
-<span class="s">            SELECT roi_id as sphere_id, 0 as num FROM geom_rois WHERE sphere_id not in (select sphere_id FROM geom_spheres)</span>
-<span class="s">            )</span>
-<span class="s">            ON roi_id = sphere_id</span>
-<span class="s">            WHERE roi_type = 0 and roi_coords = ?</span>
-<span class="s">            &quot;&quot;&quot;</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">con</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">(</span><span class="n">space_i</span><span class="p">,))</span>
-    <span class="k">return</span> <span class="n">df</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            SELECT roi_name as name, roi_desc as description, num as quantity</span>
+<span class="s2">            FROM geom_rois JOIN</span>
+<span class="s2">            (SELECT sphere_id, count(*) as num FROM geom_spheres group by sphere_id</span>
+<span class="s2">            UNION</span>
+<span class="s2">            SELECT roi_id as sphere_id, 0 as num FROM geom_rois WHERE sphere_id not in (select sphere_id FROM geom_spheres)</span>
+<span class="s2">            )</span>
+<span class="s2">            ON roi_id = sphere_id</span>
+<span class="s2">            WHERE roi_type = 0 and roi_coords = ?</span>
+<span class="s2">            &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">con</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">(</span><span class="n">space_i</span><span class="p">,))</span>
+    <span class="k">return</span> <span class="n">df</span></div>
 
-</div>
+
 <div class="viewcode-block" id="get_available_lines_df"><a class="viewcode-back" href="../../../library/geom_db.html#braviz.readAndFilter.geom_db.get_available_lines_df">[docs]</a><span class="k">def</span> <span class="nf">get_available_lines_df</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get available lines</span>
@@ -243,20 +243,20 @@
 <span class="sd">        by name</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">con</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
-    <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
-<span class="s">        SELECT roi_name as name, roi_desc as description, num as quantity</span>
-<span class="s">        FROM geom_rois JOIN</span>
-<span class="s">        (SELECT line_id, count(*) as num FROM geom_lines group by line_id</span>
-<span class="s">        UNION</span>
-<span class="s">        SELECT roi_id as line_id, 0 as num FROM geom_rois WHERE line_id not in (select line_id FROM geom_lines)</span>
-<span class="s">        )</span>
-<span class="s">        ON roi_id = line_id</span>
-<span class="s">        WHERE roi_type &gt;= 10 and roi_type &lt; 20</span>
-<span class="s">        &quot;&quot;&quot;</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">con</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s">&quot;name&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">df</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        SELECT roi_name as name, roi_desc as description, num as quantity</span>
+<span class="s2">        FROM geom_rois JOIN</span>
+<span class="s2">        (SELECT line_id, count(*) as num FROM geom_lines group by line_id</span>
+<span class="s2">        UNION</span>
+<span class="s2">        SELECT roi_id as line_id, 0 as num FROM geom_rois WHERE line_id not in (select line_id FROM geom_lines)</span>
+<span class="s2">        )</span>
+<span class="s2">        ON roi_id = line_id</span>
+<span class="s2">        WHERE roi_type &gt;= 10 and roi_type &lt; 20</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">con</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span></div>
 
-</div>
+
 <div class="viewcode-block" id="get_roi_space"><a class="viewcode-back" href="../../../library/geom_db.html#braviz.readAndFilter.geom_db.get_roi_space">[docs]</a><span class="k">def</span> <span class="nf">get_roi_space</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">roi_id</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Retrieve the coordinate systems of a ROI</span>
@@ -273,16 +273,16 @@
     <span class="n">con</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="n">roi_id</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT roi_coords FROM geom_rois WHERE roi_name = ?&quot;</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;SELECT roi_coords FROM geom_rois WHERE roi_name = ?&quot;</span>
         <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,))</span>
         <span class="n">idx</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT roi_coords FROM geom_rois WHERE roi_id = ?&quot;</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;SELECT roi_coords FROM geom_rois WHERE roi_id = ?&quot;</span>
         <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">roi_id</span><span class="p">,))</span>
         <span class="n">idx</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">_COORDINATES</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">_COORDINATES</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span></div>
 
-</div>
+
 <div class="viewcode-block" id="get_roi_id"><a class="viewcode-back" href="../../../library/geom_db.html#braviz.readAndFilter.geom_db.get_roi_id">[docs]</a><span class="k">def</span> <span class="nf">get_roi_id</span><span class="p">(</span><span class="n">roi_name</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Find the id of a ROI</span>
@@ -294,12 +294,12 @@
 <span class="sd">        ROI id in the database</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">con</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
-    <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT roi_id FROM geom_rois WHERE roi_name = ?&quot;</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;SELECT roi_id FROM geom_rois WHERE roi_name = ?&quot;</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">roi_name</span><span class="p">,))</span>
     <span class="n">idx</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">idx</span>
+    <span class="k">return</span> <span class="n">idx</span></div>
 
-</div>
+
 <div class="viewcode-block" id="get_roi_name"><a class="viewcode-back" href="../../../library/geom_db.html#braviz.readAndFilter.geom_db.get_roi_name">[docs]</a><span class="k">def</span> <span class="nf">get_roi_name</span><span class="p">(</span><span class="n">roi_id</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Find the name of a ROI</span>
@@ -311,12 +311,12 @@
 <span class="sd">        ROI name</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">con</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
-    <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT roi_name FROM geom_rois WHERE roi_id = ?&quot;</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;SELECT roi_name FROM geom_rois WHERE roi_id = ?&quot;</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">roi_id</span><span class="p">,))</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">name</span>
+    <span class="k">return</span> <span class="n">name</span></div>
 
-</div>
+
 <div class="viewcode-block" id="get_roi_type"><a class="viewcode-back" href="../../../library/geom_db.html#braviz.readAndFilter.geom_db.get_roi_type">[docs]</a><span class="k">def</span> <span class="nf">get_roi_type</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">roi_id</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get the type of a ROI</span>
@@ -332,16 +332,16 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">con</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">roi_id</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT roi_type FROM geom_rois WHERE roi_name = ?&quot;</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;SELECT roi_type FROM geom_rois WHERE roi_name = ?&quot;</span>
         <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,))</span>
         <span class="n">roi_type_key</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT roi_type FROM geom_rois WHERE roi_id = ?&quot;</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;SELECT roi_type FROM geom_rois WHERE roi_id = ?&quot;</span>
         <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">roi_id</span><span class="p">,))</span>
         <span class="n">roi_type_key</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">_ROI_TYPES</span><span class="p">[</span><span class="n">roi_type_key</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">_ROI_TYPES</span><span class="p">[</span><span class="n">roi_type_key</span><span class="p">]</span></div>
 
-</div>
+
 <div class="viewcode-block" id="subjects_with_sphere"><a class="viewcode-back" href="../../../library/geom_db.html#braviz.readAndFilter.geom_db.subjects_with_sphere">[docs]</a><span class="k">def</span> <span class="nf">subjects_with_sphere</span><span class="p">(</span><span class="n">sphere_id</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get subjects who have a certain sphere defined</span>
@@ -353,13 +353,13 @@
 <span class="sd">        A set of subjects with the sphere defined</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">con</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
-    <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT subject FROM geom_spheres WHERE sphere_id = ?&quot;</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;SELECT subject FROM geom_spheres WHERE sphere_id = ?&quot;</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">sphere_id</span><span class="p">,))</span>
     <span class="n">rows</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
     <span class="n">subjs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">subjs</span>
+    <span class="k">return</span> <span class="n">subjs</span></div>
 
-</div>
+
 <div class="viewcode-block" id="subjects_with_line"><a class="viewcode-back" href="../../../library/geom_db.html#braviz.readAndFilter.geom_db.subjects_with_line">[docs]</a><span class="k">def</span> <span class="nf">subjects_with_line</span><span class="p">(</span><span class="n">line_id</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get subjects who have a certain line defined</span>
@@ -371,13 +371,13 @@
 <span class="sd">        A set of subjects with the line defined</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">con</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
-    <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT subject FROM geom_lines WHERE line_id = ?&quot;</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;SELECT subject FROM geom_lines WHERE line_id = ?&quot;</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">line_id</span><span class="p">,))</span>
     <span class="n">rows</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
     <span class="n">subjs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">subjs</span>
+    <span class="k">return</span> <span class="n">subjs</span></div>
 
-</div>
+
 <span class="nd">@retry_write</span>
 <div class="viewcode-block" id="save_sphere"><a class="viewcode-back" href="../../../library/geom_db.html#braviz.readAndFilter.geom_db.save_sphere">[docs]</a><span class="k">def</span> <span class="nf">save_sphere</span><span class="p">(</span><span class="n">sphere_id</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">center</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -391,11 +391,11 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">center</span>
     <span class="n">con</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
-    <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;INSERT OR REPLACE INTO geom_spheres VALUES (?,?,?,?,?,?)&quot;</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;INSERT OR REPLACE INTO geom_spheres VALUES (?,?,?,?,?,?)&quot;</span>
     <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">sphere_id</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">))</span>
-    <span class="n">con</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+    <span class="n">con</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></div>
 
-</div>
+
 <div class="viewcode-block" id="load_sphere"><a class="viewcode-back" href="../../../library/geom_db.html#braviz.readAndFilter.geom_db.load_sphere">[docs]</a><span class="k">def</span> <span class="nf">load_sphere</span><span class="p">(</span><span class="n">sphere_id</span><span class="p">,</span> <span class="n">subject</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Loads a sphere for a subject</span>
@@ -407,13 +407,13 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        ``(r,x,y,z)`` where ``r`` is the radius of the sphere and ``(x,y,z)`` is its center.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT radius,ctr_x,ctr_y,ctr_z FROM geom_spheres WHERE sphere_id = ? and subject = ?&quot;</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;SELECT radius,ctr_x,ctr_y,ctr_z FROM geom_spheres WHERE sphere_id = ? and subject = ?&quot;</span>
     <span class="n">con</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">sphere_id</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">subject</span><span class="p">)))</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">res</span>
+    <span class="k">return</span> <span class="n">res</span></div>
 
-</div>
+
 <div class="viewcode-block" id="get_all_spheres"><a class="viewcode-back" href="../../../library/geom_db.html#braviz.readAndFilter.geom_db.get_all_spheres">[docs]</a><span class="k">def</span> <span class="nf">get_all_spheres</span><span class="p">(</span><span class="n">sphere_id</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get a DataFrame of all the subjects spheres with a given id</span>
@@ -424,12 +424,12 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        :class:`pandas.DataFrame` with columns for radius, center x, center y and center z; indexed by subject</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT subject,radius,ctr_x,ctr_y,ctr_z FROM geom_spheres WHERE sphere_id = ?&quot;</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;SELECT subject,radius,ctr_x,ctr_y,ctr_z FROM geom_spheres WHERE sphere_id = ?&quot;</span>
     <span class="n">con</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">con</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s">&quot;subject&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">(</span><span class="n">sphere_id</span><span class="p">,))</span>
-    <span class="k">return</span> <span class="n">df</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">con</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s2">&quot;subject&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">(</span><span class="n">sphere_id</span><span class="p">,))</span>
+    <span class="k">return</span> <span class="n">df</span></div>
 
-</div>
+
 <span class="nd">@retry_write</span>
 <div class="viewcode-block" id="recursive_delete_roi"><a class="viewcode-back" href="../../../library/geom_db.html#braviz.readAndFilter.geom_db.recursive_delete_roi">[docs]</a><span class="k">def</span> <span class="nf">recursive_delete_roi</span><span class="p">(</span><span class="n">roi_id</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -445,18 +445,18 @@
 
     <span class="n">con</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">roi_type</span> <span class="o">=</span> <span class="n">get_roi_type</span><span class="p">(</span><span class="n">roi_id</span><span class="o">=</span><span class="n">roi_id</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">roi_type</span> <span class="o">==</span> <span class="s">&quot;sphere&quot;</span><span class="p">:</span>
-        <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;DELETE FROM geom_spheres WHERE sphere_id = ?&quot;</span>
+    <span class="k">if</span> <span class="n">roi_type</span> <span class="o">==</span> <span class="s2">&quot;sphere&quot;</span><span class="p">:</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;DELETE FROM geom_spheres WHERE sphere_id = ?&quot;</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="c"># it is a line</span>
-        <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;DELETE FROM geom_lines WHERE line_id = ?&quot;</span>
-    <span class="n">q2</span> <span class="o">=</span> <span class="s">&quot;DELETE FROM geom_rois WHERE roi_id = ?&quot;</span>
+        <span class="c1"># it is a line</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;DELETE FROM geom_lines WHERE line_id = ?&quot;</span>
+    <span class="n">q2</span> <span class="o">=</span> <span class="s2">&quot;DELETE FROM geom_rois WHERE roi_id = ?&quot;</span>
     <span class="k">with</span> <span class="n">con</span><span class="p">:</span>
         <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,(</span><span class="n">roi_id</span><span class="p">,))</span>
-        <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q2</span><span class="p">,(</span><span class="n">roi_id</span><span class="p">,))</span>
+        <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q2</span><span class="p">,(</span><span class="n">roi_id</span><span class="p">,))</span></div>
 
 
-</div>
+
 <span class="nd">@retry_write</span>
 <div class="viewcode-block" id="save_line"><a class="viewcode-back" href="../../../library/geom_db.html#braviz.readAndFilter.geom_db.save_line">[docs]</a><span class="k">def</span> <span class="nf">save_line</span><span class="p">(</span><span class="n">line_id</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">point1</span><span class="p">,</span> <span class="n">point2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -472,13 +472,13 @@
     <span class="n">p2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">point2</span><span class="p">)</span>
     <span class="n">length</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">p1</span> <span class="o">-</span> <span class="n">p2</span><span class="p">)</span>
 
-    <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;INSERT OR REPLACE INTO geom_lines VALUES (?,?, ?,?,?, ?,?,?, ?)&quot;</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;INSERT OR REPLACE INTO geom_lines VALUES (?,?, ?,?,?, ?,?,?, ?)&quot;</span>
     <span class="n">con</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
         <span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">line_id</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">p1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p1</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">p2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p2</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">length</span><span class="p">))</span>
-    <span class="n">con</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+    <span class="n">con</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></div>
 
-</div>
+
 <div class="viewcode-block" id="load_line"><a class="viewcode-back" href="../../../library/geom_db.html#braviz.readAndFilter.geom_db.load_line">[docs]</a><span class="k">def</span> <span class="nf">load_line</span><span class="p">(</span><span class="n">line_id</span><span class="p">,</span> <span class="n">subject</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Retrieves a line for a given subject</span>
@@ -490,13 +490,13 @@
 <span class="sd">    Returns</span>
 <span class="sd">        ``(xo,yo,zo,xf,yf,zf)`` where ``(xo,yo,zo)`` is the line origin and ``(xf,yf,zf)`` is the end.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;SELECT p1_x,p1_y,p1_z,p2_x,p2_y,p2_z FROM geom_lines WHERE line_id = ? and subject = ?&quot;</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;SELECT p1_x,p1_y,p1_z,p2_x,p2_y,p2_z FROM geom_lines WHERE line_id = ? and subject = ?&quot;</span>
     <span class="n">con</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">line_id</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">subject</span><span class="p">)))</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">res</span>
+    <span class="k">return</span> <span class="n">res</span></div>
 
-</div>
+
 <span class="nd">@retry_write</span>
 <div class="viewcode-block" id="copy_spheres"><a class="viewcode-back" href="../../../library/geom_db.html#braviz.readAndFilter.geom_db.copy_spheres">[docs]</a><span class="k">def</span> <span class="nf">copy_spheres</span><span class="p">(</span><span class="n">orig_id</span><span class="p">,</span> <span class="n">dest_id</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -508,10 +508,10 @@
 <span class="sd">        origi_id (int) : ROI id of the source spheres</span>
 <span class="sd">        dest_id (int) : ROI id into which the spheres will be copied</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">q</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;INSERT OR REPLACE INTO geom_spheres</span>
-<span class="s">    SELECT ? as sphere_id , subject, radius, ctr_x, ctr_y, ctr_z</span>
-<span class="s">    FROM geom_spheres</span>
-<span class="s">    WHERE sphere_id = ?&quot;&quot;&quot;</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;INSERT OR REPLACE INTO geom_spheres</span>
+<span class="s2">    SELECT ? as sphere_id , subject, radius, ctr_x, ctr_y, ctr_z</span>
+<span class="s2">    FROM geom_spheres</span>
+<span class="s2">    WHERE sphere_id = ?&quot;&quot;&quot;</span>
     <span class="n">con</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
     <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">(</span><span class="n">dest_id</span><span class="p">,</span> <span class="n">orig_id</span><span class="p">))</span>
     <span class="n">con</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></div>
@@ -543,7 +543,7 @@
           
     <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Diego Angulo.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
     </div>
         </div>
         <div class="clearer"></div>
